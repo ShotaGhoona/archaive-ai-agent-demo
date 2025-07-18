@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ChatLayoutState } from "../types";
+import { ChatLayoutState } from "../../types/types";
 import { Zap, Sidebar, Maximize2, X } from "lucide-react";
 
 interface ChatHeaderProps {

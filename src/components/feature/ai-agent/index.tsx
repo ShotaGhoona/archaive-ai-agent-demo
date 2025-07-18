@@ -2,14 +2,14 @@
 
 import { useCallback, useRef, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./types";
-import { useChatUIState } from "./hooks/useChatUIState";
-import { useLayoutTransition } from "./hooks/useLayoutTransition";
+import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./types/types";
+import { useChatUIState } from "./shared/hooks/useChatUIState";
+import { useLayoutTransition } from "./shared/hooks/useLayoutTransition";
 import { getAgentConfigs, getAgentConfig } from "./utils/agentConfigs";
-import ChatButton from "./shared/ChatButton";
-import FloatingLayout, { FloatingLayoutRef } from "./layouts/FloatingLayout";
-import SidebarLayout, { SidebarLayoutRef } from "./layouts/SidebarLayout";
-import FullpageLayout, { FullpageLayoutRef } from "./layouts/FullpageLayout";
+import ChatButton from "./shared/components/ChatButton";
+import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayout";
+import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
+import FullpageLayout, { FullpageLayoutRef } from "./shared/layouts/FullpageLayout";
 import GeneralChatContent from "./agents/GeneralAgent/GeneralChatContent";
 import GeneralChatInput from "./agents/GeneralAgent/GeneralChatInput";
 import EstimateChatContent from "./agents/EstimateAgent/EstimateChatContent";

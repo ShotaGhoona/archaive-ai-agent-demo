@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatLayoutState, PersistedChatState, UserPreferences } from "../types";
+import { ChatLayoutState, PersistedChatState, UserPreferences } from "../types/types";
 
 const STORAGE_KEYS = {
   CHAT_STATE: 'archaive_chat_state_v6',

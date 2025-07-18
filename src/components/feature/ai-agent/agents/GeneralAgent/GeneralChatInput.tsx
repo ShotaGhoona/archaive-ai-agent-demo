@@ -4,8 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Send, Plus, FileText, Search, Calculator } from 'lucide-react';
-import { AgentInputProps } from '../../types';
-import { cn } from '@/lib/utils';
+import { AgentInputProps } from '../../types/types';
 
 const GeneralChatInput: React.FC<AgentInputProps> = ({ 
   onSendMessage, 

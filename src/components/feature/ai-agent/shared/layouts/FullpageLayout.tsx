@@ -1,10 +1,10 @@
 "use client";
 
 import { forwardRef, useRef, useImperativeHandle, useState } from "react";
-import { ChatLayoutState, Message, BlueprintInfo } from "../types";
-import ChatHeader from "../shared/ChatHeader";
-import ChatContent from "../shared/ChatContent";
-import ChatInput from "../shared/ChatInput";
+import { ChatLayoutState, Message, BlueprintInfo } from "../../types/types";
+import ChatHeader from "../components/ChatHeader";
+import ChatContent from "../components/ChatContent";
+import ChatInput from "../components/ChatInput";
 
 interface FullpageLayoutProps {
   messages: Message[];

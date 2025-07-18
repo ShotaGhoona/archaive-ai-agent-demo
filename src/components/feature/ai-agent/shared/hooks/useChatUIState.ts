@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useCallback, useEffect, useMemo } from "react";
-import { ChatLayoutState, ChatUIState, Position, Size, UserPreferences, Message, AIAgentConfig } from "../types";
-import { storageUtils, defaultPreferences } from "../utils/storageUtils";
+import { ChatLayoutState, ChatUIState, Position, Size, UserPreferences, Message, AIAgentConfig } from "../../types/types";
+import { storageUtils, defaultPreferences } from "../../utils/storageUtils";
 
 const DEFAULT_POSITION: Position = { x: 50, y: 50 };
 const DEFAULT_SIZE: Size = { width: 400, height: 700 };

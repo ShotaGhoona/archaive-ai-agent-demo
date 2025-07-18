@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AIAgentConfig } from '../types';
+import { AIAgentConfig } from '../types/types';
 
 /**
  * エージェント登録・管理システム

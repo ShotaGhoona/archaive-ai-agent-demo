@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { ChatLayoutState, Position, Size } from "../types";
+import { ChatLayoutState, Position, Size } from "../../types/types";
 
 export interface TransitionConfig {
   duration: number;

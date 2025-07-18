@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Message } from '../../types';
+import { Message } from '../../types/types';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -10,7 +10,6 @@ import {
   User, 
   Wrench, 
   Clock, 
-  TrendingUp, 
   CheckCircle,
   AlertTriangle,
   Copy,

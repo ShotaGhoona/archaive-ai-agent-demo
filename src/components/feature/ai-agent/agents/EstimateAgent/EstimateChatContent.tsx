@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from 'react';
-import { AgentContentProps } from '../../types';
+import { AgentContentProps } from '../../types/types';
 import EstimateMessage from './EstimateMessage';
 import FileUploadArea from './FileUploadArea';
-import TypingIndicator from '../../shared/TypingIndicator';
+import TypingIndicator from '../../shared/components/TypingIndicator';
 import { Calculator } from 'lucide-react';
 
 const EstimateChatContent: React.FC<AgentContentProps> = ({ 

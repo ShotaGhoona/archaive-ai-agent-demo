@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageCircle, Calculator, GitBranch, HelpCircle } from 'lucide-react';
-import { AIAgentConfig, AgentCategory } from '../types';
+import { AIAgentConfig, AgentCategory } from '../types/types';
 
 // エージェント定義
 export const availableAgents: Record<string, AIAgentConfig> = {

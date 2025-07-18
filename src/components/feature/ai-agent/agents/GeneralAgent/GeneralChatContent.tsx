@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import { AgentContentProps } from '../../types';
+import { AgentContentProps } from '../../types/types';
 import GeneralMessage from './GeneralMessage';
-import TypingIndicator from '../../shared/TypingIndicator';
+import TypingIndicator from '../../shared/components/TypingIndicator';
 import { MessageCircle } from 'lucide-react';
 
 const GeneralChatContent: React.FC<AgentContentProps> = ({ 

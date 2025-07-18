@@ -2,10 +2,10 @@
 
 import { forwardRef, useRef, useImperativeHandle } from "react";
 import { Card } from "@/components/ui/card";
-import { ChatLayoutState, Position, Size, Message } from "../types";
-import ChatHeader from "../shared/ChatHeader";
-import ChatContent from "../shared/ChatContent";
-import ChatInput from "../shared/ChatInput";
+import { ChatLayoutState, Position, Size, Message } from "../../types/types";
+import ChatHeader from "../components/ChatHeader";
+import ChatContent from "../components/ChatContent";
+import ChatInput from "../components/ChatInput";
 
 interface FloatingLayoutProps {
   position: Position;

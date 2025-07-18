@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AgentMessageProps } from '../../types';
+import { AgentMessageProps } from '../../types/types';
 import { cn } from '@/lib/utils';
 import { Bot, User } from 'lucide-react';
 
