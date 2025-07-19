@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AgentContentProps } from '../../types/types';
-import EstimateMessage from './EstimateMessage';
+import ChatMessage from '../../shared/components/ChatMessage';
 import FileUploadArea from './FileUploadArea';
 import TypingIndicator from '../../shared/components/TypingIndicator';
-import { Calculator } from 'lucide-react';
 
 const EstimateChatContent: React.FC<AgentContentProps> = ({ 
   messages, 
@@ -13,6 +12,8 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
   agentConfig 
 }) => {
   const [hasUploadedFile, setHasUploadedFile] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const lastMessageRef = useRef<HTMLDivElement>(null);
 
   const handleFileUpload = (file: File) => {
     setHasUploadedFile(true);
@@ -20,15 +21,32 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
     console.log('Uploaded file:', file.name);
   };
 
+  // 新しいメッセージが追加されたら自動スクロール
+  useEffect(() => {
+    if (lastMessageRef.current) {
+      lastMessageRef.current.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'end' 
+      });
+    }
+  }, [messages, isLoading]);
+
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div 
+      ref={scrollContainerRef}
+      className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4 scroll-smooth"
+      style={{ 
+        maxHeight: '100%',
+        scrollBehavior: 'smooth'
+      }}
+    >
       {/* ファイルアップロード領域 */}
       {!hasUploadedFile && messages.length === 0 && (
         <div className="mb-6">
           <div className="text-center mb-4">
-            <h3 className="text-lg font-semibold text-foreground">見積もりAI</h3>
+            <h3 className="text-lg font-semibold text-foreground">{agentConfig.name}</h3>
             <p className="text-sm text-muted-foreground">
-              図面をアップロードして見積もりを開始します
+              {agentConfig.welcomeMessage}
             </p>
           </div>
           <FileUploadArea
@@ -40,16 +58,21 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
       )}
       
       {/* メッセージ表示 */}
-      {messages.map((message) => (
-        <EstimateMessage 
+      {messages.map((message, index) => (
+        <ChatMessage 
           key={message.id} 
           message={message} 
           agentConfig={agentConfig}
+          ref={index === messages.length - 1 ? lastMessageRef : undefined}
         />
       ))}
       
       {/* ローディング表示 */}
-      {isLoading && <TypingIndicator agentColor="#10b981" agentIcon={Calculator} />}
+      {isLoading && (
+        <div ref={lastMessageRef}>
+          <TypingIndicator agentColor={agentConfig.color} agentIcon={agentConfig.icon} />
+        </div>
+      )}
     </div>
   );
 };

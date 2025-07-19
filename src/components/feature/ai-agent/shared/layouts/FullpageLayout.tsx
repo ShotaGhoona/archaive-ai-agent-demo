@@ -117,6 +117,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
                 onSendMessage={onSendMessage}
                 onQuickAction={onQuickAction}
                 disabled={isLoading}
+                agentConfig={agentConfig}
               />
             )}
           </div>

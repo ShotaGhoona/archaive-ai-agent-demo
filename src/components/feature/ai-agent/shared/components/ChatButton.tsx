@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, Plus, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { AIAgentConfig } from '../types';
+import { AIAgentConfig } from '../../types/types';
 import AgentSelector from './AgentSelector';
 
 // =============================================================================

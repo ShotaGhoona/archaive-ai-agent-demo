@@ -12,13 +12,8 @@ import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayo
 import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
 import FullpageLayout, { FullpageLayoutRef } from "./shared/layouts/FullpageLayout";
 import GeneralChatContent from "./agents/GeneralAgent/GeneralChatContent";
-import GeneralChatInput from "./agents/GeneralAgent/GeneralChatInput";
 import EstimateChatContent from "./agents/EstimateAgent/EstimateChatContent";
-import EstimateChatInput from "./agents/EstimateAgent/EstimateChatInput";
-import ProcessChatContent from "./agents/ProcessAgent/ProcessChatContent";
-import ProcessChatInput from "./agents/ProcessAgent/ProcessChatInput";
-import InquiryChatContent from "./agents/InquiryAgent/InquiryChatContent";
-import InquiryChatInput from "./agents/InquiryAgent/InquiryChatInput";
+import ChatInput from "./shared/components/ChatInput";
 import blueprintsData from "@/components/feature/blueprint/data/blueprint.json";
 
 // エージェント別レスポンス生成
@@ -63,66 +58,27 @@ const AgentContentRenderer = ({ agentId, messages, isLoading, agentConfig }: any
       return <GeneralChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
     case 'estimate':
       return <EstimateChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
-    case 'process':
-      return <ProcessChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
-    case 'inquiry':
-      return <InquiryChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
+    // case 'process':
+    //   return <ProcessChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
+    // case 'inquiry':
+    //   return <InquiryChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
     default:
       return <GeneralChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
   }
 };
 
-// エージェント別インプットレンダラー
+// 共有チャットインプット使用
 const AgentInputRenderer = ({ agentId, onSendMessage, onQuickAction, disabled, agentConfig }: any) => {
   if (!agentConfig) return null;
 
-  switch (agentId) {
-    case 'general':
-      return (
-        <GeneralChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={disabled}
-          agentConfig={agentConfig}
-        />
-      );
-    case 'estimate':
-      return (
-        <EstimateChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={disabled}
-          agentConfig={agentConfig}
-        />
-      );
-    case 'process':
-      return (
-        <ProcessChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={disabled}
-          agentConfig={agentConfig}
-        />
-      );
-    case 'inquiry':
-      return (
-        <InquiryChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={disabled}
-          agentConfig={agentConfig}
-        />
-      );
-    default:
-      return (
-        <GeneralChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={disabled}
-          agentConfig={agentConfig}
-        />
-      );
-  }
+  return (
+    <ChatInput
+      onSendMessage={onSendMessage}
+      onQuickAction={onQuickAction}
+      disabled={disabled}
+      agentConfig={agentConfig}
+    />
+  );
 };
 
 export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {

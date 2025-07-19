@@ -176,6 +176,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
             onSendMessage={onSendMessage}
             onQuickAction={onQuickAction}
             disabled={isLoading}
+            agentConfig={agentConfig}
           />
         )}
       </div>

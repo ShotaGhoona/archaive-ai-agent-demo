@@ -67,6 +67,7 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
           onSendMessage={onSendMessage}
           onQuickAction={onQuickAction}
           disabled={isLoading}
+          agentConfig={agentConfig}
         />
       )}
     </div>
