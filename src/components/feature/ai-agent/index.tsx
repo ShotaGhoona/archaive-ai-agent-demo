@@ -6,7 +6,7 @@ import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./t
 import { useChatUIState } from "./shared/hooks/useChatUIState";
 import { useLayoutTransition } from "./shared/hooks/useLayoutTransition";
 import { getAgentConfigs, getAgentConfig } from "./utils/agentConfigs";
-import { sendChatMessage, convertMessagesToHistory } from "./utils/chatApi";
+import { sendAgentMessage, convertMessagesToHistory } from "./utils/chatApi";
 import ChatButton from "./shared/components/ChatButton";
 import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayout";
 import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
@@ -50,14 +50,14 @@ const generateAgentResponse = (userMessage: string, agentId: string): string => 
 };
 
 // エージェント別コンテンツレンダラー
-const AgentContentRenderer = ({ agentId, messages, isLoading, agentConfig }: any) => {
+const AgentContentRenderer = ({ agentId, messages, isLoading, agentConfig, onFileUpload }: any) => {
   if (!agentConfig) return null;
 
   switch (agentId) {
     case 'general':
       return <GeneralChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
     case 'estimate':
-      return <EstimateChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
+      return <EstimateChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} onFileUpload={onFileUpload} />;
     // case 'process':
     //   return <ProcessChatContent messages={messages} isLoading={isLoading} agentConfig={agentConfig} />;
     // case 'inquiry':
@@ -212,19 +212,23 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
       );
 
-      // API呼び出し
-      const response = await sendChatMessage({
-        message: content,
-        agentId: state.selectedAgent,
-        conversationHistory,
-        blueprintInfo: blueprintInfo ? {
-          id: blueprintInfo.id,
-          name: blueprintInfo.name,
-          material: blueprintInfo.material,
-          customerName: blueprintInfo.customerName,
-          productName: blueprintInfo.productName
-        } : undefined
-      });
+      // API呼び出し（新しい統合関数を使用）
+      const response = await sendAgentMessage(
+        state.selectedAgent,
+        content,
+        {
+          conversationHistory,
+          metadata: blueprintInfo ? {
+            blueprintInfo: {
+              id: blueprintInfo.id,
+              name: blueprintInfo.name,
+              material: blueprintInfo.material,
+              customerName: blueprintInfo.customerName,
+              productName: blueprintInfo.productName
+            }
+          } : undefined
+        }
+      );
 
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
@@ -259,6 +263,84 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     handleSendMessage(action);
   }, [handleSendMessage]);
 
+  // ファイルアップロードハンドラー
+  const handleFileUpload = useCallback(async (file: File, message: string) => {
+    if (!state.selectedAgent) return;
+
+    // ユーザーメッセージを追加
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      content: `${message} [画像: ${file.name}]`,
+      sender: 'user',
+      timestamp: new Date(),
+    };
+
+    actions.addMessage(userMessage);
+    actions.setLoading(true);
+
+    // AIの応答準備（typing表示）
+    const typingMessage: Message = {
+      id: 'typing',
+      content: '...',
+      sender: 'ai',
+      timestamp: new Date(),
+      isTyping: true
+    };
+    actions.addMessage(typingMessage);
+
+    try {
+      // 会話履歴を取得（typing除く）
+      const conversationHistory = convertMessagesToHistory(
+        state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
+      );
+
+      // ファイル付きAPIコール
+      const response = await sendAgentMessage(
+        state.selectedAgent,
+        message,
+        {
+          image: file,
+          conversationHistory,
+          metadata: blueprintInfo ? {
+            blueprintInfo: {
+              id: blueprintInfo.id,
+              name: blueprintInfo.name,
+              material: blueprintInfo.material,
+              customerName: blueprintInfo.customerName,
+              productName: blueprintInfo.productName
+            }
+          } : undefined
+        }
+      );
+
+      const aiResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        content: response.response,
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+
+      actions.removeMessage('typing');
+      actions.addMessage(aiResponse);
+      actions.setLoading(false);
+    } catch (error) {
+      console.error('Failed to upload file:', error);
+      
+      const fallbackResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        content: error instanceof Error 
+          ? `申し訳ございません。ファイルアップロードでエラーが発生しました: ${error.message}`
+          : 'ファイルアップロードでエラーが発生しました。しばらくしてからもう一度お試しください。',
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+
+      actions.removeMessage('typing');
+      actions.addMessage(fallbackResponse);
+      actions.setLoading(false);
+    }
+  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo]);
+
   const commonProps = {
     messages: state.messages,
     isLoading: state.isLoading,
@@ -275,6 +357,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         messages={state.messages}
         isLoading={state.isLoading}
         agentConfig={state.agentConfig}
+        onFileUpload={handleFileUpload}
       />
     ) : null,
     // エージェント別インプット

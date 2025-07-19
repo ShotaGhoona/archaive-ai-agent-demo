@@ -101,7 +101,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
             </label>
           </Button>
           <div className="text-xs text-muted-foreground">
-            対応形式: {acceptedTypes.join(', ')} | 最大サイズ: {formatFileSize(maxSize)}
+            対応形式: .jpg, .jpeg, .png, .webp | 最大サイズ: {formatFileSize(maxSize)}
           </div>
         </div>
       </div>

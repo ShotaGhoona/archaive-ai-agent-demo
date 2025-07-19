@@ -120,6 +120,7 @@ export interface AgentContentProps {
   messages: Message[];
   isLoading: boolean;
   onQuickMessage?: (message: string) => void;
+  onFileUpload?: (file: File, message: string) => void;
   agentConfig: AIAgentConfig;
 }
 

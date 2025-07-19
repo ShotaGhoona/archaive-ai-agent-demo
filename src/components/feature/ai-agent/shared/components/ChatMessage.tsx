@@ -1,6 +1,8 @@
 "use client";
 
 import React, { forwardRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { Message } from "../../types/types";
 import { User } from "lucide-react";
 import { cn } from '@/lib/utils';
@@ -50,8 +52,32 @@ const ChatMessage = forwardRef<HTMLDivElement, ChatMessageProps>(({ message, age
               <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           ) : (
-            <div className="text-sm leading-relaxed whitespace-pre-wrap">
-              {message.content}
+            <div className="text-sm leading-relaxed">
+              {isAI ? (
+                <ReactMarkdown 
+                  remarkPlugins={[remarkGfm]}
+                  components={{
+                    h1: ({children}) => <h1 className="text-xl font-bold mb-3 mt-4 first:mt-0">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-lg font-bold mb-2 mt-3 first:mt-0">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-base font-bold mb-2 mt-3 first:mt-0">{children}</h3>,
+                    p: ({children}) => <p className="mb-2 last:mb-0">{children}</p>,
+                    ul: ({children}) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
+                    ol: ({children}) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
+                    li: ({children}) => <li className="ml-2">{children}</li>,
+                    strong: ({children}) => <strong className="font-semibold">{children}</strong>,
+                    em: ({children}) => <em className="italic">{children}</em>,
+                    code: ({children}) => <code className="bg-muted px-1 py-0.5 rounded text-xs font-mono">{children}</code>,
+                    pre: ({children}) => <pre className="bg-muted p-3 rounded mt-2 mb-2 overflow-x-auto text-xs font-mono">{children}</pre>,
+                    blockquote: ({children}) => <blockquote className="border-l-4 border-muted-foreground/20 pl-4 my-2 italic">{children}</blockquote>,
+                    hr: () => <hr className="my-4 border-muted-foreground/20" />,
+                    a: ({href, children}) => <a href={href} className="text-primary underline hover:no-underline" target="_blank" rel="noopener noreferrer">{children}</a>
+                  }}
+                >
+                  {message.content}
+                </ReactMarkdown>
+              ) : (
+                <div className="whitespace-pre-wrap">{message.content}</div>
+              )}
             </div>
           )}
         </div>

@@ -8,7 +8,8 @@ import FileUploadArea from './FileUploadArea';
 const EstimateChatContent: React.FC<AgentContentProps> = ({ 
   messages, 
   isLoading, 
-  agentConfig 
+  agentConfig,
+  onFileUpload
 }) => {
   const [hasUploadedFile, setHasUploadedFile] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -16,8 +17,12 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
 
   const handleFileUpload = (file: File) => {
     setHasUploadedFile(true);
-    // ファイルアップロード処理（実際の実装では適切なファイル処理を行う）
     console.log('Uploaded file:', file.name);
+    
+    // 親コンポーネントのファイルアップロードハンドラーを呼び出し
+    if (onFileUpload) {
+      onFileUpload(file, 'この図面の見積もりを開始してください');
+    }
   };
 
   // 新しいメッセージが追加されたら自動スクロール
@@ -50,8 +55,8 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
           </div>
           <FileUploadArea
             onFileUpload={handleFileUpload}
-            acceptedTypes={['.pdf', '.dwg', '.dxf', '.jpg', '.png']}
-            maxSize={10 * 1024 * 1024} // 10MB
+            acceptedTypes={['.jpg', '.jpeg', '.png', '.webp']}
+            maxSize={20 * 1024 * 1024} // 20MB
           />
         </div>
       )}
