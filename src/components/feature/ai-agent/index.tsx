@@ -6,6 +6,7 @@ import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./t
 import { useChatUIState } from "./shared/hooks/useChatUIState";
 import { useLayoutTransition } from "./shared/hooks/useLayoutTransition";
 import { getAgentConfigs, getAgentConfig } from "./utils/agentConfigs";
+import { sendChatMessage, convertMessagesToHistory } from "./utils/chatApi";
 import ChatButton from "./shared/components/ChatButton";
 import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayout";
 import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
@@ -228,7 +229,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
 
 
   const handleSendMessage = useCallback(async (content: string) => {
-    if (!state.agentConfig) return;
+    if (!state.agentConfig || !state.selectedAgent) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -249,10 +250,29 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     };
     actions.addMessage(typingMessage);
 
-    setTimeout(() => {
+    try {
+      // 会話履歴を取得（typing除く）
+      const conversationHistory = convertMessagesToHistory(
+        state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
+      );
+
+      // API呼び出し
+      const response = await sendChatMessage({
+        message: content,
+        agentId: state.selectedAgent,
+        conversationHistory,
+        blueprintInfo: blueprintInfo ? {
+          id: blueprintInfo.id,
+          name: blueprintInfo.name,
+          material: blueprintInfo.material,
+          customerName: blueprintInfo.customerName,
+          productName: blueprintInfo.productName
+        } : undefined
+      });
+
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),
-        content: generateAgentResponse(content, state.selectedAgent || 'general'),
+        content: response.response,
         sender: 'ai',
         timestamp: new Date(),
       };
@@ -260,8 +280,24 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.removeMessage('typing');
       actions.addMessage(aiResponse);
       actions.setLoading(false);
-    }, 1000 + Math.random() * 2000);
-  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent]);
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      
+      // エラー時はフォールバック応答を使用
+      const fallbackResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        content: error instanceof Error 
+          ? `申し訳ございません。エラーが発生しました: ${error.message}`
+          : 'エラーが発生しました。しばらくしてからもう一度お試しください。',
+        sender: 'ai',
+        timestamp: new Date(),
+      };
+
+      actions.removeMessage('typing');
+      actions.addMessage(fallbackResponse);
+      actions.setLoading(false);
+    }
+  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo]);
 
   const handleQuickAction = useCallback((action: string) => {
     handleSendMessage(action);

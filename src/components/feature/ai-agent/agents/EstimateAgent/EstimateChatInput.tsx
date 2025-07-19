@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, Plus, FileText, Calculator, Clock } from 'lucide-react';
+import { Send, Plus, FileText, Calculator, Clock, DollarSign, TrendingUp, Package } from 'lucide-react';
 import { AgentInputProps } from '../../types/types';
 
 const EstimateChatInput: React.FC<AgentInputProps> = ({ 
@@ -16,9 +16,12 @@ const EstimateChatInput: React.FC<AgentInputProps> = ({
   const [showQuickActions, setShowQuickActions] = useState(false);
 
   const quickActions = [
-    { id: 'estimate', label: '見積もり開始', icon: Calculator },
-    { id: 'materials', label: '材料費を確認', icon: FileText },
-    { id: 'timeline', label: '納期を確認', icon: Clock }
+    { id: 'quick-estimate', label: '概算見積もり', icon: Calculator },
+    { id: 'detailed-estimate', label: '詳細見積もり', icon: FileText },
+    { id: 'material-cost', label: '材料費分析', icon: Package },
+    { id: 'processing-cost', label: '加工費算出', icon: DollarSign },
+    { id: 'delivery-time', label: '納期見積もり', icon: Clock },
+    { id: 'cost-optimization', label: 'コスト最適化', icon: TrendingUp }
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,17 +42,20 @@ const EstimateChatInput: React.FC<AgentInputProps> = ({
       {/* クイックアクション */}
       {showQuickActions && (
         <div className="p-4 border-b border-border">
-          <div className="flex flex-wrap gap-2">
+          <div className="mb-2">
+            <h4 className="text-sm font-medium text-muted-foreground">見積もりメニュー</h4>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
             {quickActions.map((action) => (
               <Button
                 key={action.id}
                 variant="outline"
                 size="sm"
                 onClick={() => handleQuickAction(action.label)}
-                className="flex items-center gap-2 text-sm"
+                className="flex items-center gap-2 text-sm justify-start h-auto py-2"
               >
-                <action.icon className="w-4 h-4" />
-                {action.label}
+                <action.icon className="w-4 h-4 flex-shrink-0" />
+                <span className="text-left">{action.label}</span>
               </Button>
             ))}
           </div>

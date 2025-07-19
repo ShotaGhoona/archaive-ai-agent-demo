@@ -7,11 +7,13 @@
 
 ### 既存のエージェント構成
 ```typescript
-// 4つの専門エージェント
+// 実装対象エージェント
 - general: なんでもAI (一般的な相談・質問)
 - estimate: 見積もりAI (図面から見積もり自動生成)
-- process: 工程生成AI (製造工程の最適化提案)
-- inquiry: 問い合わせAI (よくある質問への迅速回答)
+
+// スコープ外
+- process: 工程生成AI (製造工程の最適化提案) ※今回は実装しない
+- inquiry: 問い合わせAI (よくある質問への迅速回答) ※今回は実装しない
 ```
 
 ### 現在の制約
@@ -29,9 +31,7 @@ src/app/api/chat/
 ├── route.ts              # メインAPI endpoint
 ├── agents/
 │   ├── general.ts        # 一般エージェント用プロンプト
-│   ├── estimate.ts       # 見積もりエージェント用プロンプト
-│   ├── process.ts        # 工程エージェント用プロンプト
-│   └── inquiry.ts        # 問い合わせエージェント用プロンプト
+│   └── estimate.ts       # 見積もりエージェント用プロンプト
 └── utils/
     ├── openai.ts         # OpenAI API設定
     ├── prompts.ts        # プロンプト管理
@@ -81,47 +81,7 @@ export const estimateAgentPrompt = `
 - 代替案の提案
 `;
 
-// agents/process.ts
-export const processAgentPrompt = `
-あなたは製造工程の最適化専門エージェントです。
-効率的で品質の高い製造工程を設計・提案します。
-
-専門分野：
-- 工程設計と最適化
-- 生産性向上の提案
-- 品質管理工程
-- 安全性の確保
-
-提案内容：
-1. 工程フロー図
-2. 各工程の詳細説明
-3. 必要な設備・工具
-4. 品質チェックポイント
-5. 改善提案
-
-回答スタイル：
-- 段階的な工程説明
-- 効率化のポイント
-- リスクと対策
-`;
-
-// agents/inquiry.ts
-export const inquiryAgentPrompt = `
-あなたは顧客サポート専門エージェントです。
-製造業・図面作成に関するよくある質問に迅速で的確な回答を提供します。
-
-対応範囲：
-- 納期に関する質問
-- 価格・コストに関する質問
-- 材料・仕様に関する質問
-- 品質・保証に関する質問
-
-回答スタイル：
-- 簡潔で分かりやすい説明
-- 必要に応じて具体例を提示
-- 関連する専門エージェントへの誘導
-- 迅速な問題解決
-`;
+// ※ process.ts と inquiry.ts は今回のスコープ外
 ```
 
 ### 2. API実装設計
@@ -163,7 +123,6 @@ export async function POST(request: NextRequest) {
         { role: 'user', content: message }
       ],
       temperature: 0.7,
-      max_tokens: 1000,
     });
     
     return NextResponse.json({
@@ -278,7 +237,6 @@ const handleSendMessage = useCallback(async (content: string) => {
 # .env.local
 OPENAI_API_KEY=your_openai_api_key_here
 OPENAI_MODEL=gpt-4-turbo-preview
-OPENAI_MAX_TOKENS=1000
 OPENAI_TEMPERATURE=0.7
 ```
 
@@ -307,27 +265,14 @@ export async function analyzeBlueprint(file: File): Promise<BlueprintAnalysis> {
 }
 ```
 
-#### 6.2 会話履歴の永続化
-```typescript
-// データベース連携
-interface ConversationSession {
-  id: string;
-  agentId: string;
-  blueprintId?: string;
-  messages: Message[];
-  createdAt: Date;
-  updatedAt: Date;
-}
-```
 
-#### 6.3 コンテキスト共有
+#### 6.2 コンテキスト共有
 ```typescript
-// エージェント間でのコンテキスト共有
+// エージェント間でのコンテキスト共有（General ↔ Estimate）
 interface SharedContext {
   blueprintInfo: BlueprintInfo;
   estimateData?: EstimateData;
-  processData?: ProcessData;
-  previousAgentInsights?: string[];
+  generalInsights?: string[];
 }
 ```
 
@@ -336,25 +281,31 @@ interface SharedContext {
 ### Phase 1: 基本API連携 (1週間)
 1. OpenAI API 設定
 2. メインAPI Route 実装
-3. 基本的なエージェント別プロンプト
-4. フロントエンド連携
+3. 基本的なフロントエンド連携
+4. エラーハンドリング実装
 
-### Phase 2: エージェント特化 (1週間)
-1. 各エージェントの詳細プロンプト設計
-2. エージェント別UI機能強化
-3. エラーハンドリング実装
-4. 会話履歴管理
+### Phase 2: GeneralAgent実装 (1週間)
+1. GeneralAgent専用プロンプト設計
+2. GeneralAgent動作確認
+3. UI/UX調整
+4. 基本的な図面情報連携
 
-### Phase 3: 高度機能 (2週間)
-1. ファイルアップロード連携
-2. 図面解析機能
-3. 会話履歴永続化
-4. パフォーマンス最適化
+### Phase 3: EstimateAgent実装 (1-2週間)
+1. EstimateAgent専用プロンプト設計
+2. ファイルアップロード機能
+3. 図面解析連携 (GPT-4 Vision)
+4. 見積もり表示UI強化
+
+### Phase 4: その他拡張機能 (1週間)
+1. パフォーマンス最適化
+2. エージェント間コンテキスト共有
+3. UI/UX最終調整
+4. 本番環境対応
 
 ## 技術的課題と解決策
 
 ### 課題1: API コスト管理
-- **解決策**: トークン数制限、キャッシュ機能、使用量監視
+- **解決策**: キャッシュ機能、使用量監視
 
 ### 課題2: レスポンス時間
 - **解決策**: ストリーミング対応、プリロード、CDN活用
@@ -367,10 +318,25 @@ interface SharedContext {
 
 ## 質問・検討事項
 
-1. **OpenAI API の料金体系**: 月額制限や使用量監視をどう実装するか？
-2. **エージェント間の情報共有**: 見積もり→工程生成の流れで情報をどう引き継ぐか？
+1. **OpenAI API の料金体系**: 使用量監視をどう実装するか？
+2. **エージェント間の情報共有**: General ↔ Estimate の情報をどう引き継ぐか？
 3. **図面解析の精度**: GPT-4 Vision API で図面からどこまで情報抽出できるか？
-4. **会話履歴の管理**: どのレベルまで永続化が必要か？
-5. **リアルタイム更新**: Server-Sent Events や WebSocket の必要性は？
+4. **リアルタイム更新**: Server-Sent Events や WebSocket の必要性は？
+
+## 実装推奨順序
+
+### 🎯 Phase 1から始める理由
+- API基盤を構築し、OpenAI連携の基本動作を確認
+- エラーハンドリングの仕組みを整える
+
+### 🎯 Phase 2: GeneralAgentを選ぶ理由
+- シンプルな対話形式で動作確認しやすい
+- 複雑な機能（ファイルアップロード等）が不要
+- 他エージェントの基盤として活用できる
+
+### 🎯 Phase 3: EstimateAgentの挑戦
+- ファイルアップロード機能の実装
+- GPT-4 Vision APIでの図面解析
+- より高度なUI/UX実装
 
 この戦略について、どの部分を優先的に実装したいか、または追加で検討すべき点があれば教えてください。
