@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { Message } from "../../types/types";
+import { Message, AIAgentConfig } from "../../types/types";
 import ChatMessage from "./ChatMessage";
 
 interface ChatContentProps {
   messages: Message[];
   isLoading: boolean;
+  agentConfig: AIAgentConfig;
 }
 
-export default function ChatContent({ messages, isLoading }: ChatContentProps) {
+export default function ChatContent({ messages, isLoading, agentConfig }: ChatContentProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -40,7 +41,7 @@ export default function ChatContent({ messages, isLoading }: ChatContentProps) {
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
       {messages.map((message) => (
-        <ChatMessage key={message.id} message={message} />
+        <ChatMessage key={message.id} message={message} agentConfig={agentConfig} />
       ))}
       <div ref={messagesEndRef} />
     </div>

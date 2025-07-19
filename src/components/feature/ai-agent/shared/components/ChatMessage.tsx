@@ -35,24 +35,32 @@ const ChatMessage = forwardRef<HTMLDivElement, ChatMessageProps>(({ message, age
         </div>
       )}
       
-      {/* メッセージバブル */}
-      <div className={cn(
-        "max-w-[80%] rounded-lg px-4 py-2",
-        isAI ? "bg-muted text-foreground" : "bg-primary text-primary-foreground",
-        isWelcome && "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
-      )}>
-        {message.isTyping ? (
-          <div className="flex space-x-1">
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"></div>
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-            <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-          </div>
-        ) : (
-          <div className="text-sm leading-relaxed whitespace-pre-wrap">
-            {message.content}
-          </div>
-        )}
-        <div className="text-xs opacity-70 mt-1">
+      {/* メッセージとタイムスタンプコンテナ */}
+      <div className="flex flex-col max-w-[80%]">
+        {/* メッセージバブル */}
+        <div className={cn(
+          "rounded-lg px-4 py-2",
+          isAI ? "bg-muted text-foreground" : "bg-primary text-primary-foreground",
+          isWelcome && "bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+        )}>
+          {message.isTyping ? (
+            <div className="flex space-x-1">
+              <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"></div>
+              <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            </div>
+          ) : (
+            <div className="text-sm leading-relaxed whitespace-pre-wrap">
+              {message.content}
+            </div>
+          )}
+        </div>
+        
+        {/* タイムスタンプ */}
+        <div className={cn(
+          "text-xs opacity-70 mt-1 px-1",
+          isUser ? "text-right" : "text-left"
+        )}>
           {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
       </div>
@@ -68,3 +76,5 @@ const ChatMessage = forwardRef<HTMLDivElement, ChatMessageProps>(({ message, age
 });
 
 ChatMessage.displayName = "ChatMessage";
+
+export default ChatMessage;

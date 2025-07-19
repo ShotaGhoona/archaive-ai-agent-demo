@@ -167,6 +167,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
             <ChatContent
               messages={messages}
               isLoading={isLoading}
+              agentConfig={agentConfig}
             />
           )}
         </div>

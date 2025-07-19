@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AgentContentProps } from '../../types/types';
 import ChatMessage from '../../shared/components/ChatMessage';
 import FileUploadArea from './FileUploadArea';
-import TypingIndicator from '../../shared/components/TypingIndicator';
 
 const EstimateChatContent: React.FC<AgentContentProps> = ({ 
   messages, 
@@ -66,13 +65,6 @@ const EstimateChatContent: React.FC<AgentContentProps> = ({
           ref={index === messages.length - 1 ? lastMessageRef : undefined}
         />
       ))}
-      
-      {/* ローディング表示 */}
-      {isLoading && (
-        <div ref={lastMessageRef}>
-          <TypingIndicator agentColor={agentConfig.color} agentIcon={agentConfig.icon} />
-        </div>
-      )}
     </div>
   );
 };

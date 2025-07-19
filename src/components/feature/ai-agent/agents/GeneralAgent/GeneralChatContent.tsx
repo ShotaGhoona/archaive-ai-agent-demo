@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from 'react';
 import { AgentContentProps } from '../../types/types';
 import ChatMessage from '../../shared/components/ChatMessage';
-import TypingIndicator from '../../shared/components/TypingIndicator';
 
 const GeneralChatContent: React.FC<AgentContentProps> = ({ 
   messages, 
@@ -50,11 +49,6 @@ const GeneralChatContent: React.FC<AgentContentProps> = ({
           ref={index === displayMessages.length - 1 ? lastMessageRef : undefined}
         />
       ))}
-      {isLoading && (
-        <div ref={lastMessageRef}>
-          <TypingIndicator agentColor={agentConfig.color} agentIcon={agentConfig.icon} />
-        </div>
-      )}
     </div>
   );
 };

@@ -58,6 +58,7 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
           <ChatContent
             messages={messages}
             isLoading={isLoading}
+            agentConfig={agentConfig}
           />
         )}
       </div>

@@ -107,6 +107,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
                 <ChatContent
                   messages={messages}
                   isLoading={isLoading}
+                  agentConfig={agentConfig}
                 />
               )}
             </div>
