@@ -9,12 +9,14 @@ interface FileUploadAreaProps {
   onFileUpload: (file: File) => void;
   acceptedTypes: string[];
   maxSize: number;
+  large?: boolean;
 }
 
 const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   onFileUpload,
   acceptedTypes,
-  maxSize
+  maxSize,
+  large = false
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -76,23 +78,32 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={cn(
-          "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
+          "border-2 border-dashed rounded-lg text-center transition-colors",
+          large ? "p-12" : "p-8",
           isDragOver 
             ? "border-primary bg-primary/10" 
             : "border-muted-foreground/25 hover:border-muted-foreground/50"
         )}
       >
-        <Upload className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-        <h3 className="text-lg font-semibold mb-2">図面ファイルをアップロード</h3>
-        <p className="text-sm text-muted-foreground mb-4">
+        <Upload className={cn(
+          "mx-auto mb-4 text-muted-foreground",
+          large ? "w-16 h-16" : "w-12 h-12"
+        )} />
+        <h3 className={cn(
+          "font-semibold mb-2",
+          large ? "text-xl" : "text-lg"
+        )}>図面ファイルをアップロード</h3>
+        <p className={cn(
+          "text-muted-foreground mb-4",
+          large ? "text-base" : "text-sm"
+        )}>
           ファイルをここにドラッグ＆ドロップするか、下のボタンから選択してください
         </p>
         <div className="space-y-2">
-          <Button variant="outline" asChild>
+          <Button variant="outline" asChild size={large ? "lg" : "default"}>
             <label className="cursor-pointer">
               <input
                 type="file"
-                multiple
                 accept={acceptedTypes.join(',')}
                 onChange={handleFileInput}
                 className="sr-only"
@@ -100,7 +111,10 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
               ファイルを選択
             </label>
           </Button>
-          <div className="text-xs text-muted-foreground">
+          <div className={cn(
+            "text-muted-foreground",
+            large ? "text-sm" : "text-xs"
+          )}>
             対応形式: .jpg, .jpeg, .png, .webp | 最大サイズ: {formatFileSize(maxSize)}
           </div>
         </div>

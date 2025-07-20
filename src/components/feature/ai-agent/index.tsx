@@ -92,6 +92,9 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const floatingRef = useRef<FloatingLayoutRef>(null);
   const sidebarRef = useRef<SidebarLayoutRef>(null);
   const fullpageRef = useRef<FullpageLayoutRef>(null);
+  
+  // セッション中の画像を保持
+  const sessionImageRef = useRef<File | null>(null);
 
   // propsから渡されたエージェント設定を反映
   useEffect(() => {
@@ -189,7 +192,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content,
+      content: sessionImageRef.current ? `${content} [画像参照]` : content,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -212,11 +215,12 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
       );
 
-      // API呼び出し（新しい統合関数を使用）
+      // API呼び出し（セッション画像があれば含める）
       const response = await sendAgentMessage(
         state.selectedAgent,
         content,
         {
+          image: sessionImageRef.current || undefined,
           conversationHistory,
           metadata: blueprintInfo ? {
             blueprintInfo: {
@@ -266,6 +270,9 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   // ファイルアップロードハンドラー
   const handleFileUpload = useCallback(async (file: File, message: string) => {
     if (!state.selectedAgent) return;
+
+    // セッション中の画像として保持
+    sessionImageRef.current = file;
 
     // ユーザーメッセージを追加
     const userMessage: Message = {
