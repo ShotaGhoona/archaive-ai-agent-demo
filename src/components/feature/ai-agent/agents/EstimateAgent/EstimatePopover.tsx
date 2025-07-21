@@ -5,12 +5,12 @@ import { X } from "lucide-react";
 import FileUploadArea from "./FileUploadArea";
 
 interface EstimatePopoverProps {
-  onFileUpload: (file: File, message: string) => void;
+  onFileAttach: (file: File) => void;
   onClose: () => void;
 }
 
 const EstimatePopover: React.FC<EstimatePopoverProps> = ({ 
-  onFileUpload, 
+  onFileAttach, 
   onClose 
 }) => {
   return (
@@ -28,7 +28,7 @@ const EstimatePopover: React.FC<EstimatePopoverProps> = ({
       
       <FileUploadArea
         onFileUpload={(file) => {
-          onFileUpload(file, '添付した図面の見積もりをお願いします。');
+          onFileAttach(file);
           onClose();
         }}
         acceptedTypes={['.jpg', '.jpeg', '.png', '.webp']}

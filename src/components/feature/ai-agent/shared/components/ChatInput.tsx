@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,9 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { 
   Send, 
-  Plus,
-  X,
-  Paperclip
+  Plus
 } from "lucide-react";
 import { AIAgentConfig } from '../../types/types';
 import EstimatePopover from '../../agents/EstimateAgent/EstimatePopover';
@@ -22,7 +20,7 @@ import AttachedFilePreview from './AttachedFilePreview';
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   onQuickAction?: (action: string) => void;
-  onFileUpload?: (file: File, message: string) => void;
+  onFileAttach?: (file: File) => void;
   disabled?: boolean;
   agentConfig: AIAgentConfig;
   isFirstVisit?: boolean;
@@ -32,8 +30,7 @@ interface ChatInputProps {
 
 export default function ChatInput({ 
   onSendMessage, 
-  onQuickAction, 
-  onFileUpload,
+  onFileAttach,
   disabled = false, 
   agentConfig,
   isFirstVisit = false,
@@ -64,8 +61,8 @@ export default function ChatInput({
       case 'estimate':
         return (
           <EstimatePopover 
-            onFileUpload={(file, message) => {
-              onFileUpload?.(file, message);
+            onFileAttach={(file) => {
+              onFileAttach?.(file);
               setIsPopoverOpen(false);
             }}
             onClose={() => setIsPopoverOpen(false)}
@@ -74,11 +71,10 @@ export default function ChatInput({
       case 'general':
         return (
           <GeneralPopover 
-            onImageUpload={(file, message) => {
-              onFileUpload?.(file, message);
+            onFileAttach={(file) => {
+              onFileAttach?.(file);
               setIsPopoverOpen(false);
             }}
-            onClose={() => setIsPopoverOpen(false)}
           />
         );
       default:

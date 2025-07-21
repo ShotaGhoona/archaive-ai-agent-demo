@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useEffect } from "react";
+import { useCallback, useRef, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./types/types";
 import { useChatUIState } from "./shared/hooks/useChatUIState";
@@ -29,14 +29,14 @@ const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }
 };
 
 // 共有チャットインプット使用
-const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileUpload, disabled, agentConfig, attachedFile, onRemoveAttachment }: any) => {
+const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment }: any) => {
   if (!agentConfig) return null;
 
   return (
     <ChatInput
       onSendMessage={onSendMessage}
       onQuickAction={onQuickAction}
-      onFileUpload={onFileUpload}
+      onFileAttach={onFileAttach}
       disabled={disabled}
       agentConfig={agentConfig}
       attachedFile={attachedFile}
@@ -58,7 +58,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const fullpageRef = useRef<FullpageLayoutRef>(null);
   
   // セッション中の添付ファイルを保持
-  const attachedFileRef = useRef<File | null>(null);
+  const [attachedFile, setAttachedFile] = useState<File | null>(null);
 
   // propsから渡されたエージェント設定を反映
   useEffect(() => {
@@ -154,9 +154,10 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const handleSendMessage = useCallback(async (content: string) => {
     if (!state.agentConfig || !state.selectedAgent) return;
 
+    const hasAttachedFile = !!attachedFile;
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: attachedFileRef.current ? `${content} [画像参照]` : content,
+      content: hasAttachedFile ? `${content} [画像参照]` : content,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -179,12 +180,12 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
       );
 
-      // ✅ 統一API使用
+      // ✅ 統一API使用 - ファイルがあれば一緒に送信
       const response = await sendUnifiedMessage(
         state.selectedAgent,
         content,
         {
-          image: attachedFileRef.current || undefined,
+          image: attachedFile || undefined,
           conversationHistory,
           metadata: blueprintInfo ? {
             blueprintInfo: {
@@ -208,6 +209,9 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.removeMessage('typing');
       actions.addMessage(aiResponse);
       actions.setLoading(false);
+      
+      // 送信成功後、添付ファイルをクリア
+      setAttachedFile(null);
     } catch (error) {
       console.error('Failed to send message:', error);
       
@@ -225,97 +229,22 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.addMessage(fallbackResponse);
       actions.setLoading(false);
     }
-  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo]);
+  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo, attachedFile]);
 
   const handleQuickAction = useCallback((action: string) => {
     handleSendMessage(action);
   }, [handleSendMessage]);
 
-  // ファイル削除ハンドラー
-  const handleRemoveAttachment = useCallback(() => {
-    attachedFileRef.current = null;
+  // ファイル添付ハンドラー（送信はしない）
+  const handleFileAttach = useCallback((file: File) => {
+    setAttachedFile(file);
   }, []);
 
-  // ファイルアップロードハンドラー
-  const handleFileUpload = useCallback(async (file: File, message: string) => {
-    if (!state.selectedAgent) return;
+  // ファイル削除ハンドラー
+  const handleRemoveAttachment = useCallback(() => {
+    setAttachedFile(null);
+  }, []);
 
-    // セッション中の画像として保持
-    attachedFileRef.current = file;
-
-    // ユーザーメッセージを追加
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: `${message} [画像: ${file.name}]`,
-      sender: 'user',
-      timestamp: new Date(),
-    };
-
-    actions.addMessage(userMessage);
-    actions.setLoading(true);
-
-    // AIの応答準備（typing表示）
-    const typingMessage: Message = {
-      id: 'typing',
-      content: '...',
-      sender: 'ai',
-      timestamp: new Date(),
-      isTyping: true
-    };
-    actions.addMessage(typingMessage);
-
-    try {
-      // 会話履歴を取得（typing除く）
-      const conversationHistory = convertMessagesToHistory(
-        state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
-      );
-
-      // ✅ 統一API使用（ファイル付き）
-      const response = await sendUnifiedMessage(
-        state.selectedAgent,
-        message,
-        {
-          image: file,
-          conversationHistory,
-          metadata: blueprintInfo ? {
-            blueprintInfo: {
-              id: blueprintInfo.id,
-              name: blueprintInfo.name,
-              material: blueprintInfo.material,
-              customerName: blueprintInfo.customerName,
-              productName: blueprintInfo.productName
-            }
-          } : undefined
-        }
-      );
-
-      const aiResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: response.response,
-        sender: 'ai',
-        timestamp: new Date(),
-      };
-
-      actions.removeMessage('typing');
-      actions.addMessage(aiResponse);
-      actions.setLoading(false);
-    } catch (error) {
-      console.error('Failed to upload file:', error);
-      
-      const fallbackResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        content: error instanceof Error 
-          ? `申し訳ございません。ファイルアップロードでエラーが発生しました: ${error.message}`
-          : 'ファイルアップロードでエラーが発生しました。しばらくしてからもう一度お試しください。',
-        sender: 'ai',
-        timestamp: new Date(),
-      };
-
-      actions.removeMessage('typing');
-      actions.addMessage(fallbackResponse);
-      actions.setLoading(false);
-    }
-  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo]);
 
   const commonProps = {
     messages: state.messages,
@@ -332,7 +261,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         messages={state.messages}
         isLoading={state.isLoading}
         agentConfig={state.agentConfig}
-        sessionImage={attachedFileRef.current}
+        sessionImage={attachedFile}
       />
     ) : null,
     // エージェント別インプット
@@ -340,10 +269,10 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       <AgentInputRenderer
         onSendMessage={handleSendMessage}
         onQuickAction={handleQuickAction}
-        onFileUpload={handleFileUpload}
+        onFileAttach={handleFileAttach}
         disabled={state.isLoading}
         agentConfig={state.agentConfig}
-        attachedFile={attachedFileRef.current}
+        attachedFile={attachedFile}
         onRemoveAttachment={handleRemoveAttachment}
       />
     ) : null
