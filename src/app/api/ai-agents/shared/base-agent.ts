@@ -1,15 +1,100 @@
-import { AgentConfig, AgentRequest, AgentResponse, AgentError } from './types';
-import { calculateUsage } from './openai-client';
+import { AgentConfig, AgentResponse, AgentError, UnifiedAgentRequest } from './types';
+import { calculateUsage, createVisionCompletion, createChatCompletion } from './openai-client';
 import OpenAI from 'openai';
 
 export abstract class BaseAgent {
   abstract config: AgentConfig;
 
-  // メイン処理メソッド（各エージェントで実装）
-  abstract process(request: AgentRequest): Promise<AgentResponse>;
+  // 🎯 統一処理エントリーポイント（新版）
+  async process(request: UnifiedAgentRequest): Promise<AgentResponse> {
+    const startTime = Date.now();
+    
+    try {
+      this.validateRequest(request);
+      const systemPrompt = this.buildSystemPrompt();
+      
+      // 🔥 自動判定：画像があればVision API、なければChat API
+      const completion = await this.processWithAutoDetection(systemPrompt, request);
+      
+      const content = completion.choices[0]?.message?.content;
+      if (!content) throw new Error('No response content from OpenAI API');
+      
+      const response = this.createResponse(content, completion);
+      this.recordMetrics(request, response, Date.now() - startTime);
+      
+      return response;
+    } catch (error) {
+      this.handleError(error as Error);
+    }
+  }
 
-  // 共通バリデーション
-  protected validateRequest(request: AgentRequest): void {
+  // 🎯 各エージェントで実装する抽象メソッド
+  abstract buildSystemPrompt(): string;
+
+  // 🎯 自動判定処理
+  private async processWithAutoDetection(
+    systemPrompt: string, 
+    request: UnifiedAgentRequest
+  ) {
+    const imageAttachment = request.attachments?.find(att => att.type === 'image');
+    
+    if (imageAttachment) {
+      // 自動的にVision API使用
+      return await this.processWithVision(systemPrompt, request, imageAttachment);
+    } else {
+      // 通常のChat API使用
+      return await this.processWithText(systemPrompt, request);
+    }
+  }
+
+  private async processWithVision(
+    systemPrompt: string, 
+    request: UnifiedAgentRequest, 
+    imageAttachment: { type: 'image' | 'file' | 'audio'; data: File; mimeType: string; filename: string }
+  ) {
+    const bytes = await imageAttachment.data.arrayBuffer();
+    const base64Image = Buffer.from(bytes).toString('base64');
+    
+    return await createVisionCompletion(
+      systemPrompt,
+      request.message,
+      base64Image,
+      imageAttachment.mimeType || 'image/jpeg',
+      this.getCompletionOptions()
+    );
+  }
+
+  private async processWithText(systemPrompt: string, request: UnifiedAgentRequest) {
+    const messages = this.buildMessages(systemPrompt, request);
+    return await createChatCompletion(messages, this.getCompletionOptions());
+  }
+
+  protected buildMessages(systemPrompt: string, request: UnifiedAgentRequest) {
+    const messages: Array<{ role: 'user' | 'assistant' | 'system'; content: string }> = [
+      { role: 'system', content: systemPrompt }
+    ];
+
+    // 会話履歴の追加
+    if (request.context?.history) {
+      messages.push(...request.context.history);
+    }
+
+    // 現在のメッセージ追加
+    messages.push({ role: 'user', content: request.message });
+
+    return messages;
+  }
+
+  // 🎯 エージェント固有設定（サブクラスでオーバーライド可能）
+  protected getCompletionOptions() {
+    return { temperature: 0.7, maxTokens: 2000 };
+  }
+
+  // 下位互換性のため保持（将来削除予定）
+  // abstract process(request: AgentRequest): Promise<AgentResponse>;
+
+  // 🎯 統一バリデーション（新版）
+  protected validateRequest(request: UnifiedAgentRequest): void {
     if (!request.message || typeof request.message !== 'string') {
       throw new AgentError('Message is required and must be a string', 'INVALID_MESSAGE', 400);
     }
@@ -99,15 +184,16 @@ export abstract class BaseAgent {
     }
   }
 
-  // メトリクス記録（将来的な監視・分析用）
-  protected recordMetrics(request: AgentRequest, response: AgentResponse, processingTime: number): void {
+  // 🎯 統一メトリクス記録（新版）
+  protected recordMetrics(request: UnifiedAgentRequest, response: AgentResponse, processingTime: number): void {
     // 将来的にはメトリクス収集システムに送信
     this.log('info', 'Request processed', {
       messageLength: request.message.length,
       responseLength: response.response.length,
       processingTime,
       tokensUsed: response.usage?.tokensUsed,
-      cost: response.usage?.cost
+      cost: response.usage?.cost,
+      hasImage: !!request.attachments?.some(att => att.type === 'image')
     });
   }
 }

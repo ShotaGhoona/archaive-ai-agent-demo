@@ -3,47 +3,72 @@
 import { useEffect, useRef } from "react";
 import { Message, AIAgentConfig } from "../../types/types";
 import ChatMessage from "./ChatMessage";
+import { MessageSquare } from "lucide-react";
 
 interface ChatContentProps {
   messages: Message[];
   isLoading: boolean;
   agentConfig: AIAgentConfig;
+  sessionImage?: File | null;
 }
 
-export default function ChatContent({ messages, isLoading, agentConfig }: ChatContentProps) {
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+// 🎯 ウェルカムメッセージ取得
+function getWelcomeMessage(agentId: string): string {
+  switch (agentId) {
+    case 'estimate':
+      return '図面をアップロードして見積もりを依頼できます。+ボタンから図面を添付してください。';
+    case 'general':
+      return '製造業に関するご質問にお答えします。画像の分析も可能です。';
+    default:
+      return 'どのようなことでお手伝いできますか？';
+  }
+}
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+export default function ChatContent({ messages, isLoading, agentConfig, sessionImage }: ChatContentProps) {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    scrollToBottom();
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
   }, [messages]);
 
-  if (messages.length === 0) {
-    return (
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="text-center max-w-sm">
-          <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <div className="w-6 h-6 bg-primary/20 rounded-full"></div>
-          </div>
-          <h3 className="font-medium text-foreground mb-2">AIアシスタントへようこそ</h3>
-          <p className="text-sm text-muted-foreground">
-            図面に関するご質問や技術的なサポートをお手伝いします。
-            何でもお気軽にお聞きください。
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const displayMessages = messages.filter(msg => 
+    !msg.content.includes('typing') || msg.sender !== 'ai'
+  );
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.map((message) => (
-        <ChatMessage key={message.id} message={message} agentConfig={agentConfig} />
-      ))}
-      <div ref={messagesEndRef} />
+    <div className="flex-1 flex flex-col h-full min-h-0">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+        {displayMessages.length === 0 && (
+          <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
+            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+              <MessageSquare className="w-8 h-8 text-blue-600" />
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {agentConfig.name}へようこそ
+              </h3>
+              <p className="text-gray-600 max-w-md">
+                {getWelcomeMessage(agentConfig.id)}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* セッション画像プレビュー */}
+        {/* {sessionImage && (
+          <SessionImagePreview image={sessionImage} />
+        )} */}
+
+        {displayMessages.map((message, index) => (
+          <ChatMessage 
+            key={message.id} 
+            message={message} 
+            agentConfig={agentConfig}
+          />
+        ))}
+      </div>
     </div>
   );
 }

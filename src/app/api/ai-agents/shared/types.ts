@@ -1,27 +1,33 @@
 import { LucideIcon } from 'lucide-react';
 
-// エージェント設定
+// エージェント設定（統一版）
 export interface AgentConfig {
   id: string;
   name: string;
   version: string;
-  inputType: 'json' | 'formdata' | 'multipart';
-  capabilities: AgentCapability[];
+  // ✅ inputType, capabilities 削除（自動判定にて統一）
 }
 
-export interface AgentCapability {
-  type: 'text' | 'vision' | 'audio' | 'file';
-  formats?: string[];
-  maxSize?: number;
-}
+// ✅ 削除済み: AgentCapability（自動判定により不要）
 
-// リクエスト・レスポンス型
-export interface AgentRequest<T = any> {
+// 🎯 統一リクエスト型（新版）
+export interface UnifiedAgentRequest {
   message: string;
-  metadata?: T;
-  context?: ConversationContext;
-  attachments?: RequestAttachment[];
+  attachments?: Array<{
+    type: 'image' | 'file' | 'audio';
+    data: File;
+    mimeType: string;
+    filename: string;
+  }>;
+  context?: {
+    history?: Array<{ role: 'user' | 'assistant'; content: string }>;
+    sessionId?: string;
+    userId?: string;
+  };
+  metadata?: Record<string, any>; // エージェント固有メタデータ
 }
+
+// ✅ 削除済み: AgentRequest<T>（UnifiedAgentRequestに統一）
 
 export interface AgentResponse {
   response: string;
@@ -31,21 +37,8 @@ export interface AgentResponse {
   attachments?: ResponseAttachment[];
 }
 
-export interface ConversationContext {
-  history?: Array<{
-    role: 'user' | 'assistant';
-    content: string;
-  }>;
-  sessionId?: string;
-  userId?: string;
-}
-
-export interface RequestAttachment {
-  type: 'image' | 'file' | 'audio';
-  data: File | string; // File object or base64 string
-  mimeType?: string;
-  filename?: string;
-}
+// ✅ 削除済み: ConversationContext（UnifiedAgentRequest.contextに統合）
+// ✅ 削除済み: RequestAttachment（UnifiedAgentRequest.attachmentsに統合）
 
 export interface ResponseAttachment {
   type: 'image' | 'file' | 'link';
@@ -61,37 +54,7 @@ export interface UsageStats {
   processingTime: number;
 }
 
-// エージェント別メタデータ
-export interface GeneralMetadata {
-  sessionId?: string;
-  userId?: string;
-  preferences?: {
-    experienceLevel?: 'beginner' | 'intermediate' | 'expert';
-    preferredUnits?: 'metric' | 'imperial';
-    industryFocus?: string[];
-  };
-}
-
-export interface EstimateMetadata {
-  blueprintInfo?: {
-    id: string;
-    name: string;
-    material: string;
-    customerName: string;
-    productName: string;
-  };
-  estimateType?: 'quick' | 'detailed' | 'final';
-  quantity?: number;
-  deliveryRequirement?: {
-    deadline: Date;
-    priority: 'normal' | 'urgent' | 'flexible';
-  };
-  qualityRequirements?: {
-    tolerance: string;
-    surfaceFinish: string;
-    inspection: string[];
-  };
-}
+// ✅ 削除済み: GeneralMetadata, EstimateMetadata（汎用metadataに統一）
 
 // エラー型
 export class AgentError extends Error {

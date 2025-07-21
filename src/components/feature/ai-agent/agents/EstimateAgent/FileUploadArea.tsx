@@ -10,13 +10,15 @@ interface FileUploadAreaProps {
   acceptedTypes: string[];
   maxSize: number;
   large?: boolean;
+  compact?: boolean;
 }
 
 const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   onFileUpload,
   acceptedTypes,
   maxSize,
-  large = false
+  large = false,
+  compact = false
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);

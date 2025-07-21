@@ -31,15 +31,16 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
   onClose,
   onSendMessage,
   onQuickAction,
-  blueprintInfo,
-  selectedAgent,
+  // blueprintInfo,
+  // selectedAgent,
   agentConfig,
   agentContent,
   agentInput
 }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
-  const [showSidebar, setShowSidebar] = useState(true);
+  // TODO: チャット履歴の実装
+  // const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  // const [showSidebar, setShowSidebar] = useState(true);
 
   useImperativeHandle(ref, () => ({
     getElement: () => containerRef.current
@@ -63,8 +64,8 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
           style={{ width: '80vw', height: '80vh' }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* 左サイドバー - チャット履歴 */}
-          {showSidebar && (
+          {/* TODO: 左サイドバー - チャット履歴 今後追加予定 */}
+          {/* {showSidebar && (
             <div className="w-64 border-r border-border bg-muted/20 flex flex-col">
               <div className="p-3 border-b border-border">
                 <h3 className="font-medium text-sm">チャット履歴</h3>
@@ -89,7 +90,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
                 ))}
               </div>
             </div>
-          )}
+          )} */}
           
           {/* メインチャット領域 */}
           <div className="flex-1 flex flex-col">

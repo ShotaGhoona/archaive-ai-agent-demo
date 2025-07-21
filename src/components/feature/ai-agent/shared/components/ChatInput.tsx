@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,18 +10,36 @@ import {
 } from "@/components/ui/popover";
 import { 
   Send, 
-  Plus
+  Plus,
+  X,
+  Paperclip
 } from "lucide-react";
 import { AIAgentConfig } from '../../types/types';
+import EstimatePopover from '../../agents/EstimateAgent/EstimatePopover';
+import GeneralPopover from '../../agents/GeneralAgent/GeneralPopover';
+import AttachedFilePreview from './AttachedFilePreview';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   onQuickAction?: (action: string) => void;
+  onFileUpload?: (file: File, message: string) => void;
   disabled?: boolean;
   agentConfig: AIAgentConfig;
+  isFirstVisit?: boolean;
+  attachedFile?: File | null;
+  onRemoveAttachment?: () => void;
 }
 
-export default function ChatInput({ onSendMessage, onQuickAction, disabled = false, agentConfig }: ChatInputProps) {
+export default function ChatInput({ 
+  onSendMessage, 
+  onQuickAction, 
+  onFileUpload,
+  disabled = false, 
+  agentConfig,
+  isFirstVisit = false,
+  attachedFile,
+  onRemoveAttachment
+}: ChatInputProps) {
   const [inputValue, setInputValue] = useState(agentConfig.defaultInput || "");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
@@ -40,19 +58,50 @@ export default function ChatInput({ onSendMessage, onQuickAction, disabled = fal
     }
   };
 
-  const handleQuickAction = (actionText: string) => {
-    setIsPopoverOpen(false);
-    onQuickAction?.(actionText);
+  // 🎯 エージェント別PopoverContent
+  const renderPopoverContent = (agentId: string) => {
+    switch (agentId) {
+      case 'estimate':
+        return (
+          <EstimatePopover 
+            onFileUpload={(file, message) => {
+              onFileUpload?.(file, message);
+              setIsPopoverOpen(false);
+            }}
+            onClose={() => setIsPopoverOpen(false)}
+          />
+        );
+      case 'general':
+        return (
+          <GeneralPopover 
+            onImageUpload={(file, message) => {
+              onFileUpload?.(file, message);
+              setIsPopoverOpen(false);
+            }}
+            onClose={() => setIsPopoverOpen(false)}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
-  // エージェント別quickActions取得
-  const quickActions = agentConfig.quickActions || [];
-
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2 p-4 border-t border-border bg-background">
-      {/* プラスボタン（ポップオーバー） */}
-      {quickActions.length > 0 && (
-        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+    <div className="p-4 border-t border-border bg-background">
+      {/* 添付ファイル表示 */}
+      {attachedFile && (
+        <AttachedFilePreview 
+          file={attachedFile} 
+          onRemove={() => onRemoveAttachment?.()} 
+        />
+      )}
+      
+      <form onSubmit={handleSubmit} className="flex gap-2">
+        {/* 🎯 統一+ボタン（エージェント別ポップオーバー） */}
+        <Popover 
+          open={isPopoverOpen || (agentConfig.id === 'estimate' && isFirstVisit)}
+          onOpenChange={setIsPopoverOpen}
+        >
           <PopoverTrigger asChild>
             <Button
               type="button"
@@ -64,37 +113,10 @@ export default function ChatInput({ onSendMessage, onQuickAction, disabled = fal
               <Plus className="h-4 w-4" />
             </Button>
           </PopoverTrigger>
-          <PopoverContent 
-            side="top" 
-            align="start" 
-            className="w-80 p-4"
-            sideOffset={8}
-          >
-            <div className="mb-2">
-              <h4 className="text-sm font-medium text-muted-foreground">
-                {agentConfig.name}のクイックアクション
-              </h4>
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {quickActions.map((action) => {
-                const Icon = action.icon;
-                return (
-                  <Button
-                    key={action.id}
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleQuickAction(action.action)}
-                    className="justify-start gap-2 h-auto py-2"
-                  >
-                    <Icon className="h-4 w-4 flex-shrink-0" />
-                    <span className="text-sm text-left">{action.label}</span>
-                  </Button>
-                );
-              })}
-            </div>
+          <PopoverContent side="top" className="p-2 w-auto">
+            {renderPopoverContent(agentConfig.id)}
           </PopoverContent>
         </Popover>
-      )}
 
       {/* メッセージ入力 */}
       <Input
@@ -116,6 +138,7 @@ export default function ChatInput({ onSendMessage, onQuickAction, disabled = fal
       >
         <Send className="h-4 w-4" />
       </Button>
-    </form>
+      </form>
+    </div>
   );
 }

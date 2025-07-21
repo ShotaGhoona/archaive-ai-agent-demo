@@ -1,150 +1,12 @@
-import { z } from 'zod';
-import { AgentRequest, GeneralMetadata, EstimateMetadata, ValidationError } from './types';
+import { ValidationError, UnifiedAgentRequest } from './types';
 
-// 共通バリデーションスキーマ
-const ConversationHistorySchema = z.array(z.object({
-  role: z.enum(['user', 'assistant']),
-  content: z.string()
-}));
-
-const BaseRequestSchema = z.object({
-  message: z.string().min(1).max(2000),
-  context: z.object({
-    history: ConversationHistorySchema.optional(),
-    sessionId: z.string().optional(),
-    userId: z.string().optional()
-  }).optional()
-});
-
-// General Agent バリデーション
-const GeneralMetadataSchema = z.object({
-  sessionId: z.string().optional(),
-  userId: z.string().optional(),
-  preferences: z.object({
-    experienceLevel: z.enum(['beginner', 'intermediate', 'expert']).optional(),
-    preferredUnits: z.enum(['metric', 'imperial']).optional(),
-    industryFocus: z.array(z.string()).optional()
-  }).optional()
-});
-
-export const GeneralRequestSchema = BaseRequestSchema.extend({
-  metadata: GeneralMetadataSchema.optional()
-});
-
-// Estimate Agent バリデーション
-const EstimateMetadataSchema = z.object({
-  blueprintInfo: z.object({
-    id: z.string(),
-    name: z.string(),
-    material: z.string(),
-    customerName: z.string(),
-    productName: z.string()
-  }).optional(),
-  estimateType: z.enum(['quick', 'detailed', 'final']).optional(),
-  quantity: z.number().positive().optional(),
-  deliveryRequirement: z.object({
-    deadline: z.string().transform((str) => new Date(str)),
-    priority: z.enum(['normal', 'urgent', 'flexible'])
-  }).optional(),
-  qualityRequirements: z.object({
-    tolerance: z.string(),
-    surfaceFinish: z.string(),
-    inspection: z.array(z.string())
-  }).optional()
-});
-
-export const EstimateRequestSchema = BaseRequestSchema.extend({
-  metadata: EstimateMetadataSchema.optional()
-});
-
-// バリデーション関数
-export function validateGeneralRequest(body: unknown): AgentRequest<GeneralMetadata> {
-  try {
-    const result = GeneralRequestSchema.parse(body);
-    return {
-      message: result.message,
-      metadata: result.metadata,
-      context: result.context
-    };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      throw new ValidationError('Invalid request format', error.errors);
-    }
-    throw error;
-  }
-}
-
-export function validateEstimateRequest(formData: FormData): AgentRequest<EstimateMetadata> {
-  try {
-    const message = formData.get('message') as string;
-    const metadataStr = formData.get('metadata') as string;
-    const contextStr = formData.get('context') as string;
-    const imageFile = formData.get('image') as File | null;
-
-    if (!message) {
-      throw new ValidationError('Message is required');
-    }
-
-    // メタデータの解析
-    let metadata: EstimateMetadata | undefined;
-    if (metadataStr) {
-      try {
-        const parsedMetadata = JSON.parse(metadataStr);
-        metadata = EstimateMetadataSchema.parse(parsedMetadata);
-      } catch (error) {
-        throw new ValidationError('Invalid metadata format');
-      }
-    }
-
-    // コンテキストの解析
-    let context;
-    if (contextStr) {
-      try {
-        context = JSON.parse(contextStr);
-      } catch (error) {
-        throw new ValidationError('Invalid context format');
-      }
-    }
-
-    // 画像ファイルの検証
-    const attachments = [];
-    if (imageFile && imageFile.size > 0) {
-      // ファイル形式チェック
-      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
-      if (!allowedTypes.includes(imageFile.type)) {
-        throw new ValidationError(
-          'Unsupported file format. Please upload JPG, PNG, or WEBP files.'
-        );
-      }
-
-      // ファイルサイズチェック（20MB制限）
-      if (imageFile.size > 20 * 1024 * 1024) {
-        throw new ValidationError(
-          'File size too large. Please upload files under 20MB.'
-        );
-      }
-
-      attachments.push({
-        type: 'image' as const,
-        data: imageFile,
-        mimeType: imageFile.type,
-        filename: imageFile.name
-      });
-    }
-
-    return {
-      message,
-      metadata,
-      context,
-      attachments: attachments.length > 0 ? attachments : undefined
-    };
-  } catch (error) {
-    if (error instanceof ValidationError) {
-      throw error;
-    }
-    throw new ValidationError('Request validation failed');
-  }
-}
+// ✅ 削除済み: 下位互換性のため削除されたスキーマ・関数
+// - ConversationHistorySchema, BaseRequestSchema
+// - GeneralMetadataSchema, GeneralRequestSchema  
+// - EstimateMetadataSchema, EstimateRequestSchema
+// - validateGeneralRequest, validateEstimateRequest
+// 
+// 🎯 統一バリデーション（validateUnifiedRequest）のみ使用
 
 // ファイル検証ヘルパー
 export function validateImageFile(file: File): void {
@@ -161,6 +23,78 @@ export function validateImageFile(file: File): void {
     throw new ValidationError(
       `File too large: ${(file.size / (1024 * 1024)).toFixed(2)}MB. Maximum size: 20MB`
     );
+  }
+}
+
+// 🎯 統一バリデーション関数（新版）
+export function validateUnifiedRequest(formData: FormData): UnifiedAgentRequest {
+  try {
+    const message = formData.get('message') as string;
+    if (!message) {
+      throw new ValidationError('Message is required');
+    }
+
+    if (message.length > 2000) {
+      throw new ValidationError('Message too long (max 2000 characters)');
+    }
+
+    const attachments: Array<{
+      type: 'image' | 'file' | 'audio';
+      data: File;
+      mimeType: string;
+      filename: string;
+    }> = [];
+
+    // 画像ファイルの処理
+    const imageFile = formData.get('image') as File | null;
+    if (imageFile && imageFile.size > 0) {
+      validateImageFile(imageFile);
+      attachments.push({
+        type: 'image',
+        data: imageFile,
+        mimeType: imageFile.type,
+        filename: imageFile.name
+      });
+    }
+
+    // コンテキストの処理
+    let context: UnifiedAgentRequest['context'];
+    const contextData = formData.get('context') as string | null;
+    if (contextData) {
+      try {
+        const parsedContext = JSON.parse(contextData);
+        context = {
+          history: parsedContext.history,
+          sessionId: parsedContext.sessionId,
+          userId: parsedContext.userId
+        };
+      } catch (error) {
+        throw new ValidationError('Invalid context format');
+      }
+    }
+
+    // メタデータの処理
+    let metadata: Record<string, any> | undefined;
+    const metadataData = formData.get('metadata') as string | null;
+    if (metadataData) {
+      try {
+        metadata = JSON.parse(metadataData);
+      } catch (error) {
+        throw new ValidationError('Invalid metadata format');
+      }
+    }
+
+    return {
+      message,
+      attachments: attachments.length > 0 ? attachments : undefined,
+      context,
+      metadata
+    };
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw error;
+    }
+    throw new ValidationError('Request validation failed');
   }
 }
 
