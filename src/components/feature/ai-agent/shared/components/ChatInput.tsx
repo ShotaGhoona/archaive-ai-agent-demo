@@ -16,6 +16,7 @@ import { AIAgentConfig } from '../../types/types';
 import EstimatePopover from '../../agents/EstimateAgent/EstimatePopover';
 import GeneralPopover from '../../agents/GeneralAgent/GeneralPopover';
 import AttachedFilePreview from './AttachedFilePreview';
+import SessionImagePreview from './SessionImagePreview';
 
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
@@ -26,6 +27,8 @@ interface ChatInputProps {
   isFirstVisit?: boolean;
   attachedFile?: File | null;
   onRemoveAttachment?: () => void;
+  sessionImage?: File | null;
+  onRemoveSessionImage?: () => void;
 }
 
 export default function ChatInput({ 
@@ -35,7 +38,9 @@ export default function ChatInput({
   agentConfig,
   isFirstVisit = false,
   attachedFile,
-  onRemoveAttachment
+  onRemoveAttachment,
+  sessionImage,
+  onRemoveSessionImage
 }: ChatInputProps) {
   const [inputValue, setInputValue] = useState(agentConfig.defaultInput || "");
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
@@ -84,7 +89,15 @@ export default function ChatInput({
 
   return (
     <div className="p-4 border-t border-border bg-background">
-      {/* 添付ファイル表示 */}
+      {/* セッション画像表示（継続参照可能） */}
+      {sessionImage && (
+        <SessionImagePreview 
+          file={sessionImage} 
+          onRemove={() => onRemoveSessionImage?.()} 
+        />
+      )}
+      
+      {/* 一時的な添付ファイル表示 */}
       {attachedFile && (
         <AttachedFilePreview 
           file={attachedFile} 

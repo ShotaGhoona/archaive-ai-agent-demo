@@ -19,7 +19,9 @@ export abstract class BaseAgent {
       const content = completion.choices[0]?.message?.content;
       if (!content) throw new Error('No response content from OpenAI API');
       
-      const response = this.createResponse(content, completion);
+      // 使用モデルを判定してレスポンスに含める
+      const modelUsed = request.attachments?.find(att => att.type === 'image') ? 'gpt-4o' : 'o1-preview';
+      const response = this.createResponse(content, completion, undefined, modelUsed);
       this.recordMetrics(request, response, Date.now() - startTime);
       
       return response;
@@ -149,9 +151,10 @@ export abstract class BaseAgent {
   protected createResponse(
     content: string,
     openaiResponse?: OpenAI.Chat.Completions.ChatCompletion,
-    attachments?: any[]
+    attachments?: any[],
+    model?: string
   ): AgentResponse {
-    const usage = openaiResponse ? calculateUsage(openaiResponse) : undefined;
+    const usage = openaiResponse ? calculateUsage(openaiResponse, model) : undefined;
 
     return {
       response: content,

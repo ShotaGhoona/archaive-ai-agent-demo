@@ -10,8 +10,8 @@ export const openai = new OpenAI({
 
 // モデル設定
 export const MODELS = {
-  TEXT: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-  VISION: process.env.OPENAI_VISION_MODEL || 'gpt-4o',
+  TEXT: process.env.OPENAI_MODEL || 'o1-preview',
+  VISION: process.env.OPENAI_VISION_MODEL || 'gpt-4o', // o1はVision未対応のためgpt-4o継続
 } as const;
 
 export const DEFAULT_TEMPERATURE = parseFloat(process.env.OPENAI_TEMPERATURE || '0.7');
@@ -92,7 +92,7 @@ export async function createVisionCompletion(
 }
 
 // 使用量計算
-export function calculateUsage(response: OpenAI.Chat.Completions.ChatCompletion): {
+export function calculateUsage(response: OpenAI.Chat.Completions.ChatCompletion, model?: string): {
   tokensUsed: number;
   cost: number;
 } {
@@ -101,9 +101,14 @@ export function calculateUsage(response: OpenAI.Chat.Completions.ChatCompletion)
     return { tokensUsed: 0, cost: 0 };
   }
 
-  // GPT-4o の料金計算（2025年7月時点の料金）
-  const INPUT_COST_PER_1K = 0.005; // $0.005 per 1K input tokens
-  const OUTPUT_COST_PER_1K = 0.015; // $0.015 per 1K output tokens
+  // モデル別料金設定（2025年7月時点の料金）
+  let INPUT_COST_PER_1K = 0.005; // デフォルト: GPT-4o
+  let OUTPUT_COST_PER_1K = 0.015;
+
+  if (model === 'o1-preview') {
+    INPUT_COST_PER_1K = 0.015; // $0.015 per 1K input tokens
+    OUTPUT_COST_PER_1K = 0.060; // $0.060 per 1K output tokens
+  }
   
   const inputCost = (usage.prompt_tokens / 1000) * INPUT_COST_PER_1K;
   const outputCost = (usage.completion_tokens / 1000) * OUTPUT_COST_PER_1K;

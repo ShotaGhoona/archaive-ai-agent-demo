@@ -78,5 +78,85 @@
       "drawing": "J-010-009",
       "material": "SCM440",
       "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP001",
+      "customerName": "株式会社田中製作所",
+      "productName": "エンジンブラケット",
+      "drawing": "A-001-001",
+      "material": "SS400",
+      "image": "https://images.unsplash.com/photo-1721244654394-36a7bc2da288?q=80&w=2217&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    },
+    {
+      "id": "BP002",
+      "customerName": "山田工業株式会社",
+      "productName": "フレーム部品",
+      "drawing": "B-002-003",
+      "material": "SUS304",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP003",
+      "customerName": "佐藤重工業",
+      "productName": "シャフトカップリング",
+      "drawing": "C-003-007",
+      "material": "S45C",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP004",
+      "customerName": "鈴木精密工業",
+      "productName": "ギアボックスケース",
+      "drawing": "D-004-012",
+      "material": "AC4C",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP005",
+      "customerName": "高橋エンジニアリング",
+      "productName": "ベアリングホルダー",
+      "drawing": "E-005-008",
+      "material": "SS400",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP006",
+      "customerName": "伊藤機械製作所",
+      "productName": "モーターマウント",
+      "drawing": "F-006-015",
+      "material": "SUS316",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP007",
+      "customerName": "渡辺工業",
+      "productName": "コネクタープレート",
+      "drawing": "G-007-021",
+      "material": "A5052",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP008",
+      "customerName": "中村精工",
+      "productName": "スプリングブラケット",
+      "drawing": "H-008-004",
+      "material": "SPCC",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP009",
+      "customerName": "小林メタルワークス",
+      "productName": "ハウジングカバー",
+      "drawing": "I-009-017",
+      "material": "FCD450",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    },
+    {
+      "id": "BP010",
+      "customerName": "加藤製鋼所",
+      "productName": "リンクアーム",
+      "drawing": "J-010-009",
+      "material": "SCM440",
+      "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
     }
-  ]
+]

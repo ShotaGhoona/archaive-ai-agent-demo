@@ -23,11 +23,11 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     id: 'estimate',
     name: '見積もりAI',
     icon: Calculator,
-    description: '図面から見積もりを自動生成',
+    description: 'プロのコストエンジニアが図面を分析して精密見積もり',
     color: '#10b981',
     category: AgentCategory.ESTIMATE,
-    welcomeMessage: '図面ファイルをアップロードして見積もりを開始してください',
-    defaultInput: 'この図面の見積もりを開始してください',
+    welcomeMessage: 'こんにちは！図面をアップロードしていただければ、詳細な見積もりを作成いたします。製造上のリスクや最適化提案もお任せください！',
+    defaultInput: 'この図面の見積もりをお願いします',
     quickActions: []
   },
   // process: {

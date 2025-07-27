@@ -29,7 +29,7 @@ const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }
 };
 
 // 共有チャットインプット使用
-const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment }: any) => {
+const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment, sessionImage, onRemoveSessionImage }: any) => {
   if (!agentConfig) return null;
 
   return (
@@ -41,6 +41,8 @@ const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabl
       agentConfig={agentConfig}
       attachedFile={attachedFile}
       onRemoveAttachment={onRemoveAttachment}
+      sessionImage={sessionImage}
+      onRemoveSessionImage={onRemoveSessionImage}
     />
   );
 };
@@ -57,8 +59,10 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const sidebarRef = useRef<SidebarLayoutRef>(null);
   const fullpageRef = useRef<FullpageLayoutRef>(null);
   
-  // セッション中の添付ファイルを保持
+  // 一時的な添付ファイル（プレビュー表示用）
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
+  // セッション中継続保持される画像（ChatGPT方式）
+  const [sessionImage, setSessionImage] = useState<File | null>(null);
 
   // propsから渡されたエージェント設定を反映
   useEffect(() => {
@@ -154,10 +158,19 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const handleSendMessage = useCallback(async (content: string) => {
     if (!state.agentConfig || !state.selectedAgent) return;
 
-    const hasAttachedFile = !!attachedFile;
+    // 新規添付ファイルがあれば、セッション画像として保存
+    if (attachedFile) {
+      setSessionImage(attachedFile);
+      setAttachedFile(null); // プレビューをクリア
+    }
+
+    // セッション画像または新規添付ファイルを使用
+    const imageToSend = attachedFile || sessionImage;
+    const hasImage = !!imageToSend;
+    
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: hasAttachedFile ? `${content} [画像参照]` : content,
+      content: hasImage ? `${content} [画像参照]` : content,
       sender: 'user',
       timestamp: new Date(),
     };
@@ -180,12 +193,12 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
       );
 
-      // ✅ 統一API使用 - ファイルがあれば一緒に送信
+      // ✅ 統一API使用 - セッション画像を使用（継続参照可能）
       const response = await sendUnifiedMessage(
         state.selectedAgent,
         content,
         {
-          image: attachedFile || undefined,
+          image: imageToSend || undefined,
           conversationHistory,
           metadata: blueprintInfo ? {
             blueprintInfo: {
@@ -210,8 +223,11 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.addMessage(aiResponse);
       actions.setLoading(false);
       
-      // 送信成功後、添付ファイルをクリア
-      setAttachedFile(null);
+      // 送信後: attachedFileのみクリア、sessionImageは保持（ChatGPT方式）
+      if (attachedFile) {
+        setAttachedFile(null);
+      }
+      // sessionImageは継続保持（手動削除まで残る）
     } catch (error) {
       console.error('Failed to send message:', error);
       
@@ -229,7 +245,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.addMessage(fallbackResponse);
       actions.setLoading(false);
     }
-  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo, attachedFile]);
+  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo, attachedFile, sessionImage]);
 
   const handleQuickAction = useCallback((action: string) => {
     handleSendMessage(action);
@@ -240,9 +256,14 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     setAttachedFile(file);
   }, []);
 
-  // ファイル削除ハンドラー
+  // 一時添付ファイル削除ハンドラー
   const handleRemoveAttachment = useCallback(() => {
     setAttachedFile(null);
+  }, []);
+
+  // セッション画像削除ハンドラー（明示的削除用）
+  const handleRemoveSessionImage = useCallback(() => {
+    setSessionImage(null);
   }, []);
 
 
@@ -261,7 +282,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         messages={state.messages}
         isLoading={state.isLoading}
         agentConfig={state.agentConfig}
-        sessionImage={attachedFile}
+        sessionImage={sessionImage}
       />
     ) : null,
     // エージェント別インプット
@@ -274,6 +295,8 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
         agentConfig={state.agentConfig}
         attachedFile={attachedFile}
         onRemoveAttachment={handleRemoveAttachment}
+        sessionImage={sessionImage}
+        onRemoveSessionImage={handleRemoveSessionImage}
       />
     ) : null
   };
