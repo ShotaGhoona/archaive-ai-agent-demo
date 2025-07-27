@@ -1,4 +1,4 @@
-import Blueprints from "@/components/feature/blueprint";
+import Blueprints from "@/components/feature/blueprint/Container";
 import ChatUIManager from "@/components/feature/ai-agent";
 
 export default function Blueprint() {

@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { Card, CardContent, Button, Separator } from "@/components/ui";
 import {
   Printer,
   Download,
