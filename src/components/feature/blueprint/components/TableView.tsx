@@ -33,14 +33,21 @@ const getStatusColor = (status: string) => {
 };
 
 interface Blueprint {
-  id: string;
-  customerName: string;
+  filename: string;
+  orderSource: string;
   productName: string;
-  drawing: string;
-  material: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
+  internalNumber: string;
+  customerNumber: string;
+  cadName: string;
+  camName: string;
+  orderQuantity: number;
+  orderDate: string;
+  deliveryDate: string;
+  maxDimensionL: number;
+  maxDimensionD: number;
+  maxDimensionH: number;
+  companyField: string;
+  image: string;
 }
 
 interface TableViewProps {
@@ -49,76 +56,87 @@ interface TableViewProps {
 
 export function TableView({ blueprints }: TableViewProps) {
   return (
-    <Card className="surface-white rounded-lg shadow-sm border border-gray-200 p-5">
-      <CardContent className="p-0">
-        <div className="overflow-x-auto">
+    <div className="flex-1 flex flex-col min-h-0">
+        {/* 固定ヘッダー */}
+        <div className="flex-shrink-0 border-b bg-gray-50">
           <Table>
             <TableHeader>
-              <TableRow className="bg-gray-50">
-                <TableHead className="font-medium text-gray-700">
-                  図面ID
+              <TableRow>
+                <TableHead className="font-medium text-gray-700 w-64 min-w-64">
+                  ファイル名
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  顧客名
+                <TableHead className="font-medium text-gray-700 w-48 min-w-48">
+                  発注元
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  品名
+                <TableHead className="font-medium text-gray-700 w-48 min-w-48">
+                  製品名
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  図版
+                <TableHead className="font-medium text-gray-700 w-32 min-w-32">
+                  社内整番
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  材質
+                <TableHead className="font-medium text-gray-700 w-32 min-w-32">
+                  客先整番
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  ステータス
+                <TableHead className="font-medium text-gray-700 w-24 min-w-24">
+                  受注個数
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  作成日
+                <TableHead className="font-medium text-gray-700 w-28 min-w-28">
+                  受注日
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
-                  更新日
+                <TableHead className="font-medium text-gray-700 w-28 min-w-28">
+                  納品日
                 </TableHead>
-                <TableHead className="font-medium text-gray-700">
+                <TableHead className="font-medium text-gray-700 w-32 min-w-32">
+                  全社項目
+                </TableHead>
+                <TableHead className="font-medium text-gray-700 w-20 min-w-20">
                   操作
                 </TableHead>
               </TableRow>
             </TableHeader>
+          </Table>
+        </div>
+        {/* スクロール可能なボディ */}
+        <div className="overflow-auto flex-1">
+          <Table>
             <TableBody>
-              {blueprints.map((blueprint) => (
-                <TableRow key={blueprint.id} className="hover:bg-gray-50">
-                  <TableCell className="font-mono text-sm font-medium text-primary">
+              {blueprints.map((blueprint, index) => (
+                <TableRow key={blueprint.internalNumber} className="hover:bg-gray-50">
+                  <TableCell className="font-mono text-sm font-medium text-primary w-64 min-w-64">
                     <Link
-                      href={`/blueprints/${blueprint.id}`}
+                      href={`/blueprints/${blueprint.internalNumber}`}
                       className="hover:underline"
                     >
-                      {blueprint.id}
+                      {blueprint.filename}
                     </Link>
                   </TableCell>
-                  <TableCell className="font-medium">
-                    {blueprint.customerName}
+                  <TableCell className="font-medium w-48 min-w-48">
+                    {blueprint.orderSource}
                   </TableCell>
-                  <TableCell>{blueprint.productName}</TableCell>
-                  <TableCell>
+                  <TableCell className="w-48 min-w-48">{blueprint.productName}</TableCell>
+                  <TableCell className="w-32 min-w-32">
                     <Badge variant="outline" className="font-mono text-xs">
-                      {blueprint.drawing}
+                      {blueprint.internalNumber}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm text-gray-600">
-                    {blueprint.material}
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={getStatusColor(blueprint.status)}>
-                      {blueprint.status}
+                  <TableCell className="w-32 min-w-32">
+                    <Badge variant="outline" className="font-mono text-xs">
+                      {blueprint.customerNumber}
                     </Badge>
                   </TableCell>
-                  <TableCell className="text-sm text-gray-600">
-                    {blueprint.createdAt}
+                  <TableCell className="text-sm text-gray-600 w-24 min-w-24">
+                    {blueprint.orderQuantity}
                   </TableCell>
-                  <TableCell className="text-sm text-gray-600">
-                    {blueprint.updatedAt}
+                  <TableCell className="text-sm text-gray-600 w-28 min-w-28">
+                    {blueprint.orderDate}
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="text-sm text-gray-600 w-28 min-w-28">
+                    {blueprint.deliveryDate}
+                  </TableCell>
+                  <TableCell className="text-sm text-gray-600 w-32 min-w-32">
+                    {blueprint.companyField}
+                  </TableCell>
+                  <TableCell className="w-20 min-w-20">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="sm">
@@ -126,7 +144,7 @@ export function TableView({ blueprints }: TableViewProps) {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        <Link href={`/blueprints/${blueprint.id}`}>
+                        <Link href={`/blueprints/${blueprint.internalNumber}`}>
                           <DropdownMenuItem>
                             <Eye className="h-4 w-4 mr-2" />
                             詳細表示
@@ -148,7 +166,6 @@ export function TableView({ blueprints }: TableViewProps) {
             </TableBody>
           </Table>
         </div>
-      </CardContent>
-    </Card>
+    </div>
   );
 }

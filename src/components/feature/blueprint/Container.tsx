@@ -1,46 +1,70 @@
 "use client";
 import { useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui";
 import blueprintsData from "@/components/feature/blueprint/data/blueprint.json";
 import { BlueprintPageHeader } from "./components/BlueprintPageHeader";
 import { TableView } from "./components/TableView";
 import { GalleryView } from "./components/GalleryView";
+import { BlueprintPagination } from "./components/BlueprintPagination";
+import { FilterSidebar } from "./components/FilterSidebar";
 
 
-// ステータスを追加したブループリントデータ
-const blueprintsWithStatus = blueprintsData.map((blueprint, index) => ({
-  ...blueprint,
-  status: ["設計中", "承認済み", "製作中", "完了"][index % 4],
-  createdAt: "2024-06-0" + ((index % 9) + 1),
-  updatedAt: "2024-06-0" + ((index % 9) + 1),
-}));
 
 export default function Blueprints() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("全て");
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
+  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
+  const [detailFilters, setDetailFilters] = useState({
+    ocrSearch: "",
+    filename: "",
+    orderSource: "",
+    productName: "",
+    internalNumber: "",
+    customerNumber: "",
+    cadName: "all",
+    camName: "all",
+    orderQuantity: "",
+    orderDateFrom: "",
+    orderDateTo: "",
+    deliveryDateFrom: "",
+    deliveryDateTo: "",
+    companyField: "all",
+  });
   const itemsPerPage = 20;
 
   // フィルタリングされたデータ
-  const filteredBlueprints = blueprintsWithStatus.filter((blueprint) => {
+  const filteredBlueprints = blueprintsData.filter((blueprint) => {
+    // 基本検索
     const matchesSearch =
-      blueprint.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blueprint.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blueprint.orderSource.toLowerCase().includes(searchTerm.toLowerCase()) ||
       blueprint.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.drawing.toLowerCase().includes(searchTerm.toLowerCase());
+      blueprint.internalNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      blueprint.customerNumber.toLowerCase().includes(searchTerm.toLowerCase());
 
+    // 基本フィルター
     const matchesFilter =
-      selectedFilter === "全て" || blueprint.status === selectedFilter;
+      selectedFilter === "全て" || blueprint.companyField === selectedFilter;
 
-    return matchesSearch && matchesFilter;
+    // 詳細フィルター
+    const matchesDetailFilters = (
+      (!detailFilters.filename || blueprint.filename.toLowerCase().includes(detailFilters.filename.toLowerCase())) &&
+      (!detailFilters.orderSource || blueprint.orderSource.toLowerCase().includes(detailFilters.orderSource.toLowerCase())) &&
+      (!detailFilters.productName || blueprint.productName.toLowerCase().includes(detailFilters.productName.toLowerCase())) &&
+      (!detailFilters.internalNumber || blueprint.internalNumber.toLowerCase().includes(detailFilters.internalNumber.toLowerCase())) &&
+      (!detailFilters.customerNumber || blueprint.customerNumber.toLowerCase().includes(detailFilters.customerNumber.toLowerCase())) &&
+      (!detailFilters.cadName || detailFilters.cadName === "all" || blueprint.cadName === detailFilters.cadName) &&
+      (!detailFilters.camName || detailFilters.camName === "all" || blueprint.camName === detailFilters.camName) &&
+      (!detailFilters.orderQuantity || blueprint.orderQuantity.toString().includes(detailFilters.orderQuantity)) &&
+      (!detailFilters.orderDateFrom || blueprint.orderDate >= detailFilters.orderDateFrom) &&
+      (!detailFilters.orderDateTo || blueprint.orderDate <= detailFilters.orderDateTo) &&
+      (!detailFilters.deliveryDateFrom || blueprint.deliveryDate >= detailFilters.deliveryDateFrom) &&
+      (!detailFilters.deliveryDateTo || blueprint.deliveryDate <= detailFilters.deliveryDateTo) &&
+      (!detailFilters.companyField || detailFilters.companyField === "all" || blueprint.companyField === detailFilters.companyField)
+    );
+
+    return matchesSearch && matchesFilter && matchesDetailFilters;
   });
 
   // ページネーション
@@ -51,10 +75,43 @@ export default function Blueprints() {
     startIndex + itemsPerPage,
   );
 
+  const clearDetailFilters = () => {
+    setDetailFilters({
+      ocrSearch: "",
+      filename: "",
+      orderSource: "",
+      productName: "",
+      internalNumber: "",
+      customerNumber: "",
+      cadName: "all",
+      camName: "all",
+      orderQuantity: "",
+      orderDateFrom: "",
+      orderDateTo: "",
+      deliveryDateFrom: "",
+      deliveryDateTo: "",
+      companyField: "all",
+    });
+  };
+
   return (
-    <div className="min-h-calc[100vh-45px]">
-      <main className="flex-1 py-6">
-        <div className="px-4 sm:px-6 lg:px-8">
+    <div className="h-[calc(100vh-45px)] flex overflow-hidden">
+      {/* フィルターサイドバー */}
+      <FilterSidebar
+        isOpen={isFilterSidebarOpen}
+        onToggle={() => setIsFilterSidebarOpen(!isFilterSidebarOpen)}
+        filters={detailFilters}
+        onFiltersChange={setDetailFilters}
+        onClearFilters={clearDetailFilters}
+      />
+      
+      {/* メインコンテンツ */}
+      <div 
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+          isFilterSidebarOpen ? 'ml-80' : 'ml-0'
+        }`}
+      >
+        <div className="flex-shrink-0 p-4">
           <BlueprintPageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -62,65 +119,23 @@ export default function Blueprints() {
             setSelectedFilter={setSelectedFilter}
             viewMode={viewMode}
             setViewMode={setViewMode}
+            onToggleFilterSidebar={() => setIsFilterSidebarOpen(!isFilterSidebarOpen)}
+            isFilterSidebarOpen={isFilterSidebarOpen}
+            blueprints={filteredBlueprints}
           />
-
-          {/* テーブルビュー */}
-          {viewMode === "table" && <TableView blueprints={currentBlueprints} />}
-
-          {/* ギャラリービュー */}
-          {viewMode === "gallery" && <GalleryView blueprints={currentBlueprints} />}
-
-          {/* ページネーション */}
-          {totalPages > 1 && (
-            <div className="mt-6 flex justify-center">
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() =>
-                        setCurrentPage(Math.max(1, currentPage - 1))
-                      }
-                      className={
-                        currentPage === 1
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                    const pageNum = i + 1;
-                    return (
-                      <PaginationItem key={pageNum}>
-                        <PaginationLink
-                          onClick={() => setCurrentPage(pageNum)}
-                          isActive={currentPage === pageNum}
-                          className="cursor-pointer"
-                        >
-                          {pageNum}
-                        </PaginationLink>
-                      </PaginationItem>
-                    );
-                  })}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() =>
-                        setCurrentPage(Math.min(totalPages, currentPage + 1))
-                      }
-                      className={
-                        currentPage === totalPages
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-            </div>
-          )}
         </div>
-      </main>
+        <div className="flex-1 flex flex-col min-h-0 px-4">
+          {viewMode === "table" && <TableView blueprints={currentBlueprints} />}
+          {viewMode === "gallery" && <GalleryView blueprints={currentBlueprints} />}
+        </div>
+        <div className="flex-shrink-0 p-4">
+          <BlueprintPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+          />
+        </div>
+      </div>
     </div>
   );
 }
