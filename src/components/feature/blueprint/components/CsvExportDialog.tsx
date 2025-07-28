@@ -159,8 +159,8 @@ export function CsvExportDialog({ blueprints }: CsvExportDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Download className="h-4 w-4 mr-2" />
+        <Button variant="outline" size="lg">
+          <Download className="h-5 w-5 mr-2" />
           CSV出力
         </Button>
       </DialogTrigger>

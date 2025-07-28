@@ -50,17 +50,17 @@ export function BlueprintPageHeader({
             variant={viewMode === "table" ? "default" : "ghost"}
             size="lg"
             onClick={() => setViewMode("table")}
-            className="h-8 w-8 p-0"
+            className="h-10 w-10 p-0"
           >
-            <List className="h-4 w-4" />
+            <List className="h-5 w-5" />
           </Button>
           <Button
             variant={viewMode === "gallery" ? "default" : "ghost"}
             size="lg"
             onClick={() => setViewMode("gallery")}
-            className="h-8 w-8 p-0"
+            className="h-10 w-10 p-0"
           >
-            <Grid3X3 className="h-4 w-4" />
+            <Grid3X3 className="h-5 w-5" />
           </Button>
         </div>
         <Button
@@ -68,16 +68,16 @@ export function BlueprintPageHeader({
           size="lg"
           onClick={onToggleFilterSidebar}
         >
-          <SlidersHorizontal className="h-4 w-4 mr-2" />
+          <SlidersHorizontal className="h-5 w-5 mr-2" />
           詳細フィルター
         </Button>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
             placeholder="ファイル名、発注元、製品名、整番で検索"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 w-64"
+            className="pl-12 w-90 h-10 text-base"
           />
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import {
   Button,
   Popover,
@@ -17,15 +18,26 @@ interface SimilarBlueprintSearchDialogProps {
 }
 
 export function SimilarBlueprintSearchDialog({ onSearchResults }: SimilarBlueprintSearchDialogProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
   const [isSearching, setIsSearching] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = (file: File) => {
-    if (file && (file.type.startsWith('image/') || file.name.endsWith('.dwg') || file.name.endsWith('.step') || file.name.endsWith('.igs'))) {
+  const handleFileSelect = async (file: File) => {
+    if (file && (file.type.startsWith('image/') || file.name.endsWith('.dwg') || file.name.endsWith('.step') || file.name.endsWith('.igs') || file.name.endsWith('.pdf'))) {
       setUploadedFile(file);
+      
+      // 画像ファイルの場合はプレビュー表示
+      if (file.type.startsWith('image/')) {
+        const imageUrl = URL.createObjectURL(file);
+        setUploadedImageUrl(imageUrl);
+      } else {
+        // CADファイルの場合は代替画像を設定
+        setUploadedImageUrl(`https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop&auto=format`);
+      }
     }
   };
 
@@ -56,35 +68,32 @@ export function SimilarBlueprintSearchDialog({ onSearchResults }: SimilarBluepri
 
   const removeFile = () => {
     setUploadedFile(null);
+    setUploadedImageUrl("");
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
   };
 
   const handleSearch = async () => {
-    if (!uploadedFile) return;
-    
-    setIsSearching(true);
-    // ここで実際の類似検索APIを呼び出す
-    try {
-      // 模擬的な検索処理
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // 模擬的な検索結果
-      const mockResults = [
-        { id: 1, filename: "BP001_エンジンブラケット.dwg", similarity: 95 },
-        { id: 2, filename: "BP015_熱交換器プレート.dwg", similarity: 87 },
-        { id: 3, filename: "BP022_ブレーキディスク.igs", similarity: 82 }
-      ];
-      
-      onSearchResults?.(mockResults);
-      setIsOpen(false);
-      setUploadedFile(null);
-    } catch (error) {
-      console.error('検索エラー:', error);
-    } finally {
-      setIsSearching(false);
+    if (!uploadedFile || !uploadedImageUrl) {
+      alert('ファイルをアップロードしてください。');
+      return;
     }
+    
+    // 類似図面検索ページに遷移
+    const searchParams = new URLSearchParams({
+      from: 'dialog',
+      fileName: uploadedFile.name,
+      imageUrl: uploadedImageUrl
+    });
+    
+    setIsOpen(false);
+    // ダイアログが閉じられた時にアップロード状態をリセット
+    setTimeout(() => {
+      removeFile();
+    }, 300);
+    
+    router.push(`/blueprint/similar_search?${searchParams.toString()}`);
   };
 
   const formatFileSize = (bytes: number) => {
@@ -98,8 +107,8 @@ export function SimilarBlueprintSearchDialog({ onSearchResults }: SimilarBluepri
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size="sm">
-          <Search className="h-4 w-4 mr-2" />
+        <Button size="lg">
+          <Search className="h-5 w-5 mr-2" />
           類似図面検索
         </Button>
       </PopoverTrigger>

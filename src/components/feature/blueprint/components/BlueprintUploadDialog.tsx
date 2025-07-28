@@ -141,8 +141,8 @@ export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialo
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size="sm" className="bg-primary hover:bg-primary/90">
-          <Plus className="h-4 w-4 mr-2" />
+        <Button size="lg" className="bg-primary hover:bg-primary/90">
+          <Plus className="h-5 w-5 mr-2" />
           新規図面登録
         </Button>
       </PopoverTrigger>

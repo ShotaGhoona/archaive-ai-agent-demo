@@ -1,170 +1,140 @@
 "use client";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { DetailTabNavigation } from "./components/DetailTabNavigation";
+import { DetailSidebar } from "./components/DetailSidebar";
+import { BlueprintViewer } from "./components/BlueprintViewer";
+import { BlueprintInfoPanel } from "./components/BlueprintInfoPanel";
+import blueprintsData from "./data/blueprints.json";
 
-import { useState } from "react";
-import { useParams } from "next/navigation";
-import { Card, CardContent, Button, Separator } from "@/components/ui";
-import {
-  Printer,
-  Download,
-  Trash2,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Edit,
-} from "lucide-react";
-import blueprintsData from "@/components/feature/blueprint/data/blueprint.json";
+interface BlueprintFile {
+  id: string;
+  name: string;
+  description: string;
+  size: number;
+  type: string;
+  imageUrl: string;
+  createdAt: string;
+  isActive?: boolean;
+}
 
 export default function BlueprintDetail() {
-  const params = useParams();
-  const blueprintId = params.id as string;
-  const blueprint = blueprintsData.find((item) => item.id === blueprintId);
-  
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState("blueprint");
+  const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
+  const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
 
-  if (!blueprint) {
-    return <div>図面が見つかりません</div>;
-  }
+  // URLパラメータからタブを取得
+  useEffect(() => {
+    const tab = searchParams.get("tab");
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [searchParams]);
 
-  // 複数の図面画像を想定（実際のデータでは配列になると想定）
-  const images = Array.from({ length: 16 }, (_, i) => ({
-    id: i,
-    url: blueprint.image,
-    name: `図面 ${i + 1}`,
-  }));
+  // 初期アクティブファイルを設定
+  useEffect(() => {
+    const activeBlueprint = blueprintFiles.find(file => file.isActive);
+    if (activeBlueprint && activeTab === "blueprint") {
+      setActiveFile(activeBlueprint);
+    } else if (activeTab !== "blueprint") {
+      setActiveFile(null);
+    }
+  }, [blueprintFiles, activeTab]);
+
+  // タブ切り替え時にURLを更新
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    const newUrl = `${window.location.pathname}?tab=${tabId}`;
+    router.push(newUrl, { scroll: false });
+  };
+
+  // ファイル選択ハンドラー
+  const handleFileSelect = (fileId: string) => {
+    const selectedFile = blueprintFiles.find(file => file.id === fileId);
+    if (selectedFile) {
+      setBlueprintFiles(prev => prev.map(file => ({
+        ...file,
+        isActive: file.id === fileId
+      })));
+      setActiveFile(selectedFile);
+    }
+  };
+
+  // ファイル削除ハンドラー
+  const handleFileRemove = (fileId: string) => {
+    setBlueprintFiles(prev => {
+      const newFiles = prev.filter(file => file.id !== fileId);
+      // 削除されたファイルがアクティブだった場合、新しいアクティブファイルを設定
+      if (activeFile?.id === fileId) {
+        const newActiveFile = newFiles.length > 0 ? newFiles[0] : null;
+        setActiveFile(newActiveFile);
+        if (newActiveFile) {
+          return newFiles.map(file => ({
+            ...file,
+            isActive: file.id === newActiveFile.id
+          }));
+        }
+      }
+      return newFiles;
+    });
+  };
+
+  // ファイル追加ハンドラー
+  const handleFileAdd = (newFile: BlueprintFile) => {
+    setBlueprintFiles(prev => [...prev, newFile]);
+  };
+
 
   return (
-    <div className="flex gap-6 h-[calc(100vh-45px)] p-6">
-      {/* 左2/3: 図面表示エリア */}
-      <div className="flex-1 flex flex-col space-y-4 min-h-0">
-        {/* 図面ナビゲーション（横スクロール） */}
-        <div className="flex-shrink-0">
-          <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide pb-2">
-            {images.map((image, index) => (
-              <div
-                key={image.id}
-                className={`flex-shrink-0 cursor-pointer rounded-lg border-2 transition-all ${
-                  selectedImageIndex === index
-                    ? "border-primary shadow-md"
-                    : "border-gray-200 hover:border-gray-300"
-                }`}
-                onClick={() => setSelectedImageIndex(index)}
-              >
-                <img
-                  src={image.url}
-                  alt={image.name}
-                  className="w-20 h-14 object-cover rounded-md"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* メイン図面表示 */}
-        <div className="relative flex-1 bg-gray-100 p-5 rounded-lg overflow-hidden min-h-0">
-          <img
-            src={images[selectedImageIndex].url}
-            alt={images[selectedImageIndex].name}
-            className="w-full h-full object-contain"
+    <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
+      {/* ページヘッダー */}
+      <div className="flex-shrink-0 p-4 border-b bg-white">
+        <div className="flex items-center justify-between">
+          <DetailTabNavigation 
+            activeTab={activeTab}
+            onTabChange={handleTabChange}
           />
           
-          {/* ナビゲーションボタン */}
-          <Button
-            variant="secondary"
-            size="icon"
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 opacity-75 hover:opacity-100"
-            onClick={() =>
-              setSelectedImageIndex(
-                selectedImageIndex > 0 ? selectedImageIndex - 1 : images.length - 1
-              )
-            }
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          
-          <Button
-            variant="secondary"
-            size="icon"
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 opacity-75 hover:opacity-100"
-            onClick={() =>
-              setSelectedImageIndex(
-                selectedImageIndex < images.length - 1 ? selectedImageIndex + 1 : 0
-              )
-            }
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
         </div>
       </div>
 
-      {/* 右1/3: ユーティリティエリア */}
-      <div className="w-80 space-y-6">
-        {/* アクションボタン群 */}
-        <div className="grid grid-cols-2 gap-2">
-          <Button variant="outline" className="w-full justify-start">
-            <Printer className="h-4 w-4 mr-2" />
-            印刷
-          </Button>
-          <Button variant="outline" className="w-full justify-start">
-            <Download className="h-4 w-4 mr-2" />
-            ダウンロード
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            削除
-          </Button>
-
-          <Button variant="outline" className="w-full justify-start">
-            <Edit className="h-4 w-4 mr-2" />
-            編集
-          </Button>
-        </div>
-
-        {/* 図面情報 */}
-        <Card>
-          <CardContent className="p-4">
-            <h3 className="font-medium text-gray-900 mb-4">図面情報</h3>
-            <div className="space-y-3">
-              <div>
-                <label className="text-sm font-medium text-gray-500">顧客名</label>
-                <p className="text-sm text-gray-900 mt-1">{blueprint.customerName}</p>
-              </div>
-              <Separator />
-              <div>
-                <label className="text-sm font-medium text-gray-500">製品名</label>
-                <p className="text-sm text-gray-900 mt-1">{blueprint.productName}</p>
-              </div>
-              <Separator />
-              <div>
-                <label className="text-sm font-medium text-gray-500">社内製番</label>
-                <p className="text-sm text-gray-900 mt-1">{blueprint.id}</p>
-              </div>
-              <Separator />
-              <div>
-                <label className="text-sm font-medium text-gray-500">客先製番</label>
-                <p className="text-sm text-gray-900 mt-1">{blueprint.drawing}</p>
-              </div>
-              <Separator />
-              <div>
-                <label className="text-sm font-medium text-gray-500">材質</label>
-                <p className="text-sm text-gray-900 mt-1">{blueprint.material}</p>
-              </div>
-              <Separator />
-              <div>
-                <label className="text-sm font-medium text-gray-500">備考</label>
-                <p className="text-sm text-gray-900 mt-1">特記事項なし</p>
+      {/* メインコンテンツエリア */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* 左サイドバー */}
+        <DetailSidebar 
+          activeTab={activeTab}
+          files={blueprintFiles}
+          onFileSelect={handleFileSelect}
+          onFileRemove={handleFileRemove}
+          onFileAdd={handleFileAdd}
+        />
+        
+        {/* 中央コンテンツエリア */}
+        {activeTab === "blueprint" ? (
+          <BlueprintViewer activeFile={activeFile} />
+        ) : (
+          <div className="flex-1 bg-gray-50 flex items-center justify-center">
+            <div className="text-center space-y-4">
+              <div className="text-6xl text-gray-300">📋</div>
+              <div className="space-y-2">
+                <h3 className="text-xl font-medium text-gray-500">
+                  {`${activeTab}表示エリア`}
+                </h3>
+                <p className="text-sm text-gray-400">
+                  コンテンツがここに表示されます
+                </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* 類似図面検索 */}
-            <Button className="w-full">
-              <Search className="h-4 w-4 mr-2" />
-              類似図面検索
-            </Button>
+          </div>
+        )}
+        
+        {/* 右側情報パネル */}
+        {activeTab === "blueprint" && (
+          <BlueprintInfoPanel activeFile={activeFile} />
+        )}
+        
       </div>
     </div>
   );

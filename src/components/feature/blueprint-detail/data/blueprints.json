@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "name": "メインアセンブリ図面.dwg",
+    "description": "製品のメインアセンブリ図面",
+    "size": 2048576,
+    "type": "application/dwg",
+    "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
+    "createdAt": "2024-01-15T10:30:00Z",
+    "isActive": true
+  },
+  {
+    "id": "2", 
+    "name": "詳細寸法図.dwg",
+    "description": "部品の詳細寸法を示した図面",
+    "size": 1536000,
+    "type": "application/dwg", 
+    "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&auto=format",
+    "createdAt": "2024-01-15T11:15:00Z",
+    "isActive": false
+  },
+  {
+    "id": "3",
+    "name": "断面図A-A.dwg", 
+    "description": "断面A-Aの詳細図面",
+    "size": 1024000,
+    "type": "application/dwg",
+    "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=800&h=600&fit=crop&auto=format",
+    "createdAt": "2024-01-15T14:20:00Z",
+    "isActive": false
+  },
+  {
+    "id": "4",
+    "name": "部品表.pdf",
+    "description": "製品構成部品の一覧表",
+    "size": 512000,
+    "type": "application/pdf",
+    "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&auto=format",
+    "createdAt": "2024-01-15T16:45:00Z", 
+    "isActive": false
+  },
+  {
+    "id": "5",
+    "name": "3Dモデル_アセンブリ.step",
+    "description": "3次元CADモデルファイル",
+    "size": 4096000,
+    "type": "application/step",
+    "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
+    "createdAt": "2024-01-15T17:30:00Z",
+    "isActive": false
+  }
+]
