@@ -1,12 +1,12 @@
 import {
-  Button,
   Input,
 } from "@/shared/shadcnui";
 import {
   Search,
-  SlidersHorizontal,
 } from "lucide-react";
-import { ProjectCsvExportDialog } from "./ProjectCsvExportDialog";
+import { FilterToggleButton } from "@/features/advanced-filter";
+import { CsvExportDialog } from "@/features/csv-export";
+import { PROJECT_CSV_COLUMNS } from "../lib/projectCsvConfig";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -26,14 +26,10 @@ export function ProjectPageHeader({
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <Button
-          variant={isFilterSidebarOpen ? "default" : "outline"}
-          size="lg"
-          onClick={onToggleFilterSidebar}
-        >
-          <SlidersHorizontal className="h-5 w-5 mr-2" />
-          詳細フィルター
-        </Button>
+        <FilterToggleButton
+          isOpen={isFilterSidebarOpen}
+          onToggle={onToggleFilterSidebar}
+        />
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
@@ -46,7 +42,11 @@ export function ProjectPageHeader({
       </div>
       <div className="flex items-center gap-4">
         {/* CSV出力ボタン */}
-        <ProjectCsvExportDialog projects={projects} />
+        <CsvExportDialog
+          data={projects}
+          initialColumns={PROJECT_CSV_COLUMNS}
+          defaultFilename="projects"
+        />
       </div>
     </div>
   );

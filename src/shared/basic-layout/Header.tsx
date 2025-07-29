@@ -24,13 +24,13 @@ export function Header() {
 
             {/* Navigation Menu */}
             <nav className="hidden md:flex items-center space-x-1">
-              <Link href="/blueprints">
+              <Link href="/blueprint">
                 <div className="relative px-3 py-1 text-sm font-medium text-white hover:text-white cursor-pointer group">
                   図面管理
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></div>
                 </div>
               </Link>
-              <Link href="/projects">
+              <Link href="/project">
                 <div className="relative px-3 py-1 text-sm font-medium text-white hover:text-white cursor-pointer group">
                   案件管理
                   <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-secondary transition-all duration-300 group-hover:w-full"></div>

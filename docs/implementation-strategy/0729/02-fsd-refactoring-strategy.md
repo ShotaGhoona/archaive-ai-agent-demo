@@ -46,7 +46,8 @@ src/features/
 ├── advanced-filter/                    # 📁 NEW
 │   ├── ui/
 │   │   ├── AdvancedFilterSidebar.tsx   # 🆕 汎用フィルターサイドバー
-│   │   └── FilterControls.tsx          # 🆕 フィルターコントロール群
+│   │   ├── FilterControls.tsx          # 🆕 フィルターコントロール群
+│   │   └── FilterToggleButton.tsx      # 🆕 フィルター切替ボタン
 │   ├── model/
 │   │   ├── types.ts                    # 🆕 フィルター型定義
 │   │   ├── useAdvancedFilter.ts        # 🆕 フィルターロジック
@@ -62,6 +63,7 @@ src/features/
 ├── csv-export/                         # 📁 NEW
 │   ├── ui/
 │   │   ├── CsvExportDialog.tsx         # 🆕 汎用CSV出力ダイアログ
+│   │   ├── CsvExportButton.tsx         # 🆕 CSV出力ボタン
 │   │   ├── ColumnSelector.tsx          # 🆕 カラム選択コンポーネント
 │   │   └── ExportPreview.tsx           # 🆕 出力プレビュー
 │   ├── model/
@@ -94,7 +96,7 @@ src/page-components/blueprint/
 │   ├── BlueprintContainer.tsx          # 🔄 MODIFY: features使用に変更
 │   ├── BlueprintPageHeader.tsx         # 🔄 MODIFY: features使用に変更
 │   ├── FilterSidebar.tsx               # ❌ DELETE: features/advanced-filterに移動
-│   ├── CsvExportDialog.tsx             # ❌ DELETE: features/data-exportに移動
+│   ├── CsvExportDialog.tsx             # ❌ DELETE: features/csv-exportに移動
 │   └── ...
 ```
 
@@ -107,7 +109,7 @@ src/page-components/project/
 │   ├── ProjectContainer.tsx            # 🔄 MODIFY: features使用に変更  
 │   ├── ProjectPageHeader.tsx           # 🔄 MODIFY: features使用に変更
 │   ├── ProjectFilterSidebar.tsx        # ❌ DELETE: features/advanced-filterに移動
-│   ├── ProjectCsvExportDialog.tsx      # ❌ DELETE: features/data-exportに移動
+│   ├── ProjectCsvExportDialog.tsx      # ❌ DELETE: features/csv-exportに移動
 │   └── ...
 ```
 
@@ -158,20 +160,52 @@ export function useAdvancedFilter<T>(
     setFilters(initialFilters);
   }, [initialFilters]);
 
+  const toggleSidebar = useCallback(() => {
+    setIsOpen(prev => !prev);
+  }, []);
+
   return {
     filters,
     setFilters,
     filteredData,
     isOpen,
     setIsOpen,
+    toggleSidebar,
     clearFilters,
   };
 }
 ```
 
-### Data Export Feature
+#### フィルター切替ボタン (features/advanced-filter/ui/FilterToggleButton.tsx)  
+```typescript
+interface FilterToggleButtonProps {
+  isOpen: boolean;
+  onToggle: () => void;
+  className?: string;
+}
 
-#### 型定義 (features/data-export/model/types.ts)
+export function FilterToggleButton({ 
+  isOpen, 
+  onToggle, 
+  className 
+}: FilterToggleButtonProps) {
+  return (
+    <Button
+      variant={isOpen ? "default" : "outline"}
+      size="lg"
+      onClick={onToggle}
+      className={className}
+    >
+      <SlidersHorizontal className="h-5 w-5 mr-2" />
+      詳細フィルター
+    </Button>
+  );
+}
+```
+
+### CSV Export Feature
+
+#### 型定義 (features/csv-export/model/types.ts)
 ```typescript
 export interface ExportColumn<T = any> {
   key: keyof T;
@@ -193,7 +227,7 @@ export interface CsvExportProps<T = any> {
 }
 ```
 
-#### エクスポートフック (features/data-export/model/useCsvExport.ts)
+#### エクスポートフック (features/csv-export/model/useCsvExport.ts)
 ```typescript
 export function useCsvExport<T>(
   data: T[],
@@ -220,24 +254,66 @@ export function useCsvExport<T>(
 }
 ```
 
+#### CSV出力ボタン (features/csv-export/ui/CsvExportButton.tsx)
+```typescript
+interface CsvExportButtonProps<T = any> {
+  data: T[];
+  columns: ExportColumn<T>[];
+  title?: string;
+  className?: string;
+}
+
+export function CsvExportButton<T>({ 
+  data, 
+  columns, 
+  title = "CSV出力", 
+  className 
+}: CsvExportButtonProps<T>) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button 
+        variant="outline" 
+        size="lg" 
+        onClick={() => setIsOpen(true)}
+        className={className}
+      >
+        <Download className="h-5 w-5 mr-2" />
+        {title}
+      </Button>
+      
+      <CsvExportDialog
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        data={data}
+        columns={columns}
+      />
+    </>
+  );
+}
+```
+
 ## ファイル変更一覧
 
-### 🆕 新規作成 (17ファイル)
+### 🆕 新規作成 (16ファイル)
 
 ```
 src/features/advanced-filter/
 ├── ui/
 │   ├── AdvancedFilterSidebar.tsx
-│   └── FilterControls.tsx
+│   ├── FilterControls.tsx
+│   └── FilterToggleButton.tsx          # 🆕 フィルター切替ボタン
 ├── model/
 │   ├── types.ts
 │   ├── useAdvancedFilter.ts
 │   └── filterUtils.ts
 └── index.ts
 
-src/features/data-export/
+src/features/csv-export/
 ├── ui/
 │   ├── CsvExportDialog.tsx
+│   ├── CsvExportButton.tsx             # 🆕 CSV出力ボタン
 │   ├── ColumnSelector.tsx
 │   └── ExportPreview.tsx
 ├── model/
@@ -245,53 +321,50 @@ src/features/data-export/
 │   ├── useCsvExport.ts
 │   └── exportUtils.ts
 └── index.ts
-
-src/shared/ui/data-table/
-├── DataTableToolbar.tsx
-├── DataTablePagination.tsx
-└── DataTableActions.tsx
 ```
 
 ### 🔄 変更 (4ファイル)
 
 ```
 src/page-components/blueprint/ui/
-├── BlueprintContainer.tsx          # features/advanced-filter使用
-└── BlueprintPageHeader.tsx         # features/data-export使用
+├── BlueprintContainer.tsx          # FilterToggleButton使用
+└── BlueprintPageHeader.tsx         # CsvExportButton使用
 
 src/page-components/project/ui/
-├── ProjectContainer.tsx            # features/advanced-filter使用
-└── ProjectPageHeader.tsx           # features/data-export使用
+├── ProjectContainer.tsx            # FilterToggleButton使用
+└── ProjectPageHeader.tsx           # CsvExportButton使用
 ```
 
-### ❌ 削除 (4ファイル)
+### ❌ 削除 (5ファイル)
 
 ```
+src/shared/basic-layout/
+└── BlueprintSidebar.tsx            # 仮置きファイル、不要
+
 src/page-components/blueprint/ui/
 ├── FilterSidebar.tsx               # → features/advanced-filter/に移行
-└── CsvExportDialog.tsx             # → features/data-export/に移行
+└── CsvExportDialog.tsx             # → features/csv-export/に移行
 
 src/page-components/project/ui/
 ├── ProjectFilterSidebar.tsx        # → features/advanced-filter/に移行
-└── ProjectCsvExportDialog.tsx      # → features/data-export/に移行
+└── ProjectCsvExportDialog.tsx      # → features/csv-export/に移行
 ```
 
 ## 実装順序
 
 ### Step 1: Features層の基盤作成
 1. `features/advanced-filter/` の型定義とユーティリティ
-2. `features/data-export/` の型定義とユーティリティ
+2. `features/csv-export/` の型定義とユーティリティ
 3. 各featureのフック実装
 
 ### Step 2: UIコンポーネント移行
 1. 既存のフィルターコンポーネントを汎用化
 2. 既存のCSV出力コンポーネントを汎用化
-3. Shared層の共通コンポーネント作成
 
 ### Step 3: Page-components更新
-1. Blueprintページの更新
-2. Projectページの更新
-3. 不要ファイルの削除
+1. 不要ファイルの削除（BlueprintSidebar.tsx）
+2. Blueprintページの更新
+3. Projectページの更新
 
 ### Step 4: テスト・最適化
 1. 機能テスト
@@ -302,6 +375,7 @@ src/page-components/project/ui/
 
 ### 1. 再利用性の向上
 - 他のテーブル型ページで同じフィルター・エクスポート機能を簡単に利用可能
+- ボタンコンポーネントとして独立、任意の場所に配置可能
 - 設定ベースでカスタマイズ可能
 
 ### 2. 保守性の向上
@@ -314,6 +388,7 @@ src/page-components/project/ui/
 
 ### 4. コード品質向上
 - 責務分離による可読性向上
+- ボタンロジックの統一化
 - テスタブルな設計
 
 ## 将来的な拡張

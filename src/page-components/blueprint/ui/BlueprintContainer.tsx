@@ -5,7 +5,9 @@ import { BlueprintPageHeader } from "./BlueprintPageHeader";
 import { TableView } from "./TableView";
 import { GalleryView } from "./GalleryView";
 import { BlueprintPagination } from "./BlueprintPagination";
-import { FilterSidebar } from "./FilterSidebar";
+import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
+import { BLUEPRINT_FILTER_CONFIG } from "../lib/blueprintFilterConfig";
+import { Blueprint } from "../lib/blueprintColumns";
 
 
 
@@ -14,27 +16,20 @@ export default function BlueprintContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("全て");
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
-  const [isFilterSidebarOpen, setIsFilterSidebarOpen] = useState(false);
-  const [detailFilters, setDetailFilters] = useState({
-    ocrSearch: "",
-    filename: "",
-    orderSource: "",
-    productName: "",
-    internalNumber: "",
-    customerNumber: "",
-    cadName: "all",
-    camName: "all",
-    orderQuantity: "",
-    orderDateFrom: "",
-    orderDateTo: "",
-    deliveryDateFrom: "",
-    deliveryDateTo: "",
-    companyField: "all",
-  });
   const itemsPerPage = 20;
 
+  // Advanced Filter Hook
+  const {
+    filteredData: filteredByAdvancedFilter,
+    isOpen: isFilterSidebarOpen,
+    toggleSidebar,
+    filters,
+    setFilters,
+    clearFilters,
+  } = useAdvancedFilter(blueprintsData as Blueprint[], BLUEPRINT_FILTER_CONFIG);
+
   // フィルタリングされたデータ
-  const filteredBlueprints = blueprintsData.filter((blueprint) => {
+  const filteredBlueprints = filteredByAdvancedFilter.filter((blueprint) => {
     // 基本検索
     const matchesSearch =
       blueprint.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -47,24 +42,7 @@ export default function BlueprintContainer() {
     const matchesFilter =
       selectedFilter === "全て" || blueprint.companyField === selectedFilter;
 
-    // 詳細フィルター
-    const matchesDetailFilters = (
-      (!detailFilters.filename || blueprint.filename.toLowerCase().includes(detailFilters.filename.toLowerCase())) &&
-      (!detailFilters.orderSource || blueprint.orderSource.toLowerCase().includes(detailFilters.orderSource.toLowerCase())) &&
-      (!detailFilters.productName || blueprint.productName.toLowerCase().includes(detailFilters.productName.toLowerCase())) &&
-      (!detailFilters.internalNumber || blueprint.internalNumber.toLowerCase().includes(detailFilters.internalNumber.toLowerCase())) &&
-      (!detailFilters.customerNumber || blueprint.customerNumber.toLowerCase().includes(detailFilters.customerNumber.toLowerCase())) &&
-      (!detailFilters.cadName || detailFilters.cadName === "all" || blueprint.cadName === detailFilters.cadName) &&
-      (!detailFilters.camName || detailFilters.camName === "all" || blueprint.camName === detailFilters.camName) &&
-      (!detailFilters.orderQuantity || blueprint.orderQuantity.toString().includes(detailFilters.orderQuantity)) &&
-      (!detailFilters.orderDateFrom || blueprint.orderDate >= detailFilters.orderDateFrom) &&
-      (!detailFilters.orderDateTo || blueprint.orderDate <= detailFilters.orderDateTo) &&
-      (!detailFilters.deliveryDateFrom || blueprint.deliveryDate >= detailFilters.deliveryDateFrom) &&
-      (!detailFilters.deliveryDateTo || blueprint.deliveryDate <= detailFilters.deliveryDateTo) &&
-      (!detailFilters.companyField || detailFilters.companyField === "all" || blueprint.companyField === detailFilters.companyField)
-    );
-
-    return matchesSearch && matchesFilter && matchesDetailFilters;
+    return matchesSearch && matchesFilter;
   });
 
   // ページネーション
@@ -75,34 +53,17 @@ export default function BlueprintContainer() {
     startIndex + itemsPerPage,
   );
 
-  const clearDetailFilters = () => {
-    setDetailFilters({
-      ocrSearch: "",
-      filename: "",
-      orderSource: "",
-      productName: "",
-      internalNumber: "",
-      customerNumber: "",
-      cadName: "all",
-      camName: "all",
-      orderQuantity: "",
-      orderDateFrom: "",
-      orderDateTo: "",
-      deliveryDateFrom: "",
-      deliveryDateTo: "",
-      companyField: "all",
-    });
-  };
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
       {/* フィルターサイドバー */}
-      <FilterSidebar
+      <AdvancedFilterSidebar
         isOpen={isFilterSidebarOpen}
-        onToggle={() => setIsFilterSidebarOpen(!isFilterSidebarOpen)}
-        filters={detailFilters}
-        onFiltersChange={setDetailFilters}
-        onClearFilters={clearDetailFilters}
+        onToggle={toggleSidebar}
+        filters={filters}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        config={BLUEPRINT_FILTER_CONFIG}
       />
       
       {/* メインコンテンツ */}
@@ -119,7 +80,7 @@ export default function BlueprintContainer() {
             setSelectedFilter={setSelectedFilter}
             viewMode={viewMode}
             setViewMode={setViewMode}
-            onToggleFilterSidebar={() => setIsFilterSidebarOpen(!isFilterSidebarOpen)}
+            onToggleFilterSidebar={toggleSidebar}
             isFilterSidebarOpen={isFilterSidebarOpen}
             blueprints={filteredBlueprints}
           />

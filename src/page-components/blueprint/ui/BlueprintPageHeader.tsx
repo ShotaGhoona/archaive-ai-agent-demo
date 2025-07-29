@@ -6,11 +6,12 @@ import {
   Search,
   Grid3X3,
   List,
-  SlidersHorizontal,
 } from "lucide-react";
+import { FilterToggleButton } from "@/features/advanced-filter";
+import { CsvExportDialog } from "@/features/csv-export";
 import { SimilarBlueprintSearchDialog } from "./SimilarBlueprintSearchDialog";
-import { CsvExportDialog } from "./CsvExportDialog";
 import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
+import { BLUEPRINT_CSV_COLUMNS } from "../lib/blueprintCsvConfig";
 
 interface BlueprintPageHeaderProps {
   searchTerm: string;
@@ -54,14 +55,10 @@ export function BlueprintPageHeader({
             <Grid3X3 className="h-5 w-5" />
           </Button>
         </div>
-        <Button
-          variant={isFilterSidebarOpen ? "default" : "outline"}
-          size="lg"
-          onClick={onToggleFilterSidebar}
-        >
-          <SlidersHorizontal className="h-5 w-5 mr-2" />
-          詳細フィルター
-        </Button>
+        <FilterToggleButton
+          isOpen={isFilterSidebarOpen}
+          onToggle={onToggleFilterSidebar}
+        />
         <div className="relative">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
           <Input
@@ -74,7 +71,11 @@ export function BlueprintPageHeader({
       </div>
       <div className="flex items-center gap-4">
         {/* CSV出力ボタン */}
-        <CsvExportDialog blueprints={blueprints} />
+        <CsvExportDialog
+          data={blueprints}
+          initialColumns={BLUEPRINT_CSV_COLUMNS}
+          defaultFilename="blueprints"
+        />
         {/* 類似図面検索 */}
         <SimilarBlueprintSearchDialog />
 
