@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Button, Card, CardContent, Badge } from "@/components/ui";
+import { Button, Card, CardContent, Badge } from "@/shared/shadcnui";
 import { Plus, FileImage, Upload, Loader2, X } from "lucide-react";
 
 interface BlueprintFile {

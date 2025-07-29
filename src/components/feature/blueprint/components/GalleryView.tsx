@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Card, CardContent, Badge } from "@/components/ui";
+import { Card, CardContent, Badge } from "@/shared/shadcnui";
 
 
 interface Blueprint {

@@ -5,7 +5,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 
 interface BlueprintPaginationProps {
   currentPage: number;
@@ -23,11 +23,12 @@ export function BlueprintPagination({
   }
 
   return (
-    <div className="mt-4 flex justify-center flex-shrink-0">
+    <div className="flex justify-center flex-shrink-0">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
+              size="sm"
               onClick={() =>
                 setCurrentPage(Math.max(1, currentPage - 1))
               }
@@ -44,6 +45,7 @@ export function BlueprintPagination({
             return (
               <PaginationItem key={pageNum}>
                 <PaginationLink
+                  size="sm"
                   onClick={() => setCurrentPage(pageNum)}
                   isActive={currentPage === pageNum}
                   className="cursor-pointer"
@@ -56,6 +58,7 @@ export function BlueprintPagination({
 
           <PaginationItem>
             <PaginationNext
+              size="sm"
               onClick={() =>
                 setCurrentPage(Math.min(totalPages, currentPage + 1))
               }

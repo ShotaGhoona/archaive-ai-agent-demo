@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import {
   Search,
   Filter,

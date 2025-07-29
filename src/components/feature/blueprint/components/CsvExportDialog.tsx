@@ -23,7 +23,7 @@ import {
   ScrollArea,
   Label,
   Separator,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { Download, GripVertical } from "lucide-react";
 
 interface Blueprint {

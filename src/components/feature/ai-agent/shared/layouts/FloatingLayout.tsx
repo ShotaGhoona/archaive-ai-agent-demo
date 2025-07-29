@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useRef, useImperativeHandle } from "react";
-import { Card } from "@/components/ui/card";
+import { Card } from "@/shared/shadcnui";
 import { ChatLayoutState, Position, Size, Message } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 import ChatContent from "../components/ChatContent";

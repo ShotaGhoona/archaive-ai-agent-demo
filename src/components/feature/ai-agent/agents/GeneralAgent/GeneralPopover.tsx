@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/shadcnui";
 import { Upload } from "lucide-react";
 
 interface GeneralPopoverProps {

@@ -10,7 +10,7 @@ import {
   CardTitle,
   Badge,
   ScrollArea,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { Plus, Upload, X, FileImage, Loader2, Files } from "lucide-react";
 import { useRouter } from "next/navigation";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/shadcnui";
 import { ChatLayoutState } from "../../types/types";
 import { Zap, Sidebar, Maximize2, X } from "lucide-react";
 

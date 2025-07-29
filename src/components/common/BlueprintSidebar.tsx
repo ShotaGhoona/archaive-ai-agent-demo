@@ -1,4 +1,4 @@
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/shared/shadcnui";
 import Link from "next/link";
 import { LucideIcon } from "lucide-react";
 import { 

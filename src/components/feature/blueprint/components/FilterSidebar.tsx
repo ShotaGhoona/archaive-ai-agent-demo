@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
   Separator,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { ChevronLeft, Search, RotateCcw } from "lucide-react";
 
 interface FilterSidebarProps {

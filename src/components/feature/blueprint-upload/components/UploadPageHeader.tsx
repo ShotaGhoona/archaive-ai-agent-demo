@@ -8,7 +8,7 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { 
   FolderPlus, 
   BookOpen, 

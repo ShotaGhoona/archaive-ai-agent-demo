@@ -5,7 +5,18 @@ import { DetailTabNavigation } from "./components/DetailTabNavigation";
 import { DetailSidebar } from "./components/DetailSidebar";
 import { BlueprintViewer } from "./components/BlueprintViewer";
 import { BlueprintInfoPanel } from "./components/BlueprintInfoPanel";
+import { SimilarBlueprintsPanel } from "./components/SimilarBlueprintsPanel";
+import { SimilarBlueprintsLoadingPanel } from "./components/SimilarBlueprintsLoadingPanel";
 import blueprintsData from "./data/blueprints.json";
+
+interface SimilarBlueprint {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  similarity: number;
+  createdAt: string;
+}
 
 interface BlueprintFile {
   id: string;
@@ -16,6 +27,7 @@ interface BlueprintFile {
   imageUrl: string;
   createdAt: string;
   isActive?: boolean;
+  similarBlueprints?: SimilarBlueprint[];
 }
 
 export default function BlueprintDetail() {
@@ -24,6 +36,8 @@ export default function BlueprintDetail() {
   const [activeTab, setActiveTab] = useState("blueprint");
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
+  const [showSimilarBlueprints, setShowSimilarBlueprints] = useState(false);
+  const [isSearchingBlueprints, setIsSearchingBlueprints] = useState(false);
 
   // URLパラメータからタブを取得
   useEffect(() => {
@@ -86,6 +100,30 @@ export default function BlueprintDetail() {
     setBlueprintFiles(prev => [...prev, newFile]);
   };
 
+  // 類似図面検索ハンドラー
+  const handleSimilarBlueprintSearch = () => {
+    setIsSearchingBlueprints(true);
+    setShowSimilarBlueprints(false);
+    
+    // 5秒のローディングをシミュレート（実際の実装ではAI画像解析APIコール）
+    setTimeout(() => {
+      setIsSearchingBlueprints(false);
+      setShowSimilarBlueprints(true);
+    }, 5000);
+  };
+
+  // 類似図面パネルを閉じる
+  const handleCloseSimilarBlueprints = () => {
+    setShowSimilarBlueprints(false);
+    setIsSearchingBlueprints(false);
+  };
+
+  // 類似図面クリックハンドラー
+  const handleSimilarBlueprintClick = (blueprint: SimilarBlueprint) => {
+    console.log('類似図面がクリックされました:', blueprint);
+    // 将来的には詳細表示や新しいタブで開く処理を実装
+  };
+
 
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
@@ -113,7 +151,10 @@ export default function BlueprintDetail() {
         
         {/* 中央コンテンツエリア */}
         {activeTab === "blueprint" ? (
-          <BlueprintViewer activeFile={activeFile} />
+          <BlueprintViewer 
+            activeFile={activeFile} 
+            onSimilarBlueprintSearch={handleSimilarBlueprintSearch}
+          />
         ) : (
           <div className="flex-1 bg-gray-50 flex items-center justify-center">
             <div className="text-center space-y-4">
@@ -130,9 +171,21 @@ export default function BlueprintDetail() {
           </div>
         )}
         
-        {/* 右側情報パネル */}
+        {/* 右側パネル - 検索中・類似図面表示・通常情報パネルの切り替え */}
         {activeTab === "blueprint" && (
-          <BlueprintInfoPanel activeFile={activeFile} />
+          isSearchingBlueprints ? (
+            <SimilarBlueprintsLoadingPanel 
+              onClose={handleCloseSimilarBlueprints}
+            />
+          ) : showSimilarBlueprints ? (
+            <SimilarBlueprintsPanel 
+              activeFile={activeFile}
+              onClose={handleCloseSimilarBlueprints}
+              onSimilarBlueprintClick={handleSimilarBlueprintClick}
+            />
+          ) : (
+            <BlueprintInfoPanel activeFile={activeFile} />
+          )
         )}
         
       </div>

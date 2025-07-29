@@ -10,7 +10,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { 
   ZoomIn, 
   ZoomOut, 
@@ -19,7 +19,7 @@ import {
   FileImage,
   Layers
 } from "lucide-react";
-import type { CarouselApi } from "@/components/ui/carousel";
+import type { CarouselApi } from "@/shared/shadcnui";
 
 interface UploadedFile {
   id: string;

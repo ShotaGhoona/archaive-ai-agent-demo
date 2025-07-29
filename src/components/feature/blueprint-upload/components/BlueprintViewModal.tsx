@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   Button,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { 
   ZoomIn, 
   ZoomOut, 

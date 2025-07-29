@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Button, Input, Card, CardContent, Badge } from "@/components/ui";
+import { Button, Input, Card, CardContent, Badge } from "@/shared/shadcnui";
 import { Search, ArrowLeft, Filter, X } from "lucide-react";
 
 interface BlueprintResult {

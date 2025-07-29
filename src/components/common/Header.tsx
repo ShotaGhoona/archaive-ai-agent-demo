@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/shadcnui";
 import { Bell, Settings, User, Menu, X } from "lucide-react";
 
 export function Header() {

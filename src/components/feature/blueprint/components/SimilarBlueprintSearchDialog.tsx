@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
   Badge,
-} from "@/components/ui";
+} from "@/shared/shadcnui";
 import { Search, Upload, X, FileImage, Loader2 } from "lucide-react";
 
 interface SimilarBlueprintSearchDialogProps {

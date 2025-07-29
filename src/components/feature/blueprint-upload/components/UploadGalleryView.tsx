@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Card, CardContent, Button } from "@/components/ui";
+import { Card, CardContent, Button } from "@/shared/shadcnui";
 import { 
   FileImage, 
   ZoomIn, 

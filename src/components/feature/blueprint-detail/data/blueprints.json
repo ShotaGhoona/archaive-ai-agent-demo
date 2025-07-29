@@ -7,7 +7,33 @@
     "type": "application/dwg",
     "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
     "createdAt": "2024-01-15T10:30:00Z",
-    "isActive": true
+    "isActive": true,
+    "similarBlueprints": [
+      {
+        "id": "sim1",
+        "name": "類似アセンブリ図面_A.dwg",
+        "description": "類似した構造のアセンブリ図面",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+        "similarity": 85,
+        "createdAt": "2024-01-10T09:15:00Z"
+      },
+      {
+        "id": "sim2", 
+        "name": "類似アセンブリ図面_B.dwg",
+        "description": "部分的に類似した設計の図面",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&auto=format", 
+        "similarity": 72,
+        "createdAt": "2024-01-08T14:20:00Z"
+      },
+      {
+        "id": "sim3",
+        "name": "関連製品図面_C.dwg", 
+        "description": "同じシリーズの製品図面",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop&auto=format",
+        "similarity": 68,
+        "createdAt": "2024-01-05T16:45:00Z"
+      }
+    ]
   },
   {
     "id": "2", 
@@ -17,7 +43,25 @@
     "type": "application/dwg", 
     "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&auto=format",
     "createdAt": "2024-01-15T11:15:00Z",
-    "isActive": false
+    "isActive": false,
+    "similarBlueprints": [
+      {
+        "id": "sim4",
+        "name": "類似寸法図_A.dwg",
+        "description": "同様の寸法表記の図面",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+        "similarity": 78,
+        "createdAt": "2024-01-12T10:30:00Z"
+      },
+      {
+        "id": "sim5",
+        "name": "詳細図_B.dwg", 
+        "description": "類似した詳細図面",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop&auto=format",
+        "similarity": 74,
+        "createdAt": "2024-01-09T13:45:00Z"
+      }
+    ]
   },
   {
     "id": "3",
@@ -27,7 +71,25 @@
     "type": "application/dwg",
     "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=800&h=600&fit=crop&auto=format",
     "createdAt": "2024-01-15T14:20:00Z",
-    "isActive": false
+    "isActive": false,
+    "similarBlueprints": [
+      {
+        "id": "sim6",
+        "name": "断面図B-B.dwg",
+        "description": "別断面での詳細図面", 
+        "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&auto=format",
+        "similarity": 82,
+        "createdAt": "2024-01-11T15:20:00Z"
+      },
+      {
+        "id": "sim7",
+        "name": "断面図C-C.dwg",
+        "description": "類似構造の断面図",
+        "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format", 
+        "similarity": 76,
+        "createdAt": "2024-01-07T11:30:00Z"
+      }
+    ]
   },
   {
     "id": "4",

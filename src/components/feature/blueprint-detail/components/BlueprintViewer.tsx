@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui";
+import { Button } from "@/shared/shadcnui";
 import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Search, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
 
 interface BlueprintFile {
@@ -16,9 +16,10 @@ interface BlueprintFile {
 
 interface BlueprintViewerProps {
   activeFile: BlueprintFile | null;
+  onSimilarBlueprintSearch?: () => void;
 }
 
-export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
+export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: BlueprintViewerProps) {
   const router = useRouter();
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -198,13 +199,10 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
           <Button
             size="lg"
             onClick={() => {
-              // 類似図面検索ページに遷移（現在の図面情報を伴って）
-              const searchParams = new URLSearchParams({
-                from: 'viewer',
-                fileName: activeFile.name,
-                imageUrl: activeFile.imageUrl
-              });
-              router.push(`/blueprint/similar_search?${searchParams.toString()}`);
+              // コンテナーのハンドラーを呼び出して右パネルに類似図面を表示
+              if (onSimilarBlueprintSearch) {
+                onSimilarBlueprintSearch();
+              }
             }}
             title="類似図面検索"
           >

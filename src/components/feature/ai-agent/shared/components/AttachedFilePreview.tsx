@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/shadcnui";
 import { X, Paperclip } from "lucide-react";
 
 interface AttachedFilePreviewProps {
