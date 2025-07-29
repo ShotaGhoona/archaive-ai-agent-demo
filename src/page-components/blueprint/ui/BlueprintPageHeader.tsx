@@ -1,16 +1,9 @@
 import {
   Button,
   Input,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
 } from "@/shared/shadcnui";
 import {
   Search,
-  Filter,
-  RefreshCw,
-  Download,
   Grid3X3,
   List,
   SlidersHorizontal,
@@ -34,8 +27,6 @@ interface BlueprintPageHeaderProps {
 export function BlueprintPageHeader({
   searchTerm,
   setSearchTerm,
-  selectedFilter,
-  setSelectedFilter,
   viewMode,
   setViewMode,
   onToggleFilterSidebar,

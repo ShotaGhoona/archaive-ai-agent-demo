@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { UploadPageHeader } from "./components/UploadPageHeader";
-import { UploadGalleryView } from "./components/UploadGalleryView";
+import { UploadPageHeader } from "./ui/UploadPageHeader";
+import { UploadGalleryView } from "./ui/UploadGalleryView";
 
 interface UploadedFile {
   id: string;

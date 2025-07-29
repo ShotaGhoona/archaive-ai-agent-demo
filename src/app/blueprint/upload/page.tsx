@@ -1,5 +1,5 @@
 "use client";
-import { BlueprintUploadPage } from "@/components/feature/blueprint-upload";
+import { BlueprintUploadPage } from "@/page-components/blueprint-upload";
 
 export default function UploadPage() {
   return <BlueprintUploadPage />;

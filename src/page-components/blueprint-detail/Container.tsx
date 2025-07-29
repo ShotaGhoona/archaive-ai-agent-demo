@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { DetailTabNavigation } from "./components/DetailTabNavigation";
-import { DetailSidebar } from "./components/DetailSidebar";
-import { BlueprintViewer } from "./components/BlueprintViewer";
-import { BlueprintInfoPanel } from "./components/BlueprintInfoPanel";
-import { SimilarBlueprintsPanel } from "./components/SimilarBlueprintsPanel";
-import { SimilarBlueprintsLoadingPanel } from "./components/SimilarBlueprintsLoadingPanel";
+import { DetailTabNavigation } from "./ui/DetailTabNavigation";
+import { DetailSidebar } from "./ui/DetailSidebar";
+import { BlueprintViewer } from "./ui/BlueprintViewer";
+import { BlueprintInfoPanel } from "./ui/BlueprintInfoPanel";
+import { SimilarBlueprintsPanel } from "./ui/SimilarBlueprintsPanel";
+import { SimilarBlueprintsLoadingPanel } from "./ui/SimilarBlueprintsLoadingPanel";
 import blueprintsData from "./data/blueprints.json";
 
 interface SimilarBlueprint {

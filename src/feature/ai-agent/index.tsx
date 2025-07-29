@@ -13,7 +13,7 @@ import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout"
 import FullpageLayout, { FullpageLayoutRef } from "./shared/layouts/FullpageLayout";
 import ChatContent from "./shared/components/ChatContent";
 import ChatInput from "./shared/components/ChatInput";
-import blueprintsData from "@/components/feature/blueprint/data/blueprint.json";
+import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 
 
 // 🎯 統一コンテンツレンダラー
@@ -50,7 +50,7 @@ const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabl
 export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const params = useParams();
   const blueprintId = params.id as string;
-  const blueprint = blueprintsData.find((item) => item.id === blueprintId);
+  const blueprint = blueprintsData.find((item) => item.internalNumber === blueprintId);
   
   const { state, actions } = useChatUIState(blueprintId);
   const { executeTransition, calculateTargetPosition, calculateTargetSize } = useLayoutTransition();
@@ -71,12 +71,12 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   }, [availableAgents]); // actions を依存配列から削除
 
   const blueprintInfo: BlueprintInfo | undefined = blueprint ? {
-    id: blueprint.id,
+    id: blueprint.internalNumber,
     image: blueprint.image,
-    name: `図面 ${blueprint.id}`,
-    customerName: blueprint.customerName,
+    name: `図面 ${blueprint.internalNumber}`,
+    customerName: blueprint.orderSource,
     productName: blueprint.productName,
-    material: blueprint.material
+    material: blueprint.companyField
   } : undefined;
 
   // キーボードショートカット

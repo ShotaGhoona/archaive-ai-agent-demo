@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import { Button } from '@/shared/shadcnui';
 import { Upload, File, X, CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/shared/lib/utils';
 
 interface FileUploadAreaProps {
   onFileUpload: (file: File) => void;

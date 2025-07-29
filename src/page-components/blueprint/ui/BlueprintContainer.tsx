@@ -1,15 +1,15 @@
 "use client";
 import { useState } from "react";
-import blueprintsData from "@/components/feature/blueprint/data/blueprint.json";
-import { BlueprintPageHeader } from "./components/BlueprintPageHeader";
-import { TableView } from "./components/TableView";
-import { GalleryView } from "./components/GalleryView";
-import { BlueprintPagination } from "./components/BlueprintPagination";
-import { FilterSidebar } from "./components/FilterSidebar";
+import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
+import { BlueprintPageHeader } from "./BlueprintPageHeader";
+import { TableView } from "./TableView";
+import { GalleryView } from "./GalleryView";
+import { BlueprintPagination } from "./BlueprintPagination";
+import { FilterSidebar } from "./FilterSidebar";
 
 
 
-export default function Blueprints() {
+export default function BlueprintContainer() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedFilter, setSelectedFilter] = useState("全て");
