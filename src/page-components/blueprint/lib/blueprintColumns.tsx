@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import { Eye, Edit, Trash2, MoreHorizontal, ZoomIn } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Blueprint {
@@ -22,7 +22,12 @@ export interface Blueprint {
   image: string;
 }
 
-export const BLUEPRINT_COLUMNS: DataTableColumn<Blueprint>[] = [
+// プレビュー用のコールバック型
+export interface BlueprintColumnCallbacks {
+  onPreview?: (blueprint: Blueprint) => void;
+}
+
+export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): DataTableColumn<Blueprint>[] => [
   {
     key: 'filename',
     label: 'ファイル名',
@@ -182,6 +187,10 @@ export const BLUEPRINT_COLUMNS: DataTableColumn<Blueprint>[] = [
               詳細表示
             </DropdownMenuItem>
           </Link>
+          <DropdownMenuItem onClick={() => callbacks?.onPreview?.(blueprint)}>
+            <ZoomIn className="h-4 w-4 mr-2" />
+            プレビュー
+          </DropdownMenuItem>
           <DropdownMenuItem>
             <Edit className="h-4 w-4 mr-2" />
             編集
@@ -195,3 +204,6 @@ export const BLUEPRINT_COLUMNS: DataTableColumn<Blueprint>[] = [
     ),
   },
 ];
+
+// 後方互換性のため
+export const BLUEPRINT_COLUMNS = createBlueprintColumns();

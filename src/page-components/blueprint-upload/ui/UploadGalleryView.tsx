@@ -8,7 +8,7 @@ import {
   Check,
   Plus
 } from "lucide-react";
-import { BlueprintViewModal } from "./BlueprintViewModal";
+import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 import { AddFileCard } from "./AddFileCard";
 import { StackedCard } from "./StackedCard";
 
@@ -77,6 +77,18 @@ export function UploadGalleryView({
     e.stopPropagation();
     setViewModalFile(file);
   };
+
+  // UploadedFile を PreviewableFile に変換
+  const convertToPreviewableFile = (file: UploadedFile): PreviewableFile => ({
+    id: file.id,
+    name: file.name,
+    url: file.url,
+    type: file.type,
+    size: file.size,
+    metadata: {
+      createdAt: file.createdAt
+    }
+  });
 
 
   // uploadedモードではfileStacksも考慮する
@@ -235,8 +247,8 @@ export function UploadGalleryView({
 
       {/* 拡大表示モーダル */}
       {viewModalFile && (
-        <BlueprintViewModal
-          files={[viewModalFile]}
+        <FilePreviewModal
+          files={[convertToPreviewableFile(viewModalFile)]}
           isOpen={!!viewModalFile}
           onClose={() => setViewModalFile(null)}
         />

@@ -9,7 +9,7 @@ import {
   Plus,
   Layers
 } from "lucide-react";
-import { BlueprintViewModal } from "./BlueprintViewModal";
+import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 
 interface UploadedFile {
   id: string;
@@ -64,6 +64,19 @@ export function StackedCard({
       onToggleSelection();
     }
   };
+
+  // UploadedFile を PreviewableFile に変換
+  const convertToPreviewableFiles = (files: UploadedFile[]): PreviewableFile[] => 
+    files.map(file => ({
+      id: file.id,
+      name: file.name,
+      url: file.url,
+      type: file.type,
+      size: file.size,
+      metadata: {
+        createdAt: file.createdAt
+      }
+    }));
 
   return (
     <>
@@ -198,8 +211,8 @@ export function StackedCard({
       </div>
 
       {/* スタックファイル表示モーダル */}
-      <BlueprintViewModal
-        files={stackedFiles}
+      <FilePreviewModal
+        files={convertToPreviewableFiles(stackedFiles)}
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
         initialFileIndex={0}
