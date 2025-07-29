@@ -236,7 +236,7 @@ export function UploadGalleryView({
       {/* 拡大表示モーダル */}
       {viewModalFile && (
         <BlueprintViewModal
-          file={viewModalFile}
+          files={[viewModalFile]}
           isOpen={!!viewModalFile}
           onClose={() => setViewModalFile(null)}
         />

@@ -9,7 +9,7 @@ import {
   Plus,
   Layers
 } from "lucide-react";
-import { StackedFilesViewModal } from "./StackedFilesViewModal";
+import { BlueprintViewModal } from "./BlueprintViewModal";
 
 interface UploadedFile {
   id: string;
@@ -198,8 +198,8 @@ export function StackedCard({
       </div>
 
       {/* スタックファイル表示モーダル */}
-      <StackedFilesViewModal
-        stackedFiles={stackedFiles}
+      <BlueprintViewModal
+        files={stackedFiles}
         isOpen={isViewModalOpen}
         onClose={() => setIsViewModalOpen(false)}
         initialFileIndex={0}
