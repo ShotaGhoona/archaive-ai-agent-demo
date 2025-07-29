@@ -17,7 +17,8 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
     if (col.editable) {
       acc[col.key as string] = { 
         type: col.inputType || 'text', 
-        label: col.label 
+        label: col.label,
+        options: col.selectOptions
       };
     }
     return acc;
@@ -79,7 +80,8 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
         onChange: setEditValue,
         onSave: saveEdit,
         onCancel: cancelEdit,
-        inputType: editableFields[field]?.type || 'text'
+        inputType: editableFields[field]?.type || 'text',
+        selectOptions: editableFields[field]?.options
       };
     }
 
@@ -90,7 +92,8 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
       onChange: null,
       onSave: null,
       onCancel: null,
-      inputType: 'text'
+      inputType: 'text',
+      selectOptions: undefined
     };
   }, [editingCell, editValue, saveEdit, cancelEdit, editableFields, getRowId]);
 

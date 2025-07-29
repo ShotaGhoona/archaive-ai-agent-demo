@@ -8,8 +8,9 @@ export interface DataTableColumn<T = any> {
   sortable: boolean;
   editable: boolean;
   locked: boolean;
-  inputType?: 'text' | 'number' | 'date' | 'email' | 'tel';
+  inputType?: 'text' | 'number' | 'date' | 'email' | 'tel' | 'select';
   sortType?: 'string' | 'number' | 'date';
+  selectOptions?: string[];
   render?: (item: T, value: any) => React.ReactNode;
   headerRender?: (column: DataTableColumn<T>) => React.ReactNode;
 }
@@ -38,8 +39,9 @@ export interface ResizeState {
 
 export interface EditableFields {
   [key: string]: {
-    type: 'text' | 'number' | 'date' | 'email' | 'tel';
+    type: 'text' | 'number' | 'date' | 'email' | 'tel' | 'select';
     label: string;
+    options?: string[];
   };
 }
 
@@ -69,6 +71,7 @@ export interface CellContentData {
   onSave: (() => void) | null;
   onCancel: (() => void) | null;
   inputType: string;
+  selectOptions?: string[];
 }
 
 // Sort icon の戻り値型

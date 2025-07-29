@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent } from '@/shared/shadcnui';
+import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/shadcnui';
 import { Lock } from 'lucide-react';
 import { DataTableColumn, CellContentData } from '../model';
 
@@ -65,18 +65,39 @@ export function TableDataCell<T>({
       onClick={column.editable ? () => onCellClick(item, column.key as string) : undefined}
     >
       {isEditing ? (
-        <Input
-          ref={cellContent.inputRef}
-          value={cellContent.value}
-          onChange={(e) => cellContent.onChange!(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') cellContent.onSave!();
-            if (e.key === 'Escape') cellContent.onCancel!();
-          }}
-          onBlur={cellContent.onSave!}
-          className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-blue-500"
-          type={cellContent.inputType}
-        />
+        cellContent.inputType === 'select' && cellContent.selectOptions ? (
+          <Select
+            value={cellContent.value}
+            onValueChange={cellContent.onChange!}
+            onOpenChange={(open) => {
+              if (!open) cellContent.onSave!();
+            }}
+          >
+            <SelectTrigger className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-blue-500">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {cellContent.selectOptions.map((option) => (
+                <SelectItem key={option} value={option}>
+                  {option}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        ) : (
+          <Input
+            ref={cellContent.inputRef}
+            value={cellContent.value}
+            onChange={(e) => cellContent.onChange!(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') cellContent.onSave!();
+              if (e.key === 'Escape') cellContent.onCancel!();
+            }}
+            onBlur={cellContent.onSave!}
+            className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-blue-500"
+            type={cellContent.inputType}
+          />
+        )
       ) : (
         <span>{cellContent.value}</span>
       )}
