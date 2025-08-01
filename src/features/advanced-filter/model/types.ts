@@ -7,7 +7,7 @@ export interface FilterConfig<T = Record<string, unknown>> {
   defaultValue?: unknown;
 }
 
-export interface FilterState<T = Record<string, unknown>> {
+export interface FilterState {
   [key: string]: unknown;
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Card, CardHeader, CardContent } from "@/shared/shadcnui";
+import { Button, Input, Card, CardContent } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
 
 interface BlueprintFile {

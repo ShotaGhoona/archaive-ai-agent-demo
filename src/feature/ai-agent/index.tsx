@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps } from "./types/types";
+import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps, AIAgentConfig } from "./types/types";
 import { useChatUIState } from "./shared/hooks/useChatUIState";
 import { useLayoutTransition } from "./shared/hooks/useLayoutTransition";
 import { getAgentConfigs, getAgentConfig } from "./utils/agentConfigs";
@@ -18,10 +18,10 @@ import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 
 // 🎯 統一コンテンツレンダラー
 const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }: {
-  messages: unknown;
+  messages: Message[];
   isLoading: boolean;
-  agentConfig: unknown;
-  sessionImage: unknown;
+  agentConfig: AIAgentConfig;
+  sessionImage: File | null;
 }) => {
   if (!agentConfig) return null;
 
@@ -35,15 +35,15 @@ const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }
 
 // 共有チャットインプット使用
 const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment, sessionImage, onRemoveSessionImage }: {
-  onSendMessage: unknown;
-  onQuickAction: unknown;
-  onFileAttach: unknown;
+  onSendMessage: (message: string) => void;
+  onQuickAction: (action: string) => void;
+  onFileAttach: (file: File) => void;
   disabled: boolean;
-  agentConfig: unknown;
-  attachedFile: unknown;
-  onRemoveAttachment: unknown;
-  sessionImage: unknown;
-  onRemoveSessionImage: unknown;
+  agentConfig: AIAgentConfig;
+  attachedFile: File | null;
+  onRemoveAttachment: () => void;
+  sessionImage: File | null;
+  onRemoveSessionImage: () => void;
 }) => {
   if (!agentConfig) return null;
 
@@ -292,7 +292,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     selectedAgent: state.selectedAgent,
     agentConfig: state.agentConfig,
     // エージェント別コンテンツ
-    agentContent: state.selectedAgent ? (
+    agentContent: state.selectedAgent && state.agentConfig ? (
       <AgentContentRenderer
         messages={state.messages}
         isLoading={state.isLoading}
@@ -301,7 +301,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       />
     ) : null,
     // エージェント別インプット
-    agentInput: state.selectedAgent ? (
+    agentInput: state.selectedAgent && state.agentConfig ? (
       <AgentInputRenderer
         onSendMessage={handleSendMessage}
         onQuickAction={handleQuickAction}

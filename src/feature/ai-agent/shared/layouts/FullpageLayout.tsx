@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useRef, useImperativeHandle } from "react";
-import { ChatLayoutState, Message, BlueprintInfo } from "../../types/types";
+import { ChatLayoutState, Message, BlueprintInfo, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 import ChatContent from "../components/ChatContent";
 import ChatInput from "../components/ChatInput";
@@ -99,7 +99,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
               currentLayout={ChatLayoutState.FULLPAGE}
               onLayoutChange={onLayoutChange}
               onClose={onClose}
-              title={agentConfig?.name ? `${agentConfig.name} Assistant` : "AI Assistant"}
+              title={(agentConfig as { name?: string })?.name ? `${(agentConfig as { name: string }).name} Assistant` : "AI Assistant"}
             />
             
             {/* チャット内容 */}
@@ -108,7 +108,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
                 <ChatContent
                   messages={messages}
                   isLoading={isLoading}
-                  agentConfig={agentConfig}
+                  agentConfig={agentConfig as AIAgentConfig}
                 />
               )}
             </div>
@@ -119,7 +119,7 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
                 onSendMessage={onSendMessage}
                 onQuickAction={onQuickAction}
                 disabled={isLoading}
-                agentConfig={agentConfig}
+                agentConfig={agentConfig as AIAgentConfig}
               />
             )}
           </div>

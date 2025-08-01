@@ -1,9 +1,7 @@
 "use client";
 
 import { 
-  MessageCircle, Calculator, HelpCircle,
-  BookOpen, Settings, FileText, Search,
-  Package, DollarSign, Clock, TrendingUp
+  MessageCircle, Calculator
 } from 'lucide-react';
 import { AIAgentConfig, AgentCategory } from '../types/types';
 

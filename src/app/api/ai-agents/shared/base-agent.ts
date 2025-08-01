@@ -1,4 +1,4 @@
-import { AgentConfig, AgentResponse, AgentError, UnifiedAgentRequest } from './types';
+import { AgentConfig, AgentResponse, AgentError, UnifiedAgentRequest, ResponseAttachment } from './types';
 import { calculateUsage, createVisionCompletion, createChatCompletion } from './openai-client';
 import OpenAI from 'openai';
 
@@ -151,7 +151,7 @@ export abstract class BaseAgent {
   protected createResponse(
     content: string,
     openaiResponse?: OpenAI.Chat.Completions.ChatCompletion,
-    attachments?: unknown[],
+    attachments?: ResponseAttachment[],
     model?: string
   ): AgentResponse {
     const usage = openaiResponse ? calculateUsage(openaiResponse, model) : undefined;

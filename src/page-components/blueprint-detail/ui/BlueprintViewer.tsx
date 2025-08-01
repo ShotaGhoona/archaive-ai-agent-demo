@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
 import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Search, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
 
@@ -20,7 +20,7 @@ interface BlueprintViewerProps {
 }
 
 export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: BlueprintViewerProps) {
-  const router = useRouter();
+  // const router = useRouter();
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);

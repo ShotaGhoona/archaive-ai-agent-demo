@@ -2,7 +2,7 @@
 
 import { forwardRef, useRef, useImperativeHandle } from "react";
 import { Card } from "@/shared/shadcnui";
-import { ChatLayoutState, Position, Size, Message } from "../../types/types";
+import { ChatLayoutState, Position, Size, Message, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 import ChatContent from "../components/ChatContent";
 import ChatInput from "../components/ChatInput";
@@ -158,7 +158,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
           onClose={onClose}
           onMouseDown={handleMouseDown}
           isDraggable={isDraggable}
-          title={agentConfig?.name ? `${agentConfig.name} Assistant` : "AI Assistant"}
+          title={(agentConfig as { name?: string })?.name ? `${(agentConfig as { name: string }).name} Assistant` : "AI Assistant"}
         />
         
         <div className="flex-1 overflow-hidden">
@@ -166,7 +166,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
             <ChatContent
               messages={messages}
               isLoading={isLoading}
-              agentConfig={agentConfig}
+              agentConfig={agentConfig as AIAgentConfig}
             />
           )}
         </div>
@@ -176,7 +176,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
             onSendMessage={onSendMessage}
             onQuickAction={onQuickAction}
             disabled={isLoading}
-            agentConfig={agentConfig}
+            agentConfig={agentConfig as AIAgentConfig}
           />
         )}
       </div>

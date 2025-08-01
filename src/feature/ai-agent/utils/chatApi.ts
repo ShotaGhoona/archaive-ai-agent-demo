@@ -1,4 +1,4 @@
-interface ChatApiRequest {
+export interface ChatApiRequest {
   message: string;
   agentId: string;
   conversationHistory?: Array<{
@@ -21,12 +21,12 @@ interface ChatApiResponse {
 }
 
 // Vision対応の見積もりエージェント用API
-interface EstimateApiRequest {
+export interface EstimateApiRequest {
   message: string;
   image?: File;
 }
 
-interface EstimateApiResponse {
+export interface EstimateApiResponse {
   response: string;
   timestamp: string;
   hasImage: boolean;

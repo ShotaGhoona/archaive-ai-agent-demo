@@ -137,30 +137,35 @@ export const useLayoutTransition = () => {
       }
 
       // Web Animations APIを使用してアニメーション実行
-      const { phases } = transitionConfig;
+      const phases = (transitionConfig as { phases?: unknown[] }).phases;
+      if (!phases || !Array.isArray(phases)) {
+        resolve();
+        return;
+      }
       let totalDuration = 0;
 
-      phases.forEach((phase: Record<string, unknown>) => {
-        const delay = phase.delay || 0;
-        const phaseDuration = phase.duration;
+      phases.forEach((phase: unknown) => {
+        const phaseObj = phase as Record<string, unknown>;
+        const delay = phaseObj.delay || 0;
+        const phaseDuration = phaseObj.duration;
         
         setTimeout(() => {
           const keyframes: Record<string, unknown> = {};
           
-          phase.properties.forEach((prop: string) => {
-            if (transitionConfig[prop]) {
-              keyframes[prop] = transitionConfig[prop];
+          (phaseObj.properties as string[])?.forEach((prop: string) => {
+            if ((transitionConfig as Record<string, unknown>)[prop]) {
+              keyframes[prop] = (transitionConfig as Record<string, unknown>)[prop];
             }
           });
 
-          element.animate(keyframes, {
-            duration: phaseDuration,
+          element.animate(keyframes as unknown as Keyframe[], {
+            duration: phaseDuration as number,
             easing: DEFAULT_TRANSITION.easing,
             fill: "forwards"
           });
-        }, delay);
+        }, delay as number);
 
-        totalDuration = Math.max(totalDuration, delay + phaseDuration);
+        totalDuration = Math.max(totalDuration, (delay as number) + (phaseDuration as number));
       });
 
       setTimeout(resolve, totalDuration);

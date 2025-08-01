@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Button, Card, CardContent, Badge } from "@/shared/shadcnui";
-import { Plus, FileImage, Upload, Loader2, X } from "lucide-react";
+import { Plus, FileImage, Loader2, X } from "lucide-react";
 
 interface BlueprintFile {
   id: string;

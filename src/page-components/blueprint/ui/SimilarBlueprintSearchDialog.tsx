@@ -17,12 +17,12 @@ interface SimilarBlueprintSearchDialogProps {
   onSearchResults?: (results: unknown[]) => void;
 }
 
-export function SimilarBlueprintSearchDialog({ onSearchResults }: SimilarBlueprintSearchDialogProps) {
+export function SimilarBlueprintSearchDialog({ }: SimilarBlueprintSearchDialogProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>("");
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

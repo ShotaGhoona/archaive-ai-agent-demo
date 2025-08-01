@@ -22,6 +22,19 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
+  const handleFiles = useCallback((files: File[]) => {
+    const validFiles = files.filter(file => {
+      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
+      return acceptedTypes.includes(extension) && file.size <= maxSize;
+    });
+
+    if (validFiles.length > 0) {
+      const newFiles = [...uploadedFiles, ...validFiles];
+      setUploadedFiles(newFiles);
+      validFiles.forEach(file => onFileUpload(file));
+    }
+  }, [acceptedTypes, maxSize, uploadedFiles, onFileUpload]);
+
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(true);
@@ -44,19 +57,6 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     const files = e.target.files ? Array.from(e.target.files) : [];
     handleFiles(files);
   }, [handleFiles]);
-
-  const handleFiles = (files: File[]) => {
-    const validFiles = files.filter(file => {
-      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
-      return acceptedTypes.includes(extension) && file.size <= maxSize;
-    });
-
-    if (validFiles.length > 0) {
-      const newFiles = [...uploadedFiles, ...validFiles];
-      setUploadedFiles(newFiles);
-      validFiles.forEach(file => onFileUpload(file));
-    }
-  };
 
   const removeFile = (index: number) => {
     const newFiles = uploadedFiles.filter((_, i) => i !== index);

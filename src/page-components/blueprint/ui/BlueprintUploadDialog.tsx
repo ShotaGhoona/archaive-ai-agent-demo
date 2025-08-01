@@ -9,9 +9,8 @@ import {
   CardHeader,
   CardTitle,
   Badge,
-  ScrollArea,
 } from "@/shared/shadcnui";
-import { Plus, Upload, X, FileImage, Loader2, Files } from "lucide-react";
+import { Plus, Loader2, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface BlueprintUploadDialogProps {
@@ -20,7 +19,7 @@ interface BlueprintUploadDialogProps {
 
 export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadedFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -88,6 +87,8 @@ export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialo
     setDragActive(false);
   };
 
+  // Unused functions - commenting out for future use
+  /*
   const removeFile = (index: number) => {
     setUploadedFiles(prev => prev.filter((_, i) => i !== index));
     if (fileInputRef.current) {
@@ -124,12 +125,14 @@ export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialo
       setIsUploading(false);
     }
   };
+  */
 
   const handleNavigateToUpload = () => {
     router.push('/blueprint/upload');
     setIsOpen(false);
   };
 
+  /*
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -137,6 +140,7 @@ export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialo
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
+  */
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>

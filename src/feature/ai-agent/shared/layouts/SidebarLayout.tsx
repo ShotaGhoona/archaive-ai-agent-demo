@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useRef, useImperativeHandle } from "react";
-import { ChatLayoutState, Message } from "../../types/types";
+import { ChatLayoutState, Message, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 import ChatContent from "../components/ChatContent";
 import ChatInput from "../components/ChatInput";
@@ -57,7 +57,7 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
           <ChatContent
             messages={messages}
             isLoading={isLoading}
-            agentConfig={agentConfig}
+            agentConfig={agentConfig as AIAgentConfig}
           />
         )}
       </div>
