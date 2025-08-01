@@ -7,6 +7,8 @@ import {
 import { FilterToggleButton } from "@/features/advanced-filter";
 import { CsvExportDialog } from "@/features/csv-export";
 import { PROJECT_CSV_COLUMNS } from "../lib/projectCsvConfig";
+import { NewProjectDialog } from "./NewProjectDialog";
+import { Project } from "../lib/projectColumns";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -14,6 +16,7 @@ interface ProjectPageHeaderProps {
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
   projects?: any[];
+  onProjectCreate?: (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => void;
 }
 
 export function ProjectPageHeader({
@@ -22,7 +25,12 @@ export function ProjectPageHeader({
   onToggleFilterSidebar,
   isFilterSidebarOpen,
   projects = [],
+  onProjectCreate,
 }: ProjectPageHeaderProps) {
+  const handleProjectCreate = (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => {
+    onProjectCreate?.(project);
+  };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -40,12 +48,16 @@ export function ProjectPageHeader({
           />
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {/* CSV出力ボタン */}
         <CsvExportDialog
           data={projects}
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
+        />
+        {/* 新規案件登録ボタン */}
+        <NewProjectDialog
+          onSubmit={handleProjectCreate}
         />
       </div>
     </div>

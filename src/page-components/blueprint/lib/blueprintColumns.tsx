@@ -39,7 +39,7 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     sortType: 'string',
     render: (blueprint: Blueprint, value: string) => (
       <Link
-        href={`/blueprints/${blueprint.internalNumber}`}
+        href={`/blueprint/${blueprint.internalNumber}`}
         className="hover:underline font-mono text-sm font-medium text-primary"
         onClick={(e) => e.stopPropagation()}
       >
