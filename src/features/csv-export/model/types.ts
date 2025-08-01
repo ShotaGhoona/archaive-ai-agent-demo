@@ -1,18 +1,18 @@
-export interface CsvColumnConfig<T = any> {
+export interface CsvColumnConfig<T = Record<string, unknown>> {
   key: keyof T;
   label: string;
   enabled: boolean;
-  formatter?: (value: any) => string;
+  formatter?: (value: unknown) => string;
 }
 
-export interface CsvExportConfig<T = any> {
+export interface CsvExportConfig<T = Record<string, unknown>> {
   columns: CsvColumnConfig<T>[];
   filename: string;
   encoding: 'utf-8' | 'shift_jis';
   includeHeader: boolean;
 }
 
-export interface CsvExportDialogProps<T = any> {
+export interface CsvExportDialogProps<T = Record<string, unknown>> {
   data: T[];
   initialColumns: Omit<CsvColumnConfig<T>, 'enabled'>[];
   defaultFilename: string;
@@ -20,7 +20,7 @@ export interface CsvExportDialogProps<T = any> {
   maxPreviewRows?: number;
 }
 
-export interface UseCsvExportReturn<T = any> {
+export interface UseCsvExportReturn<T = Record<string, unknown>> {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   encoding: 'utf-8' | 'shift_jis';

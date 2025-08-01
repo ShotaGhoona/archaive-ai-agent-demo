@@ -6,9 +6,17 @@
 //   Info
 // } from "lucide-react";
 
+// interface ActiveFile {
+//   id: string;
+//   name: string;
+//   imageUrl: string;
+//   description?: string;
+//   size: number;
+// }
+
 // interface DetailToolbarProps {
 //   activeTab: string;
-//   activeFile?: any;
+//   activeFile?: ActiveFile;
 //   onDownload?: () => void;
 //   onPrint?: () => void;
 //   onShare?: () => void;
@@ -16,7 +24,7 @@
 
 // interface ToolAction {
 //   id: string;
-//   icon: React.ComponentType<any>;
+//   icon: React.ComponentType<{ className?: string }>;
 //   label: string;
 //   description: string;
 //   action: () => void;

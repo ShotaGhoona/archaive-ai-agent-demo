@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useRef, useImperativeHandle, useState } from "react";
+import { forwardRef, useRef, useImperativeHandle } from "react";
 import { ChatLayoutState, Message, BlueprintInfo } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 import ChatContent from "../components/ChatContent";
@@ -15,7 +15,7 @@ interface FullpageLayoutProps {
   onQuickAction: (action: string) => void;
   blueprintInfo?: BlueprintInfo;
   selectedAgent?: string | null;
-  agentConfig?: any;
+  agentConfig?: unknown;
   agentContent?: React.ReactNode;
   agentInput?: React.ReactNode;
 }

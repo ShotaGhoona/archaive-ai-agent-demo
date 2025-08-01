@@ -1,14 +1,14 @@
-export interface FilterConfig<T = any> {
+export interface FilterConfig<T = Record<string, unknown>> {
   key: keyof T;
   label: string;
   type: 'text' | 'select' | 'date' | 'dateRange' | 'number' | 'datetime-local';
   options?: string[];
   placeholder?: string;
-  defaultValue?: any;
+  defaultValue?: unknown;
 }
 
-export interface FilterState<T = any> {
-  [key: string]: any;
+export interface FilterState<T = Record<string, unknown>> {
+  [key: string]: unknown;
 }
 
 export interface DateRangeFilter {
@@ -16,7 +16,7 @@ export interface DateRangeFilter {
   to?: string;
 }
 
-export interface AdvancedFilterProps<T = any> {
+export interface AdvancedFilterProps<T = Record<string, unknown>> {
   isOpen: boolean;
   onToggle: () => void;
   filters: FilterState<T>;
@@ -27,10 +27,10 @@ export interface AdvancedFilterProps<T = any> {
   className?: string;
 }
 
-export interface FilterControlProps<T = any> {
+export interface FilterControlProps<T = Record<string, unknown>> {
   config: FilterConfig<T>;
-  value: any;
-  onChange: (value: any) => void;
+  value: unknown;
+  onChange: (value: unknown) => void;
 }
 
 export interface FilterToggleButtonProps {

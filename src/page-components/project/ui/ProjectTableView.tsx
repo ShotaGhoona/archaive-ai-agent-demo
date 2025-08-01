@@ -4,7 +4,7 @@ import { Project, PROJECT_COLUMNS } from "../lib/projectColumns";
 
 interface ProjectTableViewProps {
   projects: Project[];
-  onProjectUpdate?: (projectId: string, field: string, value: any) => void;
+  onProjectUpdate?: (projectId: string, field: string, value: unknown) => void;
 }
 
 export function ProjectTableView({ projects, onProjectUpdate }: ProjectTableViewProps) {

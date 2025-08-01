@@ -17,7 +17,12 @@ import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 
 
 // 🎯 統一コンテンツレンダラー
-const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }: any) => {
+const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }: {
+  messages: unknown;
+  isLoading: boolean;
+  agentConfig: unknown;
+  sessionImage: unknown;
+}) => {
   if (!agentConfig) return null;
 
   return <ChatContent 
@@ -29,7 +34,17 @@ const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }
 };
 
 // 共有チャットインプット使用
-const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment, sessionImage, onRemoveSessionImage }: any) => {
+const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment, sessionImage, onRemoveSessionImage }: {
+  onSendMessage: unknown;
+  onQuickAction: unknown;
+  onFileAttach: unknown;
+  disabled: boolean;
+  agentConfig: unknown;
+  attachedFile: unknown;
+  onRemoveAttachment: unknown;
+  sessionImage: unknown;
+  onRemoveSessionImage: unknown;
+}) => {
   if (!agentConfig) return null;
 
   return (

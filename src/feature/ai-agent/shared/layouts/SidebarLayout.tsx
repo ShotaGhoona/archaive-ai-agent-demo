@@ -14,7 +14,7 @@ interface SidebarLayoutProps {
   onSendMessage: (message: string) => void;
   onQuickAction: (action: string) => void;
   selectedAgent?: string | null;
-  agentConfig?: any;
+  agentConfig?: unknown;
   agentContent?: React.ReactNode;
   agentInput?: React.ReactNode;
 }
@@ -30,7 +30,6 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
   onClose,
   onSendMessage,
   onQuickAction,
-  selectedAgent,
   agentConfig,
   agentContent,
   agentInput

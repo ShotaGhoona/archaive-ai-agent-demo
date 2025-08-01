@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { Card, CardContent, Badge } from "@/shared/shadcnui";
-import { Plus, Upload, Loader2 } from "lucide-react";
+import { Badge } from "@/shared/shadcnui";
+import { Plus, Loader2 } from "lucide-react";
 
 interface UploadedFile {
   id: string;

@@ -20,7 +20,7 @@ export function AdvancedFilterSidebar<T>({
   title = '詳細フィルター',
   className = '',
 }: AdvancedFilterProps<T>) {
-  const updateFilter = (key: string, value: any) => {
+  const updateFilter = (key: string, value: unknown) => {
     onFiltersChange({
       ...filters,
       [key]: value,

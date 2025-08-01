@@ -24,7 +24,7 @@ function getWelcomeMessage(agentId: string): string {
   }
 }
 
-export default function ChatContent({ messages, isLoading, agentConfig, sessionImage }: ChatContentProps) {
+export default function ChatContent({ messages, agentConfig }: ChatContentProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function ChatContent({ messages, isLoading, agentConfig, sessionI
           <SessionImagePreview image={sessionImage} />
         )} */}
 
-        {displayMessages.map((message, index) => (
+        {displayMessages.map((message) => (
           <ChatMessage 
             key={message.id} 
             message={message} 

@@ -25,7 +25,7 @@ export const useLayoutTransition = () => {
     toPosition: Position,
     toSize: Size
   ) => {
-    const transitions: Record<string, any> = {
+    const transitions: Record<string, unknown> = {
       [`${ChatLayoutState.FLOATING}-${ChatLayoutState.SIDEBAR}`]: {
         transform: [
           `translate(${fromPosition.x}px, ${fromPosition.y}px)`,
@@ -140,12 +140,12 @@ export const useLayoutTransition = () => {
       const { phases } = transitionConfig;
       let totalDuration = 0;
 
-      phases.forEach((phase: any, index: number) => {
+      phases.forEach((phase: Record<string, unknown>) => {
         const delay = phase.delay || 0;
         const phaseDuration = phase.duration;
         
         setTimeout(() => {
-          const keyframes: any = {};
+          const keyframes: Record<string, unknown> = {};
           
           phase.properties.forEach((prop: string) => {
             if (transitionConfig[prop]) {

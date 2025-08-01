@@ -34,24 +34,24 @@ export function BlueprintUploadPage() {
     
     if (storedFiles) {
       const files = JSON.parse(storedFiles);
-      setUploadedFiles(files.map((file: any) => ({
+      setUploadedFiles(files.map((file: Record<string, unknown>) => ({
         ...file,
         createdAt: new Date(file.createdAt)
       })));
     }
     if (storedTrashedFiles) {
       const files = JSON.parse(storedTrashedFiles);
-      setTrashedFiles(files.map((file: any) => ({
+      setTrashedFiles(files.map((file: Record<string, unknown>) => ({
         ...file,
         createdAt: new Date(file.createdAt)
       })));
     }
     if (storedFileStacks) {
       const stacks = JSON.parse(storedFileStacks);
-      setFileStacks(stacks.map((stack: any) => ({
+      setFileStacks(stacks.map((stack: Record<string, unknown>) => ({
         ...stack,
         createdAt: new Date(stack.createdAt),
-        files: stack.files.map((file: any) => ({
+        files: (stack.files as unknown[]).map((file: Record<string, unknown>) => ({
           ...file,
           createdAt: new Date(file.createdAt)
         }))
@@ -112,7 +112,7 @@ export function BlueprintUploadPage() {
       sessionStorage.setItem('trashedFiles', JSON.stringify(updatedTrashedFiles));
     } else {
       // ゴミ箱モードでは個別ファイルのみ削除（従来の処理）
-      const filesToRemove = trashedFiles.filter(f => selectedFiles.includes(f.id));
+      // const filesToRemove = trashedFiles.filter(f => selectedFiles.includes(f.id));
       const remainingTrashedFiles = trashedFiles.filter(f => !selectedFiles.includes(f.id));
       
       setTrashedFiles(remainingTrashedFiles);

@@ -5,7 +5,7 @@ import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 
 interface TableViewProps {
   blueprints: Blueprint[];
-  onBlueprintUpdate?: (internalNumber: string, field: string, value: any) => void;
+  onBlueprintUpdate?: (internalNumber: string, field: string, value: unknown) => void;
 }
 
 export function TableView({ blueprints, onBlueprintUpdate }: TableViewProps) {

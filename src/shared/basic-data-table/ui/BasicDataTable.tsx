@@ -14,7 +14,7 @@ export function BasicDataTable<T>({
   data,
   columns,
   onItemUpdate,
-  getRowId = (item: T) => String((item as any).id || Math.random()),
+  getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random()),
   className = '',
   emptyMessage = 'データがありません'
 }: BasicDataTableProps<T>) {

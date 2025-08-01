@@ -4,12 +4,12 @@ import { EditingCell, EditableFields, DataTableColumn, CellContentData } from '.
 interface UseCellEditProps<T> {
   columns: DataTableColumn<T>[];
   getRowId: (item: T) => string;
-  onUpdate?: (rowId: string, field: string, value: any) => void;
+  onUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps<T>) {
   const [editingCell, setEditingCell] = useState<EditingCell | null>(null);
-  const [editValue, setEditValue] = useState<any>('');
+  const [editValue, setEditValue] = useState<unknown>('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   // columns から編集可能フィールドとロックフィールドを動的に生成
@@ -29,7 +29,7 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
     .map(col => col.key as string);
 
   // 編集開始
-  const startEditing = useCallback((rowId: string, field: string, currentValue: any) => {
+  const startEditing = useCallback((rowId: string, field: string, currentValue: unknown) => {
     if (lockedFields.includes(field)) return;
     
     setEditingCell({ rowId, field, value: currentValue });
@@ -63,7 +63,7 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
   // セルがクリックされた時の処理
   const handleCellClick = useCallback((item: T, field: string) => {
     const rowId = getRowId(item);
-    const value = (item as any)[field];
+    const value = (item as Record<string, unknown>)[field];
     startEditing(rowId, field, value);
   }, [startEditing, getRowId]);
 
@@ -87,7 +87,7 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
 
     return {
       isEditing: false,
-      value: (item as any)[field],
+      value: (item as Record<string, unknown>)[field],
       inputRef: null,
       onChange: null,
       onSave: null,

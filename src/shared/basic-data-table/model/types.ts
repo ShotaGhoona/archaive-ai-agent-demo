@@ -1,6 +1,6 @@
 // 汎用的なデータテーブルの型定義
 
-export interface DataTableColumn<T = any> {
+export interface DataTableColumn<T = unknown> {
   key: keyof T | string;
   label: string;
   width: number;
@@ -11,14 +11,14 @@ export interface DataTableColumn<T = any> {
   inputType?: 'text' | 'number' | 'date' | 'email' | 'tel' | 'select';
   sortType?: 'string' | 'number' | 'date';
   selectOptions?: string[];
-  render?: (item: T, value: any) => React.ReactNode;
+  render?: (item: T, value: unknown) => React.ReactNode;
   headerRender?: (column: DataTableColumn<T>) => React.ReactNode;
 }
 
 export interface EditingCell {
   rowId: string;
   field: string;
-  value: any;
+  value: unknown;
 }
 
 export interface SortConfig {
@@ -53,10 +53,10 @@ export interface SortableFields {
 }
 
 // データテーブルのメイン props
-export interface BasicDataTableProps<T = any> {
+export interface BasicDataTableProps<T = unknown> {
   data: T[];
   columns: DataTableColumn<T>[];
-  onItemUpdate?: (rowId: string, field: string, value: any) => void;
+  onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
   getRowId?: (item: T) => string;
   className?: string;
   emptyMessage?: string;
@@ -65,9 +65,9 @@ export interface BasicDataTableProps<T = any> {
 // Cell content の戻り値型
 export interface CellContentData {
   isEditing: boolean;
-  value: any;
+  value: unknown;
   inputRef: React.RefObject<HTMLInputElement> | null;
-  onChange: ((value: any) => void) | null;
+  onChange: ((value: unknown) => void) | null;
   onSave: (() => void) | null;
   onCancel: (() => void) | null;
   inputType: string;

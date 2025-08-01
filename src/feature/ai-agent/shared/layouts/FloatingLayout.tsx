@@ -21,7 +21,7 @@ interface FloatingLayoutProps {
   isDraggable?: boolean;
   isResizable?: boolean;
   selectedAgent?: string | null;
-  agentConfig?: any;
+  agentConfig?: unknown;
   agentContent?: React.ReactNode;
   agentInput?: React.ReactNode;
 }
@@ -43,7 +43,6 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
   onSizeChange,
   isDraggable = true,
   isResizable = true,
-  selectedAgent,
   agentConfig,
   agentContent,
   agentInput

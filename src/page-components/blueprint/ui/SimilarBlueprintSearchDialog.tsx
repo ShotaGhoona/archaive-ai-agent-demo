@@ -14,7 +14,7 @@ import {
 import { Search, Upload, X, FileImage, Loader2 } from "lucide-react";
 
 interface SimilarBlueprintSearchDialogProps {
-  onSearchResults?: (results: any[]) => void;
+  onSearchResults?: (results: unknown[]) => void;
 }
 
 export function SimilarBlueprintSearchDialog({ onSearchResults }: SimilarBlueprintSearchDialogProps) {

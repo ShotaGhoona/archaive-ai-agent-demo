@@ -10,7 +10,7 @@ export const BLUEPRINT_CSV_COLUMNS: Omit<CsvColumnConfig<Blueprint>, 'enabled'>[
   { 
     key: 'orderQuantity', 
     label: '受注個数',
-    formatter: (value: number) => value.toString()
+    formatter: (value: unknown) => String(value)
   },
   { key: 'orderDate', label: '受注日' },
   { key: 'deliveryDate', label: '納品日' },

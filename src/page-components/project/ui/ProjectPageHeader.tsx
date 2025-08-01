@@ -15,7 +15,7 @@ interface ProjectPageHeaderProps {
   setSearchTerm: (value: string) => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
-  projects?: any[];
+  projects?: unknown[];
   onProjectCreate?: (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => void;
 }
 

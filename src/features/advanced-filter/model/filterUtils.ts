@@ -35,8 +35,8 @@ export function applyFilters<T>(
  * 個別のフィルター条件をチェックする
  */
 function matchesFilter<T>(
-  itemValue: any,
-  filterValue: any,
+  itemValue: unknown,
+  filterValue: unknown,
   config: FilterConfig<T>
 ): boolean {
   switch (config.type) {
@@ -66,15 +66,15 @@ function matchesFilter<T>(
 /**
  * テキストフィルターのマッチング
  */
-function matchesTextFilter(itemValue: any, filterValue: string): boolean {
-  if (!itemValue) return false;
-  return itemValue.toString().toLowerCase().includes(filterValue.toLowerCase());
+function matchesTextFilter(itemValue: unknown, filterValue: unknown): boolean {
+  if (!itemValue || typeof filterValue !== 'string') return false;
+  return String(itemValue).toLowerCase().includes(filterValue.toLowerCase());
 }
 
 /**
  * セレクトフィルターのマッチング
  */
-function matchesSelectFilter(itemValue: any, filterValue: string): boolean {
+function matchesSelectFilter(itemValue: unknown, filterValue: unknown): boolean {
   if (filterValue === 'all') return true;
   return itemValue === filterValue;
 }
@@ -82,28 +82,29 @@ function matchesSelectFilter(itemValue: any, filterValue: string): boolean {
 /**
  * 日付フィルターのマッチング
  */
-function matchesDateFilter(itemValue: any, filterValue: string): boolean {
-  if (!itemValue) return false;
-  const itemDate = new Date(itemValue).toISOString().split('T')[0];
+function matchesDateFilter(itemValue: unknown, filterValue: unknown): boolean {
+  if (!itemValue || typeof filterValue !== 'string') return false;
+  const itemDate = new Date(String(itemValue)).toISOString().split('T')[0];
   return itemDate === filterValue;
 }
 
 /**
  * 日付範囲フィルターのマッチング
  */
-function matchesDateRangeFilter(itemValue: any, filterValue: DateRangeFilter): boolean {
+function matchesDateRangeFilter(itemValue: unknown, filterValue: unknown): boolean {
+  const dateRange = filterValue as DateRangeFilter;
   if (!itemValue) {
     // 空の値の場合、範囲フィルターが設定されていれば除外
-    return !filterValue.from && !filterValue.to;
+    return !dateRange.from && !dateRange.to;
   }
 
-  const itemDate = new Date(itemValue).toISOString().split('T')[0];
+  const itemDate = new Date(String(itemValue)).toISOString().split('T')[0];
   
-  if (filterValue.from && itemDate < filterValue.from) {
+  if (dateRange.from && itemDate < dateRange.from) {
     return false;
   }
   
-  if (filterValue.to && itemDate > filterValue.to) {
+  if (dateRange.to && itemDate > dateRange.to) {
     return false;
   }
   
@@ -113,30 +114,32 @@ function matchesDateRangeFilter(itemValue: any, filterValue: DateRangeFilter): b
 /**
  * 数値フィルターのマッチング
  */
-function matchesNumberFilter(itemValue: any, filterValue: string): boolean {
+function matchesNumberFilter(itemValue: unknown, filterValue: unknown): boolean {
   if (!itemValue && itemValue !== 0) return false;
-  return itemValue.toString().includes(filterValue);
+  if (typeof filterValue !== 'string') return false;
+  return String(itemValue).includes(filterValue);
 }
 
 /**
  * 日時フィルターのマッチング
  */
-function matchesDateTimeFilter(itemValue: any, filterValue: DateRangeFilter): boolean {
+function matchesDateTimeFilter(itemValue: unknown, filterValue: unknown): boolean {
+  const dateRange = filterValue as DateRangeFilter;
   if (!itemValue) {
-    return !filterValue.from && !filterValue.to;
+    return !dateRange.from && !dateRange.to;
   }
 
-  const itemDateTime = new Date(itemValue).toISOString();
+  const itemDateTime = new Date(String(itemValue)).toISOString();
   
-  if (filterValue.from) {
-    const fromDateTime = new Date(filterValue.from).toISOString();
+  if (dateRange.from) {
+    const fromDateTime = new Date(dateRange.from).toISOString();
     if (itemDateTime < fromDateTime) {
       return false;
     }
   }
   
-  if (filterValue.to) {
-    const toDateTime = new Date(filterValue.to).toISOString();
+  if (dateRange.to) {
+    const toDateTime = new Date(dateRange.to).toISOString();
     if (itemDateTime > toDateTime) {
       return false;
     }

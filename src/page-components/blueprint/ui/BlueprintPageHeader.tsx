@@ -22,7 +22,7 @@ interface BlueprintPageHeaderProps {
   setViewMode: (mode: "table" | "gallery") => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
-  blueprints?: any[];
+  blueprints?: unknown[];
 }
 
 export function BlueprintPageHeader({

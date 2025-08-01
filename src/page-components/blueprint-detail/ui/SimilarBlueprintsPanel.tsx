@@ -33,8 +33,7 @@ interface SimilarBlueprintsPanelProps {
 
 export function SimilarBlueprintsPanel({ 
   activeFile, 
-  onClose, 
-  onSimilarBlueprintClick 
+  onClose
 }: SimilarBlueprintsPanelProps) {
   const [previewBlueprint, setPreviewBlueprint] = useState<SimilarBlueprint | null>(null);
   const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);

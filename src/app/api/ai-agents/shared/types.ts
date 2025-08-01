@@ -24,7 +24,7 @@ export interface UnifiedAgentRequest {
     sessionId?: string;
     userId?: string;
   };
-  metadata?: Record<string, any>; // エージェント固有メタデータ
+  metadata?: Record<string, unknown>; // エージェント固有メタデータ
 }
 
 // ✅ 削除済み: AgentRequest<T>（UnifiedAgentRequestに統一）
@@ -62,7 +62,7 @@ export class AgentError extends Error {
     message: string,
     public code: string,
     public statusCode: number = 500,
-    public details?: any
+    public details?: unknown
   ) {
     super(message);
     this.name = 'AgentError';
@@ -70,7 +70,7 @@ export class AgentError extends Error {
 }
 
 export class ValidationError extends AgentError {
-  constructor(message: string, details?: any) {
+  constructor(message: string, details?: unknown) {
     super(message, 'VALIDATION_ERROR', 400, details);
     this.name = 'ValidationError';
   }

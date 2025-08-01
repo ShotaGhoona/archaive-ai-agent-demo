@@ -16,7 +16,7 @@ export const PROJECT_CSV_COLUMNS: Omit<CsvColumnConfig<Project>, 'enabled'>[] = 
   { 
     key: 'lastUpdatedAt', 
     label: '最終更新日時',
-    formatter: (value: string) => new Date(value).toLocaleString('ja-JP', {
+    formatter: (value: unknown) => new Date(String(value)).toLocaleString('ja-JP', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',

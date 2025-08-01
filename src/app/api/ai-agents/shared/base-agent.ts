@@ -151,7 +151,7 @@ export abstract class BaseAgent {
   protected createResponse(
     content: string,
     openaiResponse?: OpenAI.Chat.Completions.ChatCompletion,
-    attachments?: any[],
+    attachments?: unknown[],
     model?: string
   ): AgentResponse {
     const usage = openaiResponse ? calculateUsage(openaiResponse, model) : undefined;
@@ -170,7 +170,7 @@ export abstract class BaseAgent {
   }
 
   // ログ出力ヘルパー
-  protected log(level: 'info' | 'warn' | 'error', message: string, data?: any): void {
+  protected log(level: 'info' | 'warn' | 'error', message: string, data?: unknown): void {
     const timestamp = new Date().toISOString();
     const logMessage = `[${timestamp}] [${this.config.id}] ${message}`;
     

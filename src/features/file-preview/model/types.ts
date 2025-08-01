@@ -7,7 +7,7 @@ export interface PreviewableFile {
   url: string;
   type: string;
   size: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 // プレビューオプション

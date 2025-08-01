@@ -18,7 +18,7 @@ export function FilterControl<T>({
   value, 
   onChange 
 }: FilterControlProps<T>) {
-  const handleChange = (newValue: any) => {
+  const handleChange = (newValue: unknown) => {
     onChange(newValue);
   };
 

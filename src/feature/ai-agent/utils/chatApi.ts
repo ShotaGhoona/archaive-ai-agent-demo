@@ -47,7 +47,7 @@ export async function sendUnifiedMessage(
   options: {
     image?: File;
     conversationHistory?: Array<{ role: 'user' | 'assistant'; content: string }>;
-    metadata?: any;
+    metadata?: Record<string, unknown>;
   } = {}
 ): Promise<ChatApiResponse> {
   const formData = new FormData();

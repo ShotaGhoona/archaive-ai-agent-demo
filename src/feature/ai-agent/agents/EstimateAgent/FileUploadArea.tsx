@@ -17,8 +17,7 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   onFileUpload,
   acceptedTypes,
   maxSize,
-  large = false,
-  compact = false
+  large = false
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -39,12 +38,12 @@ const FileUploadArea: React.FC<FileUploadAreaProps> = ({
     
     const files = Array.from(e.dataTransfer.files);
     handleFiles(files);
-  }, []);
+  }, [handleFiles]);
 
   const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
     handleFiles(files);
-  }, []);
+  }, [handleFiles]);
 
   const handleFiles = (files: File[]) => {
     const validFiles = files.filter(file => {

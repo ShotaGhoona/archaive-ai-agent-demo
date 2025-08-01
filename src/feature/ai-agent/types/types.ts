@@ -1,4 +1,3 @@
-import { ReactNode } from 'react';
 import { LucideIcon } from 'lucide-react';
 
 // 05の型定義を継承

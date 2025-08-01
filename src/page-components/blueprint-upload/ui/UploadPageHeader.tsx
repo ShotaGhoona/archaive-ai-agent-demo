@@ -55,7 +55,6 @@ export function UploadPageHeader({
   onDeselectAll,
   onRemoveSelected,
   onRestoreSelected,
-  onAddFiles,
   onStackFiles,
   uploadedFilesCount,
   trashedFilesCount,

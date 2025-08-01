@@ -6,7 +6,7 @@ interface ErrorResponse {
   error: {
     code: string;
     message: string;
-    details?: any;
+    details?: unknown;
     timestamp: string;
   };
 }
@@ -103,7 +103,7 @@ export function handleAgentError(error: unknown): NextResponse<ErrorResponse> {
 }
 
 // カスタムエラークラスのファクトリー関数
-export function createValidationError(message: string, details?: any): ValidationError {
+export function createValidationError(message: string, details?: unknown): ValidationError {
   return new ValidationError(message, details);
 }
 
@@ -119,7 +119,7 @@ export function createAgentError(
   message: string,
   code: string,
   statusCode: number = 500,
-  details?: any
+  details?: unknown
 ): AgentError {
   return new AgentError(message, code, statusCode, details);
 }

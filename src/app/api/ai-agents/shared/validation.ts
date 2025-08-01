@@ -68,18 +68,18 @@ export function validateUnifiedRequest(formData: FormData): UnifiedAgentRequest 
           sessionId: parsedContext.sessionId,
           userId: parsedContext.userId
         };
-      } catch (error) {
+      } catch {
         throw new ValidationError('Invalid context format');
       }
     }
 
     // メタデータの処理
-    let metadata: Record<string, any> | undefined;
+    let metadata: Record<string, unknown> | undefined;
     const metadataData = formData.get('metadata') as string | null;
     if (metadataData) {
       try {
         metadata = JSON.parse(metadataData);
-      } catch (error) {
+      } catch {
         throw new ValidationError('Invalid metadata format');
       }
     }

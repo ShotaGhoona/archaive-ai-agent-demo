@@ -17,7 +17,7 @@ export interface UseAdvancedFilterReturn<T> {
   
   // フィルター操作
   clearFilters: () => void;
-  updateFilter: (key: string, value: any) => void;
+  updateFilter: (key: string, value: unknown) => void;
   
   // 状態チェック
   hasActiveFilters: boolean;
@@ -56,7 +56,7 @@ export function useAdvancedFilter<T>(
   }, [initialFilters]);
 
   // 個別フィルターを更新する
-  const updateFilter = useCallback((key: string, value: any) => {
+  const updateFilter = useCallback((key: string, value: unknown) => {
     setFilters(prev => ({
       ...prev,
       [key]: value,

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatLayoutState, PersistedChatState, UserPreferences } from "../types/types";
+import { ChatLayoutState, PersistedChatState, UserPreferences, Message } from "../types/types";
 
 const STORAGE_KEYS = {
   CHAT_STATE: 'archaive_chat_state_v6',
@@ -61,7 +61,7 @@ export const storageUtils = {
   },
 
   // セッションデータの管理（エージェント別）
-  saveSession: (blueprintId: string, messages: any[], agentId?: string): void => {
+  saveSession: (blueprintId: string, messages: Message[], agentId?: string): void => {
     try {
       const sessionKey = agentId ? `${blueprintId}_${agentId}` : blueprintId;
       const sessionData = {
@@ -76,7 +76,7 @@ export const storageUtils = {
     }
   },
 
-  loadSession: (blueprintId: string, agentId?: string): { messages: any[] } => {
+  loadSession: (blueprintId: string, agentId?: string): { messages: Message[] } => {
     try {
       const sessionKey = agentId ? `${blueprintId}_${agentId}` : blueprintId;
       const stored = sessionStorage.getItem(`${STORAGE_KEYS.SESSION}_${sessionKey}`);

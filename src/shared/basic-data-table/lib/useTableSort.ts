@@ -36,8 +36,8 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
     const fieldConfig = sortableFields[field];
     
     return [...data].sort((a, b) => {
-      const aValue = (a as any)[field];
-      const bValue = (b as any)[field];
+      const aValue = (a as Record<string, unknown>)[field];
+      const bValue = (b as Record<string, unknown>)[field];
       
       let comparison = 0;
       
