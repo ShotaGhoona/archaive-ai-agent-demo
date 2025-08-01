@@ -186,7 +186,9 @@ export function hasActiveFilters<T>(
     
     if (typeof current === 'object' && current !== null) {
       // 日付範囲の場合
-      return current.from !== initial.from || current.to !== initial.to;
+      const currentRange = current as DateRangeFilter;
+      const initialRange = initial as DateRangeFilter;
+      return currentRange.from !== initialRange.from || currentRange.to !== initialRange.to;
     }
     
     return current !== initial;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FileImage, Download } from 'lucide-react';
 import { Button } from '@/shared/shadcnui';
-import { PreviewProvider, PreviewableFile } from '../model/types';
+import { PreviewProvider, PreviewableFile, PreviewRenderOptions } from '../model/types';
 import { detectFileType } from './fileTypeDetector';
 
 // 画像プレビュープロバイダー
@@ -17,7 +17,8 @@ export const imagePreviewProvider: PreviewProvider = {
     return typeInfo.category === 'image';
   },
   
-  render: (file: PreviewableFile) => {
+  render: (file: PreviewableFile, options: PreviewRenderOptions) => {
+    void options; // Explicitly mark as unused
     return (
       <div
         className={`transition-transform duration-200 ease-in-out ${options.className || ''}`}
@@ -53,7 +54,8 @@ export const documentPreviewProvider: PreviewProvider = {
     return typeInfo.category === 'document';
   },
   
-  render: (file: PreviewableFile) => {
+  render: (file: PreviewableFile, options: PreviewRenderOptions) => {
+    void options; // Explicitly mark as unused
     if (file.type === 'application/pdf') {
       return (
         <div className="w-full h-full">
@@ -96,7 +98,8 @@ export const cadPreviewProvider: PreviewProvider = {
     return typeInfo.category === 'cad';
   },
   
-  render: (file: PreviewableFile) => {
+  render: (file: PreviewableFile, options: PreviewRenderOptions) => {
+    void options; // Explicitly mark as unused
     return (
       <div className="text-center space-y-4 p-8">
         <FileImage className="h-24 w-24 text-gray-400 mx-auto" />
@@ -138,7 +141,8 @@ export const fallbackPreviewProvider: PreviewProvider = {
   
   canPreview: () => true, // 常に対応
   
-  render: (file: PreviewableFile) => {
+  render: (file: PreviewableFile, options: PreviewRenderOptions) => {
+    void options; // Explicitly mark as unused
     return (
       <div className="text-center space-y-4 p-8">
         <FileImage className="h-24 w-24 text-gray-400 mx-auto" />

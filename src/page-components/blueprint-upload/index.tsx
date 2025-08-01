@@ -36,24 +36,24 @@ export function BlueprintUploadPage() {
       const files = JSON.parse(storedFiles);
       setUploadedFiles(files.map((file: Record<string, unknown>) => ({
         ...file,
-        createdAt: new Date(file.createdAt)
+        createdAt: new Date(file.createdAt as string)
       })));
     }
     if (storedTrashedFiles) {
       const files = JSON.parse(storedTrashedFiles);
       setTrashedFiles(files.map((file: Record<string, unknown>) => ({
         ...file,
-        createdAt: new Date(file.createdAt)
+        createdAt: new Date(file.createdAt as string)
       })));
     }
     if (storedFileStacks) {
       const stacks = JSON.parse(storedFileStacks);
       setFileStacks(stacks.map((stack: Record<string, unknown>) => ({
         ...stack,
-        createdAt: new Date(stack.createdAt),
-        files: (stack.files as unknown[]).map((file: Record<string, unknown>) => ({
+        createdAt: new Date(stack.createdAt as string),
+        files: (stack.files as Record<string, unknown>[]).map((file: Record<string, unknown>) => ({
           ...file,
-          createdAt: new Date(file.createdAt)
+          createdAt: new Date(file.createdAt as string)
         }))
       })));
     }

@@ -37,13 +37,13 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (blueprint: Blueprint, value: string) => (
+    render: (blueprint: Blueprint, value: unknown) => (
       <Link
         href={`/blueprint/${blueprint.internalNumber}`}
         className="hover:underline font-mono text-sm font-medium text-primary"
         onClick={(e) => e.stopPropagation()}
       >
-        {value}
+        {String(value)}
       </Link>
     ),
   },
@@ -74,9 +74,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (blueprint: Blueprint, value: string) => (
+    render: (blueprint: Blueprint, value: unknown) => (
       <Badge variant="outline" className="font-mono text-xs">
-        {value}
+        {String(value)}
       </Badge>
     ),
   },
@@ -89,9 +89,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (blueprint: Blueprint, value: string) => (
+    render: (blueprint: Blueprint, value: unknown) => (
       <Badge variant="outline" className="font-mono text-xs">
-        {value}
+        {String(value)}
       </Badge>
     ),
   },

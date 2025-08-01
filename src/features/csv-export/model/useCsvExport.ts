@@ -59,7 +59,7 @@ export function useCsvExport<T>(
         if (col.formatter) {
           return col.formatter(value);
         }
-        return typeof value === 'number' ? value.toString() : (value || '');
+        return typeof value === 'number' ? value.toString() : String(value || '');
       })
     );
 
@@ -81,13 +81,14 @@ export function useCsvExport<T>(
     // データ行
     data.forEach(item => {
       const row = enabledColumns.map(col => {
-        let value = item[col.key];
+        const value = item[col.key];
+        let formattedValue: string;
         if (col.formatter) {
-          value = col.formatter(value);
+          formattedValue = col.formatter(value);
         } else {
-          value = typeof value === 'number' ? value.toString() : (value || '');
+          formattedValue = typeof value === 'number' ? value.toString() : String(value || '');
         }
-        return `"${value.toString().replace(/"/g, '""')}"`;
+        return `"${formattedValue.replace(/"/g, '""')}"`;
       });
       csvContent += row.join(",") + "\n";
     });

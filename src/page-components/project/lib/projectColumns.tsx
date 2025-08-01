@@ -57,13 +57,13 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     editable: false,
     locked: true,
     sortType: 'string',
-    render: (project: Project, value: string) => (
+    render: (project: Project, value: unknown) => (
       <Link
         href={`/project/${project.projectId}`}
         className="hover:underline font-mono text-sm font-medium text-primary"
         onClick={(e) => e.stopPropagation()}
       >
-        {value}
+        {String(value)}
       </Link>
     ),
   },
@@ -106,9 +106,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     locked: false,
     inputType: 'date',
     sortType: 'date',
-    render: (project: Project, value: string) => (
+    render: (project: Project, value: unknown) => (
       <span className={value ? '' : 'text-gray-400'}>
-        {value || '未完了'}
+        {String(value) || '未完了'}
       </span>
     ),
   },
@@ -131,9 +131,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     locked: false,
     inputType: 'date',
     sortType: 'date',
-    render: (project: Project, value: string) => (
+    render: (project: Project, value: unknown) => (
       <span className={value ? '' : 'text-gray-400'}>
-        {value || '未入荷'}
+        {String(value) || '未入荷'}
       </span>
     ),
   },
@@ -147,9 +147,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     inputType: 'select',
     sortType: 'string',
     selectOptions: ['問い合わせ', '見積もり中', '納品'],
-    render: (project: Project, value: string) => (
-      <Badge className={`text-xs ${getStatusColor(value, 'project')}`}>
-        {value}
+    render: (project: Project, value: unknown) => (
+      <Badge className={`text-xs ${getStatusColor(String(value), 'project')}`}>
+        {String(value)} 
       </Badge>
     ),
   },
@@ -163,9 +163,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     inputType: 'select',
     sortType: 'string',
     selectOptions: ['未提出', '作成中', '提出済'],
-    render: (project: Project, value: string) => (
-      <Badge className={`text-xs ${getStatusColor(value, 'quotation')}`}>
-        {value}
+    render: (project: Project, value: unknown) => (
+      <Badge className={`text-xs ${getStatusColor(String(value), 'quotation')}`}>
+        {String(value)}
       </Badge>
     ),
   },
@@ -179,9 +179,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     inputType: 'select',
     sortType: 'string',
     selectOptions: ['未対応', '配送準備中', '配送中', '配送完了'],
-    render: (project: Project, value: string) => (
-      <Badge className={`text-xs ${getStatusColor(value, 'delivery')}`}>
-        {value}
+    render: (project: Project, value: unknown) => (
+      <Badge className={`text-xs ${getStatusColor(String(value), 'delivery')}`}>
+        {String(value)}
       </Badge>
     ),
   },
@@ -202,9 +202,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     editable: false,
     locked: true,
     sortType: 'date',
-    render: (project: Project, value: string) => (
+    render: (project: Project, value: unknown) => (
       <span className="text-xs text-gray-600">
-        {new Date(value).toLocaleString('ja-JP', {
+        {new Date(String(value)).toLocaleString('ja-JP', {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',

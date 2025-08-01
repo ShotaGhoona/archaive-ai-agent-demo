@@ -10,7 +10,7 @@ interface UseCellEditProps<T> {
 export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps<T>) {
   const [editingCell, setEditingCell] = useState<EditingCell | null>(null);
   const [editValue, setEditValue] = useState<unknown>('');
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // columns から編集可能フィールドとロックフィールドを動的に生成
   const editableFields = columns.reduce((acc, col) => {

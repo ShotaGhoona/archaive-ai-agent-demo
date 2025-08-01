@@ -8,6 +8,7 @@ import {
   List,
 } from "lucide-react";
 import { FilterToggleButton } from "@/features/advanced-filter";
+import { Blueprint } from "../lib/blueprintColumns";
 import { CsvExportDialog } from "@/features/csv-export";
 import { SimilarBlueprintSearchDialog } from "./SimilarBlueprintSearchDialog";
 import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
@@ -72,7 +73,7 @@ export function BlueprintPageHeader({
       <div className="flex items-center gap-4">
         {/* CSV出力ボタン */}
         <CsvExportDialog
-          data={blueprints}
+          data={blueprints as Blueprint[]}
           initialColumns={BLUEPRINT_CSV_COLUMNS}
           defaultFilename="blueprints"
         />

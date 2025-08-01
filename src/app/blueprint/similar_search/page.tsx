@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Button, Input, Card, CardContent, Badge } from "@/shared/shadcnui";
 import { Search, ArrowLeft, Filter, X } from "lucide-react";
@@ -14,7 +14,7 @@ interface BlueprintResult {
   createdAt: string;
 }
 
-export default function SimilarBlueprintSearchPage() {
+function SimilarBlueprintSearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   
@@ -284,5 +284,20 @@ export default function SimilarBlueprintSearchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SimilarBlueprintSearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin text-4xl">⚙️</div>
+          <div className="text-gray-600">読み込み中...</div>
+        </div>
+      </div>
+    }>
+      <SimilarBlueprintSearchContent />
+    </Suspense>
   );
 }

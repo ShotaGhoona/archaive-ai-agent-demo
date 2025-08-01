@@ -51,7 +51,7 @@ export function ProjectPageHeader({
       <div className="flex items-center gap-3">
         {/* CSV出力ボタン */}
         <CsvExportDialog
-          data={projects}
+          data={projects as Project[]}
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
         />

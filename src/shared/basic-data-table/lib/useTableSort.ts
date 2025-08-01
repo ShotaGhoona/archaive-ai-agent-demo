@@ -44,7 +44,7 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
       if (fieldConfig?.type === 'number') {
         comparison = Number(aValue) - Number(bValue);
       } else if (fieldConfig?.type === 'date') {
-        comparison = new Date(aValue).getTime() - new Date(bValue).getTime();
+        comparison = new Date(aValue as string).getTime() - new Date(bValue as string).getTime();
       } else {
         // string型
         comparison = String(aValue).localeCompare(String(bValue), 'ja');

@@ -17,7 +17,7 @@ import {
 export interface TabConfig {
   id: string;
   label: string;
-  icon: React.ComponentType<unknown>;
+  icon: React.ComponentType<Record<string, unknown>>;
   description: string;
 }
 

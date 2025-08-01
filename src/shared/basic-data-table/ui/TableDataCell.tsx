@@ -46,7 +46,7 @@ export function TableDataCell<T>({
           <TooltipTrigger asChild>
             <div className="flex items-center gap-2">
               <Lock className="h-3 w-3 text-gray-400" />
-              <span>{cellContent.value}</span>
+              <span>{String(cellContent.value)}</span>
             </div>
           </TooltipTrigger>
           <TooltipContent>
@@ -67,7 +67,7 @@ export function TableDataCell<T>({
       {isEditing ? (
         cellContent.inputType === 'select' && cellContent.selectOptions ? (
           <Select
-            value={cellContent.value}
+            value={String(cellContent.value)}
             onValueChange={cellContent.onChange!}
             onOpenChange={(open) => {
               if (!open) cellContent.onSave!();
@@ -87,7 +87,7 @@ export function TableDataCell<T>({
         ) : (
           <Input
             ref={cellContent.inputRef}
-            value={cellContent.value}
+            value={String(cellContent.value)}
             onChange={(e) => cellContent.onChange!(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') cellContent.onSave!();
@@ -99,7 +99,7 @@ export function TableDataCell<T>({
           />
         )
       ) : (
-        <span>{cellContent.value}</span>
+        <span>{String(cellContent.value)}</span>
       )}
     </TableCell>
   );

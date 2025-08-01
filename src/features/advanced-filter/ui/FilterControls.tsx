@@ -36,7 +36,7 @@ export function FilterControl<T>({
         return (
           <Input
             placeholder={config.placeholder}
-            value={value || ''}
+            value={String(value || '')}
             onChange={(e) => handleChange(e.target.value)}
             className="mt-2"
           />
@@ -47,7 +47,7 @@ export function FilterControl<T>({
           <Input
             type="number"
             placeholder={config.placeholder}
-            value={value || ''}
+            value={String(value || '')}
             onChange={(e) => handleChange(e.target.value)}
             className="mt-2"
           />
@@ -55,7 +55,7 @@ export function FilterControl<T>({
 
       case 'select':
         return (
-          <Select value={value || 'all'} onValueChange={handleChange}>
+          <Select value={String(value || 'all')} onValueChange={handleChange}>
             <SelectTrigger className="mt-2">
               <SelectValue placeholder={config.placeholder} />
             </SelectTrigger>
@@ -74,7 +74,7 @@ export function FilterControl<T>({
         return (
           <Input
             type="date"
-            value={value || ''}
+            value={String(value || '')}
             onChange={(e) => handleChange(e.target.value)}
             className="mt-2 text-sm"
           />

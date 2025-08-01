@@ -7,7 +7,8 @@ export interface FilterConfig<T = Record<string, unknown>> {
   defaultValue?: unknown;
 }
 
-export interface FilterState {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export interface FilterState<T = Record<string, unknown>> {
   [key: string]: unknown;
 }
 

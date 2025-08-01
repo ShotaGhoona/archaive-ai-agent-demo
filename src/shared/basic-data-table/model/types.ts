@@ -66,7 +66,7 @@ export interface BasicDataTableProps<T = unknown> {
 export interface CellContentData {
   isEditing: boolean;
   value: unknown;
-  inputRef: React.RefObject<HTMLInputElement> | null;
+  inputRef: React.RefObject<HTMLInputElement | null> | null;
   onChange: ((value: unknown) => void) | null;
   onSave: (() => void) | null;
   onCancel: (() => void) | null;
