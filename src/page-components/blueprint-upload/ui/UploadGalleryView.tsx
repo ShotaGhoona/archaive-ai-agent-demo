@@ -221,7 +221,11 @@ export function UploadGalleryView({
                       size="sm"
                       onClick={(e) => {
                         e.stopPropagation();
-                        viewMode === "uploaded" ? onRemoveFile?.(file.id) : onRestoreFile?.(file.id);
+                        if (viewMode === "uploaded") {
+                          onRemoveFile?.(file.id);
+                        } else {
+                          onRestoreFile?.(file.id);
+                        }
                       }}
                       className="flex-1 backdrop-blur-sm"
                     >
