@@ -1,7 +1,7 @@
 "use client";
 
 import { 
-  MessageCircle, Calculator
+  MessageCircle, Calculator, Bug
 } from 'lucide-react';
 import { AIAgentConfig, AgentCategory } from '../types/types';
 
@@ -26,6 +26,16 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     category: AgentCategory.ESTIMATE,
     welcomeMessage: 'こんにちは！図面をアップロードしていただければ、詳細な見積もりを作成いたします。製造上のリスクや最適化提案もお任せください！',
     defaultInput: 'この図面の見積もりをお願いします',
+    quickActions: []
+  },
+  trouble: {
+    id: 'trouble',
+    name: 'カコトラAI',
+    icon: Bug,
+    description: '製造上のトラブルを解決',
+    color: '#ef4444',
+    category: AgentCategory.TROUBLE,
+    welcomeMessage: '製造上のトラブルを解決します。',
     quickActions: []
   },
   // process: {

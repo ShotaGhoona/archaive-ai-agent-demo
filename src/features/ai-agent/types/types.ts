@@ -48,7 +48,8 @@ export enum AgentCategory {
   ESTIMATE = 'estimate',
   PROCESS = 'process',
   INQUIRY = 'inquiry',
-  CUSTOM = 'custom'
+  CUSTOM = 'custom',
+  TROUBLE = 'trouble'
 }
 
 export interface AIAgentConfig {

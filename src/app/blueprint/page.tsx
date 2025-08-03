@@ -1,5 +1,5 @@
 import BlueprintContainer from "@/page-components/blueprint/ui/BlueprintContainer";
-import ChatUIManager from "@/feature/ai-agent";
+import ChatUIManager from "@/features/ai-agent";
 
 export default function Blueprint() {
   return (

@@ -12,7 +12,7 @@ export function Header() {
   };
 
   return (
-    <header className="bg-primary shadow-lg fixed w-full top-0 z-50">
+    <header className="bg-primary shadow-lg fixed w-full top-0 z-30">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-[45px]">
           {/* Left side - Brand and Navigation */}
