@@ -14,8 +14,7 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     description: '一般的な相談・質問に対応',
     color: '#3b82f6',
     category: AgentCategory.GENERAL,
-    welcomeMessage: 'ARCHAIVE AIエージェントへようこそ。なんでもお聞きください。',
-    quickActions: []
+    welcomeMessage: 'ARCHAIVE AIエージェントへようこそ。なんでもお聞きください。'
   },
   estimate: {
     id: 'estimate',
@@ -25,8 +24,7 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     color: '#10b981',
     category: AgentCategory.ESTIMATE,
     welcomeMessage: 'こんにちは！図面をアップロードしていただければ、詳細な見積もりを作成いたします。製造上のリスクや最適化提案もお任せください！',
-    defaultInput: 'この図面の見積もりをお願いします',
-    quickActions: []
+    defaultInput: 'この図面の見積もりをお願いします'
   },
   trouble: {
     id: 'trouble',
@@ -35,9 +33,8 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     description: '製造上のトラブルを解決',
     color: '#ef4444',
     category: AgentCategory.TROUBLE,
-    welcomeMessage: '製造上のトラブルを解決します。',
-    quickActions: []
-  },
+    welcomeMessage: '製造上のトラブルを解決します。'
+  }
   // process: {
   //   id: 'process',
   //   name: '工程生成AI',
@@ -85,23 +82,3 @@ export const getAgentConfigs = (agentIds: string[]): AIAgentConfig[] => {
     .filter(agent => agent !== undefined);
 };
 
-/**
- * カテゴリーに基づいてエージェントを取得
- */
-export const getAgentsByCategory = (category: AgentCategory): AIAgentConfig[] => {
-  return Object.values(availableAgents).filter(agent => agent.category === category);
-};
-
-/**
- * 動的にエージェントを追加
- */
-export const registerAgent = (agent: AIAgentConfig): void => {
-  availableAgents[agent.id] = agent;
-};
-
-/**
- * 全てのエージェントを取得
- */
-export const getAllAgents = (): AIAgentConfig[] => {
-  return Object.values(availableAgents);
-};

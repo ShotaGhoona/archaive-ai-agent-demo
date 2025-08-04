@@ -61,15 +61,6 @@ export interface AIAgentConfig {
   category: AgentCategory;
   welcomeMessage?: string;
   defaultInput?: string;
-  quickActions?: QuickAction[];
-}
-
-export interface QuickAction {
-  id: string;
-  label: string;
-  icon: LucideIcon;
-  action: string;
-  color?: string;
 }
 
 // ChatUIManager のプロパティ
@@ -86,8 +77,6 @@ export interface ChatUIState {
   messages: Message[];
   isLoading: boolean;
   preferences: UserPreferences;
-  isTransitioning: boolean;
-  // 06新規追加
   selectedAgent: string | null;
   agentConfig: AIAgentConfig | null;
   selectorOpen: boolean;

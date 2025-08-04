@@ -1,26 +1,18 @@
 "use client";
 
 import { useCallback, useRef, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { ChatLayoutState, Message, BlueprintInfo, ChatUIManagerProps, AIAgentConfig } from "./types/types";
+import { ChatLayoutState, Message, ChatUIManagerProps, AIAgentConfig } from "./types/types";
 import { useChatUIState } from "./shared/hooks/useChatUIState";
-import { useLayoutTransition } from "./shared/hooks/useLayoutTransition";
 import { getAgentConfigs, getAgentConfig } from "./utils/agentConfigs";
-import { sendUnifiedMessage, convertMessagesToHistory } from "./utils/chatApi";
+import { sendUnifiedMessage } from "./utils/chatApi";
 import ChatButton from "./shared/components/ChatButton";
 import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayout";
 import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
 import FullpageLayout, { FullpageLayoutRef } from "./shared/layouts/FullpageLayout";
-import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 
 
 export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
-  const params = useParams();
-  const blueprintId = params.id as string;
-  const blueprint = blueprintsData.find((item) => item.internalNumber === blueprintId);
-  
-  const { state, actions } = useChatUIState(blueprintId);
-  const { executeTransition, calculateTargetPosition, calculateTargetSize } = useLayoutTransition();
+  const { state, actions } = useChatUIState('default');
   
   const floatingRef = useRef<FloatingLayoutRef>(null);
   const sidebarRef = useRef<SidebarLayoutRef>(null);
@@ -28,60 +20,17 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   
   // 一時的な添付ファイル（プレビュー表示用）
   const [attachedFile, setAttachedFile] = useState<File | null>(null);
-  // セッション中継続保持される画像（ChatGPT方式）
-  const [sessionImage, setSessionImage] = useState<File | null>(null);
 
   // propsから渡されたエージェント設定を反映
   useEffect(() => {
     const agentConfigs = getAgentConfigs(availableAgents);
-    console.log('Available agents:', availableAgents);
-    console.log('Agent configs:', agentConfigs);
     actions.updateAvailableAgents(agentConfigs);
-  }, [availableAgents]); // actions を依存配列から削除
+  }, [availableAgents]);
 
-  const blueprintInfo: BlueprintInfo | undefined = blueprint ? {
-    id: blueprint.internalNumber,
-    image: blueprint.image,
-    name: `図面 ${blueprint.internalNumber}`,
-    customerName: blueprint.orderSource,
-    productName: blueprint.productName,
-    material: blueprint.companyField
-  } : undefined;
 
-  // キーボードショートカット
-  useEffect(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
-      if (!state.isOpen || state.isTransitioning) return;
-      
-      if (e.ctrlKey || e.metaKey) {
-        switch (e.key) {
-          case '1':
-            e.preventDefault();
-            handleLayoutChange(ChatLayoutState.FLOATING);
-            break;
-          case '2':
-            e.preventDefault();
-            handleLayoutChange(ChatLayoutState.SIDEBAR);
-            break;
-          case '3':
-            e.preventDefault();
-            handleLayoutChange(ChatLayoutState.FULLPAGE);
-            break;
-        }
-      }
-      
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        actions.closeChat();
-      }
-    };
-
-    document.addEventListener('keydown', handleKeydown);
-    return () => document.removeEventListener('keydown', handleKeydown);
-  }, [state.isOpen, state.isTransitioning, state.layoutState, actions.closeChat]);
 
   const handleLayoutChange = useCallback(async (newLayout: ChatLayoutState) => {
-    if (newLayout === state.layoutState || state.isTransitioning) return;
+    if (newLayout === state.layoutState) return;
 
     const currentRef = 
       state.layoutState === ChatLayoutState.FLOATING ? floatingRef.current :
@@ -91,30 +40,17 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     const currentElement = currentRef?.getElement();
     if (!currentElement) return;
 
-    const newPosition = calculateTargetPosition(newLayout, state.size);
-    const newSize = calculateTargetSize(newLayout);
+    // レイアウトに応じたデフォルト位置とサイズ
+    const newPosition = newLayout === ChatLayoutState.FLOATING ? { x: 50, y: 50 } : { x: 0, y: 0 };
+    const newSize = newLayout === ChatLayoutState.FLOATING ? { width: 400, height: 700 } : 
+                    newLayout === ChatLayoutState.SIDEBAR ? { width: 384, height: window.innerHeight } :
+                    { width: window.innerWidth * 0.8, height: window.innerHeight * 0.8 };
 
-    try {
-      await executeTransition(
-        currentElement,
-        state.layoutState,
-        newLayout,
-        state.position,
-        state.size,
-        newPosition,
-        newSize
-      );
-
-      actions.updateLayoutState(newLayout);
-      actions.updatePosition(newPosition);
-      actions.updateSize(newSize);
-    } catch (error) {
-      console.warn('Transition failed:', error);
-      actions.updateLayoutState(newLayout);
-      actions.updatePosition(newPosition);
-      actions.updateSize(newSize);
-    }
-  }, [state, actions.updateLayoutState, actions.updatePosition, actions.updateSize, executeTransition, calculateTargetPosition, calculateTargetSize]);
+    // 即座に切り替え
+    actions.updateLayoutState(newLayout);
+    actions.updatePosition(newPosition);
+    actions.updateSize(newSize);
+  }, [state, actions.updateLayoutState, actions.updatePosition, actions.updateSize]);
 
   const handleAgentSelect = useCallback((agentId: string) => {
     const agentConfig = getAgentConfig(agentId);
@@ -127,15 +63,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const handleSendMessage = useCallback(async (content: string) => {
     if (!state.agentConfig || !state.selectedAgent) return;
 
-    // 新規添付ファイルがあれば、セッション画像として保存
-    if (attachedFile) {
-      setSessionImage(attachedFile);
-      setAttachedFile(null); // プレビューをクリア
-    }
-
-    // セッション画像または新規添付ファイルを使用
-    const imageToSend = attachedFile || sessionImage;
-    const hasImage = !!imageToSend;
+    const hasImage = !!attachedFile;
     
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -167,27 +95,12 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     actions.addMessage(typingMessage);
 
     try {
-      // 会話履歴を取得（typing除く）
-      const conversationHistory = convertMessagesToHistory(
-        state.messages.filter(msg => msg.id !== 'typing' && !msg.isTyping)
-      );
-
-      // ✅ 統一API使用 - セッション画像を使用（継続参照可能）
+      // ダミーAPIを呼び出し
       const response = await sendUnifiedMessage(
         state.selectedAgent,
         content,
         {
-          image: imageToSend || undefined,
-          conversationHistory,
-          metadata: blueprintInfo ? {
-            blueprintInfo: {
-              id: blueprintInfo.id,
-              name: blueprintInfo.name,
-              material: blueprintInfo.material,
-              customerName: blueprintInfo.customerName,
-              productName: blueprintInfo.productName
-            }
-          } : undefined
+          image: attachedFile || undefined
         }
       );
 
@@ -202,11 +115,8 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.addMessage(aiResponse);
       actions.setLoading(false);
       
-      // 送信後: attachedFileのみクリア、sessionImageは保持（ChatGPT方式）
-      if (attachedFile) {
-        setAttachedFile(null);
-      }
-      // sessionImageは継続保持（手動削除まで残る）
+      // 送信後に添付ファイルをクリア
+      setAttachedFile(null);
     } catch (error) {
       console.error('Failed to send message:', error);
       
@@ -224,7 +134,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
       actions.addMessage(fallbackResponse);
       actions.setLoading(false);
     }
-  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, blueprintInfo, attachedFile, sessionImage]);
+  }, [actions.addMessage, actions.setLoading, actions.removeMessage, state.agentConfig, state.selectedAgent, state.messages, attachedFile]);
 
   const handleQuickAction = useCallback((action: string) => {
     handleSendMessage(action);
@@ -238,11 +148,6 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   // 一時添付ファイル削除ハンドラー
   const handleRemoveAttachment = useCallback(() => {
     setAttachedFile(null);
-  }, []);
-
-  // セッション画像削除ハンドラー（明示的削除用）
-  const handleRemoveSessionImage = useCallback(() => {
-    setSessionImage(null);
   }, []);
 
 
@@ -291,7 +196,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
           {state.layoutState === ChatLayoutState.FULLPAGE && (
             <FullpageLayout
               ref={fullpageRef}
-              blueprintInfo={blueprintInfo}
+              blueprintInfo={undefined}
               {...commonProps}
             />
           )}

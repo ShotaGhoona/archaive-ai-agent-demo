@@ -1,18 +1,5 @@
-export interface ChatApiRequest {
-  message: string;
-  agentId: string;
-  conversationHistory?: Array<{
-    role: 'user' | 'assistant';
-    content: string;
-  }>;
-  blueprintInfo?: {
-    id: string;
-    name: string;
-    material: string;
-    customerName: string;
-    productName: string;
-  };
-}
+// ダミーレスポンス用のAPI
+// 実際のAPIは使用せず、フロントエンドでダミーデータを返す
 
 interface ChatApiResponse {
   response: string;
@@ -20,27 +7,23 @@ interface ChatApiResponse {
   timestamp: string;
 }
 
-// Vision対応の見積もりエージェント用API
-export interface EstimateApiRequest {
-  message: string;
-  image?: File;
-}
+// ダミーレスポンスのテンプレート
+const dummyResponses: Record<string, string[]> = {
+  general: [
+    "ご質問ありがとうございます。製造プロセスについて詳しく説明いたします。",
+    "その材料は高強度と軽量性を兼ね備えており、多くの産業で使用されています。",
+    "コスト削減のためには、生産効率の向上と材料の最適化が重要です。",
+    "品質管理システムを導入することで、不良率を大幅に削減できます。"
+  ],
+  estimate: [
+    "図面を確認しました。この部品の製造には約3週間かかります。",
+    "材料費と加工費を含めて、概算で50万円程度になります。",
+    "精密加工が必要なため、通常より工期が長くなる可能性があります。",
+    "大量生産により単価を下げることが可能です。詳細をご相談ください。"
+  ]
+};
 
-export interface EstimateApiResponse {
-  response: string;
-  timestamp: string;
-  hasImage: boolean;
-}
-
-// ✅ 削除済み: 旧API関数群（sendUnifiedMessageに統一）
-// - sendChatMessage (50行)
-// - sendEstimateMessage (30行) 
-// - getAgentEndpoint (10行)
-// - sendAgentMessage (25行)
-// 
-// 🎯 統一API（sendUnifiedMessage）のみ使用
-
-// 🎯 全エージェント統一のAPI呼び出し（新版）
+// ダミーのAPI呼び出し関数（実際にはAPIを呼ばない）
 export async function sendUnifiedMessage(
   agentId: string,
   message: string,
@@ -50,43 +33,30 @@ export async function sendUnifiedMessage(
     metadata?: Record<string, unknown>;
   } = {}
 ): Promise<ChatApiResponse> {
-  const formData = new FormData();
-  formData.append('message', message);
+  // 1秒の遅延をシミュレート
+  await new Promise(resolve => setTimeout(resolve, 1000));
   
+  // エージェントIDに基づいてダミーレスポンスを選択
+  const responses = dummyResponses[agentId] || dummyResponses.general;
+  const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+  
+  // 画像がある場合は特別なレスポンス
   if (options.image) {
-    formData.append('image', options.image);
+    return {
+      response: `画像を確認しました。${randomResponse}`,
+      agentId,
+      timestamp: new Date().toISOString()
+    };
   }
   
-  if (options.conversationHistory) {
-    formData.append('context', JSON.stringify({
-      history: options.conversationHistory
-    }));
-  }
-  
-  if (options.metadata) {
-    formData.append('metadata', JSON.stringify(options.metadata));
-  }
-
-  const response = await fetch(`/api/ai-agents/${agentId}`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error?.message || errorData.error || `HTTP error! status: ${response.status}`);
-  }
-
-  const data = await response.json();
-  
-  // 新APIレスポンス形式を旧形式に変換
   return {
-    response: data.response,
-    agentId: data.agentId,
-    timestamp: data.timestamp
+    response: randomResponse,
+    agentId,
+    timestamp: new Date().toISOString()
   };
 }
 
+// メッセージ履歴の変換ヘルパー
 export function convertMessagesToHistory(messages: Array<{ content: string; sender: 'user' | 'ai' }>): Array<{ role: 'user' | 'assistant'; content: string }> {
   return messages
     .filter(msg => msg.sender !== 'ai' || !msg.content.includes('typing'))
