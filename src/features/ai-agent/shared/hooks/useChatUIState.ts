@@ -16,7 +16,8 @@ const DEFAULT_STATE: ChatUIState = {
   selectedAgent: null,
   agentConfig: null,
   selectorOpen: false,
-  availableAgents: []
+  availableAgents: [],
+  agentMessages: {}
 };
 
 export const useChatUIState = () => {
@@ -51,15 +52,31 @@ export const useChatUIState = () => {
 
   // 06新規追加 - エージェント関連
   const selectAgent = useCallback((agentId: string, agentConfig: AIAgentConfig) => {
-    setState(prev => ({
-      ...prev,
-      selectedAgent: agentId,
-      agentConfig,
-      isOpen: true,
-      selectorOpen: false,
-      // エージェント変更時にメッセージをリセット
-      messages: []
-    }));
+    setState(prev => {
+      // 現在のエージェントのメッセージを保存
+      const updatedAgentMessages = prev.selectedAgent 
+        ? { ...prev.agentMessages, [prev.selectedAgent]: prev.messages }
+        : prev.agentMessages;
+      
+      // 新しいエージェントのメッセージを復元（なければウェルカムメッセージ）
+      const agentMessages = updatedAgentMessages[agentId] || [{
+        id: 'welcome',
+        content: agentConfig.welcomeMessage || 'こんにちは！何かお手伝いできることはありますか？',
+        sender: 'ai' as const,
+        type: 'welcome' as const,
+        timestamp: new Date()
+      }];
+      
+      return {
+        ...prev,
+        selectedAgent: agentId,
+        agentConfig,
+        isOpen: true,
+        selectorOpen: false,
+        messages: agentMessages,
+        agentMessages: updatedAgentMessages
+      };
+    });
   }, []);
 
   const updateAvailableAgents = useCallback((agents: AIAgentConfig[]) => {
@@ -71,24 +88,50 @@ export const useChatUIState = () => {
 
 
   const addMessage = useCallback((message: Message) => {
-    setState(prev => ({
-      ...prev,
-      messages: [...prev.messages, message]
-    }));
+    setState(prev => {
+      const newMessages = [...prev.messages, message];
+      // 現在のエージェントのメッセージも更新
+      const updatedAgentMessages = prev.selectedAgent
+        ? { ...prev.agentMessages, [prev.selectedAgent]: newMessages }
+        : prev.agentMessages;
+      
+      return {
+        ...prev,
+        messages: newMessages,
+        agentMessages: updatedAgentMessages
+      };
+    });
   }, []);
 
   const removeMessage = useCallback((messageId: string) => {
-    setState(prev => ({
-      ...prev,
-      messages: prev.messages.filter(msg => msg.id !== messageId)
-    }));
+    setState(prev => {
+      const newMessages = prev.messages.filter(msg => msg.id !== messageId);
+      // 現在のエージェントのメッセージも更新
+      const updatedAgentMessages = prev.selectedAgent
+        ? { ...prev.agentMessages, [prev.selectedAgent]: newMessages }
+        : prev.agentMessages;
+      
+      return {
+        ...prev,
+        messages: newMessages,
+        agentMessages: updatedAgentMessages
+      };
+    });
   }, []);
 
   const updateMessages = useCallback((messages: Message[]) => {
-    setState(prev => ({
-      ...prev,
-      messages
-    }));
+    setState(prev => {
+      // 現在のエージェントのメッセージも更新
+      const updatedAgentMessages = prev.selectedAgent
+        ? { ...prev.agentMessages, [prev.selectedAgent]: messages }
+        : prev.agentMessages;
+      
+      return {
+        ...prev,
+        messages,
+        agentMessages: updatedAgentMessages
+      };
+    });
   }, []);
 
   const setLoading = useCallback((isLoading: boolean) => {

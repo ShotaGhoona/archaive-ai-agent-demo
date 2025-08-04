@@ -1,11 +1,8 @@
 import { 
   User, 
   Bell, 
-  Shield, 
   Palette, 
-  Database,
   Key,
-  HelpCircle,
   Building2,
   Users,
   CreditCard,

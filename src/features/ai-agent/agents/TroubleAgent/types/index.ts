@@ -1,90 +1,76 @@
-// トラブル情報の型定義
-export interface TroubleInfo {
-  document_id: string;
-  document_name: string;
-  customer: string;
-  page_number: number;
-  date: string;
-  text: string;
-  detail: {
-    cause?: string;
-    solution?: string;
-    parts?: string;
-    cost?: string;
-    downtime?: string;
-  };
-}
+// TroubleAgent 固有の型定義
+// 既存のMessage型は @/features/ai-agent/types/types から使用
 
-// 見積もり情報の型定義
-export interface EstimateInfo {
-  document_id: string;
-  document_name: string;
-  customer: string;
-  page_number: number;
-  content: Record<string, any>;
+export interface SearchQuery {
+  hasトラブル: boolean;
+  has見積もり: boolean;
+  has仕様書: boolean;
+  startDate?: number;
+  endDate?: number;
 }
-
-// 仕様書情報の型定義
-export interface SpecificationInfo {
-  document_id: string;
-  document_name: string;
-  customer: string;
-  page_number: number;
-  content: Record<string, any>;
-}
-
-// 検索結果の型定義
-export type SearchResultType = 'trouble' | 'estimate' | 'specification' | 'all';
 
 export interface SearchResult {
-  type: SearchResultType;
-  data: TroubleInfo[] | EstimateInfo[] | SpecificationInfo[] | {
-    troubles: TroubleInfo[];
-    estimates: EstimateInfo[];
-    specifications: SpecificationInfo[];
+  id: string;
+  category: 'trouble' | 'estimate' | 'specification';
+  documentName: string;
+  documentId: string;
+  pageNumber: number;
+  customer: string;
+  date: string;
+  summary: string;
+  detail?: {
+    text?: string;
+    cause?: string;
+    solution?: string;
+    cost?: string;
+    content?: Record<string, unknown>;
   };
+}
+
+export interface SearchResults {
+  troubles: SearchResult[];
+  estimates: SearchResult[];
+  specifications: SearchResult[];
+  totalCount: number;
+  query: SearchQuery;
 }
 
 // データベースの型定義
-export interface TroubleDatabase {
-  documents: Document[];
-}
-
-export interface Document {
+export interface DatabaseDocument {
   document_id: string;
   document_name: string;
   customer: string;
-  pages: Page[];
+  created_date: string;
+  updated_date: string;
+  total_pages: number;
+  pages: DatabasePage[];
 }
 
-export interface Page {
+export interface DatabasePage {
   page_number: number;
-  trouble: {
-    exists: boolean;
-    date?: string;
-    text?: string;
-    detail?: {
-      cause?: string;
-      solution?: string;
-      parts?: string;
-      cost?: string;
-      downtime?: string;
-    };
-  };
-  estimate: {
-    exists: boolean;
-    content?: Record<string, any>;
-  };
-  specification: {
-    exists: boolean;
-    content?: Record<string, any>;
+  image_url: string;
+  trouble: TroubleData;
+  estimate: EstimateData;
+  specification: SpecificationData;
+}
+
+export interface TroubleData {
+  exists: boolean;
+  date?: string;
+  text?: string;
+  detail?: {
+    cause?: string;
+    solution?: string;
+    cost?: string;
   };
 }
 
-// ChatContentのProps型定義
-export interface ChatContentProps {
-  messages: import("../../../types/types").Message[];
-  isLoading: boolean;
-  agentConfig: import("../../../types/types").AIAgentConfig;
-  sessionImage?: File | null;
+export interface EstimateData {
+  exists: boolean;
+  content?: Record<string, unknown>;
+}
+
+export interface SpecificationData {
+  exists: boolean;
+  content?: Record<string, unknown>;
 }

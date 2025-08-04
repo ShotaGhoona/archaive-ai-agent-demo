@@ -26,7 +26,7 @@ export function Header() {
             {/* Navigation Menu */}
             <nav className="hidden md:flex items-center space-x-1">
               {headerNavigations.map((navigation) => (
-                <Link href={navigation.href}>
+                <Link key={navigation.label} href={navigation.href}>
                   <div className="relative flex items-center gap-2 px-3 py-1 text-sm font-medium text-white hover:text-white cursor-pointer group">
                     {navigation.icon}
                     <span>{navigation.label}</span>
@@ -77,7 +77,7 @@ export function Header() {
           <div className="md:hidden border-t border-white/20 py-2">
             <nav className="flex flex-col space-y-1">
               {headerNavigations.map((navigation) => (
-                <Link href={navigation.href}>
+                <Link key={navigation.label} href={navigation.href}>
                   <div className="relative flex items-center gap-2 px-4 py-2 text-sm font-medium text-white hover:text-white cursor-pointer group">
                     {navigation.icon}
                     <span>{navigation.label}</span>

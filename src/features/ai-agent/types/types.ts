@@ -62,6 +62,8 @@ export interface ChatUIState {
   agentConfig: AIAgentConfig | null;
   selectorOpen: boolean;
   availableAgents: AIAgentConfig[];
+  // エージェント別メッセージ管理
+  agentMessages: Record<string, Message[]>;
 }
 
 

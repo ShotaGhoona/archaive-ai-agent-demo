@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { Message } from "../types/types";
 import { sendUnifiedMessage } from "../utils/chatApi";
 import { createUserMessage, createTypingMessage, createAIMessage, createErrorMessage } from "../utils/messageFactory";
+import { handleTroubleMessage } from "../agents/TroubleAgent/messageHandler";
 
 interface UseChatManagerProps {
   selectedAgent: string | null;
@@ -31,11 +32,30 @@ export const useChatManager = ({
     const userMessage = createUserMessage(content, hasImage);
     addMessage(userMessage);
     
-    // カコトラAI（trouble）の場合は、フロントエンドで処理を完結
+    // カコトラAI（trouble）の場合は、専用ハンドラーで処理
     if (selectedAgent === 'trouble') {
-      // ChatContentコンポーネントが検索処理を行うため、
-      // ここではメッセージの追加のみ行う
-      setLoading(false);
+      setLoading(true);
+      
+      // タイピング中のメッセージを表示
+      const typingMessage = createTypingMessage();
+      addMessage(typingMessage);
+      
+      try {
+        // TroubleAgent専用のメッセージハンドラーを呼び出し
+        const aiResponse = await handleTroubleMessage(content);
+        
+        removeMessage('typing');
+        addMessage(aiResponse);
+        setLoading(false);
+      } catch (error) {
+        console.error('Failed to handle trouble message:', error);
+        
+        const errorMessage = createErrorMessage(error);
+        removeMessage('typing');
+        addMessage(errorMessage);
+        setLoading(false);
+      }
+      
       return;
     }
     

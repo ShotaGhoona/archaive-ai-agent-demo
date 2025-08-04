@@ -33,7 +33,7 @@ export const availableAgents: Record<string, AIAgentConfig> = {
     description: '製造上のトラブルを解決',
     color: '#ef4444',
     category: AgentCategory.TROUBLE,
-    welcomeMessage: '製造上のトラブルを解決します。'
+    welcomeMessage: '過去のトラブル、見積もり、仕様書の情報を図面から検索できます。「'
   }
 };
 

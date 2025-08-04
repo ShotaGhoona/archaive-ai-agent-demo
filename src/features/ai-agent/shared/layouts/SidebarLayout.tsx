@@ -42,8 +42,8 @@ const getAgentComponents = (agentId: string) => {
     default:
       // Fallback to shared components
       return {
-        ChatContent: lazy(() => import('../components/ChatContent')),
-        ChatInput: lazy(() => import('../components/ChatInput'))
+        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
       };
   }
 };
@@ -87,6 +87,7 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
             <ChatContent
               messages={messages}
               isLoading={isLoading}
+              onSendMessage={onSendMessage}
               agentConfig={agentConfig as AIAgentConfig}
             />
           </Suspense>
