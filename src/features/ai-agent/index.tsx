@@ -11,56 +11,8 @@ import ChatButton from "./shared/components/ChatButton";
 import FloatingLayout, { FloatingLayoutRef } from "./shared/layouts/FloatingLayout";
 import SidebarLayout, { SidebarLayoutRef } from "./shared/layouts/SidebarLayout";
 import FullpageLayout, { FullpageLayoutRef } from "./shared/layouts/FullpageLayout";
-import ChatContent from "./shared/components/ChatContent";
-import ChatInput from "./shared/components/ChatInput";
 import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 
-
-// 🎯 統一コンテンツレンダラー
-const AgentContentRenderer = ({ messages, isLoading, agentConfig, sessionImage }: {
-  messages: Message[];
-  isLoading: boolean;
-  agentConfig: AIAgentConfig;
-  sessionImage: File | null;
-}) => {
-  if (!agentConfig) return null;
-
-  return <ChatContent 
-    messages={messages} 
-    isLoading={isLoading} 
-    agentConfig={agentConfig}
-    sessionImage={sessionImage}
-  />;
-};
-
-// 共有チャットインプット使用
-const AgentInputRenderer = ({ onSendMessage, onQuickAction, onFileAttach, disabled, agentConfig, attachedFile, onRemoveAttachment, sessionImage, onRemoveSessionImage }: {
-  onSendMessage: (message: string) => void;
-  onQuickAction: (action: string) => void;
-  onFileAttach: (file: File) => void;
-  disabled: boolean;
-  agentConfig: AIAgentConfig;
-  attachedFile: File | null;
-  onRemoveAttachment: () => void;
-  sessionImage: File | null;
-  onRemoveSessionImage: () => void;
-}) => {
-  if (!agentConfig) return null;
-
-  return (
-    <ChatInput
-      onSendMessage={onSendMessage}
-      onQuickAction={onQuickAction}
-      onFileAttach={onFileAttach}
-      disabled={disabled}
-      agentConfig={agentConfig}
-      attachedFile={attachedFile}
-      onRemoveAttachment={onRemoveAttachment}
-      sessionImage={sessionImage}
-      onRemoveSessionImage={onRemoveSessionImage}
-    />
-  );
-};
 
 export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   const params = useParams();
@@ -82,6 +34,8 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
   // propsから渡されたエージェント設定を反映
   useEffect(() => {
     const agentConfigs = getAgentConfigs(availableAgents);
+    console.log('Available agents:', availableAgents);
+    console.log('Agent configs:', agentConfigs);
     actions.updateAvailableAgents(agentConfigs);
   }, [availableAgents]); // actions を依存配列から削除
 
@@ -191,6 +145,16 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     };
 
     actions.addMessage(userMessage);
+    
+    // カコトラAI（trouble）の場合は、フロントエンドで処理を完結
+    if (state.selectedAgent === 'trouble') {
+      // ChatContentコンポーネントが検索処理を行うため、
+      // ここではメッセージの追加のみ行う
+      actions.setLoading(false);
+      return;
+    }
+    
+    // その他のエージェントは通常通りAPIを呼ぶ
     actions.setLoading(true);
 
     const typingMessage: Message = {
@@ -290,30 +254,7 @@ export default function ChatUIManager({ availableAgents }: ChatUIManagerProps) {
     onSendMessage: handleSendMessage,
     onQuickAction: handleQuickAction,
     selectedAgent: state.selectedAgent,
-    agentConfig: state.agentConfig,
-    // エージェント別コンテンツ
-    agentContent: state.selectedAgent && state.agentConfig ? (
-      <AgentContentRenderer
-        messages={state.messages}
-        isLoading={state.isLoading}
-        agentConfig={state.agentConfig}
-        sessionImage={sessionImage}
-      />
-    ) : null,
-    // エージェント別インプット
-    agentInput: state.selectedAgent && state.agentConfig ? (
-      <AgentInputRenderer
-        onSendMessage={handleSendMessage}
-        onQuickAction={handleQuickAction}
-        onFileAttach={handleFileAttach}
-        disabled={state.isLoading}
-        agentConfig={state.agentConfig}
-        attachedFile={attachedFile}
-        onRemoveAttachment={handleRemoveAttachment}
-        sessionImage={sessionImage}
-        onRemoveSessionImage={handleRemoveSessionImage}
-      />
-    ) : null
+    agentConfig: state.agentConfig
   };
 
   return (

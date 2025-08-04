@@ -1,10 +1,8 @@
 "use client";
 
-import { forwardRef, useRef, useImperativeHandle } from "react";
+import { forwardRef, useRef, useImperativeHandle, lazy, Suspense } from "react";
 import { ChatLayoutState, Message, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
-import ChatContent from "../components/ChatContent";
-import ChatInput from "../components/ChatInput";
 
 interface SidebarLayoutProps {
   messages: Message[];
@@ -23,6 +21,33 @@ export interface SidebarLayoutRef {
   getElement: () => HTMLDivElement | null;
 }
 
+// Helper function to get agent-specific components
+const getAgentComponents = (agentId: string) => {
+  switch (agentId) {
+    case 'trouble':
+      return {
+        ChatContent: lazy(() => import('../../agents/Trouble/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/Trouble/ChatInput'))
+      };
+    case 'estimate':
+      return {
+        ChatContent: lazy(() => import('../../agents/EstimateAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/EstimateAgent/ChatInput'))
+      };
+    case 'general':
+      return {
+        ChatContent: lazy(() => import('../../agents/GeneralAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/GeneralAgent/ChatInput'))
+      };
+    default:
+      // Fallback to shared components
+      return {
+        ChatContent: lazy(() => import('../components/ChatContent')),
+        ChatInput: lazy(() => import('../components/ChatInput'))
+      };
+  }
+};
+
 const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
   messages,
   isLoading,
@@ -40,6 +65,10 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
     getElement: () => containerRef.current
   }));
 
+  // Get agent-specific components
+  const agentId = (agentConfig as AIAgentConfig)?.id || '';
+  const { ChatContent, ChatInput } = getAgentComponents(agentId);
+
   return (
     <div
       ref={containerRef}
@@ -54,21 +83,25 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
       
       <div className="flex-1 overflow-hidden">
         {agentContent || (
-          <ChatContent
-            messages={messages}
-            isLoading={isLoading}
-            agentConfig={agentConfig as AIAgentConfig}
-          />
+          <Suspense fallback={<div className="flex items-center justify-center h-full">Loading...</div>}>
+            <ChatContent
+              messages={messages}
+              isLoading={isLoading}
+              agentConfig={agentConfig as AIAgentConfig}
+            />
+          </Suspense>
         )}
       </div>
       
       {agentInput || (
-        <ChatInput
-          onSendMessage={onSendMessage}
-          onQuickAction={onQuickAction}
-          disabled={isLoading}
-          agentConfig={agentConfig as AIAgentConfig}
-        />
+        <Suspense fallback={<div className="p-4">Loading input...</div>}>
+          <ChatInput
+            onSendMessage={onSendMessage}
+            onQuickAction={onQuickAction}
+            disabled={isLoading}
+            agentConfig={agentConfig as AIAgentConfig}
+          />
+        </Suspense>
       )}
     </div>
   );
