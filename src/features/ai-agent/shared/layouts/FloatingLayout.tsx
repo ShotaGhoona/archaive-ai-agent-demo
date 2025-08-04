@@ -33,8 +33,8 @@ const getAgentComponents = (agentId: string) => {
   switch (agentId) {
     case 'trouble':
       return {
-        ChatContent: lazy(() => import('../../agents/Trouble/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/Trouble/ChatInput'))
+        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
       };
     case 'estimate':
       return {
@@ -172,7 +172,7 @@ const FloatingLayout = forwardRef<FloatingLayoutRef, FloatingLayoutProps>(({
   return (
     <Card
       ref={containerRef}
-      className="fixed py-0 z-40 shadow-2xl border-border/50 backdrop-blur-sm bg-background/95 supports-[backdrop-filter]:bg-background/90 overflow-hidden"
+      className="fixed py-0 z-50 shadow-2xl border-border/50 backdrop-blur-sm bg-background/95 supports-[backdrop-filter]:bg-background/90 overflow-hidden"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,

@@ -26,29 +26,11 @@ export interface Size {
   height: number;
 }
 
-export interface UserPreferences {
-  defaultLayout: ChatLayoutState;
-  rememberLayout: boolean;
-  animations: boolean;
-  autoResize: boolean;
-}
-
-export interface BlueprintInfo {
-  id: string;
-  image: string;
-  name: string;
-  customerName: string;
-  productName: string;
-  material: string;
-}
 
 // 06新規追加 - AI エージェント関連型定義
 export enum AgentCategory {
   GENERAL = 'general',
   ESTIMATE = 'estimate',
-  PROCESS = 'process',
-  INQUIRY = 'inquiry',
-  CUSTOM = 'custom',
   TROUBLE = 'trouble'
 }
 
@@ -76,33 +58,12 @@ export interface ChatUIState {
   size: Size;
   messages: Message[];
   isLoading: boolean;
-  preferences: UserPreferences;
   selectedAgent: string | null;
   agentConfig: AIAgentConfig | null;
   selectorOpen: boolean;
   availableAgents: AIAgentConfig[];
 }
 
-export interface PersistedChatState {
-  layoutState: ChatLayoutState;
-  position: Position;
-  size: Size;
-  preferences: UserPreferences;
-  selectedAgent: string | null;
-  sessionData: {
-    messages: Message[];
-    lastActive: Date;
-    blueprintId: string;
-  };
-}
-
-export interface StateTransitionError {
-  fromState: ChatLayoutState;
-  toState: ChatLayoutState;
-  error: Error;
-  fallbackState: ChatLayoutState;
-  userMessage: string;
-}
 
 // エージェント別コンポーネント用プロパティ
 export interface AgentContentProps {

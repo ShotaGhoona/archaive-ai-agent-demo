@@ -26,8 +26,8 @@ const getAgentComponents = (agentId: string) => {
   switch (agentId) {
     case 'trouble':
       return {
-        ChatContent: lazy(() => import('../../agents/Trouble/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/Trouble/ChatInput'))
+        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
       };
     case 'estimate':
       return {
@@ -72,7 +72,7 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
   return (
     <div
       ref={containerRef}
-      className="fixed right-0 top-0 w-96 h-screen z-40 bg-background border-l border-border shadow-lg flex flex-col"
+      className="fixed right-0 top-0 w-96 h-screen z-50 bg-background border-l border-border shadow-lg flex flex-col"
       style={{ height: 'calc(100vh - 45px)', top: '45px' }}
     >
       <ChatHeader

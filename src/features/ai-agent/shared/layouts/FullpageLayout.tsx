@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, useRef, useImperativeHandle, lazy, Suspense } from "react";
-import { ChatLayoutState, Message, BlueprintInfo, AIAgentConfig } from "../../types/types";
+import { ChatLayoutState, Message, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
 
 interface FullpageLayoutProps {
@@ -11,7 +11,6 @@ interface FullpageLayoutProps {
   onClose: () => void;
   onSendMessage: (message: string) => void;
   onQuickAction: (action: string) => void;
-  blueprintInfo?: BlueprintInfo;
   selectedAgent?: string | null;
   agentConfig?: unknown;
   agentContent?: React.ReactNode;
@@ -27,8 +26,8 @@ const getAgentComponents = (agentId: string) => {
   switch (agentId) {
     case 'trouble':
       return {
-        ChatContent: lazy(() => import('../../agents/Trouble/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/Trouble/ChatInput'))
+        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
+        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
       };
     case 'estimate':
       return {
@@ -79,14 +78,14 @@ const FullpageLayout = forwardRef<FullpageLayoutRef, FullpageLayoutProps>(({
     <>
       {/* バックドロップ */}
       <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30"
+        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
         onClick={onClose}
       />
       
       {/* モーダルコンテンツ */}
       <div
         ref={containerRef}
-        className="fixed inset-0 z-40 flex items-center justify-center p-4"
+        className="fixed inset-0 z-55 flex items-center justify-center p-4"
       >
         <div 
           className="bg-background rounded-lg shadow-2xl border border-border overflow-hidden flex"

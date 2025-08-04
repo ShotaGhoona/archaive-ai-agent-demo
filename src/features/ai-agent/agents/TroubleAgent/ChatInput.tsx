@@ -26,7 +26,6 @@ export default function ChatInput({
   onFileAttach,
   disabled = false, 
   agentConfig,
-  isFirstVisit = false,
   attachedFile,
   onRemoveAttachment
 }: ChatInputProps) {
