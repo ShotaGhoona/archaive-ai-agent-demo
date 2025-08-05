@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
+import blueprintsData from "../data/blueprint.json";
 import { BlueprintPageHeader } from "./BlueprintPageHeader";
 import { TableView } from "./TableView";
 import { GalleryView } from "./GalleryView";

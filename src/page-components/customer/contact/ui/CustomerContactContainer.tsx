@@ -6,7 +6,7 @@ import { ContactTableView } from "./CustomerContactTableView";
 // import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { CONTACT_FILTER_CONFIG } from "../lib/contactFilterConfig";
-import { Contact } from "../model/contactTypes";
+import { Contact } from "../lib/contactColumns";
 
 interface CustomerContactContainerProps {
   customerId: string;
@@ -94,6 +94,7 @@ export default function CustomerContactContainer({ customerId }: CustomerContact
             isFilterSidebarOpen={isFilterSidebarOpen}
             contacts={filteredContacts}
             onContactCreate={handleContactCreate}
+            customerId={customerId}
           />
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
