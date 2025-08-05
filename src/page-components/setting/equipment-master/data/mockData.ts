@@ -90,67 +90,85 @@ export const columns = [
   {
     key: "category",
     label: "設備カテゴリ",
-    type: "string" as const,
     width: 120,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "equipmentName",
     label: "設備名",
-    type: "string" as const,
     width: 140,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "specification",
     label: "仕様・規格",
-    type: "string" as const,
     width: 180,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "manufacturer",
     label: "メーカー",
-    type: "string" as const,
     width: 120,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "hourlyRate",
     label: "時間単価(円)",
-    type: "number" as const,
     width: 110,
+    sortable: true,
     editable: true,
-    format: (value: number) => `¥${value.toLocaleString()}/h`
+    locked: false,
+    sortType: "number" as const,
+    render: (item: EquipmentMaster, value: unknown) => `¥${Number(value).toLocaleString()}/h`
   },
   {
     key: "energyCost",
     label: "電力費(円/h)",
-    type: "number" as const,
     width: 100,
+    sortable: true,
     editable: true,
-    format: (value: number) => `¥${value.toLocaleString()}`
+    locked: false,
+    sortType: "number" as const,
+    render: (item: EquipmentMaster, value: unknown) => `¥${Number(value).toLocaleString()}`
   },
   {
     key: "maintenanceCost",
     label: "保守費(円/h)",
-    type: "number" as const,
     width: 100,
+    sortable: true,
     editable: true,
-    format: (value: number) => `¥${value.toLocaleString()}`
+    locked: false,
+    sortType: "number" as const,
+    render: (item: EquipmentMaster, value: unknown) => `¥${Number(value).toLocaleString()}`
   },
   {
     key: "notes",
     label: "備考",
-    type: "string" as const,
     width: 200,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "updatedAt",
     label: "更新日",
-    type: "date" as const,
     width: 100,
-    editable: false
+    sortable: true,
+    editable: false,
+    locked: false,
+    sortType: "date" as const
   }
 ];

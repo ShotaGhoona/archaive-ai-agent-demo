@@ -46,7 +46,6 @@ export default function BlueprintContainer() {
   });
 
   // ページネーション（統合ページネーションでは手動スライシング不要）
-  const totalPages = Math.ceil(filteredBlueprints.length / itemsPerPage);
 
 
   return (

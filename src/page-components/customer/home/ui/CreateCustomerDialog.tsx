@@ -74,7 +74,12 @@ export function CreateCustomerDialog({ onSubmit }: CreateCustomerDialogProps) {
     setIsSubmitting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
-      onSubmit(data);
+      // faxNumberがundefinedの場合は空文字列に変換
+      const customerData = {
+        ...data,
+        faxNumber: data.faxNumber || ""
+      };
+      onSubmit(customerData);
       form.reset();
       setOpen(false);
     } catch (error) {

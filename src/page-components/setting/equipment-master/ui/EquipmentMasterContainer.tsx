@@ -19,13 +19,14 @@ export default function EquipmentMasterContainer() {
     item.manufacturer.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDataChange = (newData: EquipmentMaster[]) => {
-    setData(newData);
-  };
+  // const handleDataChange = (newData: EquipmentMaster[]) => {
+  //   setData(newData);
+  // };
 
-  const handleAddNew = (newItem: Omit<EquipmentMaster, "id" | "updatedAt">) => {
+  const handleAddNew = (newItem: { category: string; equipmentName: string; specification: string; manufacturer: string; hourlyRate: number; energyCost: number; maintenanceCost: number; notes?: string }) => {
     const newEquipment: EquipmentMaster = {
       ...newItem,
+      notes: newItem.notes || "",
       id: (data.length + 1).toString(),
       updatedAt: new Date().toISOString().split('T')[0]
     };
@@ -98,7 +99,12 @@ export default function EquipmentMasterContainer() {
         <BasicDataTable
           data={filteredData}
           columns={columns}
-          onDataChange={handleDataChange}
+          onItemUpdate={(rowId, field, value) => {
+            const updatedData = data.map(item => 
+              item.id === rowId ? { ...item, [field]: value } : item
+            );
+            setData(updatedData);
+          }}
           emptyMessage="登録された機械設備情報がありません"
         />
       </div>

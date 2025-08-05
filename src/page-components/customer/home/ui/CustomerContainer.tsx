@@ -37,9 +37,6 @@ export default function CustomerContainer() {
     return matchesSearch;
   });
 
-  // ページネーション（統合ページネーションでは手動スライシング不要）
-  const totalPages = Math.ceil(filteredCustomers.length / itemsPerPage);
-
   // 顧客更新ハンドラー
   const handleCustomerUpdate = (customerCode: string, field: string, value: unknown) => {
     setCustomers(prev => prev.map(customer => 

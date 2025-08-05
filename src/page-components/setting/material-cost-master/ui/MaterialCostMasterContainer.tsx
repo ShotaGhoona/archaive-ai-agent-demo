@@ -19,13 +19,14 @@ export default function MaterialCostMasterContainer() {
     item.supplier.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDataChange = (newData: MaterialCostMaster[]) => {
-    setData(newData);
-  };
+  // const handleDataChange = (newData: MaterialCostMaster[]) => {
+  //   setData(newData);
+  // };
 
-  const handleAddNew = (newItem: Omit<MaterialCostMaster, "id" | "updatedAt">) => {
+  const handleAddNew = (newItem: { category: string; materialName: string; specification: string; unit: string; unitPrice: number; supplier: string; notes?: string }) => {
     const newMaterial: MaterialCostMaster = {
       ...newItem,
+      notes: newItem.notes || "",
       id: (data.length + 1).toString(),
       updatedAt: new Date().toISOString().split('T')[0]
     };
@@ -98,7 +99,12 @@ export default function MaterialCostMasterContainer() {
         <BasicDataTable
           data={filteredData}
           columns={columns}
-          onDataChange={handleDataChange}
+          onItemUpdate={(rowId, field, value) => {
+            const updatedData = data.map(item => 
+              item.id === rowId ? { ...item, [field]: value } : item
+            );
+            setData(updatedData);
+          }}
           emptyMessage="登録された材料費情報がありません"
         />
       </div>

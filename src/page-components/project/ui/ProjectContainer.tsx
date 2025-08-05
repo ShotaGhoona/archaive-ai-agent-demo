@@ -37,10 +37,6 @@ export default function ProjectContainer() {
     return matchesSearch;
   });
 
-  // ページネーション（統合ページネーションでは手動スライシング不要）
-  const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
-
-
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
       {/* フィルターサイドバー */}

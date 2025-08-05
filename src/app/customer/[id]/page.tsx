@@ -1,11 +1,12 @@
 import { redirect } from 'next/navigation';
 
 interface CustomerPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function CustomerPage({ params }: CustomerPageProps) {
-  redirect(`/customer/${params.id}/profile`);
+export default async function CustomerPage({ params }: CustomerPageProps) {
+  const { id } = await params;
+  redirect(`/customer/${id}/profile`);
 }

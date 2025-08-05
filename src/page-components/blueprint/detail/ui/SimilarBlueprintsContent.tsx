@@ -33,7 +33,6 @@ interface SimilarBlueprintsContentProps {
 
 export function SimilarBlueprintsContent({ 
   activeFile, 
-  onSimilarBlueprintClick,
   isLoading = false
 }: SimilarBlueprintsContentProps) {
   const [previewBlueprint, setPreviewBlueprint] = useState<SimilarBlueprint | null>(null);

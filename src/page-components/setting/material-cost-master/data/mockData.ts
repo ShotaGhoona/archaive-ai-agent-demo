@@ -83,58 +83,74 @@ export const columns = [
   {
     key: "category",
     label: "材料カテゴリ",
-    type: "string" as const,
     width: 120,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "materialName",
     label: "材料名",
-    type: "string" as const,
     width: 120,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "specification",
     label: "規格・仕様",
-    type: "string" as const,
     width: 150,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "unit",
     label: "単位",
-    type: "string" as const,
     width: 80,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "unitPrice",
     label: "単価(円)",
-    type: "number" as const,
     width: 100,
+    sortable: true,
     editable: true,
-    format: (value: number) => `¥${value.toLocaleString()}`
+    locked: false,
+    sortType: "number" as const,
+    render: (item: MaterialCostMaster, value: unknown) => `¥${Number(value).toLocaleString()}`
   },
   {
     key: "supplier",
     label: "仕入先",
-    type: "string" as const,
     width: 120,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "notes",
     label: "備考",
-    type: "string" as const,
     width: 200,
-    editable: true
+    sortable: true,
+    editable: true,
+    locked: false,
+    sortType: "string" as const
   },
   {
     key: "updatedAt",
     label: "更新日",
-    type: "date" as const,
     width: 100,
-    editable: false
+    sortable: true,
+    editable: false,
+    locked: false,
+    sortType: "date" as const
   }
 ];

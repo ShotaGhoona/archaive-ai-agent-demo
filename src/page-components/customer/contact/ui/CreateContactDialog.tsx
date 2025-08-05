@@ -58,7 +58,7 @@ interface CreateContactDialogProps {
   onSubmit: (data: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => void;
 }
 
-export function CreateContactDialog({ customerId, onSubmit }: CreateContactDialogProps) {
+export function CreateContactDialog({ /* customerId, */ onSubmit }: CreateContactDialogProps) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

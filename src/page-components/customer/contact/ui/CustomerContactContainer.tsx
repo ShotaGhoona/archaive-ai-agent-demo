@@ -41,9 +41,6 @@ export default function CustomerContactContainer({ customerId }: CustomerContact
     return matchesSearch;
   });
 
-  // ページネーション（統合ページネーションでは手動スライシング不要）
-  const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
-
   // 顧客更新ハンドラー
   const handleContactUpdate = (contactId: string, field: string, value: unknown) => {
     setContacts(prev => prev.map(contact => 
