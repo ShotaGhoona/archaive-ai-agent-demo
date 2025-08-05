@@ -1,12 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { DetailTabNavigation } from "./ui/DetailTabNavigation";
-import { DetailSidebar } from "./ui/DetailSidebar";
-import { BlueprintViewer } from "./ui/BlueprintViewer";
-import { BlueprintInfo } from "./ui/BlueprintInfo";
+import { DetailTabNavigation } from "./DetailTabNavigation";
+import { DetailSidebar } from "./DetailSidebar";
+import { BlueprintViewer } from "./BlueprintViewer";
+import { BlueprintInfo } from "./BlueprintInfo";
 import { Card, CardContent } from "@/shared/shadcnui";
-import blueprintsData from "./data/blueprints.json";
+import blueprintsData from "../data/blueprints.json";
 
 interface SimilarBlueprint {
   id: string;

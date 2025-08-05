@@ -1,50 +1,50 @@
-# Table Pagination Refactor Strategy
+# テーブルページネーション リファクタリング戦略
 
-## Document Information
-- **Document Type**: Implementation Strategy
-- **Date**: 2025-08-05
-- **Author**: Claude Code Assistant
-- **Version**: 1.0
+## 文書情報
+- **文書種別**: 実装戦略
+- **日付**: 2025-08-05
+- **作成者**: Claude Code Assistant
+- **バージョン**: 1.0
 
-## Executive Summary
+## 概要
 
-This document outlines a comprehensive strategy for refactoring the current table and pagination architecture to eliminate code duplication, improve maintainability, and create a unified table configuration system. The current approach has significant duplication across pagination components and lacks integration between tables and pagination.
+現在のテーブルとページネーションアーキテクチャをリファクタリングし、コードの重複を排除し、保守性を向上させるための戦略を示します。**オーバーエンジニアリングを避け、既存の3つの重複ページネーションコンポーネントを統一し、BasicDataTableとの統合を図ることが主目的です。**
 
-## Current Architecture Analysis
+## 現在のアーキテクチャ分析
 
-### BasicDataTable Component
-**Location**: `src/shared/basic-data-table/ui/BasicDataTable.tsx`
+### BasicDataTableコンポーネント
+**場所**: `src/shared/basic-data-table/ui/BasicDataTable.tsx`
 
-**Current Features**:
-- Generic table component with column-based configuration
-- Built-in sorting, resizing, and cell editing capabilities
-- Uses custom hooks for functionality (`useColumnResize`, `useTableSort`, `useCellEdit`)
-- No pagination integration
+**現在の機能**:
+- 列ベースの設定を持つ汎用テーブルコンポーネント
+- ソート、リサイズ、セル編集機能を内蔵
+- 機能ごとにカスタムフック使用（`useColumnResize`, `useTableSort`, `useCellEdit`）
+- ページネーション統合なし
 
-**Strengths**:
-- Well-structured with separation of concerns
-- Generic and reusable
-- Good TypeScript support
-- Modular hook-based architecture
+**長所**:
+- 関心の分離がしっかりしている
+- 汎用的で再利用可能
+- TypeScriptサポートが充実
+- フックベースのモジュラーアーキテクチャ
 
-**Limitations**:
-- No pagination awareness
-- No total data count handling
-- No page-level data management
+**制限事項**:
+- ページネーション機能なし
+- 総データ数の処理なし
+- ページレベルのデータ管理なし
 
-### Pagination Components
-**Locations**:
+### ページネーションコンポーネント
+**場所**:
 - `src/page-components/blueprint/ui/BlueprintPagination.tsx`
 - `src/page-components/customer/ui/CustomerPagination.tsx`
 - `src/page-components/project/ui/ProjectPagination.tsx`
 
-**Current State**:
-- **100% code duplication** across all three components
-- Identical interface and implementation
-- Simple pagination logic with prev/next and page numbers
-- Limited to 5 visible page numbers
+**現在の状態**:
+- **3つのコンポーネント間で100%のコード重複**
+- インターフェースと実装が同一
+- 前後ページとページ番号のシンプルなページネーションロジック
+- 表示ページ数は5つまで
 
-**Interface Pattern**:
+**インターフェースパターン**:
 ```typescript
 interface PaginationProps {
   currentPage: number;
@@ -53,69 +53,69 @@ interface PaginationProps {
 }
 ```
 
-### Column Configuration Files
-**Locations**:
+### 列設定ファイル
+**場所**:
 - `src/page-components/blueprint/lib/blueprintColumns.tsx`
 - `src/page-components/customer/lib/customerColumns.tsx`
 
-**Current Structure**:
-- Factory functions for creating columns with callbacks
-- Rich column definitions with rendering, editing, and sorting
-- Type-safe interfaces for data models
-- Action columns with dropdown menus
+**現在の構造**:
+- コールバック付きの列作成ファクトリ関数
+- レンダリング、編集、ソート機能を持つ豊富な列定義
+- データモデルの型安全なインターフェース
+- ドロップダウンメニュー付きアクション列
 
-**Good Practices Observed**:
-- Callback-based architecture for extensibility
-- Backward compatibility with static exports
-- Rich rendering capabilities
-- Type safety
+**観察された良い慣行**:
+- 拡張性のためのコールバックベースアーキテクチャ
+- 静的エクスポートによる後方互換性
+- 豊富なレンダリング機能
+- 型安全性
 
-### Container Components
-**Locations**:
+### コンテナコンポーネント
+**場所**:
 - `src/page-components/blueprint/ui/BlueprintContainer.tsx`
 - `src/page-components/customer/ui/CustomerContainer.tsx`
 
-**Current Responsibilities**:
-- Data management and filtering
-- Pagination calculations
-- Search functionality
-- Advanced filtering integration
-- State management for current page
+**現在の責務**:
+- データ管理とフィルタリング
+- ページネーション計算
+- 検索機能
+- 高度フィルタリング統合
+- 現在ページの状態管理
 
-**Pagination Logic Pattern**:
+**ページネーションロジックパターン**:
 ```typescript
-// Repeated in every container
+// 全てのコンテナで繰り返されるコード
 const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 const startIndex = (currentPage - 1) * itemsPerPage;
 const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 ```
 
-## Problems with Current Approach
+## 現在のアプローチの問題点
 
-### 1. Code Duplication
-- **Pagination Components**: 100% identical code across 3+ components
-- **Container Logic**: Identical pagination calculations in every container
-- **Maintenance Burden**: Changes must be replicated across multiple files
+### 1. コードの重複
+- **ページネーションコンポーネント**: 3つ以上のコンポーネントで100%同じコード
+- **コンテナロジック**: 全てのコンテナで同じページネーション計算
+- **保守負担**: 変更時に複数ファイルを修正する必要
 
-### 2. Lack of Integration
-- **Separate Concerns**: Table and pagination are completely separate
-- **Manual Coordination**: Developers must manually wire pagination to tables
-- **Error Prone**: Easy to forget pagination when creating new table views
+### 2. 統合の欠如
+- **関心の分離**: テーブルとページネーションが完全に分離
+- **手動調整**: 開発者がページネーションをテーブルに手動で接続する必要
+- **エラーが起きやすい**: 新しいテーブルビュー作成時にページネーションを忘れがち
 
-### 3. Inconsistent UX
-- **Varying Implementations**: Slight differences may creep in over time
-- **Feature Gaps**: New pagination features must be added to all components
+### 3. 一貫性のないUX
+- **実装のばらつき**: 時間の経過とともに微細な違いが生じる可能性
+- **機能ギャップ**: 新しいページネーション機能を全コンポーネントに追加する必要
 
-### 4. Architecture Limitations
-- **No Standardization**: No enforced patterns for table + pagination
-- **Limited Extensibility**: Hard to add features like "items per page" selector
-- **Type Safety Issues**: No compile-time guarantees for pagination integration
+### 4. アーキテクチャの制限
+- **標準化の不足**: テーブル+ページネーションの強制パターンなし
+- **拡張性の制限**: 「ページ当たり項目数」セレクターなどの機能追加が困難
+- **型安全性の問題**: ページネーション統合のコンパイル時保証なし
 
-## Proposed New Architecture
+## 提案する新しいアーキテクチャ
 
-### 1. Unified TablePagination Component
+### 1. 統一TablePaginationコンポーネント
 
-**Location**: `src/shared/basic-data-table/ui/TablePagination.tsx`
+**場所**: `src/shared/basic-data-table/ui/TablePagination.tsx`
 
 ```typescript
 interface TablePaginationProps {
@@ -133,17 +133,16 @@ interface TablePaginationProps {
 }
 ```
 
-**Features**:
-- **Configurable items per page** with dropdown selector
-- **Total items display** ("Showing 1-20 of 150 items")
-- **Smart page number display** with ellipsis for large page counts
-- **Responsive design** with size variants
-- **Keyboard navigation** support
-- **Accessibility compliance** with ARIA labels
+**機能**:
+- **基本ページネーション**（ShadCN/UI Paginationコンポーネント使用）
+- **総項目数表示**（「150項目中1-20を表示」）
+- **既存機能と同等レベル**（現在の3つの重複コンポーネントの置き換え）
 
-### 2. Enhanced BasicDataTable with Pagination
+**実装方針**: 既存のShadCN/UIコンポーネントを最大限活用し、オーバーエンジニアリングを避ける
 
-**Location**: `src/shared/basic-data-table/ui/BasicDataTable.tsx`
+### 2. ページネーション統合型BasicDataTable
+
+**場所**: `src/shared/basic-data-table/ui/BasicDataTable.tsx`
 
 ```typescript
 interface PaginationConfig {
@@ -158,24 +157,26 @@ interface PaginationConfig {
 }
 
 interface BasicDataTableProps<T> {
-  // ... existing props
+  // ... 既存のprops
   pagination?: PaginationConfig;
   loading?: boolean;
   loadingMessage?: string;
 }
 ```
 
-**New Features**:
-- **Integrated pagination** as optional configuration
-- **Loading states** with skeleton UI
-- **Automatic layout adjustment** when pagination is enabled
-- **Data slicing handled internally** when pagination is provided
+**新機能**:
+- **統合ページネーション**（オプション設定として）
+- **内部データスライシング処理**（ページネーション提供時）
 
-### 3. Table Configuration System
+**実装方針**: 
+- 必要最小限の機能追加に留め、既存のBasicDataTableの安定性を保つ
+- **重要**: 既存のレイアウト構造（`flex-1 flex flex-col min-h-0`）を維持し、スクロール動作を保持する
 
-**Migration Path**: Column files → Table configuration files
+### 3. テーブル設定システム
 
-**New Structure**:
+**移行パス**: 列ファイル → テーブル設定ファイル
+
+**新しい構造**:
 ```typescript
 // src/page-components/blueprint/lib/blueprintTableConfig.tsx
 export interface BlueprintTableConfig {
@@ -199,9 +200,9 @@ export interface BlueprintTableConfig {
 }
 ```
 
-### 4. usePaginatedTable Hook
+### 4. usePaginatedTableフック
 
-**Location**: `src/shared/basic-data-table/lib/usePaginatedTable.ts`
+**場所**: `src/shared/basic-data-table/lib/usePaginatedTable.ts`
 
 ```typescript
 interface PaginatedTableState<T> {
@@ -228,56 +229,88 @@ export function usePaginatedTable<T>({
 }
 ```
 
-## Implementation Strategy
+## 実装戦略
 
-### Phase 1: Create Shared Components (Week 1)
+### フェーズ1: 共有コンポーネント作成（第1週）
 
-#### 1.1 TablePagination Component
+#### 1.1 TablePaginationコンポーネント
 ```bash
-src/shared/basic-data-table/ui/TablePagination.tsx
-src/shared/basic-data-table/ui/components/
-├── PaginationInfo.tsx        # "Showing X-Y of Z items"
-├── PaginationControls.tsx    # Previous/Next buttons
-├── PaginationNumbers.tsx     # Page number buttons
-└── ItemsPerPageSelector.tsx  # Dropdown for items per page
+src/shared/basic-data-table/ui/TablePagination.tsx  # 単一ファイル（ShadCN/UI使用）
 ```
 
-#### 1.2 usePaginatedTable Hook
+**実装方針**:
+- 既存のShadCN/UI Paginationコンポーネントを活用
+- オーバーエンジニアリングを避け、シンプルな置き換えに留める
+- 現在の3つの重複ページネーションコンポーネントの統一版として作成
+
+#### 1.2 usePaginatedTableフック
 ```bash
-src/shared/basic-data-table/lib/usePaginatedTable.ts
-src/shared/basic-data-table/lib/utils/paginationUtils.ts
+src/shared/basic-data-table/lib/usePaginatedTable.ts  # 単一ファイル
 ```
 
-#### 1.3 Enhanced BasicDataTable
-- Add optional pagination prop
-- Integrate TablePagination component
-- Handle loading states
-- Maintain backward compatibility
+**実装方針**:
+- 既存コンテナの重複ページネーションロジックを統一
+- 複雑な機能は追加せず、現在の機能と同等レベルに留める
 
-### Phase 2: Migration Strategy (Week 2)
+#### 1.3 BasicDataTable拡張
+- オプションのページネーションprop追加
+- TablePaginationコンポーネント統合
+- 後方互換性の維持
 
-#### 2.1 Incremental Migration Approach
+#### 1.4 重要なレイアウト設計の保持
+既存のレイアウト設計を維持することが重要：
 
-**Step 1**: Create wrapper components for backward compatibility
 ```typescript
-// src/page-components/blueprint/ui/BlueprintPagination.tsx (Legacy)
+// BlueprintContainer.tsx の重要なレイアウト構造
+return (
+  <div className="h-[calc(100vh-45px)] flex overflow-hidden"> {/* 画面全体固定高さ */}
+    {/* メインコンテンツ */}
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 p-4">         {/* ヘッダー: 固定 */}
+        <PageHeader ... />
+      </div>
+      <div className="flex-1 flex flex-col min-h-0 px-4"> {/* テーブル: スクロール可能 */}
+        <BasicDataTable ... />
+      </div>
+      <div className="flex-shrink-0 p-4">         {/* ページネーション: 固定 */}
+        <Pagination ... />
+      </div>
+    </div>
+  </div>
+);
+```
+
+**重要なポイント**:
+- `h-[calc(100vh-45px)]`: 画面全体の高さを固定
+- `flex-shrink-0`: ヘッダーとページネーションを固定サイズに
+- `flex-1 min-h-0`: テーブル部分をスクロール可能に
+- `overflow-hidden`: 外側コンテナでオーバーフロー制御
+- `overflow-auto`: BasicDataTable内でスクロール有効化
+
+### フェーズ2: 移行戦略（第2週）
+
+#### 2.1 段階的移行アプローチ
+
+**ステップ1**: 後方互換性のためのラッパーコンポーネント作成
+```typescript
+// src/page-components/blueprint/ui/BlueprintPagination.tsx (レガシー)
 export function BlueprintPagination(props: BlueprintPaginationProps) {
   return <TablePagination {...props} />;
 }
 ```
 
-**Step 2**: Update one container at a time
-- Start with Blueprint container
-- Test thoroughly
-- Apply same pattern to other containers
+**ステップ2**: 一度に一つのコンテナを更新
+- Blueprintコンテナから開始
+- 十分にテスト
+- 他のコンテナに同じパターンを適用
 
-**Step 3**: Remove legacy pagination components after all migrations
+**ステップ3**: 全移行後にレガシーページネーションコンポーネントを削除
 
-#### 2.2 Container Migration Pattern
+#### 2.2 コンテナ移行パターン
 
-**Before**:
+**変更前**:
 ```typescript
-// Manual pagination logic in container
+// コンテナ内の手動ページネーションロジック
 const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
@@ -289,197 +322,198 @@ return (
 );
 ```
 
-**After**:
+**変更後**:
 ```typescript
-// Using integrated pagination
+// 統合ページネーション使用
 const paginationConfig = {
   enabled: true,
   currentPage,
   itemsPerPage,
   totalItems: filteredData.length,
   onPageChange: setCurrentPage,
-  onItemsPerPageChange: setItemsPerPage,
-  showItemsPerPageSelector: true,
   showTotalItems: true
 };
 
 return (
-  <BasicDataTable 
-    data={filteredData} 
-    columns={columns}
-    pagination={paginationConfig}
-  />
+  <div className="h-[calc(100vh-45px)] flex overflow-hidden">
+    {/* フィルターサイドバー */}
+    <AdvancedFilterSidebar ... />
+    
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 p-4">         {/* ヘッダー: 固定 */}
+        <PageHeader ... />
+      </div>
+      <div className="flex-1 flex flex-col min-h-0 px-4"> {/* テーブル: スクロール可能 */}
+        <BasicDataTable 
+          data={filteredData} 
+          columns={columns}
+          pagination={paginationConfig}  {/* ページネーション統合 */}
+        />
+      </div>
+      {/* ページネーションは BasicDataTable 内に統合されるため不要 */}
+    </div>
+  </div>
 );
 ```
 
-### Phase 3: Table Configuration System (Week 3)
+**重要**: 既存のレイアウト構造を維持し、ページネーションをBasicDataTable内に統合する
 
-#### 3.1 Create Table Config Files
+### フェーズ3: テーブル設定システム（第3週）
 
-**Migration from Column Files**:
+#### 3.1 テーブル設定ファイル作成
+
+**列ファイルからの移行**:
 ```bash
-# Old structure
+# 旧構造
 src/page-components/blueprint/lib/blueprintColumns.tsx
 
-# New structure  
+# 新構造  
 src/page-components/blueprint/lib/blueprintTableConfig.tsx
 ```
 
-#### 3.2 Backward Compatibility Layer
-- Keep existing column files
-- Export columns from new config files
-- Gradual migration of imports
+#### 3.2 後方互換性レイヤー
+- 既存の列ファイルを維持
+- 新しい設定ファイルから列をエクスポート
+- インポートの段階的移行
 
-#### 3.3 Enhanced Configuration Features
-- Default pagination settings per table
-- Feature toggles (sorting, editing, etc.)
-- Centralized callback management
+#### 3.3 拡張設定機能
+- テーブル毎のデフォルトページネーション設定
+- 機能トグル（ソート、編集など）
+- 一元化されたコールバック管理
 
-### Phase 4: Advanced Features (Week 4)
+### フェーズ4: 最終調整とクリーンアップ（第4週）
 
-#### 4.1 Enhanced Pagination Features
-- **Smart page display** with ellipsis (1, 2, 3, ..., 10, 11, 12)
-- **Jump to page** input field
-- **Keyboard navigation** (arrow keys, enter)
-- **URL state sync** for bookmarkable pages
+#### 4.1 最終テストと調整
+- **全機能の動作確認**
+- **既存機能の回帰テスト**
+- **パフォーマンステスト**
 
-#### 4.2 Performance Optimizations
-- **Virtual scrolling** for large datasets
-- **Lazy loading** integration hooks
-- **Memoization** of pagination calculations
+#### 4.2 レガシーコンポーネント削除
+- **重複ページネーションコンポーネント削除**
+- **未使用インポートのクリーンアップ**
+- **ドキュメント更新**
 
-#### 4.3 Accessibility Improvements
-- **Screen reader** announcements for page changes
-- **Focus management** after page navigation
-- **ARIA labels** for all pagination controls
+**注意**: 高度な機能追加は避け、基本的なリファクタリング完了に集中する
 
-## File Structure Changes
+## ファイル構造の変更
 
-### New Files to Create
+### 作成する新しいファイル
 ```
 src/shared/basic-data-table/
 ├── ui/
-│   ├── TablePagination.tsx
-│   └── components/
-│       ├── PaginationInfo.tsx
-│       ├── PaginationControls.tsx  
-│       ├── PaginationNumbers.tsx
-│       └── ItemsPerPageSelector.tsx
-├── lib/
-│   ├── usePaginatedTable.ts
-│   └── utils/
-│       └── paginationUtils.ts
-└── model/
-    └── paginationTypes.ts
+│   └── TablePagination.tsx          # 単一ファイル（ShadCN/UI使用）
+└── lib/
+    └── usePaginatedTable.ts         # 単一ファイル
 ```
 
-### Files to Modify
+**注意**: オーバーエンジニアリングを避け、必要最小限のファイル構成とする
+
+### 修正するファイル
 ```
 src/shared/basic-data-table/
-├── ui/BasicDataTable.tsx          # Add pagination integration
-├── model/types.ts                 # Add pagination interfaces
-└── index.ts                       # Export new components
+├── ui/BasicDataTable.tsx          # ページネーション統合追加
+├── model/types.ts                 # ページネーションインターフェース追加
+└── index.ts                       # 新しいコンポーネントエクスポート
 
 src/page-components/*/ui/
-├── *Container.tsx                 # Migrate to new pagination system
-└── *TableView.tsx                # Update table usage
+├── *Container.tsx                 # 新しいページネーションシステムに移行
+└── *TableView.tsx                # テーブル使用法更新
 ```
 
-### Files to Eventually Remove
+### 最終的に削除するファイル
 ```
 src/page-components/blueprint/ui/BlueprintPagination.tsx
 src/page-components/customer/ui/CustomerPagination.tsx  
 src/page-components/project/ui/ProjectPagination.tsx
 ```
 
-## Migration Timeline
+## 移行タイムライン
 
-### Week 1: Foundation
-- [ ] Create TablePagination component
-- [ ] Create usePaginatedTable hook
-- [ ] Enhance BasicDataTable with pagination
-- [ ] Write comprehensive tests
+### 第1週: 基盤
+- [ ] TablePaginationコンポーネント作成
+- [ ] usePaginatedTableフック作成
+- [ ] BasicDataTableのページネーション拡張
+- [ ] 包括的なテスト作成
 
-### Week 2: Container Migration
-- [ ] Create backward compatibility wrappers
-- [ ] Migrate Blueprint container
-- [ ] Migrate Customer container  
-- [ ] Migrate Project container
-- [ ] Update all table usages
+### 第2週: コンテナ移行
+- [ ] 後方互換性ラッパー作成
+- [ ] Blueprintコンテナ移行
+- [ ] Customerコンテナ移行  
+- [ ] Projectコンテナ移行
+- [ ] 全テーブル使用法更新
 
-### Week 3: Configuration System
-- [ ] Create table config files
-- [ ] Implement backward compatibility
-- [ ] Migrate imports gradually
-- [ ] Update documentation
+### 第3週: 設定システム
+- [ ] テーブル設定ファイル作成
+- [ ] 後方互換性実装
+- [ ] インポートの段階的移行
+- [ ] ドキュメント更新
 
-### Week 4: Advanced Features & Cleanup
-- [ ] Add advanced pagination features
-- [ ] Performance optimizations
-- [ ] Accessibility improvements
-- [ ] Remove legacy pagination components
-- [ ] Final testing and documentation
+### 第4週: 最終調整とクリーンアップ
+- [ ] 全機能の動作確認
+- [ ] 既存機能の回帰テスト
+- [ ] レガシーページネーションコンポーネント削除
+- [ ] 未使用インポートのクリーンアップ
+- [ ] ドキュメント更新
 
-## Testing Strategy
+## テスト戦略
 
-### Unit Tests
-- **TablePagination component** - All props and interactions
-- **usePaginatedTable hook** - State management and calculations
-- **BasicDataTable integration** - Pagination behavior
-- **Utility functions** - Edge cases and boundary conditions
+### ユニットテスト
+- **TablePaginationコンポーネント** - 全propsとインタラクション
+- **usePaginatedTableフック** - 状態管理と計算
+- **BasicDataTable統合** - ページネーション動作
+- **ユーティリティ関数** - エッジケースと境界条件
 
-### Integration Tests
-- **Container components** - End-to-end pagination flow
-- **Table configurations** - Column and pagination integration
-- **User interactions** - Page changes, items per page changes
+### 統合テスト
+- **コンテナコンポーネント** - エンドツーエンドページネーションフロー
+- **テーブル設定** - 列とページネーションの統合
+- **ユーザーインタラクション** - ページ変更、ページ当たり項目数変更
 
-### Visual Regression Tests
-- **Pagination UI** - All size variants and states
-- **Table layouts** - With and without pagination
-- **Responsive behavior** - Mobile and desktop views
+### ビジュアル回帰テスト
+- **ページネーションUI** - 全サイズバリアントと状態
+- **テーブルレイアウト** - ページネーション有無
+- **レスポンシブ動作** - モバイルとデスクトップビュー
 
-## Risk Mitigation
+## リスク軽減
 
-### Backward Compatibility Risks
-- **Mitigation**: Create wrapper components that preserve existing APIs
-- **Rollback Plan**: Keep old components until migration is complete
-- **Testing**: Extensive regression testing of existing functionality
+### 後方互換性リスク
+- **軽減策**: 既存APIを保持するラッパーコンポーネント作成
+- **ロールバック計画**: 移行完了まで古いコンポーネント保持
+- **テスト**: 既存機能の広範囲な回帰テスト
 
-### Performance Risks
-- **Large Datasets**: Implement virtual scrolling and lazy loading hooks
-- **Re-renders**: Optimize with React.memo and useCallback
-- **Bundle Size**: Code splitting for advanced features
+### パフォーマンスリスク
+- **大量データセット**: 仮想スクロールと遅延読み込みフック実装
+- **再レンダリング**: React.memoとuseCallbackで最適化
+- **バンドルサイズ**: 高度機能のコード分割
 
-### User Experience Risks
-- **Breaking Changes**: Phased rollout with feature flags
-- **Accessibility**: Comprehensive ARIA implementation and testing
-- **Mobile Experience**: Responsive design with touch-friendly controls
+### ユーザーエクスペリエンスリスク
+- **破壊的変更**: 機能フラグ付き段階的ロールアウト
+- **アクセシビリティ**: 包括的ARIA実装とテスト
+- **モバイル体験**: タッチフレンドリーコントロール付きレスポンシブデザイン
 
-## Success Metrics
+## 成功指標
 
-### Code Quality
-- **DRY Principle**: Eliminate 100% of pagination component duplication
-- **Maintainability**: Single source of truth for pagination logic
-- **Type Safety**: Full TypeScript coverage for all new components
+### コード品質
+- **DRY原則**: ページネーションコンポーネント重複の100%排除
+- **保守性**: ページネーションロジックの単一情報源
+- **型安全性**: 全新コンポーネントの完全TypeScript対応
 
-### Performance
-- **Bundle Size**: Minimal increase (<5KB gzipped)
-- **Runtime Performance**: No regression in table rendering speed
-- **Memory Usage**: Efficient pagination state management
+### パフォーマンス
+- **バンドルサイズ**: 最小限の増加（gzip圧縮で5KB未満）
+- **実行時パフォーマンス**: テーブルレンダリング速度の回帰なし
+- **メモリ使用量**: 効率的なページネーション状態管理
 
-### Developer Experience
-- **API Consistency**: Unified interface across all table implementations
-- **Documentation**: Comprehensive guides and examples
-- **Ease of Use**: Reduced setup time for new table implementations
+### 開発者体験
+- **API一貫性**: 全テーブル実装での統一インターフェース
+- **ドキュメント**: 包括的ガイドと例
+- **使いやすさ**: 新しいテーブル実装のセットアップ時間短縮
 
-## Conclusion
+## 結論
 
-This refactoring strategy addresses the critical issues of code duplication and lack of integration in the current table and pagination system. By creating a unified TablePagination component and integrating it into BasicDataTable, we achieve:
+このリファクタリング戦略は、現在のテーブルとページネーションシステムにおけるコード重複の問題に対処します。**オーバーエンジニアリングを避け、シンプルな置き換えに留めることで以下を実現します：**
 
-1. **DRY Principle**: Eliminate duplicate pagination components
-2. **Better Integration**: Seamless table and pagination coordination
-3. **Enhanced Features**: Advanced pagination capabilities
-4. **Maintainability**: Single source of truth for pagination logic
-5. **Backward Compatibility**: Smooth migration path without breaking changes
+1. **DRY原則**: 重複ページネーションコンポーネントの排除
+2. **シンプルな統合**: BasicDataTableとページネーションの基本的な連携
+3. **保守性**: ページネーションロジックの単一情報源  
+4. **後方互換性**: 破壊的変更のないスムーズな移行パス
 
-The phased approach ensures minimal disruption while delivering immediate benefits in code quality and maintainability. The new architecture provides a solid foundation for future enhancements and scaling.
+**重要**: 既存機能の置き換えに留め、不要な機能追加は行わない段階的アプローチにより、最小限のリスクで確実な改善を実現します。
