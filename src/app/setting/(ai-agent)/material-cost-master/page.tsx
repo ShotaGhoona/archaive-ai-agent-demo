@@ -1,4 +1,4 @@
-import MaterialCostMasterContainer from "@/page-components/setting/ai-agent/ui/MaterialCostMasterContainer";
+import MaterialCostMasterContainer from "@/page-components/setting/material-cost-master/ui/MaterialCostMasterContainer";
 
 export default function MaterialCostMaster() {
   return <MaterialCostMasterContainer />;
