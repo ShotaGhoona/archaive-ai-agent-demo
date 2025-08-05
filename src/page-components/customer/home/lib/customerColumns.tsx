@@ -43,7 +43,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     sortType: 'string',
     render: (customer: Customer, value: unknown) => (
       <Link
-        href={`/customers/${customer.customerCode}`}
+        href={`/customer/${customer.customerCode}`}
         className="hover:underline font-mono text-sm font-medium text-primary"
         onClick={(e) => e.stopPropagation()}
       >
