@@ -4,9 +4,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { DetailTabNavigation } from "./ui/DetailTabNavigation";
 import { DetailSidebar } from "./ui/DetailSidebar";
 import { BlueprintViewer } from "./ui/BlueprintViewer";
-import { BlueprintInfoPanel } from "./ui/BlueprintInfoPanel";
-import { SimilarBlueprintsPanel } from "./ui/SimilarBlueprintsPanel";
-import { SimilarBlueprintsLoadingPanel } from "./ui/SimilarBlueprintsLoadingPanel";
+import { BlueprintInfo } from "./ui/BlueprintInfo";
+import { Card, CardContent } from "@/shared/shadcnui";
 import blueprintsData from "./data/blueprints.json";
 
 interface SimilarBlueprint {
@@ -36,7 +35,7 @@ export default function BlueprintDetail() {
   const [activeTab, setActiveTab] = useState("blueprint");
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
-  const [showSimilarBlueprints, setShowSimilarBlueprints] = useState(false);
+  const [activeInfoTab, setActiveInfoTab] = useState("basic");
   const [isSearchingBlueprints, setIsSearchingBlueprints] = useState(false);
 
   // URLパラメータからタブを取得
@@ -103,19 +102,17 @@ export default function BlueprintDetail() {
   // 類似図面検索ハンドラー
   const handleSimilarBlueprintSearch = () => {
     setIsSearchingBlueprints(true);
-    setShowSimilarBlueprints(false);
+    setActiveInfoTab("similar");
     
     // 5秒のローディングをシミュレート（実際の実装ではAI画像解析APIコール）
     setTimeout(() => {
       setIsSearchingBlueprints(false);
-      setShowSimilarBlueprints(true);
     }, 5000);
   };
 
-  // 類似図面パネルを閉じる
-  const handleCloseSimilarBlueprints = () => {
-    setShowSimilarBlueprints(false);
-    setIsSearchingBlueprints(false);
+  // タブ変更ハンドラー
+  const handleInfoTabChange = (value: string) => {
+    setActiveInfoTab(value);
   };
 
   // 類似図面クリックハンドラー
@@ -171,20 +168,29 @@ export default function BlueprintDetail() {
           </div>
         )}
         
-        {/* 右側パネル - 検索中・類似図面表示・通常情報パネルの切り替え */}
+        {/* 右側パネル */}
         {activeTab === "blueprint" && (
-          isSearchingBlueprints ? (
-            <SimilarBlueprintsLoadingPanel 
-              onClose={handleCloseSimilarBlueprints}
-            />
-          ) : showSimilarBlueprints ? (
-            <SimilarBlueprintsPanel 
-              activeFile={activeFile}
-              onClose={handleCloseSimilarBlueprints}
-              onSimilarBlueprintClick={handleSimilarBlueprintClick}
-            />
+          activeFile ? (
+            <Card className="w-80 border-l border-t-0 border-b-0 border-r-0 rounded-none h-full">
+              <CardContent className="p-0 h-full">
+                <BlueprintInfo
+                  activeFile={activeFile}
+                  onSimilarBlueprintClick={handleSimilarBlueprintClick}
+                  activeTab={activeInfoTab}
+                  onTabChange={handleInfoTabChange}
+                  isSearchingBlueprints={isSearchingBlueprints}
+                />
+              </CardContent>
+            </Card>
           ) : (
-            <BlueprintInfoPanel activeFile={activeFile} />
+            <div className="w-80 border-l bg-gray-50 flex items-center justify-center p-4">
+              <div className="text-center space-y-2">
+                <div className="text-4xl text-gray-300">📋</div>
+                <div className="text-sm text-gray-500">
+                  図面を選択してください
+                </div>
+              </div>
+            </div>
           )
         )}
         

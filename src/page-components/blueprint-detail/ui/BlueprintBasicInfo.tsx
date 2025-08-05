@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Card, CardContent } from "@/shared/shadcnui";
+import { Button, Input } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
 
 interface BlueprintFile {
@@ -13,7 +13,7 @@ interface BlueprintFile {
   isActive?: boolean;
 }
 
-interface BlueprintInfoPanelProps {
+interface BlueprintBasicInfoProps {
   activeFile: BlueprintFile | null;
   onSave?: (data: BlueprintInfoData) => void;
 }
@@ -62,11 +62,10 @@ const initialData: BlueprintInfoData = {
   remarks: "備考"
 };
 
-export function BlueprintInfoPanel({ activeFile, onSave }: BlueprintInfoPanelProps) {
+export function BlueprintBasicInfo({ activeFile, onSave }: BlueprintBasicInfoProps) {
   const [formData, setFormData] = useState<BlueprintInfoData>(initialData);
   const [isModified, setIsModified] = useState(false);
 
-  // アクティブファイルが変更されたときにファイル名を更新
   React.useEffect(() => {
     if (activeFile) {
       setFormData(prev => ({
@@ -93,19 +92,6 @@ export function BlueprintInfoPanel({ activeFile, onSave }: BlueprintInfoPanelPro
     console.log("保存されたデータ:", formData);
   };
 
-  if (!activeFile) {
-    return (
-      <div className="w-80 border-l bg-gray-50 flex items-center justify-center p-4">
-        <div className="text-center space-y-2">
-          <div className="text-4xl text-gray-300">📋</div>
-          <div className="text-sm text-gray-500">
-            図面を選択してください
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const inputFields = [
     { label: "ファイル名", key: "fileName" as keyof BlueprintInfoData, readOnly: true },
     { label: "ページ番号", key: "pageNumber" as keyof BlueprintInfoData },
@@ -129,35 +115,32 @@ export function BlueprintInfoPanel({ activeFile, onSave }: BlueprintInfoPanelPro
   ];
 
   return (
-    <Card className="w-80 border-l border-t-0 border-b-0 border-r-0 rounded-none h-full">
-      <CardContent className="space-y-4 overflow-y-auto max-h-[calc(100vh-45px)]">
-        {inputFields.map((field) => (
-          <div key={field.key} className="space-y-1">
-            <label className="text-sm font-medium text-gray-700">
-              {field.label}
-            </label>
-            <Input
-              value={formData[field.key]}
-              onChange={(e) => handleInputChange(field.key, e.target.value)}
-              readOnly={field.readOnly}
-              className={`h-10 ${field.readOnly ? 'bg-gray-50' : ''}`}
-            />
-          </div>
-        ))}
-        
-        {/* 保存ボタン（下部） */}
-        <div className="pt-4 border-t sticky bottom-0 bg-white">
-          <Button
-            onClick={handleSave}
-            disabled={!isModified}
-            className="w-full h-10 gap-2"
-            variant={isModified ? "default" : "outline"}
-          >
-            <Save className="h-4 w-4" />
-            変更内容を保存
-          </Button>
+    <div className="space-y-4 overflow-y-auto flex-1">
+      {inputFields.map((field) => (
+        <div key={field.key} className="space-y-1">
+          <label className="text-sm font-medium text-gray-700">
+            {field.label}
+          </label>
+          <Input
+            value={formData[field.key]}
+            onChange={(e) => handleInputChange(field.key, e.target.value)}
+            readOnly={field.readOnly}
+            className={`h-10 ${field.readOnly ? 'bg-gray-50' : ''}`}
+          />
         </div>
-      </CardContent>
-    </Card>
+      ))}
+      
+      <div className="pt-4 border-t sticky bottom-0 bg-white">
+        <Button
+          onClick={handleSave}
+          disabled={!isModified}
+          className="w-full h-10 gap-2"
+          variant={isModified ? "default" : "outline"}
+        >
+          <Save className="h-4 w-4" />
+          変更内容を保存
+        </Button>
+      </div>
+    </div>
   );
 }
