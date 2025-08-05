@@ -96,7 +96,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     inputType: 'text',
     render: (customer: Customer, value: unknown) => (
       <div className="flex items-center gap-1 text-sm">
-        <Phone className="h-3 w-3 text-gray-400" />
+        <Phone className="h-3 w-3" />
         <span className="font-mono">{String(value)}</span>
       </div>
     ),
@@ -111,7 +111,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     inputType: 'text',
     render: (customer: Customer, value: unknown) => (
       <div className="flex items-center gap-1 text-sm">
-          <Phone className="h-3 w-3 text-gray-400" />
+          <Phone className="h-3 w-3" />
         <span className="font-mono">{String(value)}</span>
       </div>
     ),

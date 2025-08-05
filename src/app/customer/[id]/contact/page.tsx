@@ -7,5 +7,5 @@ interface CustomerContactPageProps {
 }
 
 export default function CustomerContactPage({ params }: CustomerContactPageProps) {
-  return <CustomerContactContainer />;
+  return <CustomerContactContainer customerId={params.id} />;
 }
