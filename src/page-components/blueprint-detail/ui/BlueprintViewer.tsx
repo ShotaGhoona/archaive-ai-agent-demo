@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 // import { useRouter } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
-import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Search, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Search, Lock, Unlock, RotateCw, RotateCcw, Bot } from "lucide-react";
 
 interface BlueprintFile {
   id: string;
@@ -195,7 +195,12 @@ export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: Bluepr
             <Printer className="h-5 w-5" />
             <span className="text-sm">印刷</span>
           </Button>
-          
+          <Button
+            size="lg"
+          >
+            <Bot className="h-5 w-5" />
+            <span className="text-sm">AI見積もり</span>
+          </Button>
           <Button
             size="lg"
             onClick={() => {

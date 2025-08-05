@@ -5,6 +5,18 @@ import { formatDateRange } from '../utils/keywordMatcher';
 import { formatContent } from '../utils/dataParser';
 
 /**
+ * 画像ファイル名を生成
+ */
+function generateImageFileName(documentName: string, pageNumber: number): string {
+  // 実際のファイル名を直接指定
+  if (documentName === "【社外秘】VHS-60-N4辻製油") {
+    return `【社外秘】VHS-60-N4辻製油-${String(pageNumber).padStart(3, '0')}.png`;
+  }
+  // その他の文書の場合は動的生成
+  return `${documentName}-${String(pageNumber).padStart(3, '0')}.png`;
+}
+
+/**
  * ウェルカムメッセージを生成
  */
 export function createWelcomeMessage(): Message {
@@ -116,7 +128,8 @@ function formatTroubleResults(troubles: SearchResult[]): string {
       }
     }
     
-    markdown += `- [図面を確認](#)\n\n`;
+    const imageFileName = generateImageFileName(item.documentName, item.pageNumber);
+    markdown += `- [図面を確認](/ai-agent/${imageFileName})\n\n`;
   });
   
   return markdown;
@@ -143,7 +156,8 @@ function formatEstimateResults(estimates: SearchResult[]): string {
       }
     }
     
-    markdown += `- [図面を確認](#)\n\n`;
+    const imageFileName = generateImageFileName(item.documentName, item.pageNumber);
+    markdown += `- [図面を確認](/ai-agent/${imageFileName})\n\n`;
   });
   
   return markdown;
@@ -170,7 +184,8 @@ function formatSpecificationResults(specifications: SearchResult[]): string {
       }
     }
     
-    markdown += `- [図面を確認](#)\n\n`;
+    const imageFileName = generateImageFileName(item.documentName, item.pageNumber);
+    markdown += `- [図面を確認](/ai-agent/${imageFileName})\n\n`;
   });
   
   return markdown;

@@ -13,7 +13,12 @@ import {
   Monitor,
   Download,
   Webhook,
-  Settings
+  Settings,
+  Bot,
+  Package,
+  Wrench,
+  GitBranch,
+  DollarSign
 } from "lucide-react";
 
 export interface SettingItem {
@@ -115,6 +120,37 @@ export const settingSections: SettingSection[] = [
         label: "ショートカット",
         icon: <Zap className="w-4 h-4" />,
         href: "/setting/shortcuts"
+      }
+    ]
+  },
+  {
+    id: "ai-customize",
+    title: "AIカスタマイズ",
+    icon: <Bot className="w-5 h-5" />,
+    items: [
+      {
+        id: "material-cost-master",
+        label: "材料費マスター登録",
+        icon: <Package className="w-4 h-4" />,
+        href: "/setting/material-cost-master"
+      },
+      {
+        id: "equipment-master",
+        label: "機械設備マスター登録",
+        icon: <Wrench className="w-4 h-4" />,
+        href: "/setting/equipment-master"
+      },
+      {
+        id: "basic-process",
+        label: "基本工程登録",
+        icon: <GitBranch className="w-4 h-4" />,
+        href: "/setting/basic-process"
+      },
+      {
+        id: "man-month-charge",
+        label: "人月チャージ登録",
+        icon: <DollarSign className="w-4 h-4" />,
+        href: "/setting/man-month-charge"
       }
     ]
   },
