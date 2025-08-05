@@ -1,0 +1,252 @@
+[
+  {
+    "customerCode": "CUST-2024-001",
+    "customerName": "株式会社田中製作所",
+    "contactPerson": "田中太郎",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "03-1234-5678",
+    "faxNumber": "03-1234-5679",
+    "rank": "S",
+    "industry": "自動車部品"
+  },
+  {
+    "customerCode": "CUST-2024-002",
+    "customerName": "佐藤工業株式会社",
+    "contactPerson": "佐藤次郎",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "06-2345-6789",
+    "faxNumber": "06-2345-6790",
+    "rank": "A",
+    "industry": "産業機械"
+  },
+  {
+    "customerCode": "CUST-2024-003",
+    "customerName": "鈴木電子株式会社",
+    "contactPerson": "鈴木三郎",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "052-3456-7890",
+    "faxNumber": "052-3456-7891",
+    "rank": "A",
+    "industry": "電子部品"
+  },
+  {
+    "customerCode": "CUST-2024-004",
+    "customerName": "高橋食品工業",
+    "contactPerson": "高橋四郎",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "092-4567-8901",
+    "faxNumber": "092-4567-8902",
+    "rank": "B",
+    "industry": "食品加工"
+  },
+  {
+    "customerCode": "CUST-2024-005",
+    "customerName": "株式会社渡辺メディカル",
+    "contactPerson": "渡辺五郎",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "011-5678-9012",
+    "faxNumber": "011-5678-9013",
+    "rank": "S",
+    "industry": "医療機器"
+  },
+  {
+    "customerCode": "CUST-2024-006",
+    "customerName": "伊藤航空技術",
+    "contactPerson": "伊藤六郎",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "022-6789-0123",
+    "faxNumber": "022-6789-0124",
+    "rank": "A",
+    "industry": "航空宇宙"
+  },
+  {
+    "customerCode": "CUST-2024-007",
+    "customerName": "中村商事株式会社",
+    "contactPerson": "中村七郎",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "075-7890-1234",
+    "faxNumber": "075-7890-1235",
+    "rank": "B",
+    "industry": "その他"
+  },
+  {
+    "customerCode": "CUST-2024-008",
+    "customerName": "小林自動車部品",
+    "contactPerson": "小林八郎",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "045-8901-2345",
+    "faxNumber": "045-8901-2346",
+    "rank": "A",
+    "industry": "自動車部品"
+  },
+  {
+    "customerCode": "CUST-2024-009",
+    "customerName": "加藤精密工業",
+    "contactPerson": "加藤九郎",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "054-9012-3456",
+    "faxNumber": "054-9012-3457",
+    "rank": "S",
+    "industry": "産業機械"
+  },
+  {
+    "customerCode": "CUST-2024-010",
+    "customerName": "株式会社吉田エレクトロニクス",
+    "contactPerson": "吉田十郎",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "078-0123-4567",
+    "faxNumber": "078-0123-4568",
+    "rank": "B",
+    "industry": "電子部品"
+  },
+  {
+    "customerCode": "CUST-2024-011",
+    "customerName": "松本食品機械",
+    "contactPerson": "松本太一",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "087-1234-5678",
+    "faxNumber": "087-1234-5679",
+    "rank": "C",
+    "industry": "食品加工"
+  },
+  {
+    "customerCode": "CUST-2024-012",
+    "customerName": "井上医療システム",
+    "contactPerson": "井上次二",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "096-2345-6789",
+    "faxNumber": "096-2345-6790",
+    "rank": "A",
+    "industry": "医療機器"
+  },
+  {
+    "customerCode": "CUST-2024-013",
+    "customerName": "木村航空機器",
+    "contactPerson": "木村三三",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "099-3456-7890",
+    "faxNumber": "099-3456-7891",
+    "rank": "S",
+    "industry": "航空宇宙"
+  },
+  {
+    "customerCode": "CUST-2024-014",
+    "customerName": "林総合商社",
+    "contactPerson": "林四四",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "017-4567-8901",
+    "faxNumber": "017-4567-8902",
+    "rank": "C",
+    "industry": "その他"
+  },
+  {
+    "customerCode": "CUST-2024-015",
+    "customerName": "斎藤モーター",
+    "contactPerson": "斎藤五五",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "019-5678-9012",
+    "faxNumber": "019-5678-9013",
+    "rank": "B",
+    "industry": "自動車部品"
+  },
+  {
+    "customerCode": "CUST-2024-016",
+    "customerName": "清水機械工業",
+    "contactPerson": "清水六六",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "025-6789-0123",
+    "faxNumber": "025-6789-0124",
+    "rank": "A",
+    "industry": "産業機械"
+  },
+  {
+    "customerCode": "CUST-2024-017",
+    "customerName": "阿部電子技術",
+    "contactPerson": "阿部七七",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "076-7890-1234",
+    "faxNumber": "076-7890-1235",
+    "rank": "B",
+    "industry": "電子部品"
+  },
+  {
+    "customerCode": "CUST-2024-018",
+    "customerName": "長谷川フーズ",
+    "contactPerson": "長谷川八八",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "077-8901-2345",
+    "faxNumber": "077-8901-2346",
+    "rank": "C",
+    "industry": "食品加工"
+  },
+  {
+    "customerCode": "CUST-2024-019",
+    "customerName": "近藤メディカルテック",
+    "contactPerson": "近藤九九",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "086-9012-3456",
+    "faxNumber": "086-9012-3457",
+    "rank": "S",
+    "industry": "医療機器"
+  },
+  {
+    "customerCode": "CUST-2024-020",
+    "customerName": "後藤エアロスペース",
+    "contactPerson": "後藤一〇〇",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "082-0123-4567",
+    "faxNumber": "082-0123-4568",
+    "rank": "A",
+    "industry": "航空宇宙"
+  },
+  {
+    "customerCode": "CUST-2024-021",
+    "customerName": "藤田商事",
+    "contactPerson": "藤田一一一",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "089-1234-5678",
+    "faxNumber": "089-1234-5679",
+    "rank": "B",
+    "industry": "その他"
+  },
+  {
+    "customerCode": "CUST-2024-022",
+    "customerName": "岡田オートパーツ",
+    "contactPerson": "岡田一二二",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "088-2345-6789",
+    "faxNumber": "088-2345-6790",
+    "rank": "A",
+    "industry": "自動車部品"
+  },
+  {
+    "customerCode": "CUST-2024-023",
+    "customerName": "前田重工業",
+    "contactPerson": "前田一三三",
+    "salesRepresentative": "田中一郎",
+    "phoneNumber": "097-3456-7890",
+    "faxNumber": "097-3456-7891",
+    "rank": "S",
+    "industry": "産業機械"
+  },
+  {
+    "customerCode": "CUST-2024-024",
+    "customerName": "増田エレクトロ",
+    "contactPerson": "増田一四四",
+    "salesRepresentative": "山田花子",
+    "phoneNumber": "098-4567-8901",
+    "faxNumber": "098-4567-8902",
+    "rank": "B",
+    "industry": "電子部品"
+  },
+  {
+    "customerCode": "CUST-2024-025",
+    "customerName": "村上食品装置",
+    "contactPerson": "村上一五五",
+    "salesRepresentative": "佐藤美咲",
+    "phoneNumber": "04-5678-9012",
+    "faxNumber": "04-5678-9013",
+    "rank": "C",
+    "industry": "食品加工"
+  }
+]
