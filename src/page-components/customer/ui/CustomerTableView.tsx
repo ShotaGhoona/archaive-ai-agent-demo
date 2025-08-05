@@ -5,9 +5,31 @@ import { Customer, CUSTOMER_COLUMNS } from "../lib/customerColumns";
 interface CustomerTableViewProps {
   customers: Customer[];
   onCustomerUpdate?: (customerCode: string, field: string, value: unknown) => void;
+  // ページネーション統合のための新しいprops
+  currentPage?: number;
+  totalItems?: number;
+  itemsPerPage?: number;
+  onPageChange?: (page: number) => void;
 }
 
-export function CustomerTableView({ customers, onCustomerUpdate }: CustomerTableViewProps) {
+export function CustomerTableView({ 
+  customers, 
+  onCustomerUpdate,
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange
+}: CustomerTableViewProps) {
+  // ページネーション設定
+  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
+    enabled: true,
+    currentPage,
+    itemsPerPage,
+    totalItems,
+    onPageChange,
+    showTotalItems: true,
+  } : undefined;
+
   return (
     <BasicDataTable
       data={customers}
@@ -15,6 +37,7 @@ export function CustomerTableView({ customers, onCustomerUpdate }: CustomerTable
       onItemUpdate={onCustomerUpdate}
       getRowId={(customer) => customer.customerCode}
       emptyMessage="顧客データがありません"
+      pagination={paginationConfig}
     />
   );
 }

@@ -6,9 +6,21 @@ import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 interface TableViewProps {
   blueprints: Blueprint[];
   onBlueprintUpdate?: (internalNumber: string, field: string, value: unknown) => void;
+  // ページネーション統合のための新しいprops
+  currentPage?: number;
+  totalItems?: number;
+  itemsPerPage?: number;
+  onPageChange?: (page: number) => void;
 }
 
-export function TableView({ blueprints, onBlueprintUpdate }: TableViewProps) {
+export function TableView({ 
+  blueprints, 
+  onBlueprintUpdate,
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange
+}: TableViewProps) {
   const [previewFile, setPreviewFile] = useState<Blueprint | null>(null);
 
   // Blueprint を PreviewableFile に変換
@@ -33,6 +45,16 @@ export function TableView({ blueprints, onBlueprintUpdate }: TableViewProps) {
     onPreview: handlePreview
   });
 
+  // ページネーション設定
+  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
+    enabled: true,
+    currentPage,
+    itemsPerPage,
+    totalItems,
+    onPageChange,
+    showTotalItems: true,
+  } : undefined;
+
   return (
     <>
       <BasicDataTable
@@ -41,6 +63,7 @@ export function TableView({ blueprints, onBlueprintUpdate }: TableViewProps) {
         onItemUpdate={onBlueprintUpdate}
         getRowId={(blueprint) => blueprint.internalNumber}
         emptyMessage="図面データがありません"
+        pagination={paginationConfig}
       />
 
       {/* プレビューモーダル */}

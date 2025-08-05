@@ -4,7 +4,7 @@ import blueprintsData from "@/page-components/blueprint/data/blueprint.json";
 import { BlueprintPageHeader } from "./BlueprintPageHeader";
 import { TableView } from "./TableView";
 import { GalleryView } from "./GalleryView";
-import { BlueprintPagination } from "./BlueprintPagination";
+// import { BlueprintPagination } from "./BlueprintPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { BLUEPRINT_FILTER_CONFIG } from "../lib/blueprintFilterConfig";
 import { Blueprint } from "../lib/blueprintColumns";
@@ -45,13 +45,8 @@ export default function BlueprintContainer() {
     return matchesSearch && matchesFilter;
   });
 
-  // ページネーション
+  // ページネーション（統合ページネーションでは手動スライシング不要）
   const totalPages = Math.ceil(filteredBlueprints.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentBlueprints = filteredBlueprints.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  );
 
 
   return (
@@ -86,16 +81,25 @@ export default function BlueprintContainer() {
           />
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
-          {viewMode === "table" && <TableView blueprints={currentBlueprints} />}
-          {viewMode === "gallery" && <GalleryView blueprints={currentBlueprints} />}
+          {viewMode === "table" && (
+            <TableView 
+              blueprints={filteredBlueprints}
+              currentPage={currentPage}
+              totalItems={filteredBlueprints.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+            />
+          )}
+          {viewMode === "gallery" && (
+            <GalleryView 
+              blueprints={filteredBlueprints.slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage
+              )} 
+            />
+          )}
         </div>
-        <div className="flex-shrink-0 p-4">
-          <BlueprintPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-          />
-        </div>
+        {/* ページネーションはBasicDataTable内に統合されるため削除 */}
       </div>
     </div>
   );

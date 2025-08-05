@@ -3,7 +3,7 @@ import { useState } from "react";
 import projectsData from "@/page-components/project/data/project.json";
 import { ProjectPageHeader } from "./ProjectPageHeader";
 import { ProjectTableView } from "./ProjectTableView";
-import { ProjectPagination } from "./ProjectPagination";
+// import { ProjectPagination } from "./ProjectPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { PROJECT_FILTER_CONFIG } from "../lib/projectFilterConfig";
 import { Project } from "../lib/projectColumns";
@@ -37,13 +37,8 @@ export default function ProjectContainer() {
     return matchesSearch;
   });
 
-  // ページネーション
+  // ページネーション（統合ページネーションでは手動スライシング不要）
   const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentProjects = filteredProjects.slice(
-    startIndex,
-    startIndex + itemsPerPage,
-  );
 
 
   return (
@@ -74,15 +69,15 @@ export default function ProjectContainer() {
           />
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
-          <ProjectTableView projects={currentProjects} />
-        </div>
-        <div className="flex-shrink-0 p-4">
-          <ProjectPagination
+          <ProjectTableView 
+            projects={filteredProjects}
             currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
+            totalItems={filteredProjects.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
           />
         </div>
+        {/* ページネーションはBasicDataTable内に統合されるため削除 */}
       </div>
     </div>
   );
