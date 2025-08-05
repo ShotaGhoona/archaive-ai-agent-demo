@@ -1,9 +1,5 @@
-interface CustomerProjectsPageProps {
-  params: {
-    id: string;
-  };
-}
+import CustomerProjectContainer from "@/page-components/customer/project/ui/CustomerProjectContainer";
 
-export default function CustomerProjectsPage({ params }: CustomerProjectsPageProps) {
-  return <p>案件履歴 - 顧客ID: {params.id}</p>;
+export default function CustomerProjectPage() {
+  return <CustomerProjectContainer />;
 }

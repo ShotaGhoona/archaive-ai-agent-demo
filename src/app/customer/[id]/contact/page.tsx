@@ -1,4 +1,4 @@
-import CustomerContactContainer from "@/page-components/customer/customer-contact/ui/CustomerContactContainer";
+import CustomerContactContainer from "@/page-components/customer/contact/ui/CustomerContactContainer";
 
 interface CustomerContactPageProps {
   params: {
@@ -7,5 +7,5 @@ interface CustomerContactPageProps {
 }
 
 export default function CustomerContactPage({ params }: CustomerContactPageProps) {
-  return <CustomerContactContainer customerId={params.id} />;
+  return <CustomerContactContainer />;
 }

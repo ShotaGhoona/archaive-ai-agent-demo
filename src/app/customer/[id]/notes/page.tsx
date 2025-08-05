@@ -1,9 +1,5 @@
-interface CustomerNotesPageProps {
-  params: {
-    id: string;
-  };
-}
+import CustomerNotesContainer from "@/page-components/customer/notes/ui/CustomerNotesContainer";
 
-export default function CustomerNotesPage({ params }: CustomerNotesPageProps) {
-  return <p>メモ・備考 - 顧客ID: {params.id}</p>;
+export default function CustomerNotesPage() {
+  return <CustomerNotesContainer />;
 }

@@ -16,7 +16,7 @@ export const customerMenuItems: CustomerMenuItem[] = [
   {
     id: "profile",
     label: "基本情報",
-    href: "/customer/[id]",
+    href: "/customer/[id]/profile",
     icon: <User className="w-4 h-4" />
   },
   {
@@ -26,9 +26,9 @@ export const customerMenuItems: CustomerMenuItem[] = [
     icon: <Phone className="w-4 h-4" />
   },
   {
-    id: "projects",
+    id: "project",
     label: "案件履歴",
-    href: "/customer/[id]/projects",
+    href: "/customer/[id]/project",
     icon: <FileText className="w-4 h-4" />
   },
   {

@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import customersData from "@/page-components/customer/data/customer.json";
+import customersData from "../data/customer.json";
 import { CustomerPageHeader } from "./CustomerPageHeader";
 import { CustomerTableView } from "./CustomerTableView";
 // import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
