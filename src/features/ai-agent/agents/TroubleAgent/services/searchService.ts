@@ -1,7 +1,7 @@
 import { SearchQuery, SearchResults, DatabaseDocument, SearchResult } from '../types';
 import { extractTroubles, extractEstimates, extractSpecifications } from '../utils/dataParser';
 import { filterByDateRange } from '../utils/keywordMatcher';
-import mockDatabase from '../data/mockDatabase.json';
+import mockDatabase from '../data/mockDatabase-real.json';
 
 /**
  * キーワードに基づいて検索を実行

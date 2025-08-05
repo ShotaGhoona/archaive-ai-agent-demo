@@ -1,8 +1,16 @@
 "use client";
 
-import { forwardRef, useRef, useImperativeHandle, lazy, Suspense } from "react";
+import { forwardRef, useRef, useImperativeHandle } from "react";
 import { ChatLayoutState, Message, AIAgentConfig } from "../../types/types";
 import ChatHeader from "../components/ChatHeader";
+
+// エージェント別コンポーネントを事前インポート
+import TroubleAgentChatContent from '../../agents/TroubleAgent/ChatContent';
+import TroubleAgentChatInput from '../../agents/TroubleAgent/ChatInput';
+import EstimateAgentChatContent from '../../agents/EstimateAgent/ChatContent';
+import EstimateAgentChatInput from '../../agents/EstimateAgent/ChatInput';
+import GeneralAgentChatContent from '../../agents/GeneralAgent/ChatContent';
+import GeneralAgentChatInput from '../../agents/GeneralAgent/ChatInput';
 
 interface SidebarLayoutProps {
   messages: Message[];
@@ -26,24 +34,23 @@ const getAgentComponents = (agentId: string) => {
   switch (agentId) {
     case 'trouble':
       return {
-        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
+        ChatContent: TroubleAgentChatContent,
+        ChatInput: TroubleAgentChatInput
       };
     case 'estimate':
       return {
-        ChatContent: lazy(() => import('../../agents/EstimateAgent/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/EstimateAgent/ChatInput'))
+        ChatContent: EstimateAgentChatContent,
+        ChatInput: EstimateAgentChatInput
       };
     case 'general':
       return {
-        ChatContent: lazy(() => import('../../agents/GeneralAgent/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/GeneralAgent/ChatInput'))
+        ChatContent: GeneralAgentChatContent,
+        ChatInput: GeneralAgentChatInput
       };
     default:
-      // Fallback to shared components
       return {
-        ChatContent: lazy(() => import('../../agents/TroubleAgent/ChatContent')),
-        ChatInput: lazy(() => import('../../agents/TroubleAgent/ChatInput'))
+        ChatContent: TroubleAgentChatContent,
+        ChatInput: TroubleAgentChatInput
       };
   }
 };
@@ -83,26 +90,22 @@ const SidebarLayout = forwardRef<SidebarLayoutRef, SidebarLayoutProps>(({
       
       <div className="flex-1 overflow-hidden">
         {agentContent || (
-          <Suspense fallback={<div className="flex items-center justify-center h-full">Loading...</div>}>
-            <ChatContent
-              messages={messages}
-              isLoading={isLoading}
-              onSendMessage={onSendMessage}
-              agentConfig={agentConfig as AIAgentConfig}
-            />
-          </Suspense>
+          <ChatContent
+            messages={messages}
+            isLoading={isLoading}
+            onSendMessage={onSendMessage}
+            agentConfig={agentConfig as AIAgentConfig}
+          />
         )}
       </div>
       
       {agentInput || (
-        <Suspense fallback={<div className="p-4">Loading input...</div>}>
-          <ChatInput
-            onSendMessage={onSendMessage}
-            onQuickAction={onQuickAction}
-            disabled={isLoading}
-            agentConfig={agentConfig as AIAgentConfig}
-          />
-        </Suspense>
+        <ChatInput
+          onSendMessage={onSendMessage}
+          onQuickAction={onQuickAction}
+          disabled={isLoading}
+          agentConfig={agentConfig as AIAgentConfig}
+        />
       )}
     </div>
   );
