@@ -13,7 +13,7 @@ export const headerNavigations = [
   },
   {
     label: "顧客管理",
-    href: "/customers",
+    href: "/customer",
     icon: <Users className="w-4 h-4" />
   },
   {

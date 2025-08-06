@@ -1,14 +1,9 @@
-import {
-  Input,
-} from "@/shared/shadcnui";
-import {
-  Search,
-} from "lucide-react";
 import { FilterToggleButton } from "@/features/advanced-filter";
 import { CsvExportDialog } from "@/features/csv-export";
 import { PROJECT_CSV_COLUMNS } from "../lib/projectCsvConfig";
 import { NewProjectDialog } from "./NewProjectDialog";
 import { Project } from "../lib/projectColumns";
+import { SearchInput } from "@/shared/GenericSearch";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -38,15 +33,11 @@ export function ProjectPageHeader({
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
         />
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-          <Input
-            placeholder="案件ID、顧客名、担当者、ステータスで検索"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 w-96 h-10 text-base"
-          />
-        </div>
+        <SearchInput
+          value={searchTerm}
+          onChange={setSearchTerm}
+          placeholder="案件ID、顧客名、担当者、ステータスで検索"
+        />
       </div>
       <div className="flex items-center gap-3">
         {/* CSV出力ボタン */}

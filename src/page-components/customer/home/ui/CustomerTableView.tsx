@@ -1,0 +1,43 @@
+import React from "react";
+import { BasicDataTable } from "@/shared/basic-data-table";
+import { Customer, CUSTOMER_COLUMNS } from "../lib/customerColumns";
+
+interface CustomerTableViewProps {
+  customers: Customer[];
+  onCustomerUpdate?: (customerCode: string, field: string, value: unknown) => void;
+  // ページネーション統合のための新しいprops
+  currentPage?: number;
+  totalItems?: number;
+  itemsPerPage?: number;
+  onPageChange?: (page: number) => void;
+}
+
+export function CustomerTableView({ 
+  customers, 
+  onCustomerUpdate,
+  currentPage,
+  totalItems,
+  itemsPerPage,
+  onPageChange
+}: CustomerTableViewProps) {
+  // ページネーション設定
+  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
+    enabled: true,
+    currentPage,
+    itemsPerPage,
+    totalItems,
+    onPageChange,
+    showTotalItems: true,
+  } : undefined;
+
+  return (
+    <BasicDataTable
+      data={customers}
+      columns={CUSTOMER_COLUMNS}
+      onItemUpdate={onCustomerUpdate}
+      getRowId={(customer) => customer.customerCode}
+      emptyMessage="顧客データがありません"
+      pagination={paginationConfig}
+    />
+  );
+}

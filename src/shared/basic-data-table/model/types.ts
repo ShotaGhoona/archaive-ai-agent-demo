@@ -60,6 +60,7 @@ export interface BasicDataTableProps<T = unknown> {
   getRowId?: (item: T) => string;
   className?: string;
   emptyMessage?: string;
+  pagination?: PaginationConfig;
 }
 
 // Cell content の戻り値型
@@ -77,4 +78,16 @@ export interface CellContentData {
 // Sort icon の戻り値型
 export interface SortIconData {
   type: 'none' | 'asc' | 'desc';
+}
+
+// ページネーション設定
+export interface PaginationConfig {
+  enabled: boolean;
+  currentPage: number;
+  itemsPerPage: number;
+  totalItems: number;
+  onPageChange: (page: number) => void;
+  onItemsPerPageChange?: (itemsPerPage: number) => void;
+  showItemsPerPageSelector?: boolean;
+  showTotalItems?: boolean;
 }

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
-  Table,
   TableBody,
   TableHeader,
   TableRow,
@@ -9,6 +8,7 @@ import { BasicDataTableProps } from '../model';
 import { useColumnResize, useTableSort, useCellEdit } from '../lib';
 import { TableHeaderCell } from './TableHeaderCell';
 import { TableDataCell } from './TableDataCell';
+import { TablePagination } from './TablePagination';
 
 export function BasicDataTable<T>({
   data,
@@ -16,7 +16,8 @@ export function BasicDataTable<T>({
   onItemUpdate,
   getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random()),
   className = '',
-  emptyMessage = 'データがありません'
+  emptyMessage = 'データがありません',
+  pagination
 }: BasicDataTableProps<T>) {
   // Custom hooks
   const { 
@@ -45,6 +46,37 @@ export function BasicDataTable<T>({
   // ソート済みのデータを取得
   const sortedData = getSortedData(data);
 
+  // ページネーション有効時はデータをスライシング
+  const displayData = useMemo(() => {
+    if (!pagination?.enabled) {
+      return sortedData;
+    }
+    
+    const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage;
+    const endIndex = startIndex + pagination.itemsPerPage;
+    return sortedData.slice(startIndex, endIndex);
+  }, [sortedData, pagination]);
+
+  // ページネーション設定を計算
+  const paginationProps = useMemo(() => {
+    if (!pagination?.enabled) {
+      return null;
+    }
+
+    const totalPages = Math.ceil(data.length / pagination.itemsPerPage);
+    
+    return {
+      currentPage: pagination.currentPage,
+      totalPages,
+      totalItems: data.length,
+      itemsPerPage: pagination.itemsPerPage,
+      onPageChange: pagination.onPageChange,
+      onItemsPerPageChange: pagination.onItemsPerPageChange,
+      showItemsPerPageSelector: pagination.showItemsPerPageSelector,
+      showTotalItems: pagination.showTotalItems,
+    };
+  }, [pagination, data.length]);
+
   if (data.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
@@ -55,10 +87,11 @@ export function BasicDataTable<T>({
 
   return (
     <div className={`flex-1 flex flex-col min-h-0 ${className}`}>
-      <div className="flex-1 overflow-auto">
-        <Table>
-          {/* 固定ヘッダー */}
-          <TableHeader className="sticky top-0 bg-white z-50 shadow-sm">
+      {/* スクロールコンテナを移動し、table要素の直接の親にする */}
+      <div className="flex-1 relative overflow-auto">
+        <table className="w-full caption-bottom text-sm">
+          {/* 固定ヘッダー - スクロールコンテナの直接の子要素として正しく固定される */}
+          <TableHeader className="sticky top-0 bg-white z-50 shadow-sm border-b backdrop-blur-sm">
             <TableRow>
               {columns.map((column) => (
                 <TableHeaderCell
@@ -75,7 +108,7 @@ export function BasicDataTable<T>({
           </TableHeader>
           {/* スクロール可能なボディ */}
           <TableBody>
-            {sortedData.map((item) => {
+            {displayData.map((item) => {
               const rowId = getRowId(item);
               return (
                 <TableRow key={rowId} className="hover:bg-gray-50">
@@ -100,8 +133,15 @@ export function BasicDataTable<T>({
               );
             })}
           </TableBody>
-        </Table>
+        </table>
       </div>
+      
+      {/* ページネーション */}
+      {paginationProps && (
+        <div className="flex-shrink-0 p-4">
+          <TablePagination {...paginationProps} />
+        </div>
+      )}
     </div>
   );
 }

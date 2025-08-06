@@ -20,13 +20,17 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
   }, {} as SortableFields);
 
   const handleSort = useCallback((field: string) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    
-    if (sortConfig?.field === field && sortConfig?.direction === 'asc') {
-      direction = 'desc';
+    // 3段階のソート: なし → 昇順 → 降順 → なし（リセット）
+    if (!sortConfig || sortConfig.field !== field) {
+      // 新しいフィールドでソート開始（昇順）
+      setSortConfig({ field, direction: 'asc' });
+    } else if (sortConfig.direction === 'asc') {
+      // 昇順 → 降順
+      setSortConfig({ field, direction: 'desc' });
+    } else {
+      // 降順 → リセット（ソートなし）
+      setSortConfig(null);
     }
-    
-    setSortConfig({ field, direction });
   }, [sortConfig]);
 
   const getSortedData = useCallback((data: T[]) => {
