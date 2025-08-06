@@ -3,39 +3,31 @@ import { useState } from "react";
 import projectsData from "@/page-components/project/data/project.json";
 import { ProjectPageHeader } from "./ProjectPageHeader";
 import { ProjectTableView } from "./ProjectTableView";
-// import { ProjectPagination } from "./ProjectPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { PROJECT_FILTER_CONFIG } from "../lib/projectFilterConfig";
+import { PROJECT_SEARCHBAR_CONFIG } from "../lib/projectSearchbarConfig";
 import { Project } from "../lib/projectColumns";
+import { useSearchbar } from "@/shared/GenericSearch";
 
 export default function ProjectContainer() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
-  // Advanced Filter Hook
+  // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
-    filteredData: filteredByAdvancedFilter,
+    searchTerm,
+    setSearchTerm,
+    filteredData: searchFiltered,
+  } = useSearchbar(projectsData as Project[], PROJECT_SEARCHBAR_CONFIG);
+
+  const {
+    filteredData: filteredProjects,
     isOpen: isFilterSidebarOpen,
     toggleSidebar,
     filters,
     setFilters,
     clearFilters,
-  } = useAdvancedFilter(projectsData as Project[], PROJECT_FILTER_CONFIG);
-
-  // フィルタリングされたデータ
-  const filteredProjects = filteredByAdvancedFilter.filter((project) => {
-    // 基本検索
-    const matchesSearch =
-      project.projectId.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.assignee.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.projectStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.quotationStatus.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      project.deliveryStatus.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesSearch;
-  });
+  } = useAdvancedFilter(searchFiltered, PROJECT_FILTER_CONFIG);
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
@@ -73,7 +65,6 @@ export default function ProjectContainer() {
             onPageChange={setCurrentPage}
           />
         </div>
-        {/* ページネーションはBasicDataTable内に統合されるため削除 */}
       </div>
     </div>
   );

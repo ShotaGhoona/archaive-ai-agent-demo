@@ -3,39 +3,32 @@ import { useState } from "react";
 import customersData from "../data/customer.json";
 import { CustomerPageHeader } from "./CustomerPageHeader";
 import { CustomerTableView } from "./CustomerTableView";
-// import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { CUSTOMER_FILTER_CONFIG } from "../lib/customerFilterConfig";
+import { CUSTOMER_SEARCHBAR_CONFIG } from "../lib/customerSearchbarConfig";
 import { Customer } from "../lib/customerColumns";
+import { useSearchbar } from "@/shared/GenericSearch";
 
 export default function CustomerContainer() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);
   const itemsPerPage = 20;
 
-  // Advanced Filter Hook
+  // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
-    filteredData: filteredByAdvancedFilter,
+    searchTerm,
+    setSearchTerm,
+    filteredData: searchFiltered,
+  } = useSearchbar(customers, CUSTOMER_SEARCHBAR_CONFIG);
+
+  const {
+    filteredData: filteredCustomers,
     isOpen: isFilterSidebarOpen,
     toggleSidebar,
     filters,
     setFilters,
     clearFilters,
-  } = useAdvancedFilter(customers, CUSTOMER_FILTER_CONFIG);
-
-  // フィルタリングされたデータ
-  const filteredCustomers = filteredByAdvancedFilter.filter((customer) => {
-    // 基本検索
-    const matchesSearch =
-      customer.customerCode.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.contactPerson.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.salesRepresentative.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.industry.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesSearch;
-  });
+  } = useAdvancedFilter(searchFiltered, CUSTOMER_FILTER_CONFIG);
 
   // 顧客更新ハンドラー
   const handleCustomerUpdate = (customerCode: string, field: string, value: unknown) => {

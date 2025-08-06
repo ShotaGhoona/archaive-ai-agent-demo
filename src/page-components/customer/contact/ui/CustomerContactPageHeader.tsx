@@ -1,14 +1,9 @@
-import {
-  Input,
-} from "@/shared/shadcnui";
-import {
-  Search,
-} from "lucide-react";
 import { FilterToggleButton } from "@/features/advanced-filter";
 import { CsvExportDialog } from "@/features/csv-export";
 import { CONTACT_CSV_COLUMNS } from "../lib/contactCsvConfig";
 import { CreateContactDialog } from "./CreateContactDialog";
 import { Contact } from "../lib/contactColumns";
+import { SearchInput } from "@/shared/GenericSearch";
 
 interface ContactPageHeaderProps {
   searchTerm: string;
@@ -40,15 +35,11 @@ export function ContactPageHeader({
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
         />
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-          <Input
-            placeholder="連絡先名、部門、メール、電話番号で検索"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-12 w-96 h-10 text-base"
-          />
-        </div>
+        <SearchInput
+          value={searchTerm}
+          onChange={setSearchTerm}
+          placeholder="連絡先名、部門、メール、電話番号で検索"
+        />
       </div>
       <div className="flex items-center gap-3">
         {/* CSV出力ボタン */}

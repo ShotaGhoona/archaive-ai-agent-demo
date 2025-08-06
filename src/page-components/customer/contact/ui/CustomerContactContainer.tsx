@@ -6,40 +6,34 @@ import { ContactTableView } from "./CustomerContactTableView";
 // import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { CONTACT_FILTER_CONFIG } from "../lib/contactFilterConfig";
+import { CONTACT_SEARCHBAR_CONFIG } from "../lib/contactSearchbarConfig";
 import { Contact } from "../lib/contactColumns";
+import { useSearchbar } from "@/shared/GenericSearch";
 
 interface CustomerContactContainerProps {
   customerId: string;
 }
 
 export default function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [contacts, setContacts] = useState<Contact[]>(contactsData as Contact[]);
   const itemsPerPage = 20;
 
-  // Advanced Filter Hook
+  // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
-    filteredData: filteredByAdvancedFilter,
+    searchTerm,
+    setSearchTerm,
+    filteredData: searchFiltered,
+  } = useSearchbar(contacts, CONTACT_SEARCHBAR_CONFIG);
+
+  const {
+    filteredData: filteredContacts,
     isOpen: isFilterSidebarOpen,
     toggleSidebar,
     filters,
     setFilters,
     clearFilters,
-  } = useAdvancedFilter(contacts, CONTACT_FILTER_CONFIG);
-
-  // フィルタリングされたデータ
-  const filteredContacts = filteredByAdvancedFilter.filter((contact) => {
-    // 基本検索
-    const matchesSearch =
-      contact.contactName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.contactType.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      contact.isActive.toString().toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesSearch;
-  });
+  } = useAdvancedFilter(searchFiltered, CONTACT_FILTER_CONFIG);
 
   // 顧客更新ハンドラー
   const handleContactUpdate = (contactId: string, field: string, value: unknown) => {

@@ -4,49 +4,34 @@ import blueprintsData from "../data/blueprint.json";
 import { BlueprintPageHeader } from "./BlueprintPageHeader";
 import { TableView } from "./TableView";
 import { GalleryView } from "./GalleryView";
-// import { BlueprintPagination } from "./BlueprintPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { BLUEPRINT_FILTER_CONFIG } from "../lib/blueprintFilterConfig";
+import { BLUEPRINT_SEARCHBAR_CONFIG } from "../lib/blueprintSearchbarConfig";
 import { Blueprint } from "../lib/blueprintColumns";
-
-
+import { useSearchbar } from "@/shared/GenericSearch";
 
 export default function BlueprintContainer() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedFilter, setSelectedFilter] = useState("全て");
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
   const itemsPerPage = 20;
 
-  // Advanced Filter Hook
+  // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
-    filteredData: filteredByAdvancedFilter,
+    searchTerm,
+    setSearchTerm,
+    selectedFilter,
+    setSelectedFilter,
+    filteredData: searchFiltered,
+  } = useSearchbar(blueprintsData as Blueprint[], BLUEPRINT_SEARCHBAR_CONFIG);
+
+  const {
+    filteredData: filteredBlueprints,
     isOpen: isFilterSidebarOpen,
     toggleSidebar,
     filters,
     setFilters,
     clearFilters,
-  } = useAdvancedFilter(blueprintsData as Blueprint[], BLUEPRINT_FILTER_CONFIG);
-
-  // フィルタリングされたデータ
-  const filteredBlueprints = filteredByAdvancedFilter.filter((blueprint) => {
-    // 基本検索
-    const matchesSearch =
-      blueprint.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.orderSource.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.internalNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      blueprint.customerNumber.toLowerCase().includes(searchTerm.toLowerCase());
-
-    // 基本フィルター
-    const matchesFilter =
-      selectedFilter === "全て" || blueprint.companyField === selectedFilter;
-
-    return matchesSearch && matchesFilter;
-  });
-
-  // ページネーション（統合ページネーションでは手動スライシング不要）
-
+  } = useAdvancedFilter(searchFiltered, BLUEPRINT_FILTER_CONFIG);
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
@@ -98,7 +83,6 @@ export default function BlueprintContainer() {
             />
           )}
         </div>
-        {/* ページネーションはBasicDataTable内に統合されるため削除 */}
       </div>
     </div>
   );
