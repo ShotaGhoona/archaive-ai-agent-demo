@@ -1,0 +1,138 @@
+{
+  "differenceDetection": {
+    "difference": {
+      "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "label": "図面差分"
+    },
+    "old": {
+      "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
+      "label": "過去図面"
+    },
+    "new": {
+      "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif",
+      "label": "新規図面"
+    }
+  },
+  "differencesByTolerance": {
+    "1px": [
+      {
+        "id": "diff-1px-1",
+        "coordinates": {
+          "topLeft": { "x": 0.1, "y": 0.1 },
+          "bottomRight": { "x": 0.3, "y": 0.3 }
+        }
+      },
+      {
+        "id": "diff-1px-2",
+        "coordinates": {
+          "topLeft": { "x": 0.6, "y": 0.4 },
+          "bottomRight": { "x": 0.8, "y": 0.6 }
+        }
+      },
+      {
+        "id": "diff-1px-3",
+        "coordinates": {
+          "topLeft": { "x": 0.7, "y": 0.2 },
+          "bottomRight": { "x": 0.9, "y": 0.4 }
+        }
+      },
+      {
+        "id": "diff-1px-4",
+        "coordinates": {
+          "topLeft": { "x": 0.2, "y": 0.7 },
+          "bottomRight": { "x": 0.4, "y": 0.9 }
+        }
+      },
+      {
+        "id": "diff-1px-5",
+        "coordinates": {
+          "topLeft": { "x": 0.4, "y": 0.25 },
+          "bottomRight": { "x": 0.6, "y": 0.45 }
+        }
+      },
+      {
+        "id": "diff-1px-6",
+        "coordinates": {
+          "topLeft": { "x": 0.3, "y": 0.5 },
+          "bottomRight": { "x": 0.5, "y": 0.7 }
+        }
+      },
+      {
+        "id": "diff-1px-7",
+        "coordinates": {
+          "topLeft": { "x": 0.05, "y": 0.6 },
+          "bottomRight": { "x": 0.25, "y": 0.8 }
+        }
+      },
+      {
+        "id": "diff-1px-8",
+        "coordinates": {
+          "topLeft": { "x": 0.75, "y": 0.05 },
+          "bottomRight": { "x": 0.95, "y": 0.15 }
+        }
+      },
+      {
+        "id": "diff-1px-9",
+        "coordinates": {
+          "topLeft": { "x": 0.45, "y": 0.65 },
+          "bottomRight": { "x": 0.65, "y": 0.85 }
+        }
+      }
+    ],
+    "5px": [
+      {
+        "id": "diff-5px-1",
+        "coordinates": {
+          "topLeft": { "x": 0.1, "y": 0.1 },
+          "bottomRight": { "x": 0.3, "y": 0.3 }
+        }
+      },
+      {
+        "id": "diff-5px-2",
+        "coordinates": {
+          "topLeft": { "x": 0.6, "y": 0.4 },
+          "bottomRight": { "x": 0.8, "y": 0.6 }
+        }
+      },
+      {
+        "id": "diff-5px-3",
+        "coordinates": {
+          "topLeft": { "x": 0.2, "y": 0.7 },
+          "bottomRight": { "x": 0.4, "y": 0.9 }
+        }
+      },
+      {
+        "id": "diff-5px-4",
+        "coordinates": {
+          "topLeft": { "x": 0.7, "y": 0.2 },
+          "bottomRight": { "x": 0.9, "y": 0.4 }
+        }
+      }
+    ],
+    "10px": [
+      {
+        "id": "diff-10px-1",
+        "coordinates": {
+          "topLeft": { "x": 0.1, "y": 0.1 },
+          "bottomRight": { "x": 0.3, "y": 0.3 }
+        }
+      },
+      {
+        "id": "diff-10px-2",
+        "coordinates": {
+          "topLeft": { "x": 0.6, "y": 0.4 },
+          "bottomRight": { "x": 0.8, "y": 0.6 }
+        }
+      }
+    ],
+    "15px": [
+      {
+        "id": "diff-15px-1",
+        "coordinates": {
+          "topLeft": { "x": 0.1, "y": 0.1 },
+          "bottomRight": { "x": 0.3, "y": 0.3 }
+        }
+      }
+    ]
+  }
+}

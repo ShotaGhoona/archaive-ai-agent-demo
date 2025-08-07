@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Input } from "@/shared/shadcnui";
-import { Save } from "lucide-react";
+import { Save, Settings, ChevronUp } from "lucide-react";
 
 interface BlueprintFile {
   id: string;
@@ -63,6 +63,7 @@ const initialData: BlueprintInfoData = {
 };
 
 export function BlueprintBasicInfo({ activeFile, onSave }: BlueprintBasicInfoProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState<BlueprintInfoData>(initialData);
   const [isModified, setIsModified] = useState(false);
 
@@ -115,31 +116,64 @@ export function BlueprintBasicInfo({ activeFile, onSave }: BlueprintBasicInfoPro
   ];
 
   return (
-    <div className="space-y-4 overflow-y-auto flex-1">
-      {inputFields.map((field) => (
-        <div key={field.key} className="space-y-1">
-          <label className="text-sm font-medium text-gray-700">
-            {field.label}
-          </label>
-          <Input
-            value={formData[field.key]}
-            onChange={(e) => handleInputChange(field.key, e.target.value)}
-            readOnly={field.readOnly}
-            className={`h-10 ${field.readOnly ? 'bg-gray-50' : ''}`}
-          />
-        </div>
-      ))}
-      
-      <div className="pt-4 border-t sticky bottom-0 bg-white">
+    <div>
+      {/* 開閉ボタン */}
+      <div className="border-t bg-white">
         <Button
-          onClick={handleSave}
-          disabled={!isModified}
-          className="w-full h-10 gap-2"
-          variant={isModified ? "default" : "outline"}
+          variant="ghost"
+          className="h-10 w-full rounded-none border-none hover:bg-gray-50 flex items-center justify-center gap-2"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          <Save className="h-4 w-4" />
-          変更内容を保存
+          <Settings className="h-4 w-4" />
+          <span className="text-sm">基本情報設定</span>
+          <ChevronUp 
+            className={`h-4 w-4 transition-transform duration-200 ${
+              isOpen ? 'rotate-180' : ''
+            }`}
+          />
         </Button>
+      </div>
+
+      {/* 開閉パネル */}
+      <div className={`
+        bg-white border-t transition-all duration-300 ease-in-out overflow-hidden
+        ${isOpen ? 'h-80' : 'h-0'}
+      `}>
+        <div className="p-4 h-full">
+          <div className="h-full flex flex-col overflow-hidden">
+            {/* スクロール可能なフィールドエリア */}
+            <div className="flex-1 overflow-y-auto pr-2">
+              <div className="grid grid-cols-3 gap-4">
+                {inputFields.map((field) => (
+                  <div key={field.key} className="space-y-1">
+                    <label className="text-sm font-medium text-gray-700">
+                      {field.label}
+                    </label>
+                    <Input
+                      value={formData[field.key]}
+                      onChange={(e) => handleInputChange(field.key, e.target.value)}
+                      readOnly={field.readOnly}
+                      className={`h-10 ${field.readOnly ? 'bg-gray-50' : ''}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* 固定保存ボタン */}
+            <div className="bg-white flex-shrink-0">
+              <Button
+                onClick={handleSave}
+                disabled={!isModified}
+                className="w-full h-10 gap-2"
+                variant={isModified ? "default" : "outline"}
+              >
+                <Save className="h-4 w-4" />
+                変更内容を保存
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

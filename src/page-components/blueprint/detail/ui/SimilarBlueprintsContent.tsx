@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@/shared/shadcnui";
-import { Eye, GitCompare } from "lucide-react";
+import { Eye, Search } from "lucide-react";
 import { SimilarBlueprintPreviewModal } from "./SimilarBlueprintPreviewModal";
-import { SimilarBlueprintCompareDialog } from "./SimilarBlueprintCompareDialog";
 
 interface SimilarBlueprint {
   id: string;
@@ -28,26 +27,23 @@ interface BlueprintFile {
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
   onSimilarBlueprintClick?: (blueprint: SimilarBlueprint) => void;
-  isLoading?: boolean;
 }
 
 export function SimilarBlueprintsContent({ 
-  activeFile, 
-  isLoading = false
+  activeFile
 }: SimilarBlueprintsContentProps) {
   const [previewBlueprint, setPreviewBlueprint] = useState<SimilarBlueprint | null>(null);
-  const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const handlePreviewBlueprint = (blueprint: SimilarBlueprint) => {
     setPreviewBlueprint(blueprint);
     setIsPreviewOpen(true);
   };
 
-  const handleCompareBlueprint = (blueprint: SimilarBlueprint) => {
-    setCompareBlueprint(blueprint);
-    setIsCompareOpen(true);
+  const handleDifferenceDetection = (blueprint: SimilarBlueprint) => {
+    // 差分検出ページを別タブで開く
+    const differenceUrl = `/blueprint/difference-detection?source=${encodeURIComponent(activeFile?.name || '')}&target=${encodeURIComponent(blueprint.name)}&sourceId=${activeFile?.id}&targetId=${blueprint.id}`;
+    window.open(differenceUrl, '_blank');
   };
 
   const handleClosePreview = () => {
@@ -55,28 +51,6 @@ export function SimilarBlueprintsContent({
     setPreviewBlueprint(null);
   };
 
-  const handleCloseCompare = () => {
-    setIsCompareOpen(false);
-    setCompareBlueprint(null);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="text-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <div className="space-y-2">
-            <h3 className="text-lg font-medium text-gray-700">
-              類似図面を検索中...
-            </h3>
-            <p className="text-sm text-gray-500">
-              AI画像解析により類似図面を検索しています
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   if (!activeFile || !activeFile.similarBlueprints || activeFile.similarBlueprints.length === 0) {
     return (
@@ -95,7 +69,7 @@ export function SimilarBlueprintsContent({
 
   return (
     <div className="flex-1 overflow-y-auto p-4">
-      <div className="space-y-3">
+      <div className="grid grid-cols-2 gap-4">
         {similarBlueprints
           .sort((a, b) => b.similarity - a.similarity)
           .map((blueprint) => (
@@ -120,17 +94,16 @@ export function SimilarBlueprintsContent({
                         handlePreviewBlueprint(blueprint);
                       }}
                     >
-                      <Eye className="h-4 w-4 mr-1" />
-                      拡大
+                      <Eye className="h-4 w-4" />
                     </Button>
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleCompareBlueprint(blueprint);
+                        handleDifferenceDetection(blueprint);
                       }}
                     >
-                      <GitCompare className="h-4 w-4 mr-1" />
-                      比較
+                      <Search className="h-4 w-4 mr-1" />
+                      差分検出
                     </Button>
                   </div>
                 </div>
@@ -161,13 +134,6 @@ export function SimilarBlueprintsContent({
         blueprint={previewBlueprint}
         isOpen={isPreviewOpen}
         onClose={handleClosePreview}
-      />
-      
-      <SimilarBlueprintCompareDialog
-        originalBlueprint={activeFile}
-        compareBlueprint={compareBlueprint}
-        isOpen={isCompareOpen}
-        onClose={handleCloseCompare}
       />
     </div>
   );

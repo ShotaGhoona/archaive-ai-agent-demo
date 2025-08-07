@@ -5,7 +5,7 @@
     "description": "製品のメインアセンブリ図面",
     "size": 2048576,
     "type": "application/dwg",
-    "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
+    "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
     "createdAt": "2024-01-15T10:30:00Z",
     "isActive": true,
     "similarBlueprints": [
@@ -13,7 +13,7 @@
         "id": "sim1",
         "name": "類似アセンブリ図面_A.dwg",
         "description": "類似した構造のアセンブリ図面",
-        "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+        "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
         "similarity": 85,
         "createdAt": "2024-01-10T09:15:00Z"
       },
@@ -21,7 +21,7 @@
         "id": "sim2", 
         "name": "類似アセンブリ図面_B.dwg",
         "description": "部分的に類似した設計の図面",
-        "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&auto=format", 
+        "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif", 
         "similarity": 72,
         "createdAt": "2024-01-08T14:20:00Z"
       },
@@ -29,7 +29,7 @@
         "id": "sim3",
         "name": "関連製品図面_C.dwg", 
         "description": "同じシリーズの製品図面",
-        "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop&auto=format",
+        "imageUrl": "https://engineer-education.com/wp/wp-content/uploads/2020/06/Machine-element-answer1-1.jpg",
         "similarity": 68,
         "createdAt": "2024-01-05T16:45:00Z"
       }
@@ -41,7 +41,7 @@
     "description": "部品の詳細寸法を示した図面",
     "size": 1536000,
     "type": "application/dwg", 
-    "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&auto=format",
+    "imageUrl": "https://www.techno-con.co.jp/item/image/19769.png",
     "createdAt": "2024-01-15T11:15:00Z",
     "isActive": false,
     "similarBlueprints": [
@@ -57,58 +57,10 @@
         "id": "sim5",
         "name": "詳細図_B.dwg", 
         "description": "類似した詳細図面",
-        "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=400&h=300&fit=crop&auto=format",
+        "imageUrl": "https://www.atc-aiworks.com/_p/acre/20123/images/pc/smart_phone_f5af2ca6.jpg",
         "similarity": 74,
         "createdAt": "2024-01-09T13:45:00Z"
       }
     ]
-  },
-  {
-    "id": "3",
-    "name": "断面図A-A.dwg", 
-    "description": "断面A-Aの詳細図面",
-    "size": 1024000,
-    "type": "application/dwg",
-    "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=800&h=600&fit=crop&auto=format",
-    "createdAt": "2024-01-15T14:20:00Z",
-    "isActive": false,
-    "similarBlueprints": [
-      {
-        "id": "sim6",
-        "name": "断面図B-B.dwg",
-        "description": "別断面での詳細図面", 
-        "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&h=300&fit=crop&auto=format",
-        "similarity": 82,
-        "createdAt": "2024-01-11T15:20:00Z"
-      },
-      {
-        "id": "sim7",
-        "name": "断面図C-C.dwg",
-        "description": "類似構造の断面図",
-        "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format", 
-        "similarity": 76,
-        "createdAt": "2024-01-07T11:30:00Z"
-      }
-    ]
-  },
-  {
-    "id": "4",
-    "name": "部品表.pdf",
-    "description": "製品構成部品の一覧表",
-    "size": 512000,
-    "type": "application/pdf",
-    "imageUrl": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&h=600&fit=crop&auto=format",
-    "createdAt": "2024-01-15T16:45:00Z", 
-    "isActive": false
-  },
-  {
-    "id": "5",
-    "name": "3Dモデル_アセンブリ.step",
-    "description": "3次元CADモデルファイル",
-    "size": 4096000,
-    "type": "application/step",
-    "imageUrl": "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&h=600&fit=crop&auto=format",
-    "createdAt": "2024-01-15T17:30:00Z",
-    "isActive": false
   }
 ]

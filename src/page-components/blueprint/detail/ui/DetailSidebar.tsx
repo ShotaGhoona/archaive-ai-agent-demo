@@ -123,54 +123,6 @@ export function DetailSidebar({
 
       {/* ファイル一覧 */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        {files.map((file) => (
-          <Card 
-            key={file.id}
-            className={`
-              cursor-pointer transition-all duration-200 group relative py-1
-              ${file.isActive 
-                ? 'ring-2 ring-primary bg-primary/5' 
-                : 'hover:shadow-md hover:bg-gray-50'
-              }
-            `}
-            onClick={() => handleFileClick(file.id)}
-          >
-            {/* 削除ボタン */}
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRemoveFile(file.id);
-              }}
-              className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <X className="h-3 w-3" />
-            </Button>
-
-            <CardContent className="p-3">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0">
-                  <FileImage className="h-8 w-8 text-gray-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-sm font-medium text-gray-900 truncate">
-                    {file.name}
-                  </h4>
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="text-xs text-gray-500">
-                      {formatFileSize(file.size)}
-                    </span>
-                    <Badge variant="outline" className="text-xs">
-                      {file.name.split('.').pop()?.toUpperCase()}
-                    </Badge>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-
         {/* 追加ボタン */}
         <div 
           className={`
@@ -208,6 +160,49 @@ export function DetailSidebar({
             </div>
           )}
         </div>
+        {files.map((file) => (
+          <Card 
+            key={file.id}
+            className={`
+              cursor-pointer transition-all duration-200 group relative py-1
+              ${file.isActive 
+                ? 'ring-2 ring-primary bg-primary/5' 
+                : 'hover:shadow-md hover:bg-gray-50'
+              }
+            `}
+            onClick={() => handleFileClick(file.id)}
+          >
+            {/* 削除ボタン */}
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRemoveFile(file.id);
+              }}
+              className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <X className="h-3 w-3" />
+            </Button>
+
+            <CardContent className="p-2">
+              <div className="space-y-2">
+                <div className="aspect-video w-full bg-gray-100 rounded overflow-hidden">
+                  <img 
+                    src={file.imageUrl} 
+                    alt={file.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="px-1">
+                  <h4 className="text-xs font-medium text-gray-900 truncate">
+                    {file.name}
+                  </h4>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
     </div>
   );

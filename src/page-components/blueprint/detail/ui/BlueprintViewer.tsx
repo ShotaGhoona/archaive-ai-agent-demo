@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 // import { useRouter } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
-import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Search, Lock, Unlock, RotateCw, RotateCcw, Bot } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Bot } from "lucide-react";
 
 interface BlueprintFile {
   id: string;
@@ -16,10 +16,9 @@ interface BlueprintFile {
 
 interface BlueprintViewerProps {
   activeFile: BlueprintFile | null;
-  onSimilarBlueprintSearch?: () => void;
 }
 
-export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: BlueprintViewerProps) {
+export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
   // const router = useRouter();
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -102,7 +101,7 @@ export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: Bluepr
 
   if (!activeFile) {
     return (
-      <div className="flex-1 bg-gray-50 flex items-center justify-center">
+      <div className="h-full w-full bg-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
           <div className="text-6xl text-gray-300">📋</div>
           <div className="space-y-2">
@@ -121,7 +120,7 @@ export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: Bluepr
   return (
     <div 
       ref={containerRef}
-      className="flex-1 bg-gray-100 relative overflow-hidden"
+      className="h-full w-full bg-gray-100 relative overflow-hidden"
       onWheel={handleWheel}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -200,19 +199,6 @@ export function BlueprintViewer({ activeFile, onSimilarBlueprintSearch }: Bluepr
           >
             <Bot className="h-5 w-5" />
             <span className="text-sm">AI見積もり</span>
-          </Button>
-          <Button
-            size="lg"
-            onClick={() => {
-              // コンテナーのハンドラーを呼び出して右パネルに類似図面を表示
-              if (onSimilarBlueprintSearch) {
-                onSimilarBlueprintSearch();
-              }
-            }}
-            title="類似図面検索"
-          >
-            <Search className="h-5 w-5" />
-            <span className="text-sm">類似図面検索</span>
           </Button>
         </div>
       </div>

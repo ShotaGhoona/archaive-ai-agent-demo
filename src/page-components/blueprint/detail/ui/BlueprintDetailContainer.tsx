@@ -4,9 +4,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { DetailTabNavigation } from "./DetailTabNavigation";
 import { DetailSidebar } from "./DetailSidebar";
 import { BlueprintViewer } from "./BlueprintViewer";
-import { BlueprintInfo } from "./BlueprintInfo";
-import { Card, CardContent } from "@/shared/shadcnui";
+import { BlueprintBasicInfo } from "./BlueprintBasicInfo";
 import blueprintsData from "../data/blueprints.json";
+import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
 
 interface SimilarBlueprint {
   id: string;
@@ -36,7 +36,6 @@ export default function BlueprintDetail() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
   const [activeInfoTab, setActiveInfoTab] = useState("basic");
-  const [isSearchingBlueprints, setIsSearchingBlueprints] = useState(false);
 
   // URLパラメータからタブを取得
   useEffect(() => {
@@ -99,16 +98,6 @@ export default function BlueprintDetail() {
     setBlueprintFiles(prev => [...prev, newFile]);
   };
 
-  // 類似図面検索ハンドラー
-  const handleSimilarBlueprintSearch = () => {
-    setIsSearchingBlueprints(true);
-    setActiveInfoTab("similar");
-    
-    // 5秒のローディングをシミュレート（実際の実装ではAI画像解析APIコール）
-    setTimeout(() => {
-      setIsSearchingBlueprints(false);
-    }, 5000);
-  };
 
   // タブ変更ハンドラー
   const handleInfoTabChange = (value: string) => {
@@ -146,54 +135,49 @@ export default function BlueprintDetail() {
           onFileAdd={handleFileAdd}
         />
         
-        {/* 中央コンテンツエリア */}
-        {activeTab === "blueprint" ? (
-          <BlueprintViewer 
-            activeFile={activeFile} 
-            onSimilarBlueprintSearch={handleSimilarBlueprintSearch}
-          />
-        ) : (
-          <div className="flex-1 bg-gray-50 flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <div className="text-6xl text-gray-300">📋</div>
-              <div className="space-y-2">
-                <h3 className="text-xl font-medium text-gray-500">
-                  {`${activeTab}表示エリア`}
-                </h3>
-                <p className="text-sm text-gray-400">
-                  コンテンツがここに表示されます
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        {/* 右側パネル */}
-        {activeTab === "blueprint" && (
-          activeFile ? (
-            <Card className="w-80 border-l border-t-0 border-b-0 border-r-0 rounded-none h-full">
-              <CardContent className="p-0 h-full">
-                <BlueprintInfo
+        {/* 中央・右側エリア（Grid 2:1） */}
+        <div className="flex-1 grid grid-cols-3 overflow-hidden">
+          {/* 中央コンテンツエリア（2/3） */}
+          <div className="col-span-2 flex flex-col">
+            {activeTab === "blueprint" ? (
+              <>
+                {/* BlueprintViewer（上部） */}
+                <div className="flex-1 min-h-0">
+                  <BlueprintViewer 
+                    activeFile={activeFile} 
+                  />
+                </div>
+                
+                {/* BlueprintBasicInfo（トグルボタン付き） */}
+                <BlueprintBasicInfo 
                   activeFile={activeFile}
-                  onSimilarBlueprintClick={handleSimilarBlueprintClick}
-                  activeTab={activeInfoTab}
-                  onTabChange={handleInfoTabChange}
-                  isSearchingBlueprints={isSearchingBlueprints}
                 />
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="w-80 border-l bg-gray-50 flex items-center justify-center p-4">
-              <div className="text-center space-y-2">
-                <div className="text-4xl text-gray-300">📋</div>
-                <div className="text-sm text-gray-500">
-                  図面を選択してください
+              </>
+            ) : (
+              <div className="bg-gray-50 flex items-center justify-center h-full">
+                <div className="text-center space-y-4">
+                  <div className="text-6xl text-gray-300">📋</div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-medium text-gray-500">
+                      {`${activeTab}表示エリア`}
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      コンテンツがここに表示されます
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        )}
-        
+            )}
+          </div>
+          
+          {/* 右側パネル（1/3） */}
+          <div className="col-span-1 border-l ">
+            <SimilarBlueprintsContent
+              activeFile={activeFile}
+              onSimilarBlueprintClick={handleSimilarBlueprintClick}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
