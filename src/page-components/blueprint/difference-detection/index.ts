@@ -1,1 +1,1 @@
-export { default as DifferenceDetectionPage } from "./DifferenceDetectionPage";
+export { DifferenceDetectionContainer } from "./ui/DifferenceDetectionContainer";

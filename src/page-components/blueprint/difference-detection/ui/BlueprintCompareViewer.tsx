@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/shared/shadcnui";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
-import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Bot, ChevronDown } from "lucide-react";
+import { ZoomIn, ZoomOut, Maximize2, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
 import mockData from "../data/mockData.json";
 
 type ViewMode = "difference" | "old" | "new";

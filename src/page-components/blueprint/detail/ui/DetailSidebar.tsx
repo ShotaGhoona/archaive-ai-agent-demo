@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { Button, Card, CardContent, Badge } from "@/shared/shadcnui";
-import { Plus, FileImage, Loader2, X } from "lucide-react";
+import { Button, Card, CardContent } from "@/shared/shadcnui";
+import { Plus, Loader2, X } from "lucide-react";
 
 interface BlueprintFile {
   id: string;
@@ -32,13 +32,6 @@ export function DetailSidebar({
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
 
   const handleFileSelect = async (fileList: FileList) => {
     const validFiles = Array.from(fileList).filter(file => 

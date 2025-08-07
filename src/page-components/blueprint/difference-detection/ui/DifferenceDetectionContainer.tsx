@@ -7,6 +7,14 @@ import mockData from "../data/mockData.json";
 
 type ToleranceLevel = "1px" | "5px" | "10px" | "15px";
 
+interface Difference {
+  id: string;
+  coordinates: {
+    topLeft: { x: number; y: number };
+    bottomRight: { x: number; y: number };
+  };
+}
+
 export function DifferenceDetectionContainer() {
   const [tolerance, setTolerance] = useState<ToleranceLevel>("1px");
   const [viewerState, setViewerState] = useState({
@@ -27,7 +35,7 @@ export function DifferenceDetectionContainer() {
     setViewerState({ zoom, position, containerSize, imageSize, currentImageUrl: imageUrl });
   };
 
-  const handleDifferenceClick = (difference: any) => {
+  const handleDifferenceClick = (difference: Difference) => {
     // 差分の座標中心を計算
     const centerX = (difference.coordinates.topLeft.x + difference.coordinates.bottomRight.x) / 2;
     const centerY = (difference.coordinates.topLeft.y + difference.coordinates.bottomRight.y) / 2;

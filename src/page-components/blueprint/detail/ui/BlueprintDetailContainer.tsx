@@ -35,7 +35,6 @@ export default function BlueprintDetail() {
   const [activeTab, setActiveTab] = useState("blueprint");
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
-  const [activeInfoTab, setActiveInfoTab] = useState("basic");
 
   // URLパラメータからタブを取得
   useEffect(() => {
@@ -99,10 +98,6 @@ export default function BlueprintDetail() {
   };
 
 
-  // タブ変更ハンドラー
-  const handleInfoTabChange = (value: string) => {
-    setActiveInfoTab(value);
-  };
 
   // 類似図面クリックハンドラー
   const handleSimilarBlueprintClick = (blueprint: SimilarBlueprint) => {
