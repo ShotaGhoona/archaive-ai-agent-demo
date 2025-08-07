@@ -14,7 +14,6 @@ interface BlueprintFile {
 }
 
 interface DetailSidebarProps {
-  activeTab: string;
   files: BlueprintFile[];
   onFileAdd: (file: BlueprintFile) => void;
   onFileSelect: (fileId: string) => void;
@@ -22,7 +21,6 @@ interface DetailSidebarProps {
 }
 
 export function DetailSidebar({ 
-  activeTab, 
   files,
   onFileAdd, 
   onFileSelect, 
@@ -100,16 +98,6 @@ export function DetailSidebar({
     onFileRemove(fileId);
   };
 
-  // 図面タブでない場合は表示しない
-  if (activeTab !== "blueprint") {
-    return (
-      <div className="w-64 border-r bg-gray-50 p-4">
-        <div className="text-center text-gray-500 text-sm">
-          このタブではサイドバーは使用できません
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="w-64 border-r bg-white flex flex-col">

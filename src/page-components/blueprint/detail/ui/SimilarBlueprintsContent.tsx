@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/shared/shadcnui";
-import { Eye, Search } from "lucide-react";
+import { Eye, Search, GitCompareArrows } from "lucide-react";
 import { SimilarBlueprintPreviewModal } from "./SimilarBlueprintPreviewModal";
 
 interface SimilarBlueprint {
@@ -26,7 +26,6 @@ interface BlueprintFile {
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
-  onSimilarBlueprintClick?: (blueprint: SimilarBlueprint) => void;
 }
 
 export function SimilarBlueprintsContent({ 
@@ -44,6 +43,11 @@ export function SimilarBlueprintsContent({
     // 差分検出ページを別タブで開く
     const differenceUrl = `/blueprint/difference-detection?source=${encodeURIComponent(activeFile?.name || '')}&target=${encodeURIComponent(blueprint.name)}&sourceId=${activeFile?.id}&targetId=${blueprint.id}`;
     window.open(differenceUrl, '_blank');
+  };
+
+  const handleDetailedComparison = (blueprint: SimilarBlueprint) => {
+    // 詳細比較機能（将来実装予定）
+    console.log('詳細比較:', blueprint);
   };
 
   const handleClosePreview = () => {
@@ -68,7 +72,13 @@ export function SimilarBlueprintsContent({
   const similarBlueprints = activeFile.similarBlueprints;
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <div className="flex-1 overflow-y-auto p-4 h-full bg-gray-100">
+      <div className="flex justify-between items-center mb-4">
+        <div className="text-lg font-bold">類似図面</div>
+        <div className="text-sm text-gray-500">
+          {similarBlueprints.length}件の類似図面が見つかりました
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4">
         {similarBlueprints
           .sort((a, b) => b.similarity - a.similarity)
@@ -85,25 +95,36 @@ export function SimilarBlueprintsContent({
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
                   
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePreviewBlueprint(blueprint);
+                        }}
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDifferenceDetection(blueprint);
+                        }}
+                      >
+                        <Search className="h-4 w-4 mr-1" />
+                        差分検出
+                      </Button>
+                    </div>
                     <Button
                       variant="outline"
-                      className="bg-white/90 backdrop-blur-sm hover:bg-white"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handlePreviewBlueprint(blueprint);
+                        handleDetailedComparison(blueprint);
                       }}
                     >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDifferenceDetection(blueprint);
-                      }}
-                    >
-                      <Search className="h-4 w-4 mr-1" />
-                      差分検出
+                      <GitCompareArrows className="h-4 w-4 mr-1" />
+                      詳細比較
                     </Button>
                   </div>
                 </div>

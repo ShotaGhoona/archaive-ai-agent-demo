@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
 import { Bell, User, Menu, X } from "lucide-react";
-import { headerNavigations, defaultUser } from "../constants/navigation";
+import { headerNavigations, defaultUser } from "../constants/header-navigation";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

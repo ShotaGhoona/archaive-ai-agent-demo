@@ -3,7 +3,7 @@ import ChatUIManager from "@/features/ai-agent";
 
 export default function BlueprintDetailPage() {
   return (
-    <div className="max-h-calc[100vh-45px] flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col overflow-hidden">
       <BlueprintDetail  />
       <ChatUIManager 
         availableAgents={['general', 'estimate', 'trouble']}
