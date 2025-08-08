@@ -99,7 +99,7 @@ export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: Diff
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        {differences.map((difference, index) => {
+        {differences.map((difference) => {
           
           return (
             <div

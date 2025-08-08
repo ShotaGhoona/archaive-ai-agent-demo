@@ -218,10 +218,8 @@ export function SimilarBlueprintCompareModal({
                           </label>
                           <EditableComparisonField
                             value={basicFormData[field.key] || ''}
-                            compareValue={similarBlueprint.basicInformation?.[field.key] || ''}
                             onChange={(value) => handleBasicInputChange(field.key, value)}
                             readOnly={field.readOnly}
-                            showHighlight={false}
                           />
                         </div>
                       ))}
@@ -292,9 +290,7 @@ export function SimilarBlueprintCompareModal({
                           </label>
                           <EditableComparisonField
                             value={estimateFormData[field.key] || ''}
-                            compareValue={similarBlueprint.estimateInformation?.[field.key] || ''}
                             onChange={(value) => handleEstimateInputChange(field.key, value)}
-                            showHighlight={false}
                           />
                         </div>
                       ))}

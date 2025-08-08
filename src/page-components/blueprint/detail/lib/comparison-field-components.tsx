@@ -4,11 +4,9 @@ import { createHighlightedTextElements } from './text-diff-highlighter';
 
 interface EditableComparisonFieldProps {
   value: string;
-  compareValue: string;
   onChange?: (value: string) => void;
   className?: string;
   readOnly?: boolean;
-  showHighlight?: boolean;
 }
 
 interface ReadOnlyComparisonFieldProps {
@@ -23,11 +21,9 @@ interface ReadOnlyComparisonFieldProps {
  */
 export function EditableComparisonField({ 
   value, 
-  compareValue: _, 
   onChange, 
   className = "",
-  readOnly = false,
-  showHighlight: __ = true 
+  readOnly = false
 }: EditableComparisonFieldProps) {
   if (readOnly) {
     // readOnlyの場合は通常表示（ハイライトなし）

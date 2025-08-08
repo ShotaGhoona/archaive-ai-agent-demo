@@ -3,12 +3,10 @@ import { DetailTabNavigation } from "@/shared/basic-layout/ui/DetailTabNavigatio
 
 interface BlueprintDetailLayoutProps {
   children: React.ReactNode;
-  params: { id: string };
 }
 
 export default function BlueprintDetailLayout({ 
-  children, 
-  params: _ 
+  children
 }: BlueprintDetailLayoutProps) {
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
