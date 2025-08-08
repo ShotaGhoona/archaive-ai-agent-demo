@@ -328,6 +328,7 @@ export function BlueprintCompareViewer({ onStateChange, externalZoom, externalPo
         </div>
       </div>
 
+
       {/* 操作ヒント（初回表示用） */}
       {zoom === 1 && position.x === 0 && position.y === 0 && (
         <div className="absolute bottom-6 left-6 bg-primary/10 border border-primary/30 rounded-lg p-3 text-sm text-primary">
