@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
 import { Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
-import { ProjectData, projectConfig, SectionConfig } from "../data";
+import { ProjectData, projectConfig } from "../data";
 import ProjectInfoForm from "./ProjectInfoForm";
 import BlueprintGallery from "./BlueprintGallery";
 
 export default function BasicInfoContainer() {
   const [formData, setFormData] = useState<ProjectData>(projectConfig.projectData);
-  const [blueprints] = useState<Blueprint[]>(projectConfig.blueprints);
+  const [blueprints] = useState<Blueprint[]>(projectConfig.blueprints as unknown as Blueprint[]);
 
   const handleInputChange = (field: keyof ProjectData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));

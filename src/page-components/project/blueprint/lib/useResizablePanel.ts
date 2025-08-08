@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface UseResizablePanelOptions {
   initialWidth?: number;
@@ -20,7 +20,7 @@ export function useResizablePanel({
     setIsDragging(true);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging || !resizableAreaRef.current) return;
     
     const resizableAreaRect = resizableAreaRef.current.getBoundingClientRect();
@@ -31,7 +31,7 @@ export function useResizablePanel({
     const rightPanelPixelWidth = resizableAreaWidth - mouseXInResizableArea;
     const newPanelWidth = Math.max(minWidth, Math.min(maxWidth, (rightPanelPixelWidth / resizableAreaWidth) * 100));
     setPanelWidth(newPanelWidth);
-  };
+  }, [isDragging, minWidth, maxWidth]);
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -47,7 +47,7 @@ export function useResizablePanel({
         document.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging, minWidth, maxWidth]);
+  }, [isDragging, handleMouseMove]);
 
   const centerWidth = 100 - panelWidth;
 

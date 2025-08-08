@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import {
   Tabs,
   TabsContent,
@@ -84,7 +83,7 @@ export default function QuotationForm({ formData, setFormData }: QuotationFormPr
     }));
   };
 
-  const updateFormField = (field: keyof FormData, value: any) => {
+  const updateFormField = (field: keyof FormData, value: unknown) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
@@ -166,7 +165,7 @@ export default function QuotationForm({ formData, setFormData }: QuotationFormPr
                 <h4 className="text-lg font-semibold mb-4">明細</h4>
                 
                 <div className="space-y-3">
-                  {formData.tableRows.map((row, index) => (
+                  {formData.tableRows.map((row) => (
                       <div key={row.id} className="border border-gray-200 rounded-lg bg-white hover:shadow-sm transition-shadow">
                         {/* メイン行 */}
                         <div className="grid grid-cols-12 gap-3 p-4">

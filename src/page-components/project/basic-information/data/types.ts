@@ -33,6 +33,6 @@ export interface SectionConfig {
 
 export interface ProjectConfig {
   projectData: ProjectData;
-  blueprints: any[];
+  blueprints: Record<string, unknown>[];
   fieldConfig: SectionConfig[];
 }
