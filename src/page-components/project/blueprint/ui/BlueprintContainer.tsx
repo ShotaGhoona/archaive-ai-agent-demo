@@ -2,14 +2,23 @@
 import { useState, useEffect } from "react";
 import { DetailSidebar } from "./DetailSidebar";
 import { BlueprintViewer } from "./BlueprintViewer";
-import { BlueprintInfo } from "./BlueprintInfo";
+import { BlueprintUtilities } from "./BlueprintUtilities";
+import { useResizablePanel } from "../lib/useResizablePanel";
 import blueprintsData from "../data/blueprints.json";
-import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
-import { BlueprintFile } from "../data/types";
+import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "../data/types";
 
 export default function BlueprintContainer() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
+  
+  // リサイザブルパネルのフック
+  const {
+    panelWidth,
+    centerWidth,
+    isDragging,
+    resizableAreaRef,
+    handleMouseDown
+  } = useResizablePanel();
 
   // 初期アクティブファイルを設定
   useEffect(() => {
@@ -55,8 +64,32 @@ export default function BlueprintContainer() {
     setBlueprintFiles(prev => [...prev, newFile]);
   };
 
+  // 基本情報保存ハンドラー
+  const handleBasicSave = (basicData: Partial<BasicInfo>) => {
+    if (activeFile) {
+      setBlueprintFiles(prev => prev.map(file => 
+        file.id === activeFile.id 
+          ? { ...file, basicInformation: { ...(file.basicInformation || {}), ...basicData } }
+          : file
+      ));
+      setActiveFile(prev => prev ? { ...prev, basicInformation: { ...(prev.basicInformation || {}), ...basicData } } : null);
+    }
+  };
+
+  // 見積もり情報保存ハンドラー
+  const handleEstimateSave = (estimateData: Partial<EstimateInfo>) => {
+    if (activeFile) {
+      setBlueprintFiles(prev => prev.map(file => 
+        file.id === activeFile.id 
+          ? { ...file, estimateInformation: { ...(file.estimateInformation || {}), ...estimateData } }
+          : file
+      ));
+      setActiveFile(prev => prev ? { ...prev, estimateInformation: { ...(prev.estimateInformation || {}), ...estimateData } } : null);
+    }
+  };
+
   return (
-    <div className="flex-1 flex overflow-hidden">
+    <div className="flex-1 flex overflow-hidden min-h-0">
       {/* 左サイドバー */}
       <DetailSidebar 
         files={blueprintFiles}
@@ -65,27 +98,37 @@ export default function BlueprintContainer() {
         onFileAdd={handleFileAdd}
       />
       
-      {/* 中央・右側エリア（Grid 2:1） */}
-      <div className="flex-1 grid grid-cols-6 overflow-hidden">
-        {/* 中央コンテンツエリア（2/3） */}
-        <div className="col-span-4 flex flex-col">
-          {/* BlueprintViewer（上部） */}
-          <div className="flex-1 min-h-0">
-            <BlueprintViewer 
-              activeFile={activeFile} 
-            />
-          </div>
-          
-          {/* BlueprintInfo（トグルボタン付き） */}
-          <BlueprintInfo 
-            activeFile={activeFile}
+      {/* 中央・右側エリア */}
+      <div className="flex-1 flex overflow-hidden min-h-0" ref={resizableAreaRef}>
+        {/* 中央コンテンツエリア */}
+        <div 
+          className="overflow-hidden" 
+          style={{ width: `${centerWidth}%` }}
+        >
+          <BlueprintViewer 
+            activeFile={activeFile} 
           />
         </div>
         
-        {/* 右側パネル（1/3） */}
-        <div className="col-span-2 border-l">
-          <SimilarBlueprintsContent
+        {/* リサイズハンドル */}
+        <div
+          className={`w-1 bg-gray-200 hover:bg-gray-300 cursor-col-resize flex items-center justify-center transition-colors ${
+            isDragging ? 'bg-gray-300' : ''
+          }`}
+          onMouseDown={handleMouseDown}
+        >
+          <div className="w-0.5 h-8 bg-gray-400 rounded-full" />
+        </div>
+        
+        {/* 右側パネル */}
+        <div 
+          className="border-l overflow-hidden" 
+          style={{ width: `${panelWidth}%` }}
+        >
+          <BlueprintUtilities
             activeFile={activeFile}
+            onBasicSave={handleBasicSave}
+            onEstimateSave={handleEstimateSave}
           />
         </div>
       </div>

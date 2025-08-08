@@ -30,31 +30,30 @@ export function SimilarBlueprintsContent({
     setCompareBlueprint(null);
   };
 
+  const similarBlueprints = activeFile?.similarBlueprints || [];
 
-  if (!activeFile || !activeFile.similarBlueprints || activeFile.similarBlueprints.length === 0) {
+  if (similarBlueprints.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="text-center space-y-2">
-          <div className="text-4xl text-gray-300">🔍</div>
-          <div className="text-sm text-gray-500">
-            類似図面が見つかりませんでした
+      <div className="h-full bg-gray-50">
+        <div className="p-4 bg-white border-b">
+          <h3 className="text-lg font-semibold text-gray-900">類似図面</h3>
+        </div>
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="text-center space-y-2">
+            <div className="text-4xl text-gray-300">🔍</div>
+            <div className="text-sm text-gray-500">
+              類似図面が見つかりませんでした
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  const similarBlueprints = activeFile.similarBlueprints;
-
   return (
-    <div className="flex-1 overflow-y-auto p-4 h-full bg-gray-100">
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-lg font-bold">類似図面</div>
-        <div className="text-sm text-gray-500">
-          {similarBlueprints.length}件の類似図面が見つかりました
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-4">
+    <div className="h-full">
+      <div className="flex-1 overflow-y-auto p-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {similarBlueprints
           .sort((a, b) => b.similarity - a.similarity)
           .map((blueprint) => (
@@ -107,6 +106,7 @@ export function SimilarBlueprintsContent({
               </div>
             </div>
           ))}
+        </div>
       </div>
       
       <SimilarBlueprintCompareModal
