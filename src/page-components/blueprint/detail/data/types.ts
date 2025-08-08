@@ -45,6 +45,8 @@ export interface SimilarBlueprint {
   imageUrl: string;
   similarity: number;
   createdAt: string;
+  basicInformation?: BasicInformation;
+  estimateInformation?: EstimateInformation;
 }
 
 export interface BlueprintFile {

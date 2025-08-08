@@ -1,28 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "@/shared/shadcnui";
-import { Eye, Search, GitCompareArrows } from "lucide-react";
-import { SimilarBlueprintPreviewModal } from "./SimilarBlueprintPreviewModal";
-
-interface SimilarBlueprint {
-  id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  similarity: number;
-  createdAt: string;
-}
-
-interface BlueprintFile {
-  id: string;
-  name: string;
-  description: string;
-  size: number;
-  type: string;
-  imageUrl: string;
-  createdAt: string;
-  isActive?: boolean;
-  similarBlueprints?: SimilarBlueprint[];
-}
+import { Search, GitCompareArrows } from "lucide-react";
+import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
+import { BlueprintFile, SimilarBlueprint } from "../data/types";
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
@@ -31,13 +11,8 @@ interface SimilarBlueprintsContentProps {
 export function SimilarBlueprintsContent({ 
   activeFile
 }: SimilarBlueprintsContentProps) {
-  const [previewBlueprint, setPreviewBlueprint] = useState<SimilarBlueprint | null>(null);
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-
-  const handlePreviewBlueprint = (blueprint: SimilarBlueprint) => {
-    setPreviewBlueprint(blueprint);
-    setIsPreviewOpen(true);
-  };
+  const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const handleDifferenceDetection = (blueprint: SimilarBlueprint) => {
     // 差分検出ページを別タブで開く
@@ -46,13 +21,13 @@ export function SimilarBlueprintsContent({
   };
 
   const handleDetailedComparison = (blueprint: SimilarBlueprint) => {
-    // 詳細比較機能（将来実装予定）
-    console.log('詳細比較:', blueprint);
+    setCompareBlueprint(blueprint);
+    setIsCompareOpen(true);
   };
 
-  const handleClosePreview = () => {
-    setIsPreviewOpen(false);
-    setPreviewBlueprint(null);
+  const handleCloseCompare = () => {
+    setIsCompareOpen(false);
+    setCompareBlueprint(null);
   };
 
 
@@ -96,28 +71,17 @@ export function SimilarBlueprintsContent({
                   />
                   
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handlePreviewBlueprint(blueprint);
-                        }}
-                      >
-                        <Eye className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDifferenceDetection(blueprint);
-                        }}
-                      >
-                        <Search className="h-4 w-4 mr-1" />
-                        差分検出
-                      </Button>
-                    </div>
                     <Button
                       variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDifferenceDetection(blueprint);
+                      }}
+                    >
+                      <Search className="h-4 w-4 mr-1" />
+                      差分検出
+                    </Button>
+                    <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDetailedComparison(blueprint);
@@ -151,10 +115,11 @@ export function SimilarBlueprintsContent({
           ))}
       </div>
       
-      <SimilarBlueprintPreviewModal
-        blueprint={previewBlueprint}
-        isOpen={isPreviewOpen}
-        onClose={handleClosePreview}
+      <SimilarBlueprintCompareModal
+        isOpen={isCompareOpen}
+        onClose={handleCloseCompare}
+        currentBlueprint={activeFile}
+        similarBlueprint={compareBlueprint}
       />
     </div>
   );
