@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import { Eye, Edit, Trash2, MoreHorizontal, ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Project {
@@ -50,6 +50,22 @@ const getStatusColor = (status: string, type: 'project' | 'quotation' | 'deliver
 
 export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
   {
+    key: 'detail',
+    label: '詳細',
+    width: 50,
+    minWidth: 0,
+    sortable: false,
+    editable: false,
+    locked: true,
+    render: (project: Project) => (
+      <Link href={`/project/${project.projectId}/basic-information`}>
+        <Button variant="outline" size="sm" className="h-8">
+          <ExternalLink className="h-3 w-3" />
+        </Button>
+      </Link>
+    ),
+  },
+  {
     key: 'projectId',
     label: '案件ID',
     width: 140,
@@ -58,13 +74,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     locked: true,
     sortType: 'string',
     render: (project: Project, value: unknown) => (
-      <Link
-        href={`/project/${project.projectId}`}
-        className="hover:underline font-mono text-sm font-medium text-primary"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <span className="font-mono text-sm font-medium">
         {String(value)}
-      </Link>
+      </span>
     ),
   },
   {

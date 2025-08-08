@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal, ZoomIn } from 'lucide-react';
+import { Edit, Trash2, MoreHorizontal, ZoomIn, ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Blueprint {
@@ -29,6 +29,22 @@ export interface BlueprintColumnCallbacks {
 
 export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): DataTableColumn<Blueprint>[] => [
   {
+    key: 'detail',
+    label: '詳細',
+    width: 50,
+    minWidth: 0,
+    sortable: false,
+    editable: false,
+    locked: true,
+    render: (blueprint: Blueprint) => (
+      <Link href={`/project/${blueprint.internalNumber}/blueprint`}>
+        <Button variant="outline" size="sm" className="h-8">
+          <ExternalLink className="h-3 w-3" />
+        </Button>
+      </Link>
+    ),
+  },
+  {
     key: 'filename',
     label: 'ファイル名',
     width: 256,
@@ -38,13 +54,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     inputType: 'text',
     sortType: 'string',
     render: (blueprint: Blueprint, value: unknown) => (
-      <Link
-        href={`/blueprint/${blueprint.internalNumber}`}
-        className="hover:underline font-mono text-sm font-medium text-primary"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <span className="font-mono text-sm font-medium">
         {String(value)}
-      </Link>
+      </span>
     ),
   },
   {
@@ -181,12 +193,6 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <Link href={`/blueprints/${blueprint.internalNumber}`}>
-            <DropdownMenuItem>
-              <Eye className="h-4 w-4 mr-2" />
-              詳細表示
-            </DropdownMenuItem>
-          </Link>
           <DropdownMenuItem onClick={() => callbacks?.onPreview?.(blueprint)}>
             <ZoomIn className="h-4 w-4 mr-2" />
             プレビュー

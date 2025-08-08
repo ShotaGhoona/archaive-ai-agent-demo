@@ -133,9 +133,9 @@ export function DetailSidebar({
               </div>
             </div>
           ) : (
-            <div className="space-y-2">
-              <Plus className="h-6 w-6 text-gray-400 mx-auto" />
-              <div className="text-xs text-gray-600 font-medium">
+            <div className="flex items-center justify-center gap-2">
+              <Plus className="h-6 w-6 text-gray-400" />
+              <div className="text-gray-600 text-sm">
                 図面を追加
               </div>
             </div>
