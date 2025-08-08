@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
 import { Search, Settings, Calculator } from "lucide-react";
 import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
@@ -18,6 +18,7 @@ export function BlueprintUtilities({
   onEstimateSave 
 }: BlueprintUtilitiesProps) {
   const [activeTab, setActiveTab] = useState("similar");
+  const hasVisitedSimilar = useRef(false);
 
   return (
     <div className="h-full flex flex-col">
@@ -40,7 +41,11 @@ export function BlueprintUtilities({
         </div>
         
         <TabsContent value="similar" className="flex-1 overflow-hidden mt-0">
-          <SimilarBlueprintsContent activeFile={activeFile} />
+          <SimilarBlueprintsContent 
+            activeFile={activeFile} 
+            isInitialVisit={!hasVisitedSimilar.current}
+            onInitialLoadComplete={() => { hasVisitedSimilar.current = true; }}
+          />
         </TabsContent>
         
         <TabsContent value="basic" className="flex-1 overflow-hidden mt-0">
