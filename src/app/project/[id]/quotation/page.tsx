@@ -1,3 +1,5 @@
+import QuotationContainer from "@/page-components/project/quotation/ui/QuotationContainer";
+
 export default function QuotationPage() {
-  return <p>見積書ページ</p>;
+  return <QuotationContainer />;
 }
