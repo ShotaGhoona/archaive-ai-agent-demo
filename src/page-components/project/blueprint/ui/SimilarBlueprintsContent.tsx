@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/shared/shadcnui";
 import { Search, GitCompareArrows } from "lucide-react";
 import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
@@ -6,13 +6,18 @@ import { BlueprintFile, SimilarBlueprint } from "../data/types";
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
+  isInitialVisit?: boolean;
+  onInitialLoadComplete?: () => void;
 }
 
 export function SimilarBlueprintsContent({ 
-  activeFile
+  activeFile,
+  isInitialVisit = true,
+  onInitialLoadComplete
 }: SimilarBlueprintsContentProps) {
   const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(isInitialVisit);
 
   const handleDifferenceDetection = (blueprint: SimilarBlueprint) => {
     // 差分検出ページを別タブで開く
@@ -30,7 +35,41 @@ export function SimilarBlueprintsContent({
     setCompareBlueprint(null);
   };
 
+  // 初期ローディング（初回訪問時のみ）
+  useEffect(() => {
+    if (!isInitialVisit) {
+      setIsInitialLoading(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+      onInitialLoadComplete?.();
+    }, 1000 + Math.random() * 1000); // 1-2秒のランダムローディング
+
+    return () => clearTimeout(timer);
+  }, [isInitialVisit, onInitialLoadComplete]);
+
   const similarBlueprints = activeFile?.similarBlueprints || [];
+
+  // 初期ローディング状態のUI
+  if (isInitialLoading) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center">
+        <div className="flex-1 flex items-center justify-center p-4">
+          <div className="flex flex-col items-center justify-center space-y-4">
+            <div className="relative">
+              <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+            </div>
+            <div className="text-center space-y-2">
+              <p className="text-sm font-medium text-gray-700">類似図面を検索中...</p>
+              <p className="text-xs text-gray-500">AIが図面を解析しています</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (similarBlueprints.length === 0) {
     return (
