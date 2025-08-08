@@ -94,7 +94,7 @@ export function SimilarBlueprintsContent({
                 </div>
                 
                 <div className="absolute top-2 right-2">
-                  <div className="text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm bg-gray-500/90 text-white">
+                  <div className="text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm bg-gray-400/90 text-white">
                     類似度 {blueprint.similarity}%
                   </div>
                 </div>

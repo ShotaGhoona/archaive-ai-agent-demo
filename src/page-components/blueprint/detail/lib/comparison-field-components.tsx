@@ -23,11 +23,11 @@ interface ReadOnlyComparisonFieldProps {
  */
 export function EditableComparisonField({ 
   value, 
-  compareValue, 
+  compareValue: _, 
   onChange, 
   className = "",
   readOnly = false,
-  showHighlight = true 
+  showHighlight: __ = true 
 }: EditableComparisonFieldProps) {
   if (readOnly) {
     // readOnlyの場合は通常表示（ハイライトなし）

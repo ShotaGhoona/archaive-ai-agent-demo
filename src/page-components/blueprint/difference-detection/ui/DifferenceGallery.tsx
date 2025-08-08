@@ -112,12 +112,6 @@ export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: Diff
                 className="w-full h-full group-hover:scale-105 transition-transform duration-200"
                 style={getThumbnailStyle(difference)}
               />
-              
-              {/* 差分番号バッジ */}
-              <div className="absolute top-1 right-1 bg-secondary text-secondary-foreground text-xs font-medium px-1.5 py-0.5 rounded">
-                {index + 1}
-              </div>
-              
               {/* ホバー時のオーバーレイ */}
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                 <div className="text-white text-xs font-medium">

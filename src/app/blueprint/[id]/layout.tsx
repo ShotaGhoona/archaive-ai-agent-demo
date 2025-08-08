@@ -8,7 +8,7 @@ interface BlueprintDetailLayoutProps {
 
 export default function BlueprintDetailLayout({ 
   children, 
-  params 
+  params: _ 
 }: BlueprintDetailLayoutProps) {
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
