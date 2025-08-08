@@ -107,7 +107,7 @@ export function NavigationPanel({
         {/* 現在のビューポート表示（ズームイン時のみ） */}
         {currentZoom > 1 && (
           <div
-            className="absolute border-2 border-secondary bg-secondary/20"
+            className="absolute border-2 border-primary bg-primary/20"
             style={{
               left: `${viewportRect.x}px`,
               top: `${viewportRect.y}px`,
@@ -121,7 +121,7 @@ export function NavigationPanel({
         {/* ズームアウト時は全体枠を表示 */}
         {currentZoom <= 1 && (
           <div
-            className="absolute border-2 border-secondary bg-secondary/10"
+            className="absolute border-2 border-primary bg-primary/10"
             style={{
               left: '0px',
               top: '0px',

@@ -1,44 +1,18 @@
 import React, { useState } from "react";
 import { Button } from "@/shared/shadcnui";
-import { Eye, Search } from "lucide-react";
-import { SimilarBlueprintPreviewModal } from "./SimilarBlueprintPreviewModal";
-
-interface SimilarBlueprint {
-  id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  similarity: number;
-  createdAt: string;
-}
-
-interface BlueprintFile {
-  id: string;
-  name: string;
-  description: string;
-  size: number;
-  type: string;
-  imageUrl: string;
-  createdAt: string;
-  isActive?: boolean;
-  similarBlueprints?: SimilarBlueprint[];
-}
+import { Search, GitCompareArrows } from "lucide-react";
+import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
+import { BlueprintFile, SimilarBlueprint } from "../data/types";
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
-  onSimilarBlueprintClick?: (blueprint: SimilarBlueprint) => void;
 }
 
 export function SimilarBlueprintsContent({ 
   activeFile
 }: SimilarBlueprintsContentProps) {
-  const [previewBlueprint, setPreviewBlueprint] = useState<SimilarBlueprint | null>(null);
-  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-
-  const handlePreviewBlueprint = (blueprint: SimilarBlueprint) => {
-    setPreviewBlueprint(blueprint);
-    setIsPreviewOpen(true);
-  };
+  const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
+  const [isCompareOpen, setIsCompareOpen] = useState(false);
 
   const handleDifferenceDetection = (blueprint: SimilarBlueprint) => {
     // 差分検出ページを別タブで開く
@@ -46,9 +20,14 @@ export function SimilarBlueprintsContent({
     window.open(differenceUrl, '_blank');
   };
 
-  const handleClosePreview = () => {
-    setIsPreviewOpen(false);
-    setPreviewBlueprint(null);
+  const handleDetailedComparison = (blueprint: SimilarBlueprint) => {
+    setCompareBlueprint(blueprint);
+    setIsCompareOpen(true);
+  };
+
+  const handleCloseCompare = () => {
+    setIsCompareOpen(false);
+    setCompareBlueprint(null);
   };
 
 
@@ -68,7 +47,13 @@ export function SimilarBlueprintsContent({
   const similarBlueprints = activeFile.similarBlueprints;
 
   return (
-    <div className="flex-1 overflow-y-auto p-4">
+    <div className="flex-1 overflow-y-auto p-4 h-full bg-gray-100">
+      <div className="flex justify-between items-center mb-4">
+        <div className="text-lg font-bold">類似図面</div>
+        <div className="text-sm text-gray-500">
+          {similarBlueprints.length}件の類似図面が見つかりました
+        </div>
+      </div>
       <div className="grid grid-cols-2 gap-4">
         {similarBlueprints
           .sort((a, b) => b.similarity - a.similarity)
@@ -85,18 +70,9 @@ export function SimilarBlueprintsContent({
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
                   
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
                     <Button
                       variant="outline"
-                      className="bg-white/90 backdrop-blur-sm hover:bg-white"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handlePreviewBlueprint(blueprint);
-                      }}
-                    >
-                      <Eye className="h-4 w-4" />
-                    </Button>
-                    <Button
                       onClick={(e) => {
                         e.stopPropagation();
                         handleDifferenceDetection(blueprint);
@@ -105,18 +81,21 @@ export function SimilarBlueprintsContent({
                       <Search className="h-4 w-4 mr-1" />
                       差分検出
                     </Button>
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDetailedComparison(blueprint);
+                      }}
+                    >
+                      <GitCompareArrows className="h-4 w-4 mr-1" />
+                      詳細比較
+                    </Button>
                   </div>
                 </div>
                 
                 <div className="absolute top-2 right-2">
-                  <div className={`text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm ${
-                    blueprint.similarity >= 80 
-                      ? 'bg-green-500/90 text-white'
-                      : blueprint.similarity >= 70
-                      ? 'bg-yellow-500/90 text-white' 
-                      : 'bg-gray-500/90 text-white'
-                  }`}>
-                    {blueprint.similarity}%
+                  <div className="text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm bg-gray-400/90 text-white">
+                    類似度 {blueprint.similarity}%
                   </div>
                 </div>
                 
@@ -130,10 +109,11 @@ export function SimilarBlueprintsContent({
           ))}
       </div>
       
-      <SimilarBlueprintPreviewModal
-        blueprint={previewBlueprint}
-        isOpen={isPreviewOpen}
-        onClose={handleClosePreview}
+      <SimilarBlueprintCompareModal
+        isOpen={isCompareOpen}
+        onClose={handleCloseCompare}
+        currentBlueprint={activeFile}
+        similarBlueprint={compareBlueprint}
       />
     </div>
   );
