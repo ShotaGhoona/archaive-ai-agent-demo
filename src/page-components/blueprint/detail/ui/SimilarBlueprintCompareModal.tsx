@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Dialog, DialogContent, Button, Input } from "@/shared/shadcnui";
-import { X, Save } from "lucide-react";
+import { Dialog, DialogContent, Button } from "@/shared/shadcnui";
+import { Save } from "lucide-react";
 import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "../data/types";
 import { EditableComparisonField, ReadOnlyComparisonField } from "../lib/comparison-field-components";
 
@@ -113,39 +113,38 @@ export function SimilarBlueprintCompareModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="min-w-[90vw] h-[90vh] flex flex-col">
         
-        <div className="border-b">
-          <div className="flex">
-            <button
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
-                activeTab === 'blueprint'
-                  ? 'border-primary text-primary bg-primary/10'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-              onClick={() => setActiveTab('blueprint')}
-            >
-              図面比較
-            </button>
-            <button
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
-                activeTab === 'basic'
-                  ? 'border-primary text-primary bg-primary/10'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-              onClick={() => setActiveTab('basic')}
-            >
-              基本情報比較
-            </button>
-            <button
-              className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
-                activeTab === 'estimate'
-                  ? 'border-primary text-primary bg-primary/10'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-              onClick={() => setActiveTab('estimate')}
-            >
-              見積もり情報比較
-            </button>
-          </div>
+        {/* タブナビゲーション */}
+        <div className="border-b flex">
+          <button
+            className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
+              activeTab === 'blueprint'
+                ? 'border-primary text-primary bg-primary/10'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('blueprint')}
+          >
+            図面比較
+          </button>
+          <button
+            className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
+              activeTab === 'basic'
+                ? 'border-primary text-primary bg-primary/10'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('basic')}
+          >
+            基本情報比較
+          </button>
+          <button
+            className={`flex-1 px-4 py-3 text-sm font-medium transition-colors border-b-2 ${
+              activeTab === 'estimate'
+                ? 'border-primary text-primary bg-primary/10'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+            onClick={() => setActiveTab('estimate')}
+          >
+            見積もり情報比較
+          </button>
         </div>
 
         <div className="flex-1 overflow-hidden">
@@ -159,7 +158,7 @@ export function SimilarBlueprintCompareModal({
                 </div>
                 <div className="w-px bg-gray-300 mx-2"></div>
                 <div className="flex-1">
-                  <h4 className="text-sm font-medium border-b pb-2">類似図面</h4>
+                  <h4 className="text-sm font-medium text-blue-800 border-b border-blue-200 pb-2">類似図面</h4>
                 </div>
               </div>
               
@@ -199,11 +198,11 @@ export function SimilarBlueprintCompareModal({
               {/* タイトルエリア */}
               <div className="p-4 pb-2 flex gap-1">
                 <div className="flex-1">
-                  <h4 className="text-sm font-medium border-b pb-2">現在の図面の基本情報</h4>
+                  <h4 className="text-sm font-medium text-gray-800 border-b border-gray-200 pb-2">現在の図面の基本情報</h4>
                 </div>
                 <div className="w-px bg-gray-300 mx-2"></div>
                 <div className="flex-1">
-                  <h4 className="text-sm font-medium border-b pb-2">類似図面の基本情報</h4>
+                  <h4 className="text-sm font-medium text-blue-800 border-b border-blue-200 pb-2">類似図面の基本情報</h4>
                 </div>
               </div>
               
@@ -237,7 +236,7 @@ export function SimilarBlueprintCompareModal({
                     <div className="grid grid-cols-2 gap-4">
                       {basicInputFields.map((field) => (
                         <div key={field.key} className="flex flex-col space-y-1">
-                          <label className="text-sm font-medium text-gray-700">
+                          <label className="text-sm font-medium text-blue-700">
                             {field.label}
                           </label>
                           <ReadOnlyComparisonField
@@ -249,21 +248,20 @@ export function SimilarBlueprintCompareModal({
                       ))}
                     </div>
                   </div>
-
                 </div>
               </div>
 
               {/* 下部固定保存ボタン */}
-              <div className="bg-white pt-4">
-                    <Button
-                      onClick={handleBasicSave}
-                      disabled={!isBasicModified}
-                      className="w-full h-10 gap-2"
-                      variant={isBasicModified ? "default" : "outline"}
-                    >
-                      <Save className="h-4 w-4" />
-                      基本情報を保存
-                    </Button>
+              <div className="bg-white p-4">
+                <Button
+                  onClick={handleBasicSave}
+                  disabled={!isBasicModified}
+                  className="w-full h-10 gap-2"
+                  variant={isBasicModified ? "default" : "outline"}
+                >
+                  <Save className="h-4 w-4" />
+                  基本情報を保存
+                </Button>
               </div>
             </div>
           )}
@@ -274,11 +272,11 @@ export function SimilarBlueprintCompareModal({
               {/* タイトルエリア */}
               <div className="p-4 pb-2 flex gap-1">
                 <div className="flex-1">
-                  <h4 className="text-sm font-medium border-b pb-2">現在の図面の見積もり情報</h4>
+                  <h4 className="text-sm font-medium text-gray-800 border-b border-gray-200 pb-2">現在の図面の見積もり情報</h4>
                 </div>
                 <div className="w-px bg-gray-300 mx-2"></div>
                 <div className="flex-1">
-                  <h4 className="text-sm font-medium border-b pb-2">類似図面の見積もり情報</h4>
+                  <h4 className="text-sm font-medium text-blue-800 border-b border-blue-200 pb-2">類似図面の見積もり情報</h4>
                 </div>
               </div>
               
@@ -311,7 +309,7 @@ export function SimilarBlueprintCompareModal({
                     <div className="grid grid-cols-2 gap-4">
                       {estimateInputFields.map((field) => (
                         <div key={field.key} className="flex flex-col space-y-1">
-                          <label className="text-sm font-medium text-gray-700">
+                          <label className="text-sm font-medium text-blue-700">
                             {field.label}
                           </label>
                           <ReadOnlyComparisonField
@@ -327,7 +325,7 @@ export function SimilarBlueprintCompareModal({
               </div>
 
               {/* 下部固定保存ボタン */}
-              <div className="bg-white pt-4">
+              <div className="bg-white p-4">
                 <Button
                   onClick={handleEstimateSave}
                   disabled={!isEstimateModified}
@@ -337,7 +335,7 @@ export function SimilarBlueprintCompareModal({
                   <Save className="h-4 w-4" />
                   見積もり情報を保存
                 </Button>
-                  </div>
+              </div>
             </div>
           )}
         </div>
