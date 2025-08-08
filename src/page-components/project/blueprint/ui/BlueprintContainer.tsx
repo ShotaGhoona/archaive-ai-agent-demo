@@ -7,7 +7,7 @@ import blueprintsData from "../data/blueprints.json";
 import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
 import { BlueprintFile } from "../data/types";
 
-export default function BlueprintDetail() {
+export default function BlueprintContainer() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
 

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
-import { blueprintDetailTabs } from "../constants/blueprint-detail-navigation";
+import { blueprintDetailTabs } from "../constants/project-navigation";
 
 export function DetailTabNavigation() {
   const pathname = usePathname();

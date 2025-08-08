@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import projectsData from "@/page-components/project/data/project.json";
+import projectsData from "../data/project.json";
 import { ProjectPageHeader } from "./ProjectPageHeader";
 import { ProjectTableView } from "./ProjectTableView";
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";

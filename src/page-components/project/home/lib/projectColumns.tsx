@@ -59,7 +59,7 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     sortType: 'string',
     render: (project: Project, value: unknown) => (
       <Link
-        href={`/project/${project.projectId}`}
+        href={`/project/${project.projectId}/basic-information`}
         className="hover:underline font-mono text-sm font-medium text-primary"
         onClick={(e) => e.stopPropagation()}
       >

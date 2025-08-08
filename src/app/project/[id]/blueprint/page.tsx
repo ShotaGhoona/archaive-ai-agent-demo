@@ -1,10 +1,10 @@
-import BlueprintDetail from "@/page-components/blueprint/detail/ui/BlueprintDetailContainer";
+import BlueprintContainer from "@/page-components/project/blueprint/ui/BlueprintContainer";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function BlueprintDetailPage() {
   return (
     <div className="h-full flex flex-col overflow-hidden">
-      <BlueprintDetail  />
+      <BlueprintContainer  />
       <ChatUIManager 
         availableAgents={['general', 'estimate', 'trouble']}
       />
