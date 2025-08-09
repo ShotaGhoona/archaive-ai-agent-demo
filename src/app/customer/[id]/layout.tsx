@@ -1,20 +1,24 @@
-import { CustomerSidebar } from "@/shared/basic-layout/ui/CustomerSidebar";
-export default async function CustomerDetailLayout({
-  children,
-  params,
-}: {
+'use client';
+import { CustomerTabNavigation } from "@/shared/basic-layout/ui/CustomerTabNavigation";
+
+interface CustomerDetailLayoutProps {
   children: React.ReactNode;
-  params: Promise<{
-    id: string;
-  }>;
-}) {
-  const { id } = await params;
+}
+
+export default function CustomerDetailLayout({ 
+  children
+}: CustomerDetailLayoutProps) {
   return (
-    <div className="flex h-[calc(100vh-45px)] bg-background">
-      <CustomerSidebar customerId={id} />
-      <main className="flex-1 overflow-y-auto">
+    <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 p-4 border-b bg-white">
+        <div className="flex items-center justify-between">
+          <CustomerTabNavigation />
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-hidden">
         {children}
-      </main>
+      </div>
     </div>
   );
 }

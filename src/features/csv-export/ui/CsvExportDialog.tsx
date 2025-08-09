@@ -60,13 +60,50 @@ export function CsvExportDialog<T>({
           CSV出力
         </Button>
       </DialogTrigger>
-      <DialogContent className="min-w-[80vw] max-h-[80vh] flex flex-col">
+      <DialogContent className="min-w-[80vw] h-[80vh] flex flex-col">
         <DialogHeader className="flex-shrink-0">
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         
         <div className="grid grid-cols-4 gap-6 flex-1 min-h-0 overflow-hidden">
-          {/* 左側: 設定パネル */}
+          {/* 左側: プレビュー */}
+          <div className="col-span-3 flex flex-col min-h-0 overflow-hidden">
+            <div className="flex-1 flex flex-col min-h-0 mb-4">
+              <ScrollArea className="border rounded-md flex-1">
+                <Table>
+                  {includeHeader && (
+                    <TableHeader>
+                      <TableRow>
+                        {headers.map((header, index) => (
+                          <TableHead key={index} className="text-sm">
+                            {header}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+                  )}
+                  <TableBody>
+                    {rows.map((row, rowIndex) => (
+                      <TableRow key={rowIndex}>
+                        {row.map((cell, cellIndex) => (
+                          <TableCell key={cellIndex} className="text-sm">
+                            {cell}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </ScrollArea>
+              {enabledCount === 0 && (
+                <p className="text-sm text-gray-500 mt-2 text-center">
+                  カラムを選択してください
+                </p>
+              )}
+            </div>
+          </div>
+
+          {/* 右側: 操作ユーティリティ */}
           <div className="col-span-1 flex flex-col min-h-0">
             <div className="bg-gray-50 rounded-lg p-4 flex flex-col gap-4 min-h-0 border">
               {/* カラム選択とドラッグ */}
@@ -117,10 +154,10 @@ export function CsvExportDialog<T>({
                   </div>
                 </ScrollArea>
               </div>
+              
               {/* 出力オプション */}
               <div className="space-y-3 flex-shrink-0">
                 <div className="space-y-3 p-3 bg-white rounded-md border">
-                  {/* エンコード設定 */}
                   <div className="flex items-center space-x-2">
                     <Select value={encoding} onValueChange={setEncoding}>
                       <SelectTrigger className="h-7 text-xs">
@@ -143,60 +180,25 @@ export function CsvExportDialog<T>({
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* 右側: プレビュー */}
-          <div className="col-span-3 flex flex-col min-h-0 overflow-hidden">
-            {/* プレビュー */}
-            <div className="flex-1 flex flex-col min-h-0 mb-4">
-              <ScrollArea className="border rounded-md flex-1">
-                <Table>
-                  {includeHeader && (
-                    <TableHeader>
-                      <TableRow>
-                        {headers.map((header, index) => (
-                          <TableHead key={index} className="text-xs">
-                            {header}
-                          </TableHead>
-                        ))}
-                      </TableRow>
-                    </TableHeader>
-                  )}
-                  <TableBody>
-                    {rows.map((row, rowIndex) => (
-                      <TableRow key={rowIndex}>
-                        {row.map((cell, cellIndex) => (
-                          <TableCell key={cellIndex} className="text-xs">
-                            {cell}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </ScrollArea>
-              {enabledCount === 0 && (
-                <p className="text-sm text-gray-500 mt-2 text-center">
-                  カラムを選択してください
-                </p>
-              )}
+              {/* ボタンエリア */}
+              <div className="flex flex-col gap-2 pt-2 flex-shrink-0">
+                <Button 
+                  onClick={generateCsv}
+                  disabled={enabledCount === 0}
+                  className="w-full"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  CSV出力
+                </Button>
+                <Button variant="outline" onClick={() => setIsOpen(false)} className="w-full">
+                  キャンセル
+                </Button>
+              </div>
             </div>
           </div>
         </div>
 
-        <DialogFooter className="flex-shrink-0">
-          <Button variant="outline" onClick={() => setIsOpen(false)}>
-            キャンセル
-          </Button>
-          <Button 
-            onClick={generateCsv}
-            disabled={enabledCount === 0}
-          >
-            <Download className="h-4 w-4 mr-2" />
-            CSV出力
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

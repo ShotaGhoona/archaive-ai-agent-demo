@@ -144,106 +144,96 @@ export function UploadGalleryView({
             const isSelected = selectedFiles.includes(file.id);
             
             return (
-              <Card 
-                key={file.id} 
-                className={`
-                  overflow-hidden transition-all duration-200 group relative cursor-pointer
-                  ${isSelected ? 'ring-2 ring-primary shadow-lg' : 'hover:shadow-lg'}
-                `}
+              <div
+                key={file.id}
+                className="group cursor-pointer"
                 onClick={(e) => handleCardClick(file, e)}
               >
-                {/* 選択チェックボックス */}
-                <div className="absolute top-2 left-2 z-10">
-                  <Button
-                    variant={isSelected ? "default" : "secondary"}
-                    size="sm"
-                    className={`
-                      h-6 w-6 p-0 rounded-full transition-opacity
-                      ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-                    `}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleSelection(file.id);
-                    }}
-                  >
-                    {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
-                  </Button>
-                </div>
-
-                
-                <div className="aspect-video overflow-hidden bg-gray-100">
-                  {file.type.startsWith('image/') ? (
-                    <img
-                      src={file.url}
-                      alt={file.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                      <div className="text-center space-y-2">
-                        <FileImage className="h-8 w-8 text-gray-400 mx-auto" />
-                        <div className="text-xs text-gray-500 font-medium">
-                          {file.name.split('.').pop()?.toUpperCase()}
+                <div className={`
+                  relative bg-white rounded-lg border overflow-hidden hover:shadow-md transition-all duration-200
+                  ${isSelected ? 'border-primary shadow-lg ring-2 ring-primary/20' : 'border-gray-200'}
+                `}>
+                  <div className="aspect-[4/3] bg-gray-50 relative">
+                    {file.type.startsWith('image/') ? (
+                      <img
+                        src={file.url}
+                        alt={file.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                        <div className="text-center space-y-2">
+                          <FileImage className="h-12 w-12 text-gray-400 mx-auto" />
+                          <div className="text-sm text-gray-600 font-medium">
+                            {file.name.split('.').pop()?.toUpperCase()}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-                
-                <CardContent className="p-4 relative">
-                  <div className="space-y-2">
-                    <h3 className="font-medium text-gray-900 truncate text-sm">
-                      {file.name}
-                    </h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500 font-mono">
-                        {formatFileSize(file.size)}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {file.type.startsWith('image/') ? 'IMAGE' : file.name.split('.').pop()?.toUpperCase()}
-                      </span>
+                    )}
+                    
+                    {/* ホバー時のオーバーレイとボタン */}
+                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
+                      <Button
+                        variant="outline"
+                        onClick={(e) => handleViewClick(file, e)}
+                        className="bg-white/95 backdrop-blur-sm hover:bg-white"
+                      >
+                        <ZoomIn className="h-4 w-4 mr-1" />
+                        拡大
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (viewMode === "uploaded") {
+                            onRemoveFile?.(file.id);
+                          } else {
+                            onRestoreFile?.(file.id);
+                          }
+                        }}
+                        className="bg-white/95 backdrop-blur-sm text-gray-900 hover:bg-white"
+                        variant="outline"
+                      >
+                        {viewMode === "uploaded" ? (
+                          <>
+                            <Trash2 className="h-4 w-4 mr-1" />
+                            削除
+                          </>
+                        ) : (
+                          <>
+                            <RotateCcw className="h-4 w-4 mr-1" />
+                            復元
+                          </>
+                        )}
+                      </Button>
                     </div>
                   </div>
-                  
-                  {/* アクションボタン（ホバー時のみ表示、absolute配置） */}
-                  <div className="absolute inset-x-4 bottom-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+
+                  {/* 選択チェックボックス（左上） */}
+                  <div className="absolute top-2 left-2 z-10">
                     <Button
-                      variant="outline"
+                      variant={isSelected ? "default" : "secondary"}
                       size="sm"
-                      onClick={(e) => handleViewClick(file, e)}
-                      className="flex-1 bg-white/95 backdrop-blur-sm"
-                    >
-                      <ZoomIn className="h-4 w-4 mr-1" />
-                      拡大
-                    </Button>
-                    
-                    <Button
-                      size="sm"
+                      className={`
+                        h-6 w-6 p-0 rounded-full transition-opacity backdrop-blur-sm
+                        ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+                      `}
                       onClick={(e) => {
                         e.stopPropagation();
-                        if (viewMode === "uploaded") {
-                          onRemoveFile?.(file.id);
-                        } else {
-                          onRestoreFile?.(file.id);
-                        }
+                        onToggleSelection(file.id);
                       }}
-                      className="flex-1 backdrop-blur-sm"
                     >
-                      {viewMode === "uploaded" ? (
-                        <>
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          削除
-                        </>
-                      ) : (
-                        <>
-                          <RotateCcw className="h-4 w-4 mr-1" />
-                          復元
-                        </>
-                      )}
+                      {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
+
+                  {/* ファイル名 */}
+                  <div className="p-3">
+                    <h4 className="text-sm font-medium text-gray-900 truncate">
+                      {file.name}
+                    </h4>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>

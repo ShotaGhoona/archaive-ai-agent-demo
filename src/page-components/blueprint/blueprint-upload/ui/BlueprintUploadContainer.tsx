@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { UploadPageHeader } from "./ui/UploadPageHeader";
-import { UploadGalleryView } from "./ui/UploadGalleryView";
+import { UploadPageHeader } from "./UploadPageHeader";
+import { UploadGalleryView } from "./UploadGalleryView";
 
 interface UploadedFile {
   id: string;
@@ -18,7 +18,7 @@ interface FileStack {
   createdAt: Date;
 }
 
-export function BlueprintUploadPage() {
+export function BlueprintUploadContainer() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [trashedFiles, setTrashedFiles] = useState<UploadedFile[]>([]);
   const [fileStacks, setFileStacks] = useState<FileStack[]>([]);

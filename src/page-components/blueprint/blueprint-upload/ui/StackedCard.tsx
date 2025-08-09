@@ -80,134 +80,104 @@ export function StackedCard({
 
   return (
     <>
-      <div className="relative">
-        {/* 重なりを表現する背景カード（複数の影） */}
-        <div className="absolute inset-0 translate-x-1 translate-y-1 bg-gray-200 rounded-lg opacity-60"></div>
-        <div className="absolute inset-0 translate-x-2 translate-y-2 bg-gray-300 rounded-lg opacity-40"></div>
-        
-        {/* メインカード */}
-        <Card 
-          className={`
-            relative overflow-hidden transition-all duration-200 group cursor-pointer
-            ${isSelected ? 'ring-2 ring-primary shadow-lg' : 'hover:shadow-lg'}
-            bg-white border-2
-          `}
-          onClick={handleCardClick}
-        >
-          {/* 選択チェックボックス */}
-          <div className="absolute top-2 left-2 z-10">
-            <Button
-              variant={isSelected ? "default" : "secondary"}
-              size="sm"
-              className={`
-                h-6 w-6 p-0 rounded-full transition-opacity
-                ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-              `}
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleSelection();
-              }}
-            >
-              {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
-            </Button>
-          </div>
-
-          {/* スタック枚数表示 */}
-          <div className="absolute top-2 right-2 z-10">
-            <div className="bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1">
-              <Layers className="h-3 w-3" />
-              {stackCount}
-            </div>
-          </div>
-
-          {/* 画像表示エリア */}
-          <div className="aspect-video overflow-hidden bg-gray-100">
-            {representativeFile.type.startsWith('image/') ? (
-              <img
-                src={representativeFile.url}
-                alt={representativeFile.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                <div className="text-center space-y-2">
-                  <FileImage className="h-8 w-8 text-gray-400 mx-auto" />
-                  <div className="text-xs text-gray-500 font-medium">
-                    {representativeFile.name.split('.').pop()?.toUpperCase()}
+      <div className="group cursor-pointer" onClick={handleCardClick}>
+        <div className="relative">
+          {/* 重なりを表現する背景カード（複数の影） */}
+          <div className="absolute inset-0 translate-x-1 translate-y-1 bg-gray-200 rounded-lg opacity-60"></div>
+          <div className="absolute inset-0 translate-x-2 translate-y-2 bg-gray-300 rounded-lg opacity-40"></div>
+          
+          {/* メインカード */}
+          <div className={`
+            relative bg-white rounded-lg border overflow-hidden hover:shadow-md transition-all duration-200
+            ${isSelected ? 'border-primary shadow-lg ring-2 ring-primary/20' : 'border-gray-200'}
+          `}>
+            <div className="aspect-[4/3] bg-gray-50 relative">
+              {representativeFile.type.startsWith('image/') ? (
+                <img
+                  src={representativeFile.url}
+                  alt={representativeFile.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                  <div className="text-center space-y-2">
+                    <FileImage className="h-12 w-12 text-gray-400 mx-auto" />
+                    <div className="text-sm text-gray-600 font-medium">
+                      {representativeFile.name.split('.').pop()?.toUpperCase()}
+                    </div>
                   </div>
                 </div>
+              )}
+              
+              {/* ホバー時のオーバーレイとボタン */}
+              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
+                <Button
+                  variant="outline"
+                  onClick={handleViewClick}
+                  className="bg-white/95 backdrop-blur-sm hover:bg-white"
+                >
+                  <ZoomIn className="h-4 w-4 mr-1" />
+                  表示
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onUnstackFiles();
+                  }}
+                  className="bg-white/95 backdrop-blur-sm hover:bg-white"
+                >
+                  <Ungroup className="h-4 w-4 mr-1" />
+                  分離
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemoveStack();
+                  }}
+                  className="bg-white/95 backdrop-blur-sm text-gray-900 hover:bg-white"
+                  variant="outline"
+                >
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  削除
+                </Button>
               </div>
-            )}
-          </div>
-          
-          <CardContent className="p-4 relative">
-            <div className="space-y-2">
-              <h3 className="font-medium text-gray-900 truncate text-sm">
+            </div>
+
+            {/* 選択チェックボックス（左上） */}
+            <div className="absolute top-2 left-2 z-10">
+              <Button
+                variant={isSelected ? "default" : "secondary"}
+                size="sm"
+                className={`
+                  h-6 w-6 p-0 rounded-full transition-opacity backdrop-blur-sm
+                  ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
+                `}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleSelection();
+                }}
+              >
+                {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+              </Button>
+            </div>
+
+            {/* スタック枚数表示（右上） */}
+            <div className="absolute top-2 right-2 z-10">
+              <div className="bg-blue-600 text-white text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1 backdrop-blur-sm">
+                <Layers className="h-3 w-3" />
+                {stackCount}
+              </div>
+            </div>
+
+            {/* ファイル名 */}
+            <div className="p-3">
+              <h4 className="text-sm font-medium text-gray-900 truncate">
                 {representativeFile.name} 他{stackCount - 1}件
-              </h3>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-500 font-mono">
-                  {formatFileSize(getTotalSize())}
-                </span>
-                <span className="text-xs text-gray-500">
-                  {stackCount}枚重ね
-                </span>
-              </div>
-              
-              {/* ファイル一覧（最初の3つまで表示） */}
-              <div className="space-y-1">
-                {stackedFiles.slice(0, 3).map((file, index) => (
-                  <div key={file.id} className="text-xs text-gray-400 truncate">
-                    {index + 1}. {file.name}
-                  </div>
-                ))}
-                {stackCount > 3 && (
-                  <div className="text-xs text-gray-400">
-                    ...他{stackCount - 3}件
-                  </div>
-                )}
-              </div>
+              </h4>
             </div>
-            
-            {/* アクションボタン（ホバー時のみ表示） */}
-            <div className="absolute inset-x-4 bottom-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={handleViewClick}
-                className="flex-1 bg-white/95 backdrop-blur-sm"
-              >
-                <ZoomIn className="h-4 w-4 mr-1" />
-                表示
-              </Button>
-              
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onUnstackFiles();
-                }}
-                className="flex-1 bg-white/95 backdrop-blur-sm"
-              >
-                <Ungroup className="h-4 w-4 mr-1" />
-                分離
-              </Button>
-              
-              <Button
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onRemoveStack();
-                }}
-                className="flex-1 backdrop-blur-sm bg-red-600 hover:bg-red-700"
-              >
-                <Trash2 className="h-4 w-4 mr-1" />
-                削除
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* スタックファイル表示モーダル */}
