@@ -23,6 +23,31 @@ export interface Project {
   createdAt?: Date;
 }
 
+// 図面とプロジェクトの関係を管理する型
+export interface ProjectAssignment {
+  fileId: string;
+  projectId: string;
+  assignedAt: Date;
+}
+
+// 図面一括仕分け機能のメイン状態管理型
+export interface BlueprintSortingState {
+  files: UploadedFile[];
+  fileStacks: FileStack[];
+  projects: Project[];
+  assignments: ProjectAssignment[];
+  selectedFiles: string[];
+  selectedStacks: string[];
+  trashedFiles: UploadedFile[];
+}
+
+// ドラッグ&ドロップのアイテム型
+export interface DragItem {
+  type: 'file' | 'stack';
+  id: string;
+  files: UploadedFile[]; // fileの場合は単一要素、stackの場合は複数要素
+}
+
 export type ViewMode = "uploaded" | "trash";
 
 export type FileUploadData = Omit<UploadedFile, 'id' | 'createdAt'>;
@@ -57,6 +82,7 @@ export interface UploadGalleryViewProps {
   onUnstackFiles: (stackId: string) => void;
   onRemoveStack: (stackId: string) => void;
   onAddFiles: (files: FileUploadData[]) => void;
+  onDragStart?: (item: DragItem) => void;
 }
 
 export interface AddFileCardProps {
@@ -69,9 +95,17 @@ export interface StackedCardProps {
   onToggleSelection: () => void;
   onUnstackFiles: () => void;
   onRemoveStack: () => void;
+  onDragStart?: (item: DragItem) => void;
+  stackId: string;
 }
 
 export interface ProjectBoxListProps {
   projects?: Project[];
   onBatchRegister?: () => void;
+  onDropToNewProject?: (item: DragItem) => void;
+  onDropToProject?: (item: DragItem, projectId: string) => void;
+  dragOverTarget?: string | null;
+  onDragOver?: (e: React.DragEvent, targetId?: string) => void;
+  onDragLeave?: (e: React.DragEvent) => void;
+  onDrop?: (e: React.DragEvent, onDropToNewProject?: (item: DragItem) => void, onDropToProject?: (item: DragItem, projectId: string) => void, targetProjectId?: string) => void;
 }

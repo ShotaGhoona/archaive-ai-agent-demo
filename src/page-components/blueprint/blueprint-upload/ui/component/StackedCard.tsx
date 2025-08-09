@@ -10,14 +10,16 @@ import {
   Layers
 } from "lucide-react";
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
-import { StackedCardProps, UploadedFile } from "../../model/type";
+import { StackedCardProps, UploadedFile, DragItem } from "../../model/type";
 
 export function StackedCard({
   stackedFiles,
   isSelected,
   onToggleSelection,
   onUnstackFiles,
-  onRemoveStack
+  onRemoveStack,
+  onDragStart,
+  stackId
 }: StackedCardProps) {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   
@@ -49,6 +51,18 @@ export function StackedCard({
     }
   };
 
+  const handleStackDragStart = (e: React.DragEvent) => {
+    const dragItem: DragItem = {
+      type: 'stack',
+      id: stackId,
+      files: stackedFiles
+    };
+    onDragStart?.(dragItem);
+    
+    // ドラッグ効果を設定
+    e.dataTransfer.effectAllowed = 'move';
+  };
+
   // UploadedFile を PreviewableFile に変換
   const convertToPreviewableFiles = (files: UploadedFile[]): PreviewableFile[] => 
     files.map(file => ({
@@ -64,7 +78,12 @@ export function StackedCard({
 
   return (
     <>
-      <div className="group cursor-pointer" onClick={handleCardClick}>
+      <div 
+        className="group cursor-pointer" 
+        onClick={handleCardClick}
+        draggable
+        onDragStart={handleStackDragStart}
+      >
         <div className="relative">
           {/* 重なりを表現する背景カード（複数の影） */}
           <div className="absolute inset-0 translate-x-1 translate-y-1 bg-gray-200 rounded-lg opacity-60"></div>

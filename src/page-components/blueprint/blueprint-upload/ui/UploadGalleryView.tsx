@@ -11,7 +11,7 @@ import {
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 import { AddFileCard } from "./component/AddFileCard";
 import { StackedCard } from "./component/StackedCard";
-import { UploadGalleryViewProps, UploadedFile } from "../model/type";
+import { UploadGalleryViewProps, UploadedFile, DragItem } from "../model/type";
 
 export function UploadGalleryView({
   files,
@@ -25,7 +25,8 @@ export function UploadGalleryView({
   onToggleStackSelection,
   onUnstackFiles,
   onRemoveStack,
-  onAddFiles
+  onAddFiles,
+  onDragStart
 }: UploadGalleryViewProps) {
   const [viewModalFile, setViewModalFile] = useState<UploadedFile | null>(null);
 
@@ -40,6 +41,18 @@ export function UploadGalleryView({
   const handleViewClick = (file: UploadedFile, e: React.MouseEvent) => {
     e.stopPropagation();
     setViewModalFile(file);
+  };
+
+  const handleFileDragStart = (file: UploadedFile, e: React.DragEvent) => {
+    const dragItem: DragItem = {
+      type: 'file',
+      id: file.id,
+      files: [file]
+    };
+    onDragStart?.(dragItem);
+    
+    // ドラッグ効果を設定
+    e.dataTransfer.effectAllowed = 'move';
   };
 
   // UploadedFile を PreviewableFile に変換
@@ -66,11 +79,13 @@ export function UploadGalleryView({
           {viewMode === "uploaded" && fileStacks.map((stack) => (
             <StackedCard
               key={stack.id}
+              stackId={stack.id}
               stackedFiles={stack.files}
               isSelected={selectedStacks.includes(stack.id)}
               onToggleSelection={() => onToggleStackSelection(stack.id)}
               onUnstackFiles={() => onUnstackFiles(stack.id)}
               onRemoveStack={() => onRemoveStack(stack.id)}
+              onDragStart={onDragStart}
             />
           ))}
           
@@ -82,7 +97,9 @@ export function UploadGalleryView({
               <div
                 key={file.id}
                 className="group cursor-pointer"
+                draggable={viewMode === "uploaded"}
                 onClick={(e) => handleCardClick(file, e)}
+                onDragStart={(e) => handleFileDragStart(file, e)}
               >
                 <div className={`
                   relative bg-white rounded-lg border overflow-hidden hover:shadow-md transition-all duration-200
