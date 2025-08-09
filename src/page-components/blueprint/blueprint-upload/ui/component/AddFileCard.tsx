@@ -1,19 +1,7 @@
 import { useState, useRef } from "react";
 import { Badge } from "@/shared/shadcnui";
 import { Plus, Loader2 } from "lucide-react";
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  url: string;
-  createdAt: Date;
-}
-
-interface AddFileCardProps {
-  onAddFiles: (files: Omit<UploadedFile, 'id' | 'createdAt'>[]) => void;
-}
+import { AddFileCardProps, FileUploadData } from "../../model/type";
 
 export function AddFileCard({ onAddFiles }: AddFileCardProps) {
   const [isUploading, setIsUploading] = useState(false);
@@ -34,7 +22,7 @@ export function AddFileCard({ onAddFiles }: AddFileCardProps) {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        const fileData = validFiles.map(file => ({
+        const fileData: FileUploadData[] = validFiles.map(file => ({
           name: file.name,
           size: file.size,
           type: file.type,

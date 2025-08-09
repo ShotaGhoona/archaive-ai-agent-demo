@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Button } from "@/shared/shadcnui";
+import { Button, Tabs, TabsList, TabsTrigger } from "@/shared/shadcnui";
 import { 
   CheckSquare, 
   Square, 
@@ -9,31 +8,7 @@ import {
   Upload,
   Layers
 } from "lucide-react";
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  url: string;
-  createdAt: Date;
-}
-
-interface UploadPageHeaderProps {
-  viewMode: "uploaded" | "trash";
-  onViewModeChange: (mode: "uploaded" | "trash") => void;
-  selectedFiles: string[];
-  selectedStacks: string[];
-  onSelectAll: () => void;
-  onDeselectAll: () => void;
-  onRemoveSelected: () => void;
-  onRestoreSelected: () => void;
-  onAddFiles: (files: Omit<UploadedFile, 'id' | 'createdAt'>[]) => void;
-  onStackFiles: () => void;
-  uploadedFilesCount: number;
-  trashedFilesCount: number;
-  stacksCount: number;
-}
+import { UploadPageHeaderProps } from "../model/type";
 
 export function UploadPageHeader({
   viewMode,
@@ -64,28 +39,23 @@ export function UploadPageHeader({
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        {/* ビューモード切り替え */}
-        <div className="flex items-center gap-1 border border-gray-200 rounded-lg bg-background">
-          <Button
-            variant={viewMode === "uploaded" ? "default" : "ghost"}
-            size="lg"
-            onClick={() => onViewModeChange("uploaded")}
-            className="h-8 px-3"
-          >
-            <Upload className="h-4 w-4 mr-1" />
-            アップロード ({uploadedFilesCount})
-          </Button>
-          <Button
-            variant={viewMode === "trash" ? "default" : "ghost"}
-            size="lg"
-            onClick={() => onViewModeChange("trash")}
-            className="h-8 px-3"
-          >
-            <Archive className="h-4 w-4 mr-1" />
-            ゴミ箱 ({trashedFilesCount})
-          </Button>
-        </div>
-        
+        {/* ビューモード切り替え（Tabs使用） */}
+        <Tabs value={viewMode} onValueChange={(value) => onViewModeChange(value as "uploaded" | "trash")}>
+          <TabsList className="h-10">
+            <TabsTrigger value="uploaded" className="flex items-center gap-1 h-8">
+              <Upload className="h-4 w-4" />
+              アップロード ({uploadedFilesCount})
+            </TabsTrigger>
+            <TabsTrigger value="trash" className="flex items-center gap-1 h-8">
+              <Archive className="h-4 w-4" />
+              ゴミ箱 ({trashedFilesCount})
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </div>
+      
+      {/* 右側：図面を重ねる・削除ボタン */}
+      <div className="flex items-center gap-2">
         {/* 選択操作ボタン */}
         <div className="flex items-center gap-2">
           {/* 全て選択ボタン */}
@@ -112,42 +82,40 @@ export function UploadPageHeader({
               全て解除
             </Button>
           )}
-          
-          {/* 図面を重ねるボタン（uploadedモードで複数アイテム選択時のみ表示） */}
-          {viewMode === "uploaded" && canStackItems && (
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={onStackFiles}
-              className="text-blue-600 hover:text-blue-700"
-            >
-              <Layers className="h-4 w-4 mr-1" />
-              図面を重ねる ({totalSelectedItems})
-            </Button>
-          )}
-
-          {/* 削除/復元ボタン（何かが選択されている時のみ表示） */}
-          {hasAnySelection && (
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={viewMode === "uploaded" ? onRemoveSelected : onRestoreSelected}
-              className={viewMode === "uploaded" ? "text-red-600 hover:text-red-700" : "text-green-600 hover:text-green-700"}
-            >
-              {viewMode === "uploaded" ? (
-                <>
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  削除 ({totalSelectedItems})
-                </>
-              ) : (
-                <>
-                  <RotateCcw className="h-4 w-4 mr-1" />
-                  復元 ({selectedFiles.length})
-                </>
-              )}
-            </Button>
-          )}
         </div>
+        {/* 図面を重ねるボタン（uploadedモードで複数アイテム選択時のみ表示） */}
+        {viewMode === "uploaded" && canStackItems && (
+          <Button
+            variant="default"
+            size="lg"
+            onClick={onStackFiles}
+          >
+            <Layers className="h-4 w-4 mr-1" />
+            図面を重ねる ({totalSelectedItems})
+          </Button>
+        )}
+
+        {/* 削除/復元ボタン（何かが選択されている時のみ表示） */}
+        {hasAnySelection && (
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={viewMode === "uploaded" ? onRemoveSelected : onRestoreSelected}
+            className={viewMode === "uploaded" ? "text-red-600 hover:text-red-700" : "text-green-600 hover:text-green-700"}
+          >
+            {viewMode === "uploaded" ? (
+              <>
+                <Trash2 className="h-4 w-4 mr-1" />
+                削除 ({totalSelectedItems})
+              </>
+            ) : (
+              <>
+                <RotateCcw className="h-4 w-4 mr-1" />
+                復元 ({selectedFiles.length})
+              </>
+            )}
+          </Button>
+        )}
       </div>
     </div>
   );

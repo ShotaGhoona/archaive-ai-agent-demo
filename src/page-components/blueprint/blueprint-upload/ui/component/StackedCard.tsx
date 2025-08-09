@@ -10,23 +10,7 @@ import {
   Layers
 } from "lucide-react";
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  url: string;
-  createdAt: Date;
-}
-
-interface StackedCardProps {
-  stackedFiles: UploadedFile[];
-  isSelected: boolean;
-  onToggleSelection: () => void;
-  onUnstackFiles: () => void;
-  onRemoveStack: () => void;
-}
+import { StackedCardProps, UploadedFile } from "../../model/type";
 
 export function StackedCard({
   stackedFiles,
@@ -89,14 +73,14 @@ export function StackedCard({
           {/* メインカード */}
           <div className={`
             relative bg-white rounded-lg border overflow-hidden hover:shadow-md transition-all duration-200
-            ${isSelected ? 'border-primary shadow-lg ring-2 ring-primary/20' : 'border-gray-200'}
+            ${isSelected ? 'border-primary border-2 shadow-xl ring-4 ring-primary/30' : 'border-gray-200'}
           `}>
             <div className="aspect-[4/3] bg-gray-50 relative">
               {representativeFile.type.startsWith('image/') ? (
                 <img
                   src={representativeFile.url}
                   alt={representativeFile.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-100">
@@ -109,58 +93,8 @@ export function StackedCard({
                 </div>
               )}
               
-              {/* ホバー時のオーバーレイとボタン */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
-                <Button
-                  variant="outline"
-                  onClick={handleViewClick}
-                  className="bg-white/95 backdrop-blur-sm hover:bg-white"
-                >
-                  <ZoomIn className="h-4 w-4 mr-1" />
-                  表示
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onUnstackFiles();
-                  }}
-                  className="bg-white/95 backdrop-blur-sm hover:bg-white"
-                >
-                  <Ungroup className="h-4 w-4 mr-1" />
-                  分離
-                </Button>
-                <Button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRemoveStack();
-                  }}
-                  className="bg-white/95 backdrop-blur-sm text-gray-900 hover:bg-white"
-                  variant="outline"
-                >
-                  <Trash2 className="h-4 w-4 mr-1" />
-                  削除
-                </Button>
-              </div>
             </div>
 
-            {/* 選択チェックボックス（左上） */}
-            <div className="absolute top-2 left-2 z-10">
-              <Button
-                variant={isSelected ? "default" : "secondary"}
-                size="sm"
-                className={`
-                  h-6 w-6 p-0 rounded-full transition-opacity backdrop-blur-sm
-                  ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-                `}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onToggleSelection();
-                }}
-              >
-                {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
-              </Button>
-            </div>
 
             {/* スタック枚数表示（右上） */}
             <div className="absolute top-2 right-2 z-10">
@@ -170,11 +104,48 @@ export function StackedCard({
               </div>
             </div>
 
-            {/* ファイル名 */}
-            <div className="p-3">
+            {/* ファイル名とボタン群 */}
+            <div className="p-3 space-y-2">
               <h4 className="text-sm font-medium text-gray-900 truncate">
                 {representativeFile.name} 他{stackCount - 1}件
               </h4>
+              
+              {/* ボタン群 */}
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleViewClick}
+                  className="flex-1 text-xs"
+                >
+                  <ZoomIn className="h-3 w-3 mr-1" />
+                  表示
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onUnstackFiles();
+                  }}
+                  className="flex-1 text-xs"
+                >
+                  <Ungroup className="h-3 w-3 mr-1" />
+                  分離
+                </Button>
+                <Button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemoveStack();
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 text-xs"
+                >
+                  <Trash2 className="h-3 w-3 mr-1" />
+                  削除
+                </Button>
+              </div>
             </div>
           </div>
         </div>
