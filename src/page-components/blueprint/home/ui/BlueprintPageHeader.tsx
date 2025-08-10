@@ -9,7 +9,6 @@ import { FilterToggleButton } from "@/features/advanced-filter";
 import { Blueprint } from "../lib/blueprintColumns";
 import { CsvExportDialog } from "@/features/csv-export";
 import { SimilarBlueprintSearchDialog } from "./SimilarBlueprintSearchDialog";
-import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
 import { BLUEPRINT_CSV_COLUMNS } from "../lib/blueprintCsvConfig";
 import { SearchInput } from "@/shared/GenericSearch";
 
@@ -74,9 +73,6 @@ export function BlueprintPageHeader({
         />
         {/* 類似図面検索 */}
         <SimilarBlueprintSearchDialog />
-
-        {/* 新規図面登録ボタン */}
-        <BlueprintUploadDialog />
       </div>
     </div>
   );

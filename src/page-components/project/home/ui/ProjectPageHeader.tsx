@@ -5,6 +5,8 @@ import { SearchInput } from "@/shared/GenericSearch";
 import { Button } from "@/shared/shadcnui";
 import { Plus } from "lucide-react";
 import { Project } from "../lib/projectColumns";
+import Link from "next/link";
+import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -42,16 +44,13 @@ export function ProjectPageHeader({
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
         />
-        
-        <Button size="lg">
-          <Plus className="h-4 w-4 mr-2" />
-          一括案件登録
-        </Button>
-
-        <Button size="lg">
-          <Plus className="h-4 w-4 mr-2" />
-          個別案件登録
-        </Button>
+        <Link href="/blueprint/upload">
+          <Button size="lg">
+            <Plus className="h-4 w-4 mr-2" />
+            一括案件登録
+          </Button>
+        </Link>
+        <BlueprintUploadDialog />
       </div>
     </div>
   );
