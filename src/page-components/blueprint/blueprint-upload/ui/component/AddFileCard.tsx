@@ -1,19 +1,7 @@
 import { useState, useRef } from "react";
 import { Badge } from "@/shared/shadcnui";
 import { Plus, Loader2 } from "lucide-react";
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  url: string;
-  createdAt: Date;
-}
-
-interface AddFileCardProps {
-  onAddFiles: (files: Omit<UploadedFile, 'id' | 'createdAt'>[]) => void;
-}
+import { AddFileCardProps, FileUploadData } from "../../model/type";
 
 export function AddFileCard({ onAddFiles }: AddFileCardProps) {
   const [isUploading, setIsUploading] = useState(false);
@@ -34,7 +22,7 @@ export function AddFileCard({ onAddFiles }: AddFileCardProps) {
       try {
         await new Promise(resolve => setTimeout(resolve, 1000));
         
-        const fileData = validFiles.map(file => ({
+        const fileData: FileUploadData[] = validFiles.map(file => ({
           name: file.name,
           size: file.size,
           type: file.type,
@@ -78,9 +66,9 @@ export function AddFileCard({ onAddFiles }: AddFileCardProps) {
   return (
     <div 
       className={`
-        relative overflow-hidden transition-all duration-200 cursor-pointer border-2 border-dashed rounded-lg bg-gray-100
-        ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'}
-        ${isUploading ? 'border-blue-300 bg-blue-50' : ''}
+        relative transition-all duration-200 cursor-pointer border-2 border-dashed rounded-xl flex items-center justify-center
+        ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-primary/50'}
+        ${isUploading ? 'border-blue-400 bg-blue-50/50' : 'bg-gray-50/50 hover:bg-gray-50'}
       `}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
@@ -96,40 +84,35 @@ export function AddFileCard({ onAddFiles }: AddFileCardProps) {
         className="hidden"
       />
       
-      <div className="aspect-video flex items-center justify-center">
+      <div className="aspect-video flex flex-col items-center justify-center p-8">
         {isUploading ? (
-          <div className="text-center space-y-3">
-            <Loader2 className="h-12 w-12 text-blue-600 animate-spin mx-auto" />
-            <div className="text-sm text-blue-600 font-medium">
+          <div className="text-center space-y-4">
+            <Loader2 className="h-10 w-10 text-blue-500 animate-spin mx-auto" />
+            <p className="text-sm text-blue-600 font-medium">
               アップロード中...
-            </div>
+            </p>
           </div>
         ) : (
-          <div className="text-center space-y-3">
-            <div className="p-4 rounded-full bg-white/80 shadow-sm">
-              <Plus className="h-12 w-12 text-gray-500 mx-auto" />
+          <div className="text-center space-y-4">
+            <div className="p-3 rounded-full bg-white border shadow-sm flex items-center justify-center gap-2">
+              <Plus className="h-8 w-8 text-gray-400" />
+              <p className="text-sm font-bold text-gray-400">
+                図面をアップロード
+              </p>
             </div>
-            <div className="text-sm text-gray-600 font-medium">
-              図面を追加
+            <div className="space-y-2">
+              <p className="text-xs text-gray-500">
+                ドラッグ&ドロップまたはクリック
+              </p>
+              <div className="flex flex-wrap gap-1 justify-center pt-2">
+                <Badge variant="outline" className="text-xs">DWG</Badge>
+                <Badge variant="outline" className="text-xs">STEP</Badge>
+                <Badge variant="outline" className="text-xs">IGS</Badge>
+                <Badge variant="outline" className="text-xs">PDF</Badge>
+              </div>
             </div>
           </div>
         )}
-      </div>
-      
-      <div className="p-4 bg-white/50">
-        <div className="space-y-3">
-          <h3 className="font-medium text-gray-600 text-sm text-center">
-            {isUploading ? 'アップロード中...' : 'ドラッグ&ドロップまたはクリック'}
-          </h3>
-          {!isUploading && (
-            <div className="flex flex-wrap gap-1 justify-center">
-              <Badge variant="secondary" className="text-xs bg-white/80">DWG</Badge>
-              <Badge variant="secondary" className="text-xs bg-white/80">STEP</Badge>
-              <Badge variant="secondary" className="text-xs bg-white/80">IGS</Badge>
-              <Badge variant="secondary" className="text-xs bg-white/80">PDF</Badge>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { usePathname, useParams } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
 import { blueprintDetailTabs } from "../constants/project-navigation";
 
-export function DetailTabNavigation() {
+export function ProjectTabNavigation() {
   const pathname = usePathname();
   const params = useParams();
   const blueprintId = params.id as string;

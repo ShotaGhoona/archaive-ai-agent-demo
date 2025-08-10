@@ -1,46 +1,15 @@
 import { useState } from "react";
-import { Card, CardContent, Button } from "@/shared/shadcnui";
+import { Button } from "@/shared/shadcnui";
 import { 
   FileImage, 
   ZoomIn, 
   RotateCcw, 
-  Trash2,
-  Check,
-  Plus
+  Trash2
 } from "lucide-react";
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
-import { AddFileCard } from "./AddFileCard";
-import { StackedCard } from "./StackedCard";
-
-interface UploadedFile {
-  id: string;
-  name: string;
-  size: number;
-  type: string;
-  url: string;
-  createdAt: Date;
-}
-
-interface FileStack {
-  id: string;
-  files: UploadedFile[];
-  createdAt: Date;
-}
-
-interface UploadGalleryViewProps {
-  files: UploadedFile[];
-  fileStacks: FileStack[];
-  selectedFiles: string[];
-  selectedStacks: string[];
-  viewMode: "uploaded" | "trash";
-  onRemoveFile: (id: string) => void;
-  onRestoreFile: (id: string) => void;
-  onToggleSelection: (id: string) => void;
-  onToggleStackSelection: (stackId: string) => void;
-  onUnstackFiles: (stackId: string) => void;
-  onRemoveStack: (stackId: string) => void;
-  onAddFiles: (files: Omit<UploadedFile, 'id' | 'createdAt'>[]) => void;
-}
+import { AddFileCard } from "./component/AddFileCard";
+import { StackedCard } from "./component/StackedCard";
+import { UploadGalleryViewProps, UploadedFile, DragItem } from "../model/type";
 
 export function UploadGalleryView({
   files,
@@ -54,17 +23,11 @@ export function UploadGalleryView({
   onToggleStackSelection,
   onUnstackFiles,
   onRemoveStack,
-  onAddFiles
+  onAddFiles,
+  onDragStart
 }: UploadGalleryViewProps) {
   const [viewModalFile, setViewModalFile] = useState<UploadedFile | null>(null);
 
-  const formatFileSize = (bytes: number) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
 
   const handleCardClick = (file: UploadedFile, e: React.MouseEvent) => {
     e.preventDefault();
@@ -76,6 +39,18 @@ export function UploadGalleryView({
   const handleViewClick = (file: UploadedFile, e: React.MouseEvent) => {
     e.stopPropagation();
     setViewModalFile(file);
+  };
+
+  const handleFileDragStart = (file: UploadedFile, e: React.DragEvent) => {
+    const dragItem: DragItem = {
+      type: 'file',
+      id: file.id,
+      files: [file]
+    };
+    onDragStart?.(dragItem);
+    
+    // ドラッグ効果を設定
+    e.dataTransfer.effectAllowed = 'move';
   };
 
   // UploadedFile を PreviewableFile に変換
@@ -91,39 +66,10 @@ export function UploadGalleryView({
   });
 
 
-  // uploadedモードではfileStacksも考慮する
-  const hasContent = viewMode === "uploaded" ? files.length > 0 || fileStacks.length > 0 : files.length > 0;
-
-  if (!hasContent) {
-    return (
-      <div className="overflow-auto flex-1">
-        {viewMode === "uploaded" ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-1">
-            <AddFileCard onAddFiles={onAddFiles} />
-          </div>
-        ) : (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center space-y-4">
-              <FileImage className="h-16 w-16 text-gray-300 mx-auto" />
-              <div className="space-y-2">
-                <h3 className="text-lg font-medium text-gray-500">
-                  ゴミ箱は空です
-                </h3>
-                <p className="text-sm text-gray-400">
-                  削除された図面はここに表示されます
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="overflow-auto flex-1">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-1">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-1">
           {/* アップロードビューの場合、最初に追加カードを表示 */}
           {viewMode === "uploaded" && <AddFileCard onAddFiles={onAddFiles} />}
           
@@ -131,11 +77,13 @@ export function UploadGalleryView({
           {viewMode === "uploaded" && fileStacks.map((stack) => (
             <StackedCard
               key={stack.id}
+              stackId={stack.id}
               stackedFiles={stack.files}
               isSelected={selectedStacks.includes(stack.id)}
               onToggleSelection={() => onToggleStackSelection(stack.id)}
               onUnstackFiles={() => onUnstackFiles(stack.id)}
               onRemoveStack={() => onRemoveStack(stack.id)}
+              onDragStart={onDragStart}
             />
           ))}
           
@@ -144,106 +92,82 @@ export function UploadGalleryView({
             const isSelected = selectedFiles.includes(file.id);
             
             return (
-              <Card 
-                key={file.id} 
-                className={`
-                  overflow-hidden transition-all duration-200 group relative cursor-pointer
-                  ${isSelected ? 'ring-2 ring-primary shadow-lg' : 'hover:shadow-lg'}
-                `}
+              <div
+                key={file.id}
+                className="group cursor-pointer"
+                draggable={viewMode === "uploaded"}
                 onClick={(e) => handleCardClick(file, e)}
+                onDragStart={(e) => handleFileDragStart(file, e)}
               >
-                {/* 選択チェックボックス */}
-                <div className="absolute top-2 left-2 z-10">
-                  <Button
-                    variant={isSelected ? "default" : "secondary"}
-                    size="sm"
-                    className={`
-                      h-6 w-6 p-0 rounded-full transition-opacity
-                      ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}
-                    `}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleSelection(file.id);
-                    }}
-                  >
-                    {isSelected ? <Check className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
-                  </Button>
-                </div>
-
-                
-                <div className="aspect-video overflow-hidden bg-gray-100">
-                  {file.type.startsWith('image/') ? (
-                    <img
-                      src={file.url}
-                      alt={file.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-50">
-                      <div className="text-center space-y-2">
-                        <FileImage className="h-8 w-8 text-gray-400 mx-auto" />
-                        <div className="text-xs text-gray-500 font-medium">
-                          {file.name.split('.').pop()?.toUpperCase()}
+                <div className={`
+                  relative bg-white rounded-lg border overflow-hidden hover:shadow-md transition-all duration-200
+                  ${isSelected ? 'border-primary border-2 shadow-xl ring-4 ring-primary/30' : 'border-gray-200'}
+                `}>
+                  <div className="aspect-[4/3] bg-gray-50 relative">
+                    {file.type.startsWith('image/') ? (
+                      <img
+                        src={file.url}
+                        alt={file.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                        <div className="text-center space-y-2">
+                          <FileImage className="h-12 w-12 text-gray-400 mx-auto" />
+                          <div className="text-sm text-gray-600 font-medium">
+                            {file.name.split('.').pop()?.toUpperCase()}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
-                
-                <CardContent className="p-4 relative">
-                  <div className="space-y-2">
-                    <h3 className="font-medium text-gray-900 truncate text-sm">
-                      {file.name}
-                    </h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500 font-mono">
-                        {formatFileSize(file.size)}
-                      </span>
-                      <span className="text-xs text-gray-500">
-                        {file.type.startsWith('image/') ? 'IMAGE' : file.name.split('.').pop()?.toUpperCase()}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  {/* アクションボタン（ホバー時のみ表示、absolute配置） */}
-                  <div className="absolute inset-x-4 bottom-0 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={(e) => handleViewClick(file, e)}
-                      className="flex-1 bg-white/95 backdrop-blur-sm"
-                    >
-                      <ZoomIn className="h-4 w-4 mr-1" />
-                      拡大
-                    </Button>
+                    )}
                     
-                    <Button
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (viewMode === "uploaded") {
-                          onRemoveFile?.(file.id);
-                        } else {
-                          onRestoreFile?.(file.id);
-                        }
-                      }}
-                      className="flex-1 backdrop-blur-sm"
-                    >
-                      {viewMode === "uploaded" ? (
-                        <>
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          削除
-                        </>
-                      ) : (
-                        <>
-                          <RotateCcw className="h-4 w-4 mr-1" />
-                          復元
-                        </>
-                      )}
-                    </Button>
                   </div>
-                </CardContent>
-              </Card>
+
+
+                  {/* ファイル名とボタン群 */}
+                  <div className="p-3 space-y-2">
+                    <h4 className="text-sm font-medium text-gray-900 truncate">
+                      {file.name}
+                    </h4>
+                    
+                    {/* ボタン群 */}
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={(e) => handleViewClick(file, e)}
+                        className="flex-1 text-xs"
+                      >
+                        <ZoomIn className="h-3 w-3 mr-1" />
+                        拡大
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (viewMode === "uploaded") {
+                            onRemoveFile?.(file.id);
+                          } else {
+                            onRestoreFile?.(file.id);
+                          }
+                        }}
+                        variant="outline"
+                        size="sm"
+                      >
+                        {viewMode === "uploaded" ? (
+                          <>
+                            <Trash2 className="h-3 w-3" />
+                          </>
+                        ) : (
+                          <>
+                            <RotateCcw className="h-3 w-3 mr-1" />
+                            復元
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>

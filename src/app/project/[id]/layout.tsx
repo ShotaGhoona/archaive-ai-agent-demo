@@ -1,5 +1,5 @@
 'use client';
-import { DetailTabNavigation } from "@/shared/basic-layout/ui/DetailTabNavigation";
+import { ProjectTabNavigation } from "@/shared/basic-layout/ui/ProjectTabNavigation";
 
 interface BlueprintDetailLayoutProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ export default function BlueprintDetailLayout({
       {/* ページヘッダー */}
       <div className="flex-shrink-0 p-4 border-b bg-white">
         <div className="flex items-center justify-between">
-          <DetailTabNavigation />
+          <ProjectTabNavigation />
         </div>
       </div>
 

@@ -1,9 +1,12 @@
 import { FilterToggleButton } from "@/features/advanced-filter";
 import { CsvExportDialog } from "@/features/csv-export";
 import { PROJECT_CSV_COLUMNS } from "../lib/projectCsvConfig";
-import { NewProjectDialog } from "./NewProjectDialog";
-import { Project } from "../lib/projectColumns";
 import { SearchInput } from "@/shared/GenericSearch";
+import { Button } from "@/shared/shadcnui";
+import { Plus } from "lucide-react";
+import { Project } from "../lib/projectColumns";
+import Link from "next/link";
+import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -11,7 +14,6 @@ interface ProjectPageHeaderProps {
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
   projects?: unknown[];
-  onProjectCreate?: (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => void;
 }
 
 export function ProjectPageHeader({
@@ -20,11 +22,7 @@ export function ProjectPageHeader({
   onToggleFilterSidebar,
   isFilterSidebarOpen,
   projects = [],
-  onProjectCreate,
 }: ProjectPageHeaderProps) {
-  const handleProjectCreate = (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => {
-    onProjectCreate?.(project);
-  };
 
   return (
     <div className="flex items-center justify-between">
@@ -46,10 +44,13 @@ export function ProjectPageHeader({
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
         />
-        {/* 新規案件登録ボタン */}
-        <NewProjectDialog
-          onSubmit={handleProjectCreate}
-        />
+        <Link href="/blueprint/upload">
+          <Button size="lg">
+            <Plus className="h-4 w-4 mr-2" />
+            一括案件登録
+          </Button>
+        </Link>
+        <BlueprintUploadDialog />
       </div>
     </div>
   );

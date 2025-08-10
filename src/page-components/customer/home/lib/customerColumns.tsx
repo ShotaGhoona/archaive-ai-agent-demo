@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal, Phone } from 'lucide-react';
+import { Eye, Edit, Trash2, MoreHorizontal, Phone, ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Customer {
@@ -34,6 +34,22 @@ export interface CustomerColumnCallbacks {
 
 export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): DataTableColumn<Customer>[] => [
   {
+    key: 'detail',
+    label: '詳細',
+    width: 50,
+    minWidth: 0,
+    sortable: false,
+    editable: false,
+    locked: true,
+    render: (customer: Customer) => (
+      <Link href={`/customer/${customer.customerCode}`}>
+        <Button variant="outline" size="sm" className="h-8">
+          <ExternalLink className="h-3 w-3" />
+        </Button>
+      </Link>
+    ),
+  },
+  {
     key: 'customerCode',
     label: '取引先コード',
     width: 140,
@@ -41,14 +57,10 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     editable: false,
     locked: true,
     sortType: 'string',
-    render: (customer: Customer, value: unknown) => (
-      <Link
-        href={`/customer/${customer.customerCode}`}
-        className="hover:underline font-mono text-sm font-medium text-primary"
-        onClick={(e) => e.stopPropagation()}
-      >
+    render: (value: unknown) => (
+      <span className="font-mono text-sm font-medium">
         {String(value)}
-      </Link>
+      </span>
     ),
   },
   {

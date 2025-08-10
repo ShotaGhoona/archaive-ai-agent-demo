@@ -53,7 +53,7 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (blueprint: Blueprint, value: unknown) => (
+    render: (blueprint: Blueprint,value: unknown) => (
       <span className="font-mono text-sm font-medium">
         {String(value)}
       </span>
