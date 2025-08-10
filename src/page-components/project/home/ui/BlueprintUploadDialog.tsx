@@ -7,8 +7,6 @@ import {
   PopoverTrigger,
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
   Badge,
 } from "@/shared/shadcnui";
 import { Plus, Loader2, Upload } from "lucide-react";

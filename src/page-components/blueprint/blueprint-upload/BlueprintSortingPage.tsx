@@ -3,24 +3,21 @@ import { UploadGalleryView } from './ui/UploadGalleryView';
 import { ProjectBoxList } from './ui/ProjectBoxList';
 import { useBlueprintSorting } from './hooks/useBlueprintSorting';
 import { useDragAndDrop } from './hooks/useDragAndDrop';
-import { ViewMode } from './model/type';
+import { ViewMode, FileUploadData } from './model/type';
 
 interface BlueprintSortingPageProps {
   // 基本的なプロパティ（既存のページから引き継ぎ）
   viewMode: ViewMode;
-  onViewModeChange: (mode: ViewMode) => void;
   // その他必要なプロパティ
 }
 
 export function BlueprintSortingPage({
   viewMode,
-  onViewModeChange,
 }: BlueprintSortingPageProps) {
   // 状態管理フック
   const {
     state,
     getUnassignedFiles,
-    getProjectFiles,
     handleDropToNewProject,
     handleDropToProject,
     updateFiles,
@@ -28,16 +25,12 @@ export function BlueprintSortingPage({
     updateSelectedFiles,
     updateSelectedStacks,
     updateTrashedFiles,
-    updateProjectName,
-    deleteProject,
   } = useBlueprintSorting();
 
   // ドラッグ&ドロップ管理フック
   const {
-    draggedItem,
     dragOverTarget,
     handleDragStart,
-    handleDragEnd,
     handleDragOver,
     handleDragLeave,
     handleDrop,
@@ -103,7 +96,7 @@ export function BlueprintSortingPage({
     }
   };
 
-  const handleAddFiles = (files: any[]) => {
+  const handleAddFiles = (files: FileUploadData[]) => {
     // ファイル追加処理の実装
     console.log('ファイル追加:', files);
   };

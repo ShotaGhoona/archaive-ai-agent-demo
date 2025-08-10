@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { Card, CardContent, Button } from "@/shared/shadcnui";
+import { Button } from "@/shared/shadcnui";
 import { 
   FileImage, 
   ZoomIn, 
   RotateCcw, 
-  Trash2,
-  Check,
-  Plus
+  Trash2
 } from "lucide-react";
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 import { AddFileCard } from "./component/AddFileCard";
