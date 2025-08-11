@@ -3,40 +3,40 @@
     "id": "PM001",
     "processName": "材料切断",
     "processCategory": "加工",
-    "customFormula": "length * width * 50 + manHour * 2000",
-    "remarks": "標準的な切断工程。材料費込み",
+    "customFormula": "length * width * 50",
+    "remarks": "標準的な切断工程。面積ベース",
     "updatedAt": "2024-08-11T10:30:00.000Z"
   },
   {
     "id": "PM002", 
     "processName": "溶接作業",
     "processCategory": "溶接",
-    "customFormula": "length * 80 + manHour * 2500",
-    "remarks": "TIG溶接対応",
+    "customFormula": "length * 80",
+    "remarks": "TIG溶接対応。長さベース",
     "updatedAt": "2024-08-11T09:15:00.000Z"
   },
   {
     "id": "PM003",
     "processName": "表面処理",
     "processCategory": "塗装", 
-    "customFormula": "area * 120 + manHour * 1800",
-    "remarks": "粉体塗装",
+    "customFormula": "length * width * 120",
+    "remarks": "粉体塗装。表面積ベース",
     "updatedAt": "2024-08-10T16:45:00.000Z"
   },
   {
     "id": "PM004",
     "processName": "機械加工",
     "processCategory": "加工",
-    "customFormula": "volume * 200 + manHour * 3000",
-    "remarks": "NC旋盤使用",
+    "customFormula": "length * width * height * 200",
+    "remarks": "NC旋盤使用。体積ベース",
     "updatedAt": "2024-08-10T14:20:00.000Z"
   },
   {
     "id": "PM005",
-    "processName": "組立作業",
+    "processName": "重量物組立",
     "processCategory": "組立", 
-    "customFormula": "partCount * 500 + manHour * 2200",
-    "remarks": "部品点数に応じた組立",
+    "customFormula": "weight * 500",
+    "remarks": "重量に応じた組立作業",
     "updatedAt": "2024-08-09T11:30:00.000Z"
   }
 ]

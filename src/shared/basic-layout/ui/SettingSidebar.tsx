@@ -22,7 +22,7 @@ export default function SettingSidebar() {
   };
 
   return (
-    <aside className="w-72 bg-gray-50 dark:bg-gray-900 h-[calc(100vh-45px)] flex flex-col">
+    <aside className="w-72 bg-gray-50 dark:bg-gray-900 h-[calc(100vh-45px)] flex flex-col border-r border-gray-200">
       {/* ヘッダー */}
       <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
         <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -68,18 +68,18 @@ export default function SettingSidebar() {
                       className={cn(
                         "flex items-center gap-3 px-12 py-2 text-sm transition-colors relative",
                         "hover:bg-gray-100 dark:hover:bg-gray-800",
-                        isActive && "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400",
+                        isActive && "bg-primary/10 text-primary",
                         !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
                       )}
                     >
                       {/* アクティブインジケーター */}
                       {isActive && (
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-600 dark:bg-blue-400" />
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
                       )}
                       
                       <div className={cn(
                         "flex-shrink-0",
-                        isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-400 dark:text-gray-500"
+                        isActive ? "text-primary" : "text-gray-400 dark:text-gray-500"
                       )}>
                         {item.icon}
                       </div>

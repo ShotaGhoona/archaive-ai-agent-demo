@@ -21,24 +21,58 @@ export function TableHeaderCell<T>({
   getHeaderClassName
 }: TableHeaderCellProps<T>) {
   const renderSortIcon = () => {
+    if (!column.sortable) return null;
+    
     if (sortIcon.type === 'none') {
-      return <ChevronsUpDown className="h-4 w-4 text-gray-400" />;
+      return (
+        <div 
+          className="cursor-pointer hover:text-gray-600 transition-colors" 
+          onClick={(e) => {
+            e.stopPropagation();
+            onSort(column.key as string);
+          }}
+          title="ソート"
+        >
+          <ChevronsUpDown className="h-4 w-4 text-gray-400" />
+        </div>
+      );
     }
     
     return sortIcon.type === 'asc' 
-      ? <ChevronUp className="h-4 w-4 text-blue-600" />
-      : <ChevronDown className="h-4 w-4 text-blue-600" />;
+      ? (
+          <div 
+            className="cursor-pointer hover:text-primary transition-colors" 
+            onClick={(e) => {
+              e.stopPropagation();
+              onSort(column.key as string);
+            }}
+            title="降順でソート"
+          >
+            <ChevronUp className="h-4 w-4 text-primary" />
+          </div>
+        )
+      : (
+          <div 
+            className="cursor-pointer hover:text-primary transition-colors" 
+            onClick={(e) => {
+              e.stopPropagation();
+              onSort(column.key as string);
+            }}
+            title="昇順でソート"
+          >
+            <ChevronDown className="h-4 w-4 text-primary" />
+          </div>
+        );
   };
 
   return (
     <TableHead 
       className={`${getHeaderClassName(column.key as string)} relative`}
       style={{ width: getColumnWidth(column.key as string), minWidth: getColumnWidth(column.key as string) }}
-      onClick={column.sortable ? () => onSort(column.key as string) : undefined}
     >
       <div className="flex items-center gap-2">
         <span>{column.label}</span>
-        {column.sortable && renderSortIcon()}
+        {renderSortIcon()}
       </div>
       {column.key !== 'actions' && (
         <div 
