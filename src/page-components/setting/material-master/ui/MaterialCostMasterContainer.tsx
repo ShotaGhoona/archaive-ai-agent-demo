@@ -8,7 +8,7 @@ import { BasicDataTable } from "@/shared/basic-data-table/ui/BasicDataTable";
 import { MaterialCostMasterDialog } from "./MaterialCostMasterDialog";
 import { MaterialCostMaster, mockData, columns } from "../data/mockData";
 
-export default function MaterialCostMasterContainer() {
+export default function MaterialMasterContainer() {
   const [data, setData] = useState<MaterialCostMaster[]>(mockData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);

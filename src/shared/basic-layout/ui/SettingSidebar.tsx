@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { HelpCircle, ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
-import { settingSections, appInfo } from "../constants/settings";
+import { settingSections, appInfo } from "../constants/settings-sidebar";
 
 export default function SettingSidebar() {
   const pathname = usePathname();
