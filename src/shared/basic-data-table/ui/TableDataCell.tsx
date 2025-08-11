@@ -73,7 +73,7 @@ export function TableDataCell<T>({
               if (!open) cellContent.onSave!();
             }}
           >
-            <SelectTrigger className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-blue-500">
+            <SelectTrigger className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-primary">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -94,7 +94,7 @@ export function TableDataCell<T>({
               if (e.key === 'Escape') cellContent.onCancel!();
             }}
             onBlur={cellContent.onSave!}
-            className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-blue-500"
+            className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-primary"
             type={cellContent.inputType}
           />
         )

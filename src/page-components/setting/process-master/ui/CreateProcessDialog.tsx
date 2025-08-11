@@ -294,7 +294,7 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
       <DialogTrigger asChild>
         <Button className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
-          工程追加
+          新しく工程を追加
         </Button>
       </DialogTrigger>
       <DialogContent className="min-w-7xl max-h-[90vh] overflow-y-auto">
@@ -436,7 +436,7 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
                 {/* 左側: 計算式作成エリア */}
                 <div className="space-y-4">
                   <Card>
-                    <CardHeader className="pb-3">
+                    <CardHeader>
                       <CardTitle className="text-sm">計算式を作成</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
