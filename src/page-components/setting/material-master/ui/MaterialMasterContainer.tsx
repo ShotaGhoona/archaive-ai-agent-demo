@@ -5,7 +5,7 @@ import { Button } from "@/shared/shadcnui/button";
 import { Input } from "@/shared/shadcnui/input";
 import { Search, Plus, Download } from "lucide-react";
 import { BasicDataTable } from "@/shared/basic-data-table/ui/BasicDataTable";
-import { MaterialCostMasterDialog } from "./MaterialCostMasterDialog";
+import { MaterialMasterDialog } from "./MaterialMasterDialog";
 import { MaterialCostMaster, mockData, columns } from "../data/mockData";
 
 export default function MaterialMasterContainer() {
@@ -110,7 +110,7 @@ export default function MaterialMasterContainer() {
       </div>
 
       {/* 新規追加ダイアログ */}
-      <MaterialCostMasterDialog
+      <MaterialMasterDialog
         open={isDialogOpen}
         onOpenChange={setIsDialogOpen}
         onSubmit={handleAddNew}

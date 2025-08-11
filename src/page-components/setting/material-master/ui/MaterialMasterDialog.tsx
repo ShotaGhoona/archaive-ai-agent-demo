@@ -42,7 +42,7 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-interface MaterialCostMasterDialogProps {
+interface MaterialMasterDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: FormData) => void;
@@ -76,11 +76,11 @@ const commonUnits = [
   "その他"
 ];
 
-export function MaterialCostMasterDialog({
+export function MaterialMasterDialog({
   open,
   onOpenChange,
   onSubmit,
-}: MaterialCostMasterDialogProps) {
+}: MaterialMasterDialogProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormData>({
