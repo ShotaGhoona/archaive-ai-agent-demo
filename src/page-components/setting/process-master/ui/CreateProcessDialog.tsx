@@ -58,6 +58,27 @@ interface FormulaElement {
   unit?: string;
 }
 
+// 要素の型定義
+type ElementType = 'variable' | 'number' | 'operator' | 'openParen' | 'closeParen';
+type FormulaState = 'variable' | 'number' | 'operator' | 'openParen' | 'closeParen' | 'empty';
+
+// 計算式の状態遷移ルール
+const FORMULA_STATE_MACHINE: Record<FormulaState, { canAdd: ElementType[] }> = {
+  // 変数・数値の後は演算子と閉じ括弧が可能
+  'variable': { canAdd: ['operator', 'closeParen'] },
+  'number': { canAdd: ['operator', 'closeParen'] },
+  
+  // 閉じ括弧の後は演算子と閉じ括弧が可能（ネストした括弧対応）
+  'closeParen': { canAdd: ['operator', 'closeParen'] },
+  
+  // 演算子・開き括弧の後は変数・数値・開き括弧のみ  
+  'operator': { canAdd: ['variable', 'number', 'openParen'] },
+  'openParen': { canAdd: ['variable', 'number', 'openParen'] },
+  
+  // 初期状態では変数・数値・開き括弧のみ
+  'empty': { canAdd: ['variable', 'number', 'openParen'] }
+};
+
 // 変数定義（シンプルに4つのみ）
 const VARIABLES: FormulaElement[] = [
   { id: 'length', type: 'variable', value: 'length', label: '長さ', unit: 'mm' },
@@ -75,6 +96,13 @@ const OPERATORS: FormulaElement[] = [
   { id: 'openParen', type: 'operator', value: '(', label: '(' },
   { id: 'closeParen', type: 'operator', value: ')', label: ')' },
 ];
+
+// 演算子タイプのマッピング
+const getOperatorType = (operatorId: string): ElementType => {
+  if (operatorId === 'openParen') return 'openParen';
+  if (operatorId === 'closeParen') return 'closeParen';
+  return 'operator';
+};
 
 // 計算式テンプレート（縦並び用）
 const FORMULA_TEMPLATES = [
@@ -116,6 +144,31 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
   const [formulaElements, setFormulaElements] = useState<FormulaElement[]>([]);
   const [showTemplates, setShowTemplates] = useState(false);
 
+  // 現在の計算式の状態を取得
+  const getCurrentState = (): FormulaState => {
+    if (formulaElements.length === 0) return 'empty';
+    
+    const lastElement = formulaElements[formulaElements.length - 1];
+    
+    if (lastElement.type === 'variable' || lastElement.type === 'number') {
+      return lastElement.type;
+    }
+    
+    if (lastElement.type === 'operator') {
+      return getOperatorType(lastElement.id);
+    }
+    
+    return 'empty';
+  };
+
+  // 要素が追加可能かチェック
+  const canAddElement = (elementType: ElementType): boolean => {
+    const currentState = getCurrentState();
+    const allowedTypes = FORMULA_STATE_MACHINE[currentState].canAdd;
+    
+    return allowedTypes.includes(elementType);
+  };
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -129,6 +182,23 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
 
   // 要素を追加
   const addElement = (element: FormulaElement) => {
+    let elementType: ElementType;
+    
+    if (element.type === 'variable') {
+      elementType = 'variable';
+    } else if (element.type === 'number') {
+      elementType = 'number';
+    } else if (element.type === 'operator') {
+      elementType = getOperatorType(element.id);
+    } else {
+      return; // 無効なタイプ
+    }
+    
+    // 状態チェック：追加不可能な場合は何もしない
+    if (!canAddElement(elementType)) {
+      return;
+    }
+    
     const newElement = { ...element, id: `${element.id}_${Date.now()}` };
     setFormulaElements(prev => [...prev, newElement]);
     updateFormula([...formulaElements, newElement]);
@@ -372,23 +442,74 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
                     <CardContent className="space-y-4">
                       {/* 変数選択 */}
                       <div>
-                        <h4 className="text-sm font-medium mb-2">変数を選択</h4>
-                        <div className="grid grid-cols-4 gap-2">
-                          {VARIABLES.map((variable) => (
-                            <Button
-                              key={variable.id}
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              className="h-auto p-3 text-left justify-start"
-                              onClick={() => addElement(variable)}
-                            >
-                              <div className="text-xs w-full">
-                                <div className="font-medium">{variable.label}</div>
-                                <div className="text-gray-500">({variable.unit})</div>
-                              </div>
-                            </Button>
-                          ))}
+                        <h4 className="text-sm font-medium mb-2">変数・数値を選択</h4>
+                        <div className="grid grid-cols-5 gap-2">
+                          {VARIABLES.map((variable) => {
+                            const isDisabled = !canAddElement('variable');
+                            return (
+                              <Button
+                                key={variable.id}
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className={`h-auto p-3 text-left justify-start ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                onClick={() => addElement(variable)}
+                                disabled={isDisabled}
+                              >
+                                <div className="text-xs w-full">
+                                  <div className="font-medium">{variable.label}</div>
+                                  <div className="text-gray-500">({variable.unit})</div>
+                                </div>
+                              </Button>
+                            );
+                          })}
+                          
+                          {/* カスタム数値入力ボタン */}
+                          <div className="relative">
+                            {(() => {
+                              const isDisabled = !canAddElement('number');
+                              return (
+                                <Input
+                                  type="number"
+                                  placeholder="数値"
+                                  className={`h-auto p-3 text-center text-xs border-2 border-dashed ${isDisabled ? 'opacity-50 cursor-not-allowed bg-gray-100' : ''}`}
+                                  disabled={isDisabled}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter' && !isDisabled) {
+                                      e.preventDefault();
+                                      const input = e.target as HTMLInputElement;
+                                      if (input.value) {
+                                        addElement({
+                                          id: `number_${Date.now()}`,
+                                          type: 'number',
+                                          value: input.value,
+                                          label: input.value
+                                        });
+                                        input.value = '';
+                                      }
+                                    }
+                                  }}
+                                  onBlur={(e) => {
+                                    if (!isDisabled) {
+                                      const input = e.target as HTMLInputElement;
+                                      if (input.value) {
+                                        addElement({
+                                          id: `number_${Date.now()}`,
+                                          type: 'number',
+                                          value: input.value,
+                                          label: input.value
+                                        });
+                                        input.value = '';
+                                      }
+                                    }
+                                  }}
+                                />
+                              );
+                            })()}
+                            <div className="absolute -bottom-5 left-0 right-0 text-xs text-gray-400 text-center">
+                              数値入力
+                            </div>
+                          </div>
                         </div>
                       </div>
 
@@ -396,53 +517,23 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
                       <div>
                         <h4 className="text-sm font-medium mb-2">演算子を選択</h4>
                         <div className="grid grid-cols-6 gap-2">
-                          {OPERATORS.map((operator) => (
-                            <Button
-                              key={operator.id}
-                              type="button"
-                              variant="outline"
-                              size="sm"
-                              onClick={() => addElement(operator)}
-                              className="h-12 text-lg"
-                            >
-                              {operator.label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* カスタム数値入力 */}
-                      <div>
-                        <h4 className="text-sm font-medium mb-2">カスタム数値</h4>
-                        <div className="flex gap-2">
-                          <Input
-                            type="number"
-                            placeholder="数値を入力してEnter"
-                            className="flex-1"
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                e.preventDefault();
-                                const input = e.target as HTMLInputElement;
-                                if (input.value) {
-                                  addElement({
-                                    id: `number_${Date.now()}`,
-                                    type: 'number',
-                                    value: input.value,
-                                    label: input.value
-                                  });
-                                  input.value = '';
-                                }
-                              }
-                            }}
-                          />
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={resetFormula}
-                          >
-                            <RotateCcw className="h-4 w-4" />
-                          </Button>
+                          {OPERATORS.map((operator) => {
+                            const operatorType = getOperatorType(operator.id);
+                            const isDisabled = !canAddElement(operatorType);
+                            return (
+                              <Button
+                                key={operator.id}
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => addElement(operator)}
+                                className={`h-12 text-lg ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                disabled={isDisabled}
+                              >
+                                {operator.label}
+                              </Button>
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -479,7 +570,9 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
                                 </div>
                                 
                                 <div className="font-mono text-lg min-h-[2rem] flex items-center">
-                                  {form.watch('customFormula') || (
+                                  {form.watch('customFormula') ? (
+                                    <span>({form.watch('customFormula')}) × charge</span>
+                                  ) : (
                                     <span className="text-gray-400 text-sm">式を作成してください</span>
                                   )}
                                 </div>
@@ -491,26 +584,20 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
                                   <h4 className="text-sm font-medium mb-2">計算例 <span className="text-xs text-gray-500">※ 長さ100mm, 幅50mm, 高さ20mm, 重量2kg</span></h4>
                                   <div className="p-4 bg-gray-50 rounded border">
                                     <div className="space-y-2">
-                                      <div className="flex justify-between items-center">
-                                        <span className="text-sm">材料費:</span>
-                                        <span className="font-medium">
-                                          {previewResult.toLocaleString()}円
+                                      <div className="flex justify-between items-center border-b pb-2">
+                                        <span className="text-sm">計算式</span>
+                                        <span className="font-mono text-sm">
+                                          {form.watch('customFormula').replace(/length/g, '100mm').replace(/width/g, '50mm').replace(/height/g, '20mm').replace(/weight/g, '2kg')} × {form.watch('hourlyCharge')}
                                         </span>
                                       </div>
-                                      <div className="flex justify-between items-center">
-                                        <span className="text-sm">チャージ:</span>
-                                        <span className="font-medium">
-                                          {form.watch('hourlyCharge')}円/時間
-                                        </span>
-                                      </div>
-                                      <div className="border-t pt-2 flex justify-between items-center">
-                                        <span className="text-sm font-medium">合計目安:</span>
+                                      <div className="flex justify-between items-end">
+                                        <span className="text-sm">加工費合計目安</span>
                                         <span className="text-lg font-bold">
-                                          {(previewResult + form.watch('hourlyCharge')).toLocaleString()}円/時間
+                                          {(previewResult * form.watch('hourlyCharge')).toLocaleString()}円
                                         </span>
-                                        </div>
                                       </div>
                                     </div>
+                                  </div>
                                 </div>
                               )}
                               
