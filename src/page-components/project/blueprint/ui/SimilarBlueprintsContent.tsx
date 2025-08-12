@@ -73,10 +73,7 @@ export function SimilarBlueprintsContent({
 
   if (similarBlueprints.length === 0) {
     return (
-      <div className="h-full bg-gray-50">
-        <div className="p-4 bg-white border-b">
-          <h3 className="text-lg font-semibold text-gray-900">類似図面</h3>
-        </div>
+      <div className="h-full flex flex-col items-center justify-center">
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center space-y-2">
             <div className="text-4xl text-gray-300">🔍</div>

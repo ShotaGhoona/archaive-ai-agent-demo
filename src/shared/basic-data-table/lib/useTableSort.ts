@@ -70,7 +70,7 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
 
   const getHeaderClassName = useCallback((field: string) => {
     const isSortable = field in sortableFields;
-    let baseClass = "font-medium text-gray-700 text-lg";
+    let baseClass = "font-medium text-gray-700";
     
     if (isSortable) {
       baseClass += " cursor-pointer hover:bg-gray-100 transition-colors select-none";

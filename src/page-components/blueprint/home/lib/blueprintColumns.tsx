@@ -38,8 +38,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: true,
     render: (blueprint: Blueprint) => (
       <Link href={`/project/${blueprint.internalNumber}/blueprint`}>
-        <Button variant="outline" size="sm" className="h-8">
+        <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
           <ExternalLink className="h-3 w-3" />
+          開く
         </Button>
       </Link>
     ),
@@ -87,9 +88,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     inputType: 'text',
     sortType: 'string',
     render: (blueprint: Blueprint, value: unknown) => (
-      <Badge variant="outline" className="font-mono text-xs">
+      <span className="font-mono text-sm font-medium">
         {String(value)}
-      </Badge>
+      </span>
     ),
   },
   {
@@ -102,9 +103,9 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     inputType: 'text',
     sortType: 'string',
     render: (blueprint: Blueprint, value: unknown) => (
-      <Badge variant="outline" className="font-mono text-xs">
+      <span className="font-mono text-sm font-medium">
         {String(value)}
-      </Badge>
+      </span>
     ),
   },
   {
@@ -176,38 +177,6 @@ export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): Da
     locked: false,
     inputType: 'text',
     sortType: 'string',
-  },
-  {
-    key: 'actions',
-    label: '操作',
-    width: 80,
-    minWidth: 80,
-    sortable: false,
-    editable: false,
-    locked: false,
-    render: (blueprint: Blueprint) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem onClick={() => callbacks?.onPreview?.(blueprint)}>
-            <ZoomIn className="h-4 w-4 mr-2" />
-            プレビュー
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Edit className="h-4 w-4 mr-2" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-red-600">
-            <Trash2 className="h-4 w-4 mr-2" />
-            削除
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
   },
 ];
 

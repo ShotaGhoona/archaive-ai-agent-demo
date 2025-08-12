@@ -3,6 +3,7 @@ import { useState } from "react";
 import projectsData from "../data/project.json";
 import { ProjectPageHeader } from "./ProjectPageHeader";
 import { ProjectTableView } from "./ProjectTableView";
+import { ProjectKanbanView } from "./ProjectKanbanView";
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { PROJECT_FILTER_CONFIG } from "../lib/projectFilterConfig";
 import { PROJECT_SEARCHBAR_CONFIG } from "../lib/projectSearchbarConfig";
@@ -11,6 +12,7 @@ import { useSearchbar } from "@/shared/GenericSearch";
 
 export default function ProjectContainer() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
   const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
@@ -51,19 +53,28 @@ export default function ProjectContainer() {
           <ProjectPageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
+            viewMode={viewMode}
+            setViewMode={setViewMode}
             onToggleFilterSidebar={toggleSidebar}
             isFilterSidebarOpen={isFilterSidebarOpen}
             projects={filteredProjects}
           />
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
-          <ProjectTableView 
-            projects={filteredProjects}
-            currentPage={currentPage}
-            totalItems={filteredProjects.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
-          />
+          {viewMode === "table" && (
+            <ProjectTableView 
+              projects={filteredProjects}
+              currentPage={currentPage}
+              totalItems={filteredProjects.length}
+              itemsPerPage={itemsPerPage}
+              onPageChange={setCurrentPage}
+            />
+          )}
+          {viewMode === "kanban" && (
+            <ProjectKanbanView 
+              projects={filteredProjects}
+            />
+          )}
         </div>
       </div>
     </div>

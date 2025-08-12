@@ -59,8 +59,9 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
     locked: true,
     render: (project: Project) => (
       <Link href={`/project/${project.projectId}/basic-information`}>
-        <Button variant="outline" size="sm" className="h-8">
+        <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
           <ExternalLink className="h-3 w-3" />
+          開く
         </Button>
       </Link>
     ),
@@ -224,40 +225,6 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
           minute: '2-digit',
         })}
       </span>
-    ),
-  },
-  {
-    key: 'actions',
-    label: '操作',
-    width: 80,
-    minWidth: 80,
-    sortable: false,
-    editable: false,
-    locked: false,
-    render: (project: Project) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <Link href={`/projects/${project.projectId}`}>
-            <DropdownMenuItem>
-              <Eye className="h-4 w-4 mr-2" />
-              詳細表示
-            </DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem>
-            <Edit className="h-4 w-4 mr-2" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-red-600">
-            <Trash2 className="h-4 w-4 mr-2" />
-            削除
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     ),
   },
 ];
