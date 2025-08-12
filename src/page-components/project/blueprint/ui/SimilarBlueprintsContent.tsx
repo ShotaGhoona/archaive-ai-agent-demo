@@ -130,12 +130,13 @@ export function SimilarBlueprintsContent({
                     </Button>
                   </div>
                 </div>
-                
-                <div className="absolute top-2 right-2">
+
+                {/* そこまで精度が出ないそうなので表示しない方向に決まりまいた 20250812 */}
+                {/* <div className="absolute top-2 right-2">
                   <div className="text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm bg-gray-400/90 text-white">
                     類似度 {blueprint.similarity}%
                   </div>
-                </div>
+                </div> */}
                 
                 <div className="p-3">
                   <h4 className="text-sm font-medium text-gray-900 truncate">
