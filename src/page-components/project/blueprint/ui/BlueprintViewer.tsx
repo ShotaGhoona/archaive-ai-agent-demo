@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 // import { useRouter } from "next/navigation";
-import { Button } from "@/shared/shadcnui";
+import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
 import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Bot } from "lucide-react";
 
 interface BlueprintFile {
@@ -55,11 +55,15 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
 
   // 回転機能
   const handleRotateClockwise = () => {
-    setRotation(prev => (prev + 90) % 360);
+    if (!isZoomLocked) {
+      setRotation(prev => (prev + 90) % 360);
+    }
   };
 
   const handleRotateCounterClockwise = () => {
-    setRotation(prev => (prev - 90 + 360) % 360);
+    if (!isZoomLocked) {
+      setRotation(prev => prev - 90);
+    }
   };
 
   // マウスホイールでズーム
@@ -203,84 +207,126 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
         </div>
       </div>
 
-      {/* ズームコントロール */}
+      {/* 操作コントロール */}
       <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 space-y-2">
         <div className="flex flex-col items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleZoomIn}
-            disabled={zoom >= 5 || isZoomLocked}
-            className="w-10 h-10 p-0"
-            title={isZoomLocked ? "ズームがロックされています" : "拡大"}
-          >
-            <ZoomIn className="h-4 w-4" />
-          </Button>
+          {/* ズーム・回転・フィットコントロール - ロック時は非表示 */}
+          {!isZoomLocked && (
+            <div className="flex flex-col items-center gap-2 animate-in slide-in-from-top-2 duration-300">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleZoomIn}
+                    disabled={zoom >= 5}
+                    className="w-10 h-10 p-0"
+                  >
+                    <ZoomIn className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  拡大
+                </TooltipContent>
+              </Tooltip>
+              
+              <div className="text-xs font-mono text-gray-600 min-w-12 text-center">
+                {Math.round(zoom * 100)}%
+              </div>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleZoomOut}
+                    disabled={zoom <= 0.1}
+                    className="w-10 h-10 p-0"
+                  >
+                    <ZoomOut className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  縮小
+                </TooltipContent>
+              </Tooltip>
+              
+              <div className="w-full h-px bg-gray-300" />
+                        
+              {/* 回転コントロール */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRotateCounterClockwise}
+                    className="w-10 h-10 p-0"
+                  >
+                    <RotateCcw className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  反時計回りに90°回転
+                </TooltipContent>
+              </Tooltip>
+              
+              <div className="text-xs font-mono text-gray-600 min-w-12 text-center">
+                {rotation}°
+              </div>
+              
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRotateClockwise}
+                    className="w-10 h-10 p-0"
+                  >
+                    <RotateCw className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  時計回りに90°回転
+                </TooltipContent>
+              </Tooltip>
+              
+              <div className="w-full h-px bg-gray-300" />
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleFitToScreen}
+                    className="w-10 h-10 p-0"
+                  >
+                    <Maximize2 className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="left">
+                  画面に合わせる
+                </TooltipContent>
+              </Tooltip>
+              
+              <div className="w-full h-px bg-gray-300" />
+            </div>
+          )}
           
-          <div className="text-xs font-mono text-gray-600 min-w-12 text-center">
-            {Math.round(zoom * 100)}%
-          </div>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleZoomOut}
-            disabled={zoom <= 0.1 || isZoomLocked}
-            className="w-10 h-10 p-0"
-            title={isZoomLocked ? "ズームがロックされています" : "縮小"}
-          >
-            <ZoomOut className="h-4 w-4" />
-          </Button>
-          
-          <div className="w-full h-px bg-gray-300" />
-                    
-          {/* 回転コントロール */}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRotateCounterClockwise}
-            className="w-10 h-10 p-0"
-            title="反時計回りに90°回転"
-          >
-            <RotateCcw className="h-4 w-4" />
-          </Button>
-          
-          <div className="text-xs font-mono text-gray-600 min-w-12 text-center">
-            {rotation}°
-          </div>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRotateClockwise}
-            className="w-10 h-10 p-0"
-            title="時計回りに90°回転"
-          >
-            <RotateCw className="h-4 w-4" />
-          </Button>
-          
-          <div className="w-full h-px bg-gray-300" />
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleFitToScreen}
-            disabled={isZoomLocked}
-            className="w-10 h-10 p-0"
-            title={isZoomLocked ? "ズームがロックされています" : "画面に合わせる"}
-          >
-            <Maximize2 className="h-4 w-4" />
-          </Button>
-          
-          
-          <Button
-            variant={isZoomLocked ? "default" : "outline"}
-            size="sm"
-            onClick={toggleZoomLock}
-            className="w-10 h-10 p-0"
-            title={isZoomLocked ? "ズームロックを解除" : "ズームをロック"}
-          >
-            {isZoomLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-          </Button>          
+          {/* ロックボタンは常に表示 */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={isZoomLocked ? "default" : "outline"}
+                size="sm"
+                onClick={toggleZoomLock}
+                className="w-10 h-10 p-0"
+              >
+                {isZoomLocked ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="left">
+              {isZoomLocked ? "ズームロックを解除" : "ズームをロック"}
+            </TooltipContent>
+          </Tooltip>          
         </div>
       </div>
 
