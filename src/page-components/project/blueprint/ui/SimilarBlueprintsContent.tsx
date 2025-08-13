@@ -73,10 +73,7 @@ export function SimilarBlueprintsContent({
 
   if (similarBlueprints.length === 0) {
     return (
-      <div className="h-full bg-gray-50">
-        <div className="p-4 bg-white border-b">
-          <h3 className="text-lg font-semibold text-gray-900">類似図面</h3>
-        </div>
+      <div className="h-full flex flex-col items-center justify-center">
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center space-y-2">
             <div className="text-4xl text-gray-300">🔍</div>
@@ -130,12 +127,13 @@ export function SimilarBlueprintsContent({
                     </Button>
                   </div>
                 </div>
-                
-                <div className="absolute top-2 right-2">
+
+                {/* そこまで精度が出ないそうなので表示しない方向に決まりまいた 20250812 */}
+                {/* <div className="absolute top-2 right-2">
                   <div className="text-xs font-medium px-2 py-1 rounded-full backdrop-blur-sm bg-gray-400/90 text-white">
                     類似度 {blueprint.similarity}%
                   </div>
-                </div>
+                </div> */}
                 
                 <div className="p-3">
                   <h4 className="text-sm font-medium text-gray-900 truncate">

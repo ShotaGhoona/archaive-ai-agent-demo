@@ -37,13 +37,11 @@ export function TableView({
     }
   });
 
-  const handlePreview = (blueprint: Blueprint) => {
-    setPreviewFile(blueprint);
-  };
+  // const handlePreview = (blueprint: Blueprint) => {
+  //   setPreviewFile(blueprint);
+  // };
 
-  const columns = createBlueprintColumns({
-    onPreview: handlePreview
-  });
+  const columns = createBlueprintColumns();
 
   // ページネーション設定
   const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {

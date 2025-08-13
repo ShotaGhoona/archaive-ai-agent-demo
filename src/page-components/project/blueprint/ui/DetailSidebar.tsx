@@ -1,5 +1,18 @@
 import { useState, useRef } from "react";
-import { Button, Card, CardContent } from "@/shared/shadcnui";
+import { 
+  Button, 
+  Card, 
+  CardContent,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/shared/shadcnui";
 import { Plus, Loader2, X } from "lucide-react";
 
 interface BlueprintFile {
@@ -133,10 +146,15 @@ export function DetailSidebar({
               </div>
             </div>
           ) : (
-            <div className="flex items-center justify-center gap-2">
-              <Plus className="h-6 w-6 text-gray-400" />
-              <div className="text-gray-600 text-sm">
-                図面を追加
+            <div className="flex flex-col items-center justify-center gap-2">
+              <div className="flex items-center gap-2">
+                <Plus className="h-6 w-6 text-gray-400" />
+                <div className="text-gray-600 text-sm mr-2">
+                  図面を追加
+                </div>
+              </div>
+              <div className="text-xs text-gray-400">
+                クリックorドラッグ&ドロップ
               </div>
             </div>
           )}
@@ -154,17 +172,37 @@ export function DetailSidebar({
             onClick={() => handleFileClick(file.id)}
           >
             {/* 削除ボタン */}
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleRemoveFile(file.id);
-              }}
-              className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <X className="h-3 w-3" />
-            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <X className="h-3 w-3" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>ファイルを削除しますか？</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    「{file.name}」を削除します。この操作は取り消せません。
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleRemoveFile(file.id)}
+                    className="text-white bg-red-500 hover:bg-red-600"
+                  >
+                    削除
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
 
             <CardContent className="p-2">
               <div className="space-y-2">

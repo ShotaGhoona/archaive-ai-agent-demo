@@ -56,7 +56,7 @@ export function FilterControl<T>({
       case 'select':
         return (
           <Select value={String(value || 'all')} onValueChange={handleChange}>
-            <SelectTrigger className="mt-2">
+            <SelectTrigger className="mt-2 w-full">
               <SelectValue placeholder={config.placeholder} />
             </SelectTrigger>
             <SelectContent>
