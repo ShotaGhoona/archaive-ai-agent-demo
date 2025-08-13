@@ -32,7 +32,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     editable: false,
     locked: true,
     sortType: 'string',
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="font-mono text-sm font-medium">
         {String(value)}
       </span>
@@ -47,7 +47,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="font-medium">
         {String(value)}
       </span>
@@ -63,7 +63,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     inputType: 'select',
     sortType: 'string',
     selectOptions: ['加工', '組立', '検査', '塗装', '溶接', 'その他'],
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <Badge className={`text-xs ${getCategoryColor(String(value))}`}>
         {String(value)}
       </Badge>
@@ -78,7 +78,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <div className="flex items-center space-x-2">
         <Calculator className="h-4 w-4 text-gray-500" />
         <span className="font-mono text-sm bg-gray-50 px-2 py-1 rounded border">
@@ -96,7 +96,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="text-sm text-gray-600 truncate">
         {String(value) || '-'}
       </span>
@@ -110,7 +110,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     editable: false,
     locked: true,
     sortType: 'date',
-    render: (processMaster: ProcessMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="text-xs text-gray-600">
         {new Date(String(value)).toLocaleString('ja-JP', {
           year: 'numeric',
@@ -130,7 +130,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     sortable: false,
     editable: false,
     locked: false,
-    render: (processMaster: ProcessMaster) => (
+    render: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm">

@@ -33,7 +33,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     editable: false,
     locked: true,
     sortType: 'string',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="font-mono text-sm font-medium">
         {String(value)}
       </span>
@@ -48,7 +48,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="font-medium">
         {String(value)}
       </span>
@@ -64,7 +64,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     inputType: 'select',
     sortType: 'string',
     selectOptions: ['鉄鋼', 'アルミニウム', 'ステンレス', '樹脂', 'その他'],
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <Badge className={`text-xs ${getCategoryColor(String(value))}`}>
         {String(value)}
       </Badge>
@@ -79,7 +79,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <div className="flex items-center space-x-2">
         <Calculator className="h-4 w-4 text-gray-500" />
         <span className="font-mono text-sm bg-gray-50 px-2 py-1 rounded border">
@@ -97,7 +97,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="text-sm">
         {String(value)}
       </span>
@@ -112,7 +112,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     locked: false,
     inputType: 'text',
     sortType: 'string',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="text-sm text-gray-600 truncate">
         {String(value) || '-'}
       </span>
@@ -126,7 +126,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     editable: false,
     locked: true,
     sortType: 'date',
-    render: (materialMaster: MaterialMaster, value: unknown) => (
+    render: (_, value: unknown) => (
       <span className="text-xs text-gray-600">
         {new Date(String(value)).toLocaleString('ja-JP', {
           year: 'numeric',
@@ -146,7 +146,7 @@ export const MATERIAL_MASTER_COLUMNS: DataTableColumn<MaterialMaster>[] = [
     sortable: false,
     editable: false,
     locked: false,
-    render: (materialMaster: MaterialMaster) => (
+    render: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" size="sm">

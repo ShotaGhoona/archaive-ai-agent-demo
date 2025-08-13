@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Edit, Trash2, MoreHorizontal, ZoomIn, ExternalLink } from 'lucide-react';
+import { Button } from '@/shared/shadcnui';
+import { ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Blueprint {
@@ -27,7 +27,7 @@ export interface BlueprintColumnCallbacks {
   onPreview?: (blueprint: Blueprint) => void;
 }
 
-export const createBlueprintColumns = (callbacks?: BlueprintColumnCallbacks): DataTableColumn<Blueprint>[] => [
+export const createBlueprintColumns = (): DataTableColumn<Blueprint>[] => [
   {
     key: 'detail',
     label: '詳細',

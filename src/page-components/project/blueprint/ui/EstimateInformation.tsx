@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
-import { Save, Plus, X, Trash2 } from "lucide-react";
+import { Save, Plus, Trash2 } from "lucide-react";
 import { BlueprintFile, EstimateInformation as EstimateInfo } from "../data/types";
 import materialMasterData from "@/page-components/setting/material-master/data/materialMaster.json";
 import processMasterData from "@/page-components/setting/process-master/data/processMaster.json";

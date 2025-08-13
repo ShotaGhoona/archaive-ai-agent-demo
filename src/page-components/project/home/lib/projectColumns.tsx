@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal, ExternalLink } from 'lucide-react';
+import { Badge, Button } from '@/shared/shadcnui';
+import { ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Project {

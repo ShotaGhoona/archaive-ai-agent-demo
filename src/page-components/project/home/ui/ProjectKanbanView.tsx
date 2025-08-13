@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { Card, CardContent, CardHeader, Badge } from "@/shared/shadcnui";
-import { Calendar, User, Clock, FileText, Truck } from "lucide-react";
+import { Card, CardContent, Badge } from "@/shared/shadcnui";
+import { User, Clock } from "lucide-react";
 import { Project } from "../lib/projectColumns";
 import { useRouter } from "next/navigation";
 

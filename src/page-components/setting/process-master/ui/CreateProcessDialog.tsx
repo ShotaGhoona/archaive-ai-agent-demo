@@ -7,8 +7,6 @@ import * as z from "zod";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
   DialogFooter,
 } from "@/shared/shadcnui/dialog";
@@ -30,9 +28,8 @@ import {
 import { Input } from "@/shared/shadcnui/input";
 import { Button } from "@/shared/shadcnui/button";
 import { Textarea } from "@/shared/shadcnui/textarea";
-import { Badge } from "@/shared/shadcnui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/shadcnui/card";
-import { Plus, Calculator, Trash2, RotateCcw, Eye, Lightbulb } from "lucide-react";
+import { Plus, Trash2, RotateCcw, Eye, Lightbulb } from "lucide-react";
 import { ProcessMaster } from "../lib/processMasterColumns";
 
 const formSchema = z.object({
@@ -204,12 +201,12 @@ export function CreateProcessDialog({ onSubmit }: CreateProcessDialogProps) {
     updateFormula([...formulaElements, newElement]);
   };
 
-  // 要素を削除
-  const removeElement = (index: number) => {
-    const newElements = formulaElements.filter((_, i) => i !== index);
-    setFormulaElements(newElements);
-    updateFormula(newElements);
-  };
+  // 要素を削除 (現在未使用)
+  // const removeElement = (index: number) => {
+  //   const newElements = formulaElements.filter((_, i) => i !== index);
+  //   setFormulaElements(newElements);
+  //   updateFormula(newElements);
+  // };
 
   // 計算式を更新
   const updateFormula = (elements: FormulaElement[]) => {

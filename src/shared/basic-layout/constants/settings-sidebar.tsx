@@ -11,7 +11,6 @@ import {
   Monitor,
   Settings,
   Package,
-  Wrench,
   GitBranch,
   Database,
   HardDrive
