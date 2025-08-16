@@ -1,24 +1,19 @@
 import { 
   User, 
   Bell, 
-  Palette, 
-  Key,
+  Palette,
   Building2,
   Users,
   CreditCard,
-  Globe,
   Zap,
   Mail,
   Lock,
   Monitor,
-  Download,
-  Webhook,
   Settings,
-  Bot,
   Package,
-  Wrench,
   GitBranch,
-  DollarSign
+  Database,
+  HardDrive
 } from "lucide-react";
 
 export interface SettingItem {
@@ -37,9 +32,9 @@ export interface SettingSection {
 
 export const settingSections: SettingSection[] = [
   {
-    id: "personal",
-    title: "個人設定",
-    icon: <User className="w-5 h-5" />,
+    id: "basic",
+    title: "基本設定",
+    icon: <Settings className="w-5 h-5" />,
     items: [
       {
         id: "profile",
@@ -64,16 +59,9 @@ export const settingSections: SettingSection[] = [
         label: "メール設定",
         icon: <Mail className="w-4 h-4" />,
         href: "/setting/email"
-      }
-    ]
-  },
-  {
-    id: "organization",
-    title: "組織管理",
-    icon: <Building2 className="w-5 h-5" />,
-    items: [
+      },
       {
-        id: "org-settings",
+        id: "organization",
         label: "組織情報",
         icon: <Building2 className="w-4 h-4" />,
         href: "/setting/organization"
@@ -89,19 +77,6 @@ export const settingSections: SettingSection[] = [
         label: "請求・支払い",
         icon: <CreditCard className="w-4 h-4" />,
         href: "/setting/billing"
-      }
-    ]
-  },
-  {
-    id: "preferences",
-    title: "環境設定",
-    icon: <Settings className="w-5 h-5" />,
-    items: [
-      {
-        id: "general",
-        label: "一般",
-        icon: <Settings className="w-4 h-4" />,
-        href: "/setting/general"
       },
       {
         id: "appearance",
@@ -124,64 +99,40 @@ export const settingSections: SettingSection[] = [
     ]
   },
   {
-    id: "ai-customize",
-    title: "AIカスタマイズ",
-    icon: <Bot className="w-5 h-5" />,
+    id: "master",
+    title: "マスター設定",
+    icon: <Package className="w-5 h-5" />,
     items: [
       {
-        id: "material-cost-master",
-        label: "材料費マスター登録",
+        id: "material-master",
+        label: "材料マスター設定",
         icon: <Package className="w-4 h-4" />,
-        href: "/setting/material-cost-master"
+        href: "/setting/material-master"
       },
       {
-        id: "equipment-master",
-        label: "機械設備マスター登録",
-        icon: <Wrench className="w-4 h-4" />,
-        href: "/setting/equipment-master"
-      },
-      {
-        id: "basic-process",
-        label: "基本工程登録",
+        id: "process-master",
+        label: "工程マスター設定",
         icon: <GitBranch className="w-4 h-4" />,
-        href: "/setting/basic-process"
-      },
-      {
-        id: "man-month-charge",
-        label: "人月チャージ登録",
-        icon: <DollarSign className="w-4 h-4" />,
-        href: "/setting/man-month-charge"
+        href: "/setting/process-master"
       }
     ]
   },
   {
-    id: "developer",
-    title: "開発者向け",
-    icon: <Key className="w-5 h-5" />,
+    id: "database",
+    title: "データベース設定",
+    icon: <Database className="w-5 h-5" />,
     items: [
       {
-        id: "api-keys",
-        label: "APIキー",
-        icon: <Key className="w-4 h-4" />,
-        href: "/setting/api-keys"
+        id: "drawing-database",
+        label: "図面データベース設定",
+        icon: <HardDrive className="w-4 h-4" />,
+        href: "/setting/drawing-database"
       },
       {
-        id: "webhooks",
-        label: "Webhook",
-        icon: <Webhook className="w-4 h-4" />,
-        href: "/setting/webhooks"
-      },
-      {
-        id: "integrations",
-        label: "インテグレーション",
-        icon: <Globe className="w-4 h-4" />,
-        href: "/setting/integrations"
-      },
-      {
-        id: "import-export",
-        label: "インポート/エクスポート",
-        icon: <Download className="w-4 h-4" />,
-        href: "/setting/import-export"
+        id: "project-database",
+        label: "案件データベース設定",
+        icon: <Database className="w-4 h-4" />,
+        href: "/setting/project-database"
       }
     ]
   }

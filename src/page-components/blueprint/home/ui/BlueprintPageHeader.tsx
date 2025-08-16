@@ -1,5 +1,8 @@
 import {
   Button,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
 } from "@/shared/shadcnui";
 import {
   Grid3X3,
@@ -37,22 +40,36 @@ export function BlueprintPageHeader({
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1 border border-gray-200 rounded-lg bg-background">
-          <Button
-            variant={viewMode === "table" ? "default" : "ghost"}
-            size="lg"
-            onClick={() => setViewMode("table")}
-            className="h-10 w-10 p-0"
-          >
-            <List className="h-5 w-5" />
-          </Button>
-          <Button
-            variant={viewMode === "gallery" ? "default" : "ghost"}
-            size="lg"
-            onClick={() => setViewMode("gallery")}
-            className="h-10 w-10 p-0"
-          >
-            <Grid3X3 className="h-5 w-5" />
-          </Button>
+          <Tooltip delayDuration={500}>
+            <TooltipTrigger asChild>
+              <Button
+                variant={viewMode === "table" ? "default" : "ghost"}
+                size="lg"
+                onClick={() => setViewMode("table")}
+                className="h-10 w-10 p-0"
+              >
+                <List className="h-5 w-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              テーブルビュー
+            </TooltipContent>
+          </Tooltip>
+          <Tooltip delayDuration={500}>
+            <TooltipTrigger asChild>
+              <Button
+                variant={viewMode === "gallery" ? "default" : "ghost"}
+                size="lg"
+                onClick={() => setViewMode("gallery")}
+                className="h-10 w-10 p-0"
+              >
+                <Grid3X3 className="h-5 w-5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              ギャラリービュー
+            </TooltipContent>
+          </Tooltip>
         </div>
         <FilterToggleButton
           isOpen={isFilterSidebarOpen}

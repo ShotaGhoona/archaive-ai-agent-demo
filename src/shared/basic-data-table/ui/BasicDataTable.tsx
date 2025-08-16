@@ -89,7 +89,7 @@ export function BasicDataTable<T>({
     <div className={`flex-1 flex flex-col min-h-0 ${className}`}>
       {/* スクロールコンテナを移動し、table要素の直接の親にする */}
       <div className="flex-1 relative overflow-auto">
-        <table className="w-full caption-bottom text-sm">
+        <table className="w-full caption-bottom text-base">
           {/* 固定ヘッダー - スクロールコンテナの直接の子要素として正しく固定される */}
           <TableHeader className="sticky top-0 bg-white z-50 shadow-sm border-b backdrop-blur-sm">
             <TableRow>
@@ -138,7 +138,7 @@ export function BasicDataTable<T>({
       
       {/* ページネーション */}
       {paginationProps && (
-        <div className="flex-shrink-0 p-4">
+        <div className="flex-shrink-0 px-4 py-2">
           <TablePagination {...paginationProps} />
         </div>
       )}

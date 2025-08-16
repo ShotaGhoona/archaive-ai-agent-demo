@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { Button } from "@/shared/shadcnui";
-import { customerMenuItems } from "../constants/customer";
+import { customerMenuItems } from "../constants/customer-navigation";
 
 export function CustomerTabNavigation() {
   const pathname = usePathname();
