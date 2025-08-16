@@ -1,0 +1,227 @@
+"use client";
+
+import React, { useState } from 'react';
+import { ChevronRight, Plus, MoreVertical, Edit, Trash2, ChevronLeft, GripVertical } from 'lucide-react';
+import { Button } from '../../../shared/shadcnui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../../shared/shadcnui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../../shared/shadcnui/tooltip';
+import { defaultV2SidebarData } from '../init-data/v2-sidebar';
+import { NewItemDialog } from './NewItemDialog';
+import { V2SidebarProps, Column, V2SidebarItem } from '../model/types';
+import { generateId, addItemToTree, deleteItemFromTree } from '../lib/sidebarUtils';
+import { handleItemClick, handleColumnToggle, updateColumnsAfterAdd, updateColumnsAfterDelete } from '../lib/columnLogic';
+import { DragDropState, handleDragStart as dragStart, handleDragOver, handleDrop } from '../lib/dragDropLogic';
+
+export const V2Sidebar: React.FC<V2SidebarProps> = () => {
+  const [sidebarData, setSidebarData] = useState<V2SidebarItem[]>(defaultV2SidebarData);
+  const [columns, setColumns] = useState<Column[]>([
+    { id: 'root', items: defaultV2SidebarData, isCollapsed: false }
+  ]);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [addParentId, setAddParentId] = useState<string>('');
+  const [dragState, setDragState] = useState<DragDropState>({
+    draggedItemIndex: null,
+    draggedColumnIndex: null
+  });
+
+  const onItemClick = (item: V2SidebarItem, columnIndex: number) => {
+    const newColumns = handleItemClick(item, columnIndex, columns);
+    setColumns(newColumns);
+  };
+
+  const onColumnToggle = (columnIndex: number) => {
+    const newColumns = handleColumnToggle(columnIndex, columns);
+    setColumns(newColumns);
+  };
+
+  const addItem = (newItem: Omit<V2SidebarItem, 'id'>) => {
+    const itemWithId = { ...newItem, id: generateId() };
+    const newSidebarData = addItemToTree(sidebarData, itemWithId, addParentId);
+    setSidebarData(newSidebarData);
+    
+    const newColumns = updateColumnsAfterAdd(columns, newSidebarData, addParentId);
+    setColumns(newColumns);
+  };
+
+  const handleItemAdd = (parentId: string) => {
+    setAddParentId(parentId);
+    setAddDialogOpen(true);
+  };
+
+  const handleItemEdit = (id: string) => {
+    console.log('編集:', id);
+  };
+
+  const handleItemDelete = (id: string) => {
+    const newSidebarData = deleteItemFromTree(sidebarData, id);
+    setSidebarData(newSidebarData);
+    
+    const newColumns = updateColumnsAfterDelete(columns, newSidebarData);
+    setColumns(newColumns);
+  };
+
+  const resetDragState = () => {
+    setDragState({ draggedItemIndex: null, draggedColumnIndex: null });
+  };
+
+  const handleDragStart = (e: React.DragEvent, itemIndex: number, columnIndex: number) => {
+    dragStart(e, itemIndex, columnIndex, setDragState);
+  };
+
+  const onDrop = (e: React.DragEvent, targetIndex: number, columnIndex: number) => {
+    handleDrop(
+      e,
+      targetIndex,
+      columnIndex,
+      dragState,
+      columns,
+      sidebarData,
+      setColumns,
+      setSidebarData,
+      resetDragState
+    );
+  };
+
+  return (
+    <TooltipProvider>
+      <div className="bg-gray-50 flex" style={{ height: 'calc(100vh - 45px)' }}>
+      {columns.map((column, index) => {
+        const isCollapsed = column.isCollapsed;
+        
+        return (
+          <div key={column.id} className={`${isCollapsed ? 'w-12' : 'w-48'} bg-white border-r border-gray-200 flex flex-col`} style={{ height: 'calc(100vh - 45px)' }}>
+            {/* Header */}
+            <div className="p-3 border-b border-gray-200 flex items-center justify-between">
+              {!isCollapsed && (
+                <div className="flex items-center gap-2">
+                  {column.parentItem && (
+                    <>
+                      <div className={`${column.parentItem.iconColor}`}>
+                        {column.parentItem.icon}
+                      </div>
+                      <span className="font-medium text-sm truncate">{column.parentItem.name}</span>
+                    </>
+                  )}
+                  {!column.parentItem && (
+                    <span className="font-medium text-sm">Root</span>
+                  )}
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                {!isCollapsed && (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="h-6 w-6 p-0"
+                    onClick={() => handleItemAdd(column.parentItem?.id || '')}
+                  >
+                    <Plus className="w-3 h-3" />
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-6 w-6 p-0"
+                  onClick={() => onColumnToggle(index)}
+                  title={isCollapsed ? "カラムを開く" : "カラムを閉じる"}
+                >
+                  {isCollapsed ? (
+                    <ChevronRight className="w-3 h-3" />
+                  ) : (
+                    <ChevronLeft className="w-3 h-3" />
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            {/* Items */}
+            <div className="flex-1 overflow-y-auto p-2">
+              {column.items.map((item, itemIndex) => {
+                const itemElement = (
+                  <div
+                    key={item.id}
+                    draggable={!isCollapsed}
+                    onDragStart={(e) => handleDragStart(e, itemIndex, index)}
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => onDrop(e, itemIndex, index)}
+                    className={`flex items-center gap-2 p-2 hover:bg-primary/20 cursor-pointer group rounded h-10 ${
+                      column.selectedItemId === item.id
+                        ? 'bg-primary/30'
+                        : ''
+                    } ${isCollapsed ? 'justify-center' : ''}`}
+                    onClick={() => onItemClick(item, index)}
+                  >
+                    <div className={`flex-shrink-0 ${item.iconColor} ${!isCollapsed ? 'group-hover:hidden' : ''}`}>
+                      {item.icon}
+                    </div>
+                    {!isCollapsed && (
+                      <div className="flex-shrink-0 text-gray-400 hidden group-hover:block">
+                        <GripVertical className="w-4 h-4" />
+                      </div>
+                    )}
+                    {!isCollapsed && (
+                      <>
+                        <span className="flex-1 text-sm truncate">{item.name}</span>
+                        
+                        <div className="opacity-0 group-hover:opacity-100 flex items-center gap-1">
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                className="h-6 w-6 p-0"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <MoreVertical className="w-3 h-3" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem onClick={() => handleItemEdit(item.id)}>
+                                <Edit className="w-4 h-4 mr-2" />
+                                編集
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleItemDelete(item.id)}
+                                className="text-red-600"
+                              >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                削除
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+
+                if (isCollapsed) {
+                  return (
+                    <Tooltip key={item.id}>
+                      <TooltipTrigger asChild>
+                        {itemElement}
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <p>{item.name}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  );
+                }
+
+                return itemElement;
+              })}
+            </div>
+          </div>
+        );
+      })}
+      
+      <NewItemDialog
+        isOpen={addDialogOpen}
+        onClose={() => setAddDialogOpen(false)}
+        onAdd={addItem}
+        parentId={addParentId}
+      />
+      </div>
+    </TooltipProvider>
+  );
+};

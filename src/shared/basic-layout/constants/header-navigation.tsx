@@ -2,6 +2,11 @@ import { FileText, Users, Settings } from "lucide-react";
 
 export const headerNavigations = [
   {
+    label: "v2.1",
+    href: "/v2",
+    icon: <FileText className="w-4 h-4" />
+  },
+  {
     label: "図面管理",
     href: "/blueprint",
     icon: <FileText className="w-4 h-4" />
