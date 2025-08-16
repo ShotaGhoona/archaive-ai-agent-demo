@@ -55,7 +55,7 @@ export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialo
       <PopoverTrigger asChild>
         <Button size="lg" className="bg-primary hover:bg-primary/90">
           <Plus className="h-5 w-5 mr-2" />
-          個別案件登録
+          案件登録
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-96 p-0" align="end">

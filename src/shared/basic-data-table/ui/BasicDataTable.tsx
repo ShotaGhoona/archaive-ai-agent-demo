@@ -138,7 +138,7 @@ export function BasicDataTable<T>({
       
       {/* ページネーション */}
       {paginationProps && (
-        <div className="flex-shrink-0 p-4">
+        <div className="flex-shrink-0 px-4 py-2">
           <TablePagination {...paginationProps} />
         </div>
       )}
