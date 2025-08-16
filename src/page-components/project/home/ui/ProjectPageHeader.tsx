@@ -85,13 +85,13 @@ export function ProjectPageHeader({
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
         />
+        <BlueprintUploadDialog />
         <Link href="/blueprint/upload">
-          <Button size="lg">
+          <Button size="lg" className="bg-primary hover:bg-primary/90">
             <Plus className="h-4 w-4 mr-2" />
             一括案件登録
           </Button>
         </Link>
-        <BlueprintUploadDialog />
       </div>
     </div>
   );

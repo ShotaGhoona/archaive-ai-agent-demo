@@ -33,7 +33,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     locked: true,
     sortType: 'string',
     render: (_, value: unknown) => (
-      <span className="font-mono text-sm font-medium">
+      <span className="font-mono font-medium">
         {String(value)}
       </span>
     ),
@@ -48,7 +48,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     inputType: 'text',
     sortType: 'string',
     render: (_, value: unknown) => (
-      <span className="font-medium">
+      <span>
         {String(value)}
       </span>
     ),
@@ -64,7 +64,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     sortType: 'string',
     selectOptions: ['加工', '組立', '検査', '塗装', '溶接', 'その他'],
     render: (_, value: unknown) => (
-      <Badge className={`text-xs ${getCategoryColor(String(value))}`}>
+      <Badge className={`${getCategoryColor(String(value))}`}>
         {String(value)}
       </Badge>
     ),
@@ -80,8 +80,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     sortType: 'string',
     render: (_, value: unknown) => (
       <div className="flex items-center space-x-2">
-        <Calculator className="h-4 w-4 text-gray-500" />
-        <span className="font-mono text-sm bg-gray-50 px-2 py-1 rounded border">
+        <span className="font-mono bg-gray-50 px-2 py-1 rounded border w-full">
           {String(value) || '未設定'}
         </span>
       </div>
@@ -97,7 +96,7 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
     inputType: 'text',
     sortType: 'string',
     render: (_, value: unknown) => (
-      <span className="text-sm text-gray-600 truncate">
+      <span className="text-gray-600">
         {String(value) || '-'}
       </span>
     ),
@@ -120,38 +119,6 @@ export const PROCESS_MASTER_COLUMNS: DataTableColumn<ProcessMaster>[] = [
           minute: '2-digit',
         })}
       </span>
-    ),
-  },
-  {
-    key: 'actions',
-    label: '操作',
-    width: 80,
-    minWidth: 80,
-    sortable: false,
-    editable: false,
-    locked: false,
-    render: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuItem>
-            <Eye className="h-4 w-4 mr-2" />
-            詳細表示
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Edit className="h-4 w-4 mr-2" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem className="text-red-600">
-            <Trash2 className="h-4 w-4 mr-2" />
-            削除
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     ),
   },
 ];

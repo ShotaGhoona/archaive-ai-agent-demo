@@ -66,7 +66,7 @@ export function TablePagination({
     <div className={`flex items-center justify-between ${className}`}>
       {/* 総項目数表示 */}
       {showTotalItems && (
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground  whitespace-nowrap">
           {totalItems}件中 {startItem}-{endItem}件を表示
         </div>
       )}
