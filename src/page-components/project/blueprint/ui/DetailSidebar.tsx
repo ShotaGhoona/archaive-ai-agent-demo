@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/shared/shadcnui";
 import { Plus, Loader2, X } from "lucide-react";
-import { BlueprintFile } from "@/widgets/blueprint-view/model/types";
+import { BlueprintFile } from "@/widgets/blueprint-detail-layout/model/types";
 
 interface DetailSidebarProps {
   files: BlueprintFile[];

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Input } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
-import { BlueprintFile, BasicInformation as BasicInfo } from "@/widgets/blueprint-view/model/types";
+import { BlueprintFile, BasicInformation as BasicInfo } from "@/widgets/blueprint-detail-layout/model/types";
 
 interface BasicInformationProps {
   activeFile: BlueprintFile | null;
