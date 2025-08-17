@@ -46,7 +46,7 @@ export function BlueprintTabNavigation() {
         const isActive = activeTab === tab.id;
         
         return (
-          <Tooltip key={tab.id}>
+          <Tooltip key={tab.id} delayDuration={500}>
             <TooltipTrigger asChild>
               <Link href={tab.href(projectId)}>
                 <Button
@@ -65,7 +65,7 @@ export function BlueprintTabNavigation() {
                 </Button>
               </Link>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent side="bottom">
               <p>{tab.description}</p>
             </TooltipContent>
           </Tooltip>

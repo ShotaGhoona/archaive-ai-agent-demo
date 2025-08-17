@@ -23,13 +23,6 @@ export default function SettingSidebar() {
 
   return (
     <aside className="w-72 bg-gray-50 dark:bg-gray-900 h-[calc(100vh-45px)] flex flex-col border-r border-gray-200">
-      {/* ヘッダー */}
-      <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-800 flex-shrink-0">
-        <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          設定
-        </h1>
-      </div>
-
       {/* ナビゲーション */}
       <nav className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
         {settingSections.map((section) => (

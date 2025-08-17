@@ -43,8 +43,9 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     locked: true,
     render: (customer: Customer) => (
       <Link href={`/customer/${customer.customerCode}`}>
-        <Button variant="outline" size="sm" className="h-8">
+        <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
           <ExternalLink className="h-3 w-3" />
+          開く
         </Button>
       </Link>
     ),
@@ -57,7 +58,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     editable: false,
     locked: true,
     sortType: 'string',
-    render: (value: unknown) => (
+    render: (customer: Customer, value: unknown) => (
       <span className="font-mono text-sm font-medium">
         {String(value)}
       </span>
@@ -107,8 +108,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     locked: false,
     inputType: 'text',
     render: (customer: Customer, value: unknown) => (
-      <div className="flex items-center gap-1 text-sm">
-        <Phone className="h-3 w-3" />
+      <div className="flex items-center gap-1 text-sm"> 
         <span className="font-mono">{String(value)}</span>
       </div>
     ),
@@ -123,7 +123,6 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     inputType: 'text',
     render: (customer: Customer, value: unknown) => (
       <div className="flex items-center gap-1 text-sm">
-          <Phone className="h-3 w-3" />
         <span className="font-mono">{String(value)}</span>
       </div>
     ),
@@ -166,43 +165,6 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
       <Badge variant="outline" className="text-xs">
         {String(value)}
       </Badge>
-    ),
-  },
-  {
-    key: 'actions',
-    label: '操作',
-    width: 80,
-    minWidth: 80,
-    sortable: false,
-    editable: false,
-    locked: false,
-    render: (customer: Customer) => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <Link href={`/customers/${customer.customerCode}`}>
-            <DropdownMenuItem>
-              <Eye className="h-4 w-4 mr-2" />
-              詳細表示
-            </DropdownMenuItem>
-          </Link>
-          <DropdownMenuItem onClick={() => callbacks?.onEdit?.(customer)}>
-            <Edit className="h-4 w-4 mr-2" />
-            編集
-          </DropdownMenuItem>
-          <DropdownMenuItem 
-            className="text-red-600"
-            onClick={() => callbacks?.onDelete?.(customer)}
-          >
-            <Trash2 className="h-4 w-4 mr-2" />
-            削除
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
     ),
   },
 ];
