@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { DetailSidebar } from "./DetailSidebar";
 import { BlueprintViewer } from "@/widgets/blueprint-view/ui/BlueprintViewer";
 import { BlueprintUtilities } from "./BlueprintUtilities";
-import { useResizablePanel } from "../lib/useResizablePanel";
+import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features/resizable-layout";
+import { projectBlueprintConfig } from "../lib/resizableLayoutConfig";
 import blueprintsData from "@/widgets/blueprint-view/init-data/blueprints.json";
 import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-view/model/types";
 
@@ -11,14 +12,6 @@ export default function BlueprintContainer() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
   const [activeFile, setActiveFile] = useState<BlueprintFile | null>(null);
   
-  // リサイザブルパネルのフック
-  const {
-    panelWidth,
-    centerWidth,
-    isDragging,
-    resizableAreaRef,
-    handleMouseDown
-  } = useResizablePanel();
 
   // 初期アクティブファイルを設定
   useEffect(() => {
@@ -99,39 +92,28 @@ export default function BlueprintContainer() {
       />
       
       {/* 中央・右側エリア */}
-      <div className="flex-1 flex overflow-hidden min-h-0" ref={resizableAreaRef}>
+      <ResizableLayout 
+        config={projectBlueprintConfig}
+        className="flex-1 min-h-0"
+      >
         {/* 中央コンテンツエリア */}
-        <div 
-          className="overflow-hidden" 
-          style={{ width: `${centerWidth}%` }}
-        >
+        <ResizablePanel index={0}>
           <BlueprintViewer 
             activeFile={activeFile} 
           />
-        </div>
+        </ResizablePanel>
         
-        {/* リサイズハンドル */}
-        <div
-          className={`w-1 bg-gray-200 hover:bg-gray-300 cursor-col-resize flex items-center justify-center transition-colors ${
-            isDragging ? 'bg-gray-300' : ''
-          }`}
-          onMouseDown={handleMouseDown}
-        >
-          <div className="w-0.5 h-8 bg-gray-400 rounded-full" />
-        </div>
+        <ResizableHandle />
         
         {/* 右側パネル */}
-        <div 
-          className="border-l overflow-hidden" 
-          style={{ width: `${panelWidth}%` }}
-        >
+        <ResizablePanel index={1} className="border-l">
           <BlueprintUtilities
             activeFile={activeFile}
             onBasicSave={handleBasicSave}
             onEstimateSave={handleEstimateSave}
           />
-        </div>
-      </div>
+        </ResizablePanel>
+      </ResizableLayout>
     </div>
   );
 }

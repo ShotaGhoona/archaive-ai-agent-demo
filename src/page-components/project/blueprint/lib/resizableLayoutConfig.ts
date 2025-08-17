@@ -1,0 +1,10 @@
+import { ResizableLayoutConfig } from "@/features/resizable-layout";
+
+// プロジェクト図面ページ用設定（左: サイドバー, 中央: ビューア、右: ユーティリティ）
+export const projectBlueprintConfig: ResizableLayoutConfig = {
+  direction: 'horizontal',
+  panels: [
+    { initialWidth: 67, minWidth: 40, maxWidth: 80 },
+    { initialWidth: 33, minWidth: 20, maxWidth: 60 }
+  ]
+} as const;
