@@ -1,0 +1,266 @@
+{
+  "productId": "INT-2024-001",
+  "productName": "精密加工部品A",
+  "basicInformation": {
+    "fileName": "メインアセンブリ図面.dwg",
+    "pageNumber": "1",
+    "customerName": "株式会社サンプル",
+    "productName": "精密加工部品A",
+    "internalProductNumber": "INT-2024-001",
+    "customerProductNumber": "CUS-A-2024-001",
+    "cadName": "AutoCAD 2024",
+    "camName": "Mastercam X9",
+    "orderQuantity": "100",
+    "orderDate": "2024-01-10",
+    "deliveryDate": "2024-02-15",
+    "maxLength": "150.5",
+    "maxWidth": "80.2",
+    "maxHeight": "45.0",
+    "test": "材質試験済み",
+    "companyItem": "品質管理部確認済",
+    "itemG": "グループA",
+    "itemI": "重要度：高",
+    "remarks": "特別仕様品のため要注意"
+  },
+  "estimateInformation": {
+    "materialCost": "15000",
+    "processingCost": "28000", 
+    "laborCost": "12000",
+    "equipmentCost": "5000",
+    "overheadCost": "8000",
+    "profitMargin": "15",
+    "totalCost": "68000",
+    "unitPrice": "680",
+    "totalPrice": "68000",
+    "deliveryDays": "35",
+    "setupCost": "3000",
+    "transportCost": "2000",
+    "packagingCost": "1500",
+    "qualityAssuranceCost": "2500",
+    "remarks": "量産時は単価調整可能"
+  },
+  "blueprintViews": [
+    {
+      "id": "view-1",
+      "name": "正面図",
+      "description": "製品の正面から見た図面",
+      "viewType": "front",
+      "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "isActive": true,
+      "createdAt": "2024-01-15T10:30:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-front-1",
+          "name": "類似正面図_A.dwg",
+          "description": "類似した正面図構造",
+          "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
+          "similarity": 89,
+          "internalProductNumber": "INT-2023-087",
+          "customerProductNumber": "CUS-A-2023-087",
+          "customerName": "株式会社テクノ",
+          "productName": "類似加工部品A",
+          "createdAt": "2024-01-10T09:15:00Z"
+        },
+        {
+          "id": "sim-front-2",
+          "name": "類似正面構造_B.dwg",
+          "description": "正面から見た類似設計",
+          "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif",
+          "similarity": 76,
+          "internalProductNumber": "INT-2023-065",
+          "customerProductNumber": "CUS-B-2023-065",
+          "customerName": "株式会社プロテック",
+          "productName": "部分類似部品B",
+          "createdAt": "2024-01-08T14:20:00Z"
+        },
+        {
+          "id": "sim-front-3",
+          "name": "正面アセンブリ_C.dwg",
+          "description": "正面組立図の類似品",
+          "imageUrl": "https://engineer-education.com/wp/wp-content/uploads/2020/06/Machine-element-answer1-1.jpg",
+          "similarity": 71,
+          "internalProductNumber": "INT-2023-045",
+          "customerProductNumber": "CUS-C-2023-045",
+          "customerName": "株式会社メカトロ",
+          "productName": "シリーズ製品C",
+          "createdAt": "2024-01-05T16:45:00Z"
+        }
+      ]
+    },
+    {
+      "id": "view-2", 
+      "name": "側面図",
+      "description": "製品の側面から見た図面",
+      "viewType": "side",
+      "imageUrl": "https://www.techno-con.co.jp/item/image/19769.png",
+      "isActive": false,
+      "createdAt": "2024-01-15T10:35:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-side-1",
+          "name": "類似側面図_A.dwg",
+          "description": "類似した側面構造",
+          "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+          "similarity": 83,
+          "internalProductNumber": "INT-2024-015",
+          "customerProductNumber": "CUS-A-2024-015",
+          "customerName": "株式会社精密",
+          "productName": "寸法類似部品A",
+          "createdAt": "2024-01-12T10:30:00Z"
+        },
+        {
+          "id": "sim-side-2",
+          "name": "側面詳細図_B.dwg",
+          "description": "側面から見た詳細設計",
+          "imageUrl": "https://www.atc-aiworks.com/_p/acre/20123/images/pc/smart_phone_f5af2ca6.jpg",
+          "similarity": 79,
+          "internalProductNumber": "INT-2024-008",
+          "customerProductNumber": "CUS-B-2024-008",
+          "customerName": "株式会社アドバンス",
+          "productName": "詳細部品B",
+          "createdAt": "2024-01-09T13:45:00Z"
+        }
+      ]
+    },
+    {
+      "id": "view-3",
+      "name": "上面図", 
+      "description": "製品の上面から見た図面",
+      "viewType": "top",
+      "imageUrl": "https://engineer-education.com/wp/wp-content/uploads/2020/06/Machine-element-answer1-1.jpg",
+      "isActive": false,
+      "createdAt": "2024-01-15T10:40:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-top-1",
+          "name": "類似上面図_A.dwg",
+          "description": "上面から見た類似構造",
+          "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
+          "similarity": 85,
+          "internalProductNumber": "INT-2023-089",
+          "customerProductNumber": "CUS-T-2023-089",
+          "customerName": "株式会社トップビュー",
+          "productName": "上面類似部品A",
+          "createdAt": "2024-01-11T11:20:00Z"
+        },
+        {
+          "id": "sim-top-2",
+          "name": "平面レイアウト_B.dwg",
+          "description": "平面配置の類似設計",
+          "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif",
+          "similarity": 72,
+          "internalProductNumber": "INT-2023-078",
+          "customerProductNumber": "CUS-T-2023-078",
+          "customerName": "株式会社レイアウト",
+          "productName": "平面設計部品B",
+          "createdAt": "2024-01-09T14:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": "view-4",
+      "name": "断面図A-A",
+      "description": "A-A線での断面図",
+      "viewType": "section",
+      "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
+      "isActive": false,
+      "createdAt": "2024-01-15T10:45:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-section-1",
+          "name": "類似断面図_A.dwg",
+          "description": "類似した断面構造",
+          "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+          "similarity": 88,
+          "internalProductNumber": "INT-2023-095",
+          "customerProductNumber": "CUS-S-2023-095",
+          "customerName": "株式会社断面設計",
+          "productName": "断面類似部品A",
+          "createdAt": "2024-01-10T16:45:00Z"
+        },
+        {
+          "id": "sim-section-2",
+          "name": "断面詳細_B.dwg",
+          "description": "断面の詳細構造",
+          "imageUrl": "https://www.atc-aiworks.com/_p/acre/20123/images/pc/smart_phone_f5af2ca6.jpg",
+          "similarity": 81,
+          "internalProductNumber": "INT-2023-092",
+          "customerProductNumber": "CUS-S-2023-092",
+          "customerName": "株式会社内部構造",
+          "productName": "断面設計部品B",
+          "createdAt": "2024-01-08T13:20:00Z"
+        }
+      ]
+    },
+    {
+      "id": "view-5",
+      "name": "詳細図",
+      "description": "重要部分の詳細拡大図",
+      "viewType": "detail",
+      "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif",
+      "isActive": false,
+      "createdAt": "2024-01-15T10:50:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-detail-1",
+          "name": "類似詳細図_A.dwg",
+          "description": "類似した詳細構造",
+          "imageUrl": "https://www.kabuku.io/wp_module/wp-content/uploads/2022/12/af-1024x724.jpg.webp",
+          "similarity": 92,
+          "internalProductNumber": "INT-2023-101",
+          "customerProductNumber": "CUS-D-2023-101",
+          "customerName": "株式会社ディテール",
+          "productName": "詳細類似部品A",
+          "createdAt": "2024-01-12T09:30:00Z"
+        },
+        {
+          "id": "sim-detail-2",
+          "name": "拡大詳細_B.dwg",
+          "description": "拡大部分の類似設計",
+          "imageUrl": "https://engineer-education.com/wp/wp-content/uploads/2020/06/Machine-element-answer1-1.jpg",
+          "similarity": 87,
+          "internalProductNumber": "INT-2023-098",
+          "customerProductNumber": "CUS-D-2023-098",
+          "customerName": "株式会社マクロビュー",
+          "productName": "拡大設計部品B",
+          "createdAt": "2024-01-11T15:15:00Z"
+        }
+      ]
+    },
+    {
+      "id": "view-6",
+      "name": "注記入り図面",
+      "description": "製造上の注意事項を記載した図面",
+      "viewType": "annotated",
+      "imageUrl": "https://images.unsplash.com/photo-1581092160327-ac3a67003e8c?w=400&h=300&fit=crop&auto=format",
+      "isActive": false,
+      "createdAt": "2024-01-15T10:55:00Z",
+      "similarBlueprints": [
+        {
+          "id": "sim-annotated-1",
+          "name": "類似注記図_A.dwg",
+          "description": "類似した注記付き図面",
+          "imageUrl": "https://www.atc-aiworks.com/_p/acre/20123/images/pc/smart_phone_f5af2ca6.jpg",
+          "similarity": 78,
+          "internalProductNumber": "INT-2023-105",
+          "customerProductNumber": "CUS-N-2023-105",
+          "customerName": "株式会社アノテーション",
+          "productName": "注記類似部品A",
+          "createdAt": "2024-01-13T10:45:00Z"
+        },
+        {
+          "id": "sim-annotated-2",
+          "name": "製造注意図_B.dwg",
+          "description": "製造注意事項付き図面",
+          "imageUrl": "https://image.itmedia.co.jp/mn/articles/0808/21/yk_dradrill07_zen.gif",
+          "similarity": 74,
+          "internalProductNumber": "INT-2023-103",
+          "customerProductNumber": "CUS-N-2023-103",
+          "customerName": "株式会社製造ガイド",
+          "productName": "注意事項部品B",
+          "createdAt": "2024-01-12T14:20:00Z"
+        }
+      ]
+    }
+  ]
+}

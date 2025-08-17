@@ -62,3 +62,14 @@ export interface BlueprintFile {
   estimateInformation?: EstimateInformation;
   similarBlueprints?: SimilarBlueprint[];
 }
+
+export interface BlueprintView {
+  id: string;
+  name: string;
+  description: string;
+  viewType: string;
+  imageUrl: string;
+  isActive: boolean;
+  createdAt: string;
+  similarBlueprints?: SimilarBlueprint[];
+}
