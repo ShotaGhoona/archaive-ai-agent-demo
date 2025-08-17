@@ -4,7 +4,7 @@ import { Search, Settings, Calculator } from "lucide-react";
 import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
 import { BasicInformation } from "./BasicInformation";
 import { EstimateInformation } from "./EstimateInformation";
-import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "../data/types";
+import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-view/model/types";
 
 interface BlueprintUtilitiesProps {
   activeFile: BlueprintFile | null;

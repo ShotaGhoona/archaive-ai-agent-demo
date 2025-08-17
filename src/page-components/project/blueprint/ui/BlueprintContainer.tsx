@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import { DetailSidebar } from "./DetailSidebar";
-import { BlueprintViewer } from "./BlueprintViewer";
+import { BlueprintViewer } from "@/widgets/blueprint-view/ui/BlueprintViewer";
 import { BlueprintUtilities } from "./BlueprintUtilities";
 import { useResizablePanel } from "../lib/useResizablePanel";
-import blueprintsData from "../data/blueprints.json";
-import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "../data/types";
+import blueprintsData from "@/widgets/blueprint-view/init-data/blueprints.json";
+import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-view/model/types";
 
 export default function BlueprintContainer() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
