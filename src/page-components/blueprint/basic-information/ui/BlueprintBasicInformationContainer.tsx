@@ -1,4 +1,4 @@
-export default function BlueprintDetailContainer() {
+export default function BlueprintBasicInformationContainer() {
   return (
     <div className="h-full overflow-y-auto">
       <div className="p-6">
