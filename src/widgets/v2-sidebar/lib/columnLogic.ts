@@ -14,7 +14,7 @@ export const handleItemClick = (
   newColumns.splice(columnIndex + 1);
   
   // If item is a folder, add new column (even if empty)
-  if (item.type === 'folder') {
+  if (item.type === 'folder' || item.type === 'project-folder') {
     newColumns.push({
       id: `column-${item.id}`,
       items: item.children || [],

@@ -1,0 +1,198 @@
+[
+  {
+    "id": "inbox-f7a2k9x3m8",
+    "name": "案件Inbox",
+    "type": "folder",
+    "iconColor": "text-primary",
+    "children": [
+      {
+        "id": "project-2024-12-15-yamada-corp-b8k3x2l9",
+        "name": "2024-12-15 山田製作所",
+        "type": "project-folder",
+        "iconColor": "text-primary",
+        "parentId": "inbox-f7a2k9x3m8",
+        "children": [
+          {
+            "id": "drawings-folder-n5m8p4r1x",
+            "name": "図面",
+            "type": "folder",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-15-yamada-corp-b8k3x2l9",
+            "children": [
+              {
+                "id": "drawing-main-assembly-z9h2k8m5",
+                "name": "メイン組立図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-n5m8p4r1x"
+              },
+              {
+                "id": "drawing-part-a-detail-x3q7w8e2",
+                "name": "部品A詳細図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-n5m8p4r1x"
+              },
+              {
+                "id": "drawing-part-b-detail-y4r9t5u1",
+                "name": "部品B詳細図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-n5m8p4r1x"
+              }
+            ]
+          },
+          {
+            "id": "quotation-yamada-2024-v6b3n2m8",
+            "name": "見積書",
+            "type": "quotation",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-15-yamada-corp-b8k3x2l9"
+          },
+          {
+            "id": "order-yamada-2024-w7c4o3p9",
+            "name": "受注書",
+            "type": "order",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-15-yamada-corp-b8k3x2l9"
+          },
+          {
+            "id": "delivery-yamada-2024-a8d5q4r1",
+            "name": "納品書",
+            "type": "delivery-note",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-15-yamada-corp-b8k3x2l9"
+          }
+        ]
+      },
+      {
+        "id": "project-2024-12-10-tanaka-industries-c9l4y6z2",
+        "name": "2024-12-10 田中工業",
+        "type": "project-folder",
+        "iconColor": "text-primary",
+        "parentId": "inbox-f7a2k9x3m8",
+        "children": [
+          {
+            "id": "drawings-folder-h8j5k9l2",
+            "name": "図面",
+            "type": "folder",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-10-tanaka-industries-c9l4y6z2",
+            "children": [
+              {
+                "id": "drawing-housing-assembly-m3n6p2q4",
+                "name": "筐体組立図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-h8j5k9l2"
+              },
+              {
+                "id": "drawing-cover-plate-r7s1t9u5",
+                "name": "カバープレート図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-h8j5k9l2"
+              }
+            ]
+          },
+          {
+            "id": "quotation-tanaka-2024-e4f7h3i8",
+            "name": "見積書",
+            "type": "quotation",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-10-tanaka-industries-c9l4y6z2"
+          },
+          {
+            "id": "specification-tanaka-j2k5m8n1",
+            "name": "仕様書",
+            "type": "specification",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-12-10-tanaka-industries-c9l4y6z2"
+          }
+        ]
+      },
+      {
+        "id": "project-2024-11-28-sato-manufacturing-d0x8v5b3",
+        "name": "2024-11-28 佐藤製造",
+        "type": "project-folder",
+        "iconColor": "text-primary",
+        "parentId": "inbox-f7a2k9x3m8",
+        "children": [
+          {
+            "id": "drawings-folder-p9q2w7e4",
+            "name": "図面",
+            "type": "folder",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-11-28-sato-manufacturing-d0x8v5b3",
+            "children": [
+              {
+                "id": "drawing-frame-structure-t8y3u6i1",
+                "name": "フレーム構造図",
+                "type": "blueprint",
+                "iconColor": "text-primary",
+                "parentId": "drawings-folder-p9q2w7e4"
+              }
+            ]
+          },
+          {
+            "id": "quotation-sato-2024-a5s9d2f7",
+            "name": "見積書",
+            "type": "quotation",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-11-28-sato-manufacturing-d0x8v5b3"
+          },
+          {
+            "id": "order-sato-2024-g4h8j1k5",
+            "name": "受注書",
+            "type": "order",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-11-28-sato-manufacturing-d0x8v5b3"
+          },
+          {
+            "id": "delivery-sato-2024-l7z3x9c6",
+            "name": "納品書",
+            "type": "delivery-note",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-11-28-sato-manufacturing-d0x8v5b3"
+          },
+          {
+            "id": "inspection-sato-2024-v2b5n8m4",
+            "name": "検査成績書",
+            "type": "inspection-report",
+            "iconColor": "text-primary",
+            "parentId": "project-2024-11-28-sato-manufacturing-d0x8v5b3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "doc-inbox-q8w5e3r7",
+    "name": "ドキュメントInbox",
+    "type": "folder",
+    "iconColor": "text-gray-600",
+    "children": [
+      {
+        "id": "template-quotation-x4c7v9b2",
+        "name": "見積書テンプレート",
+        "type": "quotation",
+        "iconColor": "text-gray-600",
+        "parentId": "doc-inbox-q8w5e3r7"
+      },
+      {
+        "id": "standard-spec-y6n3m1q8",
+        "name": "標準仕様書",
+        "type": "specification",
+        "iconColor": "text-gray-600",
+        "parentId": "doc-inbox-q8w5e3r7"
+      },
+      {
+        "id": "outsource-list-z9f2h5j8",
+        "name": "外注業者リスト",
+        "type": "custom",
+        "iconColor": "text-gray-600",
+        "parentId": "doc-inbox-q8w5e3r7"
+      }
+    ]
+  }
+]
