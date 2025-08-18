@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/shared/shadcnui";
-import { Plus, Loader2, X, FileText } from "lucide-react";
+import { Plus, Loader2, X, FileText, Expand } from "lucide-react";
 import { BlueprintView } from "../model/types";
 
 interface BlueprintDetailSidebarProps {
@@ -32,6 +32,7 @@ export function BlueprintDetailSidebar({
 }: BlueprintDetailSidebarProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
+  const [isGalleryMode, setIsGalleryMode] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (fileList: FileList) => {
@@ -94,6 +95,9 @@ export function BlueprintDetailSidebar({
 
   const handleViewClick = (viewId: string) => {
     onViewSelect(viewId);
+    if (isGalleryMode) {
+      setIsGalleryMode(false);
+    }
   };
 
   const handleRemoveView = (viewId: string) => {
@@ -101,13 +105,16 @@ export function BlueprintDetailSidebar({
   };
 
   return (
-    <div className="w-48 flex flex-col bg-gray-100">
+    <div className={`h-full flex flex-col z-10 absolute left-0 top-0 transition-all duration-300 ${
+      isGalleryMode ? 'w-full bg-gray-900/20 backdrop-blur-md' : 'w-48'
+    }`}>
       {/* 図面ビュー一覧 */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hidden">
-        {/* 追加ボタン */}
+      <div className="flex-1 overflow-y-auto scrollbar-hidden p-4">
+        <div className={`${ isGalleryMode ? 'grid grid-cols-4 gap-4' : 'space-y-3'}`}>
+        
         <div 
           className={`
-            border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors
+            border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors bg-white/90
             ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'}
             ${isUploading ? 'border-blue-300 bg-blue-50' : ''}
           `}
@@ -149,17 +156,32 @@ export function BlueprintDetailSidebar({
 
         {/* 図面ビューリスト */}
         {views.map((view) => (
-          <Card 
-            key={view.id}
-            className={`
-              cursor-pointer transition-all duration-200 group relative py-1
-              ${view.isActive 
-                ? 'ring-2 ring-primary' 
-                : 'hover:shadow-md hover:bg-gray-50'
-              }
-            `}
-            onClick={() => handleViewClick(view.id)}
-          >
+          <div key={view.id} className="w-full">
+            <Card 
+              className={`
+                cursor-pointer transition-all duration-200 group relative py-1
+                ${view.isActive 
+                  ? 'ring-2 ring-primary' 
+                  : 'hover:shadow-md hover:bg-gray-50'
+                }
+              `}
+              onClick={() => handleViewClick(view.id)}
+            >
+            {/* 展開ボタン (サイドバーモード時のみ) */}
+            {!isGalleryMode && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsGalleryMode(true);
+                }}
+                className="absolute top-2 left-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                <Expand className="h-3 w-3" />
+              </Button>
+            )}
+            
             {/* 削除ボタン */}
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -216,6 +238,7 @@ export function BlueprintDetailSidebar({
               </div>
             </CardContent>
           </Card>
+          </div>
         ))}
         
         {views.length === 0 && (
@@ -224,6 +247,7 @@ export function BlueprintDetailSidebar({
             <p className="text-sm text-gray-500">図面ビューがありません</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

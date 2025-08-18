@@ -29,7 +29,7 @@ export function GalleryView({ blueprints }: GalleryViewProps) {
     <div className="overflow-auto flex-1">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-3n mb gap-6 p-1">
       {blueprints.map((blueprint) => (
-        <Link key={blueprint.internalNumber} href={`/project/${blueprint.internalNumber}`}>
+        <Link key={blueprint.internalNumber} href={`/blueprint/${blueprint.internalNumber}/basic-information`}>
           <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-200 group cursor-pointer p-0">
             <div className="aspect-video overflow-hidden bg-gray-100">
               <img

@@ -71,22 +71,20 @@ export function BlueprintDetailLayout({
       
       {/* メインコンテンツエリア */}
       <div className="flex-1 flex min-h-0">
-        {/* 左側: BlueprintDetailSidebar */}
-        <BlueprintDetailSidebar
-          views={blueprintViews}
-          onViewSelect={handleViewSelect}
-          onViewRemove={handleViewRemove}
-          onViewAdd={handleViewAdd}
-        />
-        
-        {/* 中央・右側: リサイザブルエリア */}
         <div className="flex-1 min-w-0">
           <ResizableLayout 
             config={blueprintDetailConfig}
             className="h-full"
           >
-            {/* 中央: BlueprintViewer */}
+            {/* 右: BlueprintViewer */}
             <ResizablePanel index={0} className="bg-gray-50 relative">
+              
+              <BlueprintDetailSidebar
+                views={blueprintViews}
+                onViewSelect={handleViewSelect}
+                onViewRemove={handleViewRemove}
+                onViewAdd={handleViewAdd}
+              />
               <BlueprintViewer activeFile={activeView} />
             </ResizablePanel>
 

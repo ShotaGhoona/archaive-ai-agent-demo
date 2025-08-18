@@ -178,7 +178,7 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
       <div 
         className="absolute inset-0 flex items-center justify-center"
         style={{
-          transform: `translate(${position.x}px, ${position.y}px)`
+          transform: `translate(${position.x + 48}px, ${position.y}px)`
         }}
       >
         <img
