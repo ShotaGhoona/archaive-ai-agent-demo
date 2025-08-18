@@ -13,6 +13,8 @@ export interface DataTableColumn<T = unknown> {
   selectOptions?: string[];
   render?: (item: T, value: unknown) => React.ReactNode;
   headerRender?: (column: DataTableColumn<T>) => React.ReactNode;
+  stickyLeft?: number;
+  stickyRight?: number;
 }
 
 export interface EditingCell {

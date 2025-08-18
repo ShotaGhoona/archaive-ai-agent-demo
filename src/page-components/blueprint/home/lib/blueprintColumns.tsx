@@ -36,6 +36,7 @@ export const createBlueprintColumns = (): DataTableColumn<Blueprint>[] => [
     sortable: false,
     editable: false,
     locked: true,
+    stickyLeft: 0,
     render: (blueprint: Blueprint) => (
       <Link href={`/project/${blueprint.internalNumber}/blueprint`}>
         <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">

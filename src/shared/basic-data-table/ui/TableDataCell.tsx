@@ -2,6 +2,7 @@ import React from 'react';
 import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/shadcnui';
 import { Lock } from 'lucide-react';
 import { DataTableColumn, CellContentData } from '../model';
+import { useStickyColumns } from '../lib/useStickyColumns';
 
 interface TableDataCellProps<T> {
   item: T;
@@ -22,12 +23,13 @@ export function TableDataCell<T>({
   getColumnWidth,
   getCellClassName
 }: TableDataCellProps<T>) {
+  const { getStickyStyle } = useStickyColumns();
   // カスタムレンダー関数がある場合
   if (column.render && !isEditing) {
     return (
       <TableCell 
         className={getCellClassName(column.key as string, isEditing)}
-        style={{ width: getColumnWidth(column.key as string), minWidth: getColumnWidth(column.key as string) }}
+        style={getStickyStyle(column, getColumnWidth)}
         onClick={column.editable ? () => onCellClick(item, column.key as string) : undefined}
       >
         {column.render(item, cellContent.value)}
@@ -40,7 +42,7 @@ export function TableDataCell<T>({
     return (
       <TableCell 
         className={getCellClassName(column.key as string, false)}
-        style={{ width: getColumnWidth(column.key as string), minWidth: getColumnWidth(column.key as string) }}
+        style={getStickyStyle(column, getColumnWidth)}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -61,7 +63,7 @@ export function TableDataCell<T>({
   return (
     <TableCell 
       className={getCellClassName(column.key as string, isEditing)}
-      style={{ width: getColumnWidth(column.key as string), minWidth: getColumnWidth(column.key as string) }}
+      style={getStickyStyle(column, getColumnWidth)}
       onClick={column.editable ? () => onCellClick(item, column.key as string) : undefined}
     >
       {isEditing ? (
