@@ -106,7 +106,7 @@ export function BlueprintDetailSidebar({
 
   return (
     <div className={`h-full flex flex-col z-10 absolute left-0 top-0 transition-all duration-300 ${
-      isGalleryMode ? 'w-full bg-gray-900/20 backdrop-blur-md' : 'w-48'
+      isGalleryMode ? 'w-full bg-white/10 backdrop-blur-md' : 'w-48 bg-gradient-to-r from-white/80 via-white/60 to-transparent'
     }`}>
       {/* 図面ビュー一覧 */}
       <div className="flex-1 overflow-y-auto scrollbar-hidden p-4">

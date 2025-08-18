@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
-import { Save, Plus, Trash2 } from "lucide-react";
+import { Save, Plus, Trash2, Edit, Check, X } from "lucide-react";
 import { BlueprintFile, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-detail-layout/model/types";
 import materialMasterData from "@/page-components/setting/material-master/data/materialMaster.json";
 import processMasterData from "@/page-components/setting/process-master/data/processMaster.json";
@@ -62,6 +62,13 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
   const [materialSelection, setMaterialSelection] = useState<MaterialSelection | null>(null);
   const [processSelections, setProcessSelections] = useState<ProcessSelection[]>([]);
   const [otherCosts, setOtherCosts] = useState<OtherCost[]>([]);
+  const [materialMultiplier, setMaterialMultiplier] = useState<number>(100);
+  const [processMultiplier, setProcessMultiplier] = useState<number>(100);
+  const [isManualEdit, setIsManualEdit] = useState<boolean>(false);
+  const [hasManualEdit, setHasManualEdit] = useState<boolean>(false);
+  const [manualMaterialCost, setManualMaterialCost] = useState<number>(0);
+  const [manualProcessCost, setManualProcessCost] = useState<number>(0);
+  const [manualOtherCost, setManualOtherCost] = useState<number>(0);
   const [isModified, setIsModified] = useState(false);
 
   useEffect(() => {
@@ -70,6 +77,13 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
       setMaterialSelection(null);
       setProcessSelections([]);
       setOtherCosts([]);
+      setMaterialMultiplier(100);
+      setProcessMultiplier(100);
+      setIsManualEdit(false);
+      setHasManualEdit(false);
+      setManualMaterialCost(0);
+      setManualProcessCost(0);
+      setManualOtherCost(0);
       setIsModified(false);
     }
   }, [activeFile]);
@@ -117,6 +131,11 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
     setIsModified(true);
   };
 
+  // 工程の表示価格を掛け率適用後で計算
+  const getProcessDisplayPrice = (process: ProcessSelection) => {
+    return Math.round(process.price * (processMultiplier / 100));
+  };
+
   // 工程削除
   const handleProcessRemove = (id: string) => {
     setProcessSelections(prev => prev.filter(p => p.id !== id));
@@ -149,10 +168,47 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
   };
 
   // 合計計算
-  const materialCost = materialSelection?.price || 0;
-  const processCost = processSelections.reduce((sum, p) => sum + p.price, 0);
-  const otherCost = otherCosts.reduce((sum, c) => sum + c.price, 0);
+  const materialBaseCost = materialSelection?.price || 0;
+  const calculatedMaterialCost = Math.round(materialBaseCost * (materialMultiplier / 100));
+  const processBaseCost = processSelections.reduce((sum, p) => sum + p.price, 0);
+  const calculatedProcessCost = Math.round(processBaseCost * (processMultiplier / 100));
+  const calculatedOtherCost = otherCosts.reduce((sum, c) => sum + c.price, 0);
+  
+  // 手動編集済みの場合は手動値を使用、そうでなければ計算値を使用
+  const materialCost = hasManualEdit ? manualMaterialCost : calculatedMaterialCost;
+  const processCost = hasManualEdit ? manualProcessCost : calculatedProcessCost;
+  const otherCost = hasManualEdit ? manualOtherCost : calculatedOtherCost;
   const totalCost = materialCost + processCost + otherCost;
+
+  // 手動編集開始
+  const handleStartManualEdit = () => {
+    // 現在の値（手動編集済みなら手動値、そうでなければ計算値）を設定
+    setManualMaterialCost(hasManualEdit ? manualMaterialCost : calculatedMaterialCost);
+    setManualProcessCost(hasManualEdit ? manualProcessCost : calculatedProcessCost);
+    setManualOtherCost(hasManualEdit ? manualOtherCost : calculatedOtherCost);
+    setIsManualEdit(true);
+    setIsModified(true);
+  };
+
+  // 手動編集キャンセル
+  const handleCancelManualEdit = () => {
+    // 手動編集をキャンセルして元の値に戻す
+    if (hasManualEdit) {
+      // 以前の手動編集値に戻す（変更前の手動値を復元する必要があるが、ここでは簡単に編集モードを終了）
+      setIsManualEdit(false);
+    } else {
+      // 手動編集したことがない場合は計算値に戻す
+      setIsManualEdit(false);
+    }
+    setIsModified(true);
+  };
+
+  // 手動編集確定
+  const handleConfirmManualEdit = () => {
+    setIsManualEdit(false);
+    setHasManualEdit(true); // 手動編集済みフラグを立てる
+    setIsModified(true);
+  };
 
 
   const handleSave = () => {
@@ -174,10 +230,27 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {/* 1. 材料選択 */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">材料選択</h3>
-          <div className="border rounded-lg">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold">材料選択</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">掛け率:</span>
+              <Input
+                type="number"
+                value={materialMultiplier}
+                onChange={(e) => {
+                  setMaterialMultiplier(Number(e.target.value));
+                  setIsModified(true);
+                }}
+                className="w-20"
+                min="0"
+                step="1"
+              />
+              <span className="text-sm text-gray-600">%</span>
+            </div>
+          </div>
+          <div className="border rounded-lg bg-gray-50">
             {materialSelection ? (
-              <div className="flex justify-between items-center p-3 border-b">
+              <div className="flex justify-between items-center p-3">
                 <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
@@ -188,12 +261,11 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
                   </Button>
                   <span>{materialSelection.materialName}</span>
                 </div>
-                <div className="font-medium">{materialSelection.price.toLocaleString()}円</div>
+                <div className="font-medium">{materialCost.toLocaleString()}円</div>
               </div>
             ) : (
-              <div className="p-3">
                 <Select onValueChange={handleMaterialSelect}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full border-0">
                     <Plus className="h-4 w-4 mr-2" />
                     <SelectValue placeholder="材料を選択" />
                   </SelectTrigger>
@@ -205,17 +277,34 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              
             )}
           </div>
         </div>
 
         {/* 2. 工程選択 */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">工程選択</h3>
-          <div className="border rounded-lg">
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold">工程選択</h3>
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600">掛け率:</span>
+              <Input
+                type="number"
+                value={processMultiplier}
+                onChange={(e) => {
+                  setProcessMultiplier(Number(e.target.value));
+                  setIsModified(true);
+                }}
+                className="w-20"
+                min="0"
+                step="1"
+              />
+              <span className="text-sm text-gray-600">%</span>
+            </div>
+          </div>
+          <div className="border rounded-lg py-2 bg-gray-50">
             {processSelections.map((process) => (
-              <div key={process.id} className="flex justify-between items-center p-3 border-b">
+              <div key={process.id} className="flex justify-between items-center px-3 py-1">
                 <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
@@ -236,33 +325,31 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
                     <span className="text-sm text-gray-600">分</span>
                   </div>
                 </div>
-                <div className="font-medium">{process.price.toLocaleString()}円</div>
+                <div className="font-medium">{getProcessDisplayPrice(process).toLocaleString()}円</div>
               </div>
             ))}
-            <div className="p-3">
-              <Select onValueChange={handleProcessAdd} value="">
-                <SelectTrigger className="w-full">
-                  <Plus className="h-4 w-4 mr-2" />
-                  <SelectValue placeholder="工程を追加" />
-                </SelectTrigger>
-                <SelectContent>
-                  {processMasterData.map((process) => (
-                    <SelectItem key={process.id} value={process.id}>
-                      {process.processName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <Select onValueChange={handleProcessAdd} value="">
+              <SelectTrigger className="w-full border-0">
+                <Plus className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="工程を追加" />
+              </SelectTrigger>
+              <SelectContent>
+                {processMasterData.map((process) => (
+                  <SelectItem key={process.id} value={process.id}>
+                    {process.processName}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         {/* 3. その他費用 */}
         <div className="space-y-3">
           <h3 className="text-lg font-semibold">その他費用</h3>
-          <div className="border rounded-lg">
+          <div className="border rounded-lg py-2 bg-gray-50">
             {otherCosts.map((cost) => (
-              <div key={cost.id} className="flex justify-between items-center p-3 border-b">
+              <div key={cost.id} className="flex justify-between items-center px-3 py-1">
                 <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
@@ -289,9 +376,9 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
                 </div>
               </div>
             ))}
-            <div className="p-3">
+            <div className="">
               <Button
-                variant="outline"
+                variant="ghost"
                 onClick={handleOtherCostAdd}
                 className="w-full"
               >
@@ -304,20 +391,90 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
 
         {/* 4. 見積もり結果 */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">見積もり結果</h3>
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold">見積もり結果</h3>
+            <div className="flex items-center gap-2">
+              {!isManualEdit ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleStartManualEdit}
+                  className="gap-2"
+                >
+                  <Edit className="h-4 w-4" />
+                  手動編集
+                </Button>
+              ) : (
+                <div className="flex gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleConfirmManualEdit}
+                    className="gap-1"
+                  >
+                    <Check className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCancelManualEdit}
+                    className="gap-1"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="border rounded-lg p-4 bg-gray-50">
             <div className="space-y-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span>材料費:</span>
-                <span>{materialCost.toLocaleString()}円</span>
+                {isManualEdit ? (
+                  <Input
+                    type="number"
+                    value={manualMaterialCost}
+                    onChange={(e) => {
+                      setManualMaterialCost(Number(e.target.value));
+                      setIsModified(true);
+                    }}
+                    className="w-32 text-right"
+                  />
+                ) : (
+                  <span>{materialCost.toLocaleString()}円</span>
+                )}
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span>工程費:</span>
-                <span>{processCost.toLocaleString()}円</span>
+                {isManualEdit ? (
+                  <Input
+                    type="number"
+                    value={manualProcessCost}
+                    onChange={(e) => {
+                      setManualProcessCost(Number(e.target.value));
+                      setIsModified(true);
+                    }}
+                    className="w-32 text-right"
+                  />
+                ) : (
+                  <span>{processCost.toLocaleString()}円</span>
+                )}
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span>その他:</span>
-                <span>{otherCost.toLocaleString()}円</span>
+                {isManualEdit ? (
+                  <Input
+                    type="number"
+                    value={manualOtherCost}
+                    onChange={(e) => {
+                      setManualOtherCost(Number(e.target.value));
+                      setIsModified(true);
+                    }}
+                    className="w-32 text-right"
+                  />
+                ) : (
+                  <span>{otherCost.toLocaleString()}円</span>
+                )}
               </div>
               <hr className="my-2" />
               <div className="flex justify-between text-lg font-bold">

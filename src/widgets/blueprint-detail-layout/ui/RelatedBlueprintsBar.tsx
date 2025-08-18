@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import { Card, CardContent, Badge, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
+import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
 import { RelatedBlueprint } from "../model/relatedBlueprintTypes";
 import { FileText } from "lucide-react";
 
@@ -12,7 +12,6 @@ interface RelatedBlueprintsBarProps {
 
 export function RelatedBlueprintsBar({ 
   blueprints, 
-  projectId, 
   currentPath 
 }: RelatedBlueprintsBarProps) {
   const getStatusIndicator = (status: RelatedBlueprint['status']) => {

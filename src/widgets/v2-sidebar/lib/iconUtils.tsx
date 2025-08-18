@@ -1,6 +1,6 @@
 import { 
-  FileText, Package, Wrench, Calculator, Truck, ClipboardCheck, 
-  FolderOpen, Receipt, ShoppingCart, Send, BookOpen, Tag,
+  FileText, Package, Wrench, Calculator, ClipboardCheck, 
+  FolderOpen, Receipt, ShoppingCart, Send, BookOpen,
   Building2, ShoppingBag, Box
 } from "lucide-react";
 import { FaFolder } from "react-icons/fa";
