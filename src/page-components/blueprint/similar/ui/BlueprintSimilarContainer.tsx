@@ -81,7 +81,7 @@ export default function BlueprintSimilarContainer() {
   return (
     <div className="h-full">
       <div className="flex-1 overflow-y-auto p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {similarBlueprints
           .sort((a, b) => b.similarity - a.similarity)
           .map((blueprint) => (
@@ -134,19 +134,7 @@ export default function BlueprintSimilarContainer() {
       <SimilarBlueprintCompareModal
         isOpen={isCompareOpen}
         onClose={handleCloseCompare}
-        currentBlueprint={activeView ? {
-          id: activeView.id,
-          name: activeView.name,
-          description: activeView.description,
-          size: 0,
-          type: "blueprint-view",
-          imageUrl: activeView.imageUrl,
-          createdAt: activeView.createdAt,
-          isActive: activeView.isActive,
-          basicInformation: blueprintData.basicInformation,
-          estimateInformation: blueprintData.estimateInformation,
-          similarBlueprints: activeView.similarBlueprints
-        } : null}
+        currentView={activeView}
         similarBlueprint={compareBlueprint}
       />
     </div>

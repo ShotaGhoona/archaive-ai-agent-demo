@@ -101,7 +101,7 @@ export function BlueprintDetailSidebar({
   };
 
   return (
-    <div className="w-48 border-r bg-white flex flex-col">
+    <div className="w-48 flex flex-col bg-gray-100">
       {/* 図面ビュー一覧 */}
       <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hidden">
         {/* 追加ボタン */}
@@ -154,7 +154,7 @@ export function BlueprintDetailSidebar({
             className={`
               cursor-pointer transition-all duration-200 group relative py-1
               ${view.isActive 
-                ? 'ring-2 ring-primary bg-primary/5' 
+                ? 'ring-2 ring-primary' 
                 : 'hover:shadow-md hover:bg-gray-50'
               }
             `}

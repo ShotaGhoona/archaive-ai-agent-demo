@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
-import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "@/widgets/blueprint-detail-layout/model/types";
+import { BlueprintView, SimilarBlueprint, BasicInformation, EstimateInformation } from "@/widgets/blueprint-detail-layout/model/types";
 import { EditableComparisonField, ReadOnlyComparisonField } from "../lib/comparison-field-components";
+import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
 
 interface SimilarBlueprintCompareModalProps {
   isOpen: boolean;
   onClose: () => void;
-  currentBlueprint: BlueprintFile | null;
+  currentView: BlueprintView | null;
   similarBlueprint: SimilarBlueprint | null;
 }
 
@@ -61,7 +62,7 @@ const estimateInputFields: Array<{
 export function SimilarBlueprintCompareModal({
   isOpen,
   onClose,
-  currentBlueprint,
+  currentView,
   similarBlueprint
 }: SimilarBlueprintCompareModalProps) {
   const [activeTab, setActiveTab] = useState<'basic' | 'estimate'>('estimate');
@@ -71,13 +72,14 @@ export function SimilarBlueprintCompareModal({
   const [isEstimateModified, setIsEstimateModified] = useState(false);
 
   React.useEffect(() => {
-    if (currentBlueprint) {
-      setBasicFormData(currentBlueprint.basicInformation || {});
-      setEstimateFormData(currentBlueprint.estimateInformation || {});
+    if (currentView) {
+      // 製品レベルの情報を使用（新しいデータ構造）
+      setBasicFormData(blueprintData.basicInformation || {});
+      setEstimateFormData(blueprintData.estimateInformation || {});
       setIsBasicModified(false);
       setIsEstimateModified(false);
     }
-  }, [currentBlueprint]);
+  }, [currentView]);
 
   const handleBasicInputChange = (field: keyof BasicInformation, value: string) => {
     setBasicFormData(prev => ({
@@ -105,7 +107,7 @@ export function SimilarBlueprintCompareModal({
     setIsEstimateModified(false);
   };
 
-  if (!currentBlueprint || !similarBlueprint) {
+  if (!currentView || !similarBlueprint) {
     return null;
   }
 
@@ -127,7 +129,7 @@ export function SimilarBlueprintCompareModal({
               {/* タイトルエリア */}
               <div className="p-4 pb-2 flex gap-1">
                 <div className="flex-1">
-                  <h4 className="text-base font-semibold text-gray-900 border-b-2 border-gray-300 pb-3 bg-gray-50/50 px-3 py-2 rounded-t-lg">現在の図面</h4>
+                  <h4 className="text-base font-semibold text-gray-900 border-b-2 border-gray-300 pb-3 bg-gray-50/50 px-3 py-2 rounded-t-lg">現在のビュー</h4>
                 </div>
                 <div className="w-px bg-gray-300 mx-2"></div>
                 <div className="flex-1">
@@ -137,11 +139,11 @@ export function SimilarBlueprintCompareModal({
               
               {/* 図面コンテンツエリア */}
               <div className="flex p-4 pt-2 gap-1">
-                {/* 左側: 現在の図面 */}
+                {/* 左側: 現在のビュー */}
                 <div className="flex-1 bg-gray-50 rounded-lg overflow-hidden p-4 flex items-center justify-center">
                   <img
-                    src={currentBlueprint.imageUrl}
-                    alt={currentBlueprint.name}
+                    src={currentView.imageUrl}
+                    alt={currentView.name}
                     className="max-w-full max-h-full object-contain rounded border"
                   />
                 </div>
@@ -220,7 +222,7 @@ export function SimilarBlueprintCompareModal({
               {/* タイトルエリア */}
               <div className="p-4 pb-2 flex gap-1">
                 <div className="flex-1">
-                  <h4 className="text-base font-semibold text-gray-900 border-b-2 border-gray-300 pb-3 bg-gray-50/50 px-3 py-2 rounded-t-lg">現在の図面</h4>
+                  <h4 className="text-base font-semibold text-gray-900 border-b-2 border-gray-300 pb-3 bg-gray-50/50 px-3 py-2 rounded-t-lg">現在のビュー</h4>
                 </div>
                 <div className="w-px bg-gray-300 mx-2"></div>
                 <div className="flex-1">
@@ -230,11 +232,11 @@ export function SimilarBlueprintCompareModal({
               
               {/* 図面コンテンツエリア */}
               <div className="flex p-4 pt-2 gap-1">
-                {/* 左側: 現在の図面 */}
+                {/* 左側: 現在のビュー */}
                 <div className="flex-1 bg-gray-50 rounded-lg overflow-hidden p-4 flex items-center justify-center">
                   <img
-                    src={currentBlueprint.imageUrl}
-                    alt={currentBlueprint.name}
+                    src={currentView.imageUrl}
+                    alt={currentView.name}
                     className="max-w-full max-h-full object-contain rounded border"
                   />
                 </div>

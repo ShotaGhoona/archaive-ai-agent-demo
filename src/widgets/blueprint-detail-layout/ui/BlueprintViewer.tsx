@@ -343,17 +343,6 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
           </Tooltip>          
         </div>
       </div>
-
-      {zoom === 1 && position.x === 0 && position.y === 0 && (
-        <div className="absolute bottom-6 left-6 bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700">
-          <div className="font-medium mb-1">操作方法:</div>
-          <div className="space-y-1 text-xs">
-            <div>• ドラッグで移動</div>
-            <div>• マウスホイールでズーム</div>
-            <div>• 右下のボタンで拡大/縮小</div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

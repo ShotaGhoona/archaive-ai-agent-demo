@@ -63,41 +63,41 @@ export function BlueprintDetailLayout({
   };
 
   return (
-    <div className="h-[calc(100vh-45px)] flex">
-      {/* 左側: BlueprintDetailSidebar */}
-      <BlueprintDetailSidebar
-        views={blueprintViews}
-        onViewSelect={handleViewSelect}
-        onViewRemove={handleViewRemove}
-        onViewAdd={handleViewAdd}
-      />
+    <div className="h-[calc(100vh-45px)] flex flex-col">
+      {/* 全体上部: タブナビゲーション */}
+      <div className="flex-shrink-0 p-4 border-b">
+        <BlueprintTabNavigation />
+      </div>
       
-      {/* 中央・右側: リサイザブルエリア */}
-      <div className="flex-1 min-w-0">
-        <ResizableLayout 
-          config={blueprintDetailConfig}
-          className="h-full"
-        >
-          {/* 中央: BlueprintViewer */}
-          <ResizablePanel index={0} className="bg-gray-50 relative">
-            <BlueprintViewer activeFile={activeView} />
-          </ResizablePanel>
+      {/* メインコンテンツエリア */}
+      <div className="flex-1 flex min-h-0">
+        {/* 左側: BlueprintDetailSidebar */}
+        <BlueprintDetailSidebar
+          views={blueprintViews}
+          onViewSelect={handleViewSelect}
+          onViewRemove={handleViewRemove}
+          onViewAdd={handleViewAdd}
+        />
+        
+        {/* 中央・右側: リサイザブルエリア */}
+        <div className="flex-1 min-w-0">
+          <ResizableLayout 
+            config={blueprintDetailConfig}
+            className="h-full"
+          >
+            {/* 中央: BlueprintViewer */}
+            <ResizablePanel index={0} className="bg-gray-50 relative">
+              <BlueprintViewer activeFile={activeView} />
+            </ResizablePanel>
 
-          <ResizableHandle />
+            <ResizableHandle />
 
-          {/* 右側: タブナビゲーション + コンテンツ */}
-          <ResizablePanel index={1} className="flex flex-col bg-white">
-            {/* 右側上部: タブナビゲーション */}
-            <div className="flex-shrink-0 p-4 border-b">
-              <BlueprintTabNavigation />
-            </div>
-
-            {/* 右側下部: 各コンテナ */}
-            <div className="flex-1 overflow-hidden">
+            {/* 右側: コンテンツ */}
+            <ResizablePanel index={1}>
               {children}
-            </div>
-          </ResizablePanel>
-        </ResizableLayout>
+            </ResizablePanel>
+          </ResizableLayout>
+        </div>
       </div>
     </div>
   );
