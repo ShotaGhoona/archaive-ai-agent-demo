@@ -114,7 +114,7 @@ export function BlueprintDetailSidebar({
         
         <div 
           className={`
-            border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors bg-white/90
+            border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors
             ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'}
             ${isUploading ? 'border-blue-300 bg-blue-50' : ''}
           `}
@@ -140,16 +140,11 @@ export function BlueprintDetailSidebar({
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center gap-2">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2 w-full h-full">
                 <Plus className="h-6 w-6 text-gray-400" />
                 <div className="text-gray-600 text-sm mr-2">
                   図面を追加
                 </div>
-              </div>
-              <div className="text-xs text-gray-400">
-                クリックorドラッグ&ドロップ
-              </div>
             </div>
           )}
         </div>

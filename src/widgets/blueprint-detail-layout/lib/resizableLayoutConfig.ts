@@ -4,7 +4,7 @@ import { ResizableLayoutConfig } from "@/features/resizable-layout";
 export const blueprintDetailConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
   panels: [
-    { initialWidth: 60, minWidth: 20, maxWidth: 80 },
-    { initialWidth: 40, minWidth: 20, maxWidth: 80 }
+    { initialWidth: 70, minWidth: 20, maxWidth: 80 },
+    { initialWidth: 30, minWidth: 20, maxWidth: 80 }
   ]
 } as const;
