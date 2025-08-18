@@ -41,6 +41,7 @@ export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): Data
     sortable: false,
     editable: false,
     locked: true,
+    stickyLeft: 0,
     render: (customer: Customer) => (
       <Link href={`/customer/${customer.customerCode}`}>
         <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">

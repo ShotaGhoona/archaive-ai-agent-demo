@@ -2,6 +2,7 @@ import React from 'react';
 import { TableHead } from '@/shared/shadcnui';
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import { DataTableColumn, SortIconData } from '../model';
+import { useStickyColumns } from '../lib/useStickyColumns';
 
 interface TableHeaderCellProps<T> {
   column: DataTableColumn<T>;
@@ -20,6 +21,7 @@ export function TableHeaderCell<T>({
   getColumnWidth,
   getHeaderClassName
 }: TableHeaderCellProps<T>) {
+  const { getStickyStyle } = useStickyColumns();
   const renderSortIcon = () => {
     if (!column.sortable) return null;
     
@@ -68,7 +70,7 @@ export function TableHeaderCell<T>({
   return (
     <TableHead 
       className={`${getHeaderClassName(column.key as string)} relative`}
-      style={{ width: getColumnWidth(column.key as string), minWidth: getColumnWidth(column.key as string) }}
+      style={getStickyStyle(column, getColumnWidth, { isHeader: true })}
     >
       <div className="flex items-center gap-2">
         <span>{column.label}</span>

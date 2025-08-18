@@ -1,6 +1,5 @@
 import React from 'react';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal, Calculator } from 'lucide-react';
+import { Badge } from '@/shared/shadcnui';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface MaterialMaster {
