@@ -22,7 +22,7 @@ export default function SettingSidebar() {
   };
 
   return (
-    <aside className="w-72 bg-gray-50 dark:bg-gray-900 h-[calc(100vh-45px)] flex flex-col border-r border-gray-200">
+    <aside className="w-[250px] bg-gray-50 dark:bg-gray-900 h-[calc(100vh-45px)] flex flex-col border-r border-gray-200">
       {/* ナビゲーション */}
       <nav className="flex-1 overflow-y-auto py-4 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
         {settingSections.map((section) => (
@@ -59,7 +59,7 @@ export default function SettingSidebar() {
                       key={item.id}
                       href={item.href}
                       className={cn(
-                        "flex items-center gap-3 px-12 py-2 text-sm transition-colors relative",
+                        "flex items-center gap-3 px-6 py-2 text-sm transition-colors relative",
                         "hover:bg-gray-100 dark:hover:bg-gray-800",
                         isActive && "bg-primary/10 text-primary",
                         !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
