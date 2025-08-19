@@ -1,5 +1,5 @@
-import DrawingDatabaseContainer from '@/page-components/setting/drawing-database/ui/DrawingDatabaseContainer';
+import BlueprintDatabaseSettingContainer from '@/page-components/setting/drawing-database/ui/BlueprintDatabaseSettingContainer';
 
 export default function DrawingDatabasePage() {
-  return <DrawingDatabaseContainer />;
+  return <BlueprintDatabaseSettingContainer />;
 }

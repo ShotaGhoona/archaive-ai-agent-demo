@@ -189,7 +189,7 @@ export function PreviewFilter({ columns }: PreviewFilterProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="flex items-center gap-2">
+        <Button variant="outline" size="lg" className="flex items-center gap-2">
           <Filter className="h-4 w-4" />
           フィルタープレビュー
         </Button>

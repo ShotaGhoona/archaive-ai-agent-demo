@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import { PageHeader } from './PageHeader';
 import { ColumnDefineArea } from './ColumnDefineArea';
-import { ColumnConfig, DEFAULT_COLUMNS } from '../model/types';
+import { ColumnConfig, DatabaseColumnSettingProps } from '../model/types';
 
-export default function DrawingDatabaseContainer() {
-  const [columns, setColumns] = useState<ColumnConfig[]>(DEFAULT_COLUMNS);
+export default function DatabaseColumnSettingContainer({
+  defaultColumns,
+  databaseType,
+  pageTitle,
+}: DatabaseColumnSettingProps) {
+  const [columns, setColumns] = useState<ColumnConfig[]>(defaultColumns);
 
   // 列設定の更新
   const handleUpdateColumn = (id: string, updates: Partial<ColumnConfig>) => {
@@ -53,8 +57,8 @@ export default function DrawingDatabaseContainer() {
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
-    console.log('設定を保存:', columns);
-    alert('設定を保存しました');
+    console.log(`${databaseType}データベース設定を保存:`, columns);
+    alert(`${pageTitle}を保存しました`);
   };
 
   return (

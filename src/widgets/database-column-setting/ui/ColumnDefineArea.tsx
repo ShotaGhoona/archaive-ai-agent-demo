@@ -1,5 +1,23 @@
-import { Plus, GripVertical, Trash2 } from 'lucide-react';
-import { Button, Switch, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Input } from '@/shared/shadcnui';
+import { Plus, GripVertical, Trash2, Type, Hash, Calendar, List, User, ToggleLeft } from 'lucide-react';
+import { 
+  Button, 
+  Switch, 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue, 
+  Input,
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/shared/shadcnui';
 import { ColumnConfig, SelectOption } from '../model/types';
 import { SelectOptionsManager } from './SelectOptionsManager';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
@@ -80,7 +98,9 @@ export function ColumnDefineArea({
                               <Input
                                 value={column.name}
                                 onChange={(e) => handleUpdate(column.id, { name: e.target.value })}
-                                className="border-0 shadow-none focus:ring-1 focus:ring-blue-500"
+                                className={`border-0 shadow-none focus:ring-1 focus:ring-blue-500 ${
+                                  column.name === '新しい項目' ? 'text-primary font-medium' : ''
+                                }`}
                                 placeholder="項目名を入力"
                               />
                             </div>
@@ -102,12 +122,42 @@ export function ColumnDefineArea({
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="text">テキスト</SelectItem>
-                                  <SelectItem value="number">数値</SelectItem>
-                                  <SelectItem value="date">日付</SelectItem>
-                                  <SelectItem value="select">選択肢</SelectItem>
-                                  <SelectItem value="user">従業員</SelectItem>
-                                  <SelectItem value="boolean">ON / OFF</SelectItem>
+                                  <SelectItem value="text">
+                                    <div className="flex items-center gap-2">
+                                      <Type className="h-4 w-4" />
+                                      テキスト
+                                    </div>
+                                  </SelectItem>
+                                  <SelectItem value="number">
+                                    <div className="flex items-center gap-2">
+                                      <Hash className="h-4 w-4" />
+                                      数値
+                                    </div>
+                                  </SelectItem>
+                                  <SelectItem value="date">
+                                    <div className="flex items-center gap-2">
+                                      <Calendar className="h-4 w-4" />
+                                      日付
+                                    </div>
+                                  </SelectItem>
+                                  <SelectItem value="select">
+                                    <div className="flex items-center gap-2">
+                                      <List className="h-4 w-4" />
+                                      選択肢
+                                    </div>
+                                  </SelectItem>
+                                  <SelectItem value="user">
+                                    <div className="flex items-center gap-2">
+                                      <User className="h-4 w-4" />
+                                      従業員
+                                    </div>
+                                  </SelectItem>
+                                  <SelectItem value="boolean">
+                                    <div className="flex items-center gap-2">
+                                      <ToggleLeft className="h-4 w-4" />
+                                      ON / OFF
+                                    </div>
+                                  </SelectItem>
                                 </SelectContent>
                               </Select>
                               
@@ -142,14 +192,34 @@ export function ColumnDefineArea({
                                 onCheckedChange={(checked) => handleUpdate(column.id, { filterEnabled: checked })}
                               />
                             </div>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => handleDelete(column.id)}
-                              className="text-red-500 hover:text-red-600 hover:bg-red-50"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>項目を削除しますか？</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    「{column.name}」を削除します。この操作は取り消すことができません。
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() => handleDelete(column.id)}
+                                    className="bg-red-600 hover:bg-red-700"
+                                  >
+                                    削除
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </div>
                         </div>
                       )}
