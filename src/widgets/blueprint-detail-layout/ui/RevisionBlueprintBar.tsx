@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger, Button } from "@/shared/shadcnui";
 import { RevisionBlueprint } from "../model/revisionBlueprintTypes";
-import { FileText, GitCompareArrows } from "lucide-react";
+import { FileText, GitCompareArrows, ExternalLink, Briefcase } from "lucide-react";
 
 interface RevisionBlueprintBarProps {
   blueprints: RevisionBlueprint[];
@@ -15,6 +15,23 @@ export function RevisionBlueprintBar({
   currentPath,
   onCompare 
 }: RevisionBlueprintBarProps) {
+  const handleOpenBlueprintPage = (blueprintId: string, path: string) => {
+    window.open(`/blueprint/${blueprintId}/${path}`, '_blank');
+  };
+
+  const handleOpenProjectPage = (projectId: string) => {
+    window.open(`/project/${projectId}/basic-information`, '_blank');
+  };
+
+  const handleCompareBlueprint = (blueprint: RevisionBlueprint, onCompare: (blueprint: RevisionBlueprint) => void) => {
+    onCompare(blueprint);
+  };
+
+  const handleButtonClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
 
   return (
     <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-white via-white/50 to-transparent backdrop-blur-sm border-b">
@@ -22,15 +39,8 @@ export function RevisionBlueprintBar({
         {blueprints.map((blueprint) => (
           <Tooltip key={blueprint.id} delayDuration={300}>
             <TooltipTrigger asChild>
-              <Link
-                href={`/blueprint/${blueprint.id}/${currentPath}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-shrink-0"
-              >
-                <Card className={`w-40 cursor-pointer transition-all duration-200 hover:shadow-md p-0 ${
-                  blueprint.isActive ? 'ring-2 ring-primary' : 'hover:bg-gray-50'
-                }`}>
+              <div className="flex-shrink-0">
+                <Card className={`w-40 transition-all duration-200 p-0`}>
                   <CardContent className="p-2">
                     <div className="space-y-2">
                       {/* 画像部分 - aspect-videoで16:9比率 */}
@@ -60,7 +70,7 @@ export function RevisionBlueprintBar({
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
+              </div>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="w-96 p-0 border-0 shadow-2xl backdrop-blur-sm" style={{ filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))' }}>
               <div className="bg-white rounded-lg overflow-hidden">
@@ -112,22 +122,36 @@ export function RevisionBlueprintBar({
                       <p className="text-sm text-gray-900">{blueprint.description}</p>
                     </div>
                   )}
-                  {onCompare && (
-                    <div className="mt-3 pt-2 border-t">
+                  <div className="mt-3 pt-2 border-t space-y-2">
+                    <div className="flex gap-2">
                       <Button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          onCompare(blueprint);
-                        }}
+                        onClick={(e) => handleButtonClick(e, () => handleOpenBlueprintPage(blueprint.id, currentPath))}
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        図面ページを開く
+                      </Button>
+                      <Button
+                        onClick={(e) => handleButtonClick(e, () => handleOpenProjectPage(blueprint.projectId))}
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <Briefcase className="h-3 w-3 mr-1" />
+                        案件ページを開く
+                      </Button>
+                    </div>
+                    {onCompare && (
+                      <Button
+                        onClick={(e) => handleButtonClick(e, () => handleCompareBlueprint(blueprint, onCompare))}
                         size="sm"
                         className="w-full"
                       >
                         <GitCompareArrows className="h-4 w-4 mr-2" />
                         詳細比較
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
             </TooltipContent>

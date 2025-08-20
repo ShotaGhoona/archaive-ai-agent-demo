@@ -46,6 +46,7 @@
       "filename": "main_frame_v2.dwg",
       "status": "completed",
       "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "projectId": "PRJ-2024-001",
       "isActive": true
     },
     {
@@ -54,6 +55,7 @@
       "filename": "sub_frame_v1.dwg",
       "status": "in_progress",
       "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "projectId": "PRJ-2024-001",
       "isActive": false
     },
     {
@@ -62,6 +64,7 @@
       "filename": "connector_parts.dwg",
       "status": "pending",
       "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "projectId": "PRJ-2024-001",
       "isActive": false
     },
     {
@@ -70,6 +73,7 @@
       "filename": "reinforcement_plate.dwg", 
       "status": "completed",
       "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "projectId": "PRJ-2024-001",
       "isActive": false
     },
     {
@@ -78,6 +82,7 @@
       "filename": "control_box_v3.dwg",
       "status": "in_progress", 
       "imageUrl": "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+      "projectId": "PRJ-2024-001",
       "isActive": false
     }
   ],
@@ -90,6 +95,7 @@
       "deliveryDate": "2024-01-15",
       "customerName": "トヨタ自動車",
       "projectNumber": "TOY-2024-001",
+      "projectId": "PRJ-TOY-2024-001",
       "similarity": 92,
       "description": "前回納品したフレーム図面の改良版",
       "isActive": false,
@@ -140,6 +146,7 @@
       "deliveryDate": "2023-11-28",
       "customerName": "日産自動車",
       "projectNumber": "NIS-2023-045",
+      "projectId": "PRJ-NIS-2023-045",
       "similarity": 87,
       "description": "制御ボックスの配線レイアウト設計図",
       "isActive": false,
@@ -190,6 +197,7 @@
       "deliveryDate": "2023-09-10",
       "customerName": "ホンダ技研",
       "projectNumber": "HON-2023-032",
+      "projectId": "PRJ-HON-2023-032",
       "similarity": 85,
       "description": "車体補強用プレートの詳細設計",
       "isActive": false,
@@ -240,6 +248,7 @@
       "deliveryDate": "2023-07-22", 
       "customerName": "マツダ",
       "projectNumber": "MAZ-2023-018",
+      "projectId": "PRJ-MAZ-2023-018",
       "similarity": 78,
       "description": "エンジン部品接続用アセンブリ図面",
       "isActive": false,
@@ -290,6 +299,7 @@
       "deliveryDate": "2023-05-15",
       "customerName": "スバル",
       "projectNumber": "SUB-2023-011",
+      "projectId": "PRJ-SUB-2023-011",
       "similarity": 73,
       "description": "品質検査用治具の設計図面",
       "isActive": false,
