@@ -9,7 +9,7 @@ import {
   Avatar,
   AvatarFallback
 } from '@/shared/shadcnui';
-import { ExternalLink, Table, User } from 'lucide-react';
+import { ExternalLink, Table } from 'lucide-react';
 import { ColumnConfig, generateSampleValue } from '../model/types';
 
 interface PreviewTableProps {

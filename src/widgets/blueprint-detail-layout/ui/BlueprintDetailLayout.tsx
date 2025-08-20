@@ -3,16 +3,19 @@ import { useState, useEffect } from "react";
 import { usePathname, useParams } from "next/navigation";
 import { BlueprintViewer } from "./BlueprintViewer";
 import { BlueprintTabNavigation } from "@/shared/basic-layout/ui/BlueprintTabNavigation";
-import { RelatedBlueprintsBar } from "./RelatedBlueprintsBar";
+import { SameProjectBlueprintBar } from "./SameProjectBlueprintBar";
+import { RevisionBlueprintBar } from "./RevisionBlueprintBar";
+import { RevisionBlueprintCompareModal } from "./RevisionBlueprintCompareModal";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features/resizable-layout";
 import { blueprintDetailConfig } from "../lib/resizableLayoutConfig";
 import { BlueprintDetailSidebar } from "./BlueprintDetailSidebar";
 import { Button } from "@/shared/shadcnui";
-import { Layers3, ChevronLeft } from "lucide-react";
+import { Layers3, ChevronLeft, History } from "lucide-react";
 import blueprintData from "../data/blueprints.json";
-import relatedBlueprintsData from "../data/relatedBlueprints.json";
+import blueprintDetailData from "../data/blueprints.json";
 import { BlueprintView } from "../model/types";
-import { RelatedBlueprintsData } from "../model/relatedBlueprintTypes";
+import { SameProjectBlueprintsData } from "../model/sameProjectBlueprintTypes";
+import { RevisionBlueprintsData, RevisionBlueprint } from "../model/revisionBlueprintTypes";
 import Link from "next/link";
 
 interface BlueprintDetailLayoutProps {
@@ -27,10 +30,21 @@ export function BlueprintDetailLayout({
   const blueprintId = params.id as string;
   const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews);
   const [activeView, setActiveView] = useState<BlueprintView | null>(null);
-  const [showRelatedBlueprints, setShowRelatedBlueprints] = useState(false);
+  const [showSameProjectBlueprints, setShowSameProjectBlueprints] = useState(false);
+  const [showRevisionBlueprints, setShowRevisionBlueprints] = useState(false);
+  const [compareRevision, setCompareRevision] = useState<RevisionBlueprint | null>(null);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   
-  // 関連図面データの型キャスト
-  const relatedData = relatedBlueprintsData as RelatedBlueprintsData;
+  // 同一案件図面データの取得
+  const sameProjectData = {
+    projectId: blueprintDetailData.productId,
+    sameProjectBlueprints: blueprintDetailData.sameProjectBlueprints
+  } as SameProjectBlueprintsData;
+  
+  // リビジョン図面データの取得
+  const revisionData = {
+    revisionBlueprints: blueprintDetailData.revisionBlueprints
+  } as RevisionBlueprintsData;
   
   // 現在のパスから図面のパスを取得 (basic-information, estimate, similar など)
   const getCurrentPath = () => {
@@ -82,6 +96,17 @@ export function BlueprintDetailLayout({
     setBlueprintViews(prev => [...prev, newView]);
   };
 
+  // リビジョン比較ハンドラー
+  const handleCompareRevision = (revision: RevisionBlueprint) => {
+    setCompareRevision(revision);
+    setIsCompareModalOpen(true);
+  };
+
+  const handleCloseCompareModal = () => {
+    setIsCompareModalOpen(false);
+    setCompareRevision(null);
+  };
+
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col">
       {/* 全体上部: タブナビゲーション */}
@@ -106,27 +131,55 @@ export function BlueprintDetailLayout({
             <BlueprintTabNavigation />
           </div>
           
-          {/* 関連図面ボタン */}
-          <Button
-            variant={showRelatedBlueprints ? "default" : "outline"}
-            size="lg"
-            onClick={() => setShowRelatedBlueprints(!showRelatedBlueprints)}
-            className="flex items-center gap-2"
-          >
-            <Layers3 className="h-4 w-4" />
-            { showRelatedBlueprints ? '閉じる' : '関連図面を見る' }
-          </Button>
+          <div className="flex items-center gap-3">
+            {/* 同一案件図面ボタン */}
+            <Button
+              variant={showSameProjectBlueprints ? "default" : "outline"}
+              size="lg"
+              onClick={() => {
+                setShowSameProjectBlueprints(!showSameProjectBlueprints);
+                if (showRevisionBlueprints) setShowRevisionBlueprints(false);
+              }}
+              className="flex items-center gap-2"
+            >
+              <Layers3 className="h-4 w-4" />
+              { showSameProjectBlueprints ? '閉じる' : '同一案件の図面を見る' }
+            </Button>
+            
+            {/* リビジョン図面ボタン */}
+            <Button
+              variant={showRevisionBlueprints ? "default" : "outline"}
+              size="lg"
+              onClick={() => {
+                setShowRevisionBlueprints(!showRevisionBlueprints);
+                if (showSameProjectBlueprints) setShowSameProjectBlueprints(false);
+              }}
+              className="flex items-center gap-2"
+            >
+              <History className="h-4 w-4" />
+              { showRevisionBlueprints ? '閉じる' : 'リビジョン図面を見る' }
+            </Button>
+          </div>
         </div>
       </div>
       
       {/* メインコンテンツエリア */}
       <div className="flex-1 flex min-h-0 relative">
-        {/* 関連図面バー - オーバーレイ */}
-        {showRelatedBlueprints && (
-          <RelatedBlueprintsBar
-            blueprints={relatedData.relatedBlueprints}
-            projectId={relatedData.projectId}
+        {/* 同一案件図面バー - オーバーレイ */}
+        {showSameProjectBlueprints && (
+          <SameProjectBlueprintBar
+            blueprints={sameProjectData.sameProjectBlueprints}
+            projectId={sameProjectData.projectId}
             currentPath={getCurrentPath()}
+          />
+        )}
+        
+        {/* リビジョン図面バー - オーバーレイ */}
+        {showRevisionBlueprints && (
+          <RevisionBlueprintBar
+            blueprints={revisionData.revisionBlueprints}
+            currentPath={getCurrentPath()}
+            onCompare={handleCompareRevision}
           />
         )}
         <div className="flex-1 min-w-0">
@@ -155,6 +208,14 @@ export function BlueprintDetailLayout({
           </ResizableLayout>
         </div>
       </div>
+      
+      {/* リビジョン比較モーダル */}
+      <RevisionBlueprintCompareModal
+        isOpen={isCompareModalOpen}
+        onClose={handleCloseCompareModal}
+        currentView={activeView}
+        revisionBlueprint={compareRevision}
+      />
     </div>
   );
 }
