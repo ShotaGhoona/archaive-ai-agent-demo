@@ -9,7 +9,6 @@ import { createHighlightedTextElements } from './text-diff-highlighter';
 export function EditableComparisonField({ 
   config,
   currentValue,
-  comparisonValue,
   isEditable = true,
   onChange
 }: ComparisonFieldProps) {

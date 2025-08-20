@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
-import { Eye, Edit, Trash2, MoreHorizontal, Phone, ExternalLink } from 'lucide-react';
+import { Badge, Button } from '@/shared/shadcnui';
+import { ExternalLink } from 'lucide-react';
 import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Customer {
@@ -32,7 +32,7 @@ export interface CustomerColumnCallbacks {
   onDelete?: (customer: Customer) => void;
 }
 
-export const createCustomerColumns = (callbacks?: CustomerColumnCallbacks): DataTableColumn<Customer>[] => [
+export const createCustomerColumns = (): DataTableColumn<Customer>[] => [
   {
     key: 'detail',
     label: '詳細',

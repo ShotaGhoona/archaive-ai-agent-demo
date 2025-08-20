@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 // 汎用的な比較データインターフェース
 export interface ComparisonData {
   [key: string]: unknown;

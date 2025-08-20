@@ -48,7 +48,7 @@ export function ColumnDefineArea({
     onDeleteColumn(id);
   };
 
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = (result: { destination?: { index: number } | null; source: { index: number } }) => {
     if (!result.destination) {
       return;
     }

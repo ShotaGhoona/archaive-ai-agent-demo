@@ -18,5 +18,5 @@ export interface ResizableContextState {
   isDragging: boolean;
   setPanelSizes: (sizes: [number, number]) => void;
   setIsDragging: (isDragging: boolean) => void;
-  containerRef: React.RefObject<HTMLDivElement>;
+  containerRef: React.RefObject<HTMLDivElement | null>;
 }
