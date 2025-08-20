@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
 
 interface BlueprintGalleryProps {
@@ -11,9 +12,10 @@ export default function BlueprintGallery({ blueprints }: BlueprintGalleryProps) 
       <h3 className="text-lg font-semibold mb-4">登録図面</h3>
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto">
         {blueprints.map((blueprint) => (
-          <div
+          <Link
             key={blueprint.internalNumber}
-            className="border rounded-lg p-3 hover:shadow-md transition-shadow cursor-pointer"
+            href={`/blueprint/${blueprint.internalNumber}/basic-information`}
+            className="border rounded-lg p-3 hover:shadow-md transition-shadow cursor-pointer block"
           >
             <div className="aspect-square mb-2 overflow-hidden rounded bg-gray-100">
               <img
@@ -30,7 +32,7 @@ export default function BlueprintGallery({ blueprints }: BlueprintGalleryProps) 
                 {blueprint.productName}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       

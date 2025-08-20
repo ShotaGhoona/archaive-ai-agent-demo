@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/shared/shadcnui";
 import { Search, GitCompareArrows } from "lucide-react";
 import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
-import { BlueprintFile, SimilarBlueprint } from "../data/types";
+import { BlueprintFile, SimilarBlueprint } from "@/widgets/blueprint-detail-layout/model/types";
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;

@@ -133,6 +133,12 @@ export const settingSections: SettingSection[] = [
         label: "案件データベース設定",
         icon: <Database className="w-4 h-4" />,
         href: "/setting/project-database"
+      },
+      {
+        id: "customer-database",
+        label: "顧客データベース設定",
+        icon: <Database className="w-4 h-4" />,
+        href: "/setting/customer-database"
       }
     ]
   }

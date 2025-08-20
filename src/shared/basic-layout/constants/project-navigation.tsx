@@ -3,13 +3,9 @@ import {
   Receipt, 
   ShoppingCart, 
   Truck, 
-  ClipboardCheck, 
   Send, 
   FileSearch, 
   CreditCard, 
-  Building, 
-  Package,
-  Box,
   FolderOpen
 } from "lucide-react";
 
@@ -58,13 +54,6 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     description: "納品完了書類" 
   },
   { 
-    id: "inspection", 
-    label: "検査成績書", 
-    href: (id) => `/project/${id}/inspection`,
-    icon: <ClipboardCheck className="h-4 w-4" />, 
-    description: "品質検査結果" 
-  },
-  { 
     id: "shipping", 
     label: "送り状", 
     href: (id) => `/project/${id}/shipping`,
@@ -84,27 +73,6 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     href: (id) => `/project/${id}/invoice`,
     icon: <CreditCard className="h-4 w-4" />, 
     description: "代金請求書類" 
-  },
-  { 
-    id: "outsource-quotation", 
-    label: "外注見積書", 
-    href: (id) => `/project/${id}/outsource-quotation`,
-    icon: <Building className="h-4 w-4" />, 
-    description: "外注業者見積もり" 
-  },
-  { 
-    id: "outsource-delivery", 
-    label: "外注納品書", 
-    href: (id) => `/project/${id}/outsource-delivery`,
-    icon: <Package className="h-4 w-4" />, 
-    description: "外注業者納品書" 
-  },
-  { 
-    id: "3d-model", 
-    label: "3Dモデル", 
-    href: (id) => `/project/${id}/3d-model`,
-    icon: <Box className="h-4 w-4" />, 
-    description: "3次元モデルデータ" 
   },
   { 
     id: "others", 

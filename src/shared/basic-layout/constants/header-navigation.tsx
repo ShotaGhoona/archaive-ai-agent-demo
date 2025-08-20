@@ -1,6 +1,11 @@
-import { FileText, Users, Settings } from "lucide-react";
+import { FileText, Users, Settings, FolderOpen } from "lucide-react";
 
 export const headerNavigations = [
+  {
+    label: "(v2.1)",
+    href: "/v2",
+    icon: <FolderOpen className="w-4 h-4" />
+  },
   {
     label: "図面管理",
     href: "/blueprint",

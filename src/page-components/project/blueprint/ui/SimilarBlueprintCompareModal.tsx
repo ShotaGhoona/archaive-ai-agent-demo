@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
-import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "../data/types";
+import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "@/widgets/blueprint-detail-layout/model/types";
 import { EditableComparisonField, ReadOnlyComparisonField } from "../lib/comparison-field-components";
 
 interface SimilarBlueprintCompareModalProps {

@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { Button } from "@/shared/shadcnui";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
 import { customerMenuItems } from "../constants/customer-navigation";
 
 export function CustomerTabNavigation() {
@@ -30,22 +30,29 @@ export function CustomerTabNavigation() {
         const href = tab.href.replace("[id]", customerId);
         
         return (
-          <Link key={tab.id} href={href}>
-            <Button
-              variant={isActive ? "default" : "ghost"}
-              size="lg"
-              className={`
-                flex-shrink-0 h-12 px-4 gap-2 text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-primary text-primary-foreground shadow-sm" 
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }
-              `}
-            >
-              {tab.icon}
-              {tab.label}
-            </Button>
-          </Link>
+          <Tooltip key={tab.id} delayDuration={500}>
+            <TooltipTrigger asChild>
+              <Link href={href}>
+                <Button
+                  variant={isActive ? "default" : "ghost"}
+                  size="lg"
+                  className={`
+                    flex-shrink-0 h-12 px-4 gap-2 text-sm font-medium transition-all
+                    ${isActive 
+                      ? "bg-primary text-primary-foreground shadow-sm" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    }
+                  `}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>{tab.description}</p>
+            </TooltipContent>
+          </Tooltip>
         );
       })}
     </div>

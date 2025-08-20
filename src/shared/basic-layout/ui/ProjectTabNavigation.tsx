@@ -1,7 +1,7 @@
 'use client';
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { Button } from "@/shared/shadcnui";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
 import { blueprintDetailTabs } from "../constants/project-navigation";
 
 export function ProjectTabNavigation() {
@@ -32,22 +32,29 @@ export function ProjectTabNavigation() {
         const isActive = activeTab === tab.id;
         
         return (
-          <Link key={tab.id} href={tab.href(blueprintId)}>
-            <Button
-              variant={isActive ? "default" : "ghost"}
-              size="lg"
-              className={`
-                flex-shrink-0 h-12 px-4 gap-2 text-sm font-medium transition-all
-                ${isActive 
-                  ? "bg-primary text-primary-foreground shadow-sm" 
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-                }
-              `}
-            >
-              {tab.icon}
-              {tab.label}
-            </Button>
-          </Link>
+          <Tooltip key={tab.id} delayDuration={500}>
+            <TooltipTrigger asChild>
+              <Link href={tab.href(blueprintId)}>
+                <Button
+                  variant={isActive ? "default" : "ghost"}
+                  size="lg"
+                  className={`
+                    flex-shrink-0 h-12 px-4 gap-2 text-sm font-medium transition-all
+                    ${isActive 
+                      ? "bg-primary text-primary-foreground shadow-sm" 
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    }
+                  `}
+                >
+                  {tab.icon}
+                  {tab.label}
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              <p>{tab.description}</p>
+            </TooltipContent>
+          </Tooltip>
         );
       })}
     </div>
