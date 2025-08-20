@@ -16,7 +16,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
+  AlertDialogTrigger,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
 } from '@/shared/shadcnui';
 import { ColumnConfig, SelectOption } from '../model/types';
 import { SelectOptionsManager } from './SelectOptionsManager';
@@ -59,6 +62,52 @@ export function ColumnDefineArea({
   };
 
   const sortedColumns = columns.sort((a, b) => a.order - b.order);
+
+  // データ型の定義
+  const dataTypes = [
+    {
+      value: 'text',
+      label: 'テキスト',
+      icon: Type,
+      title: "テキスト型",
+      description: "文字や文章を入力する項目です。製品名、部品名、コメントなどに使用します。"
+    },
+    {
+      value: 'number',
+      label: '数値',
+      icon: Hash,
+      title: "数値型", 
+      description: "数字を入力する項目です。受注個数、寸法、重量、価格などに使用します。"
+    },
+    {
+      value: 'date',
+      label: '日付',
+      icon: Calendar,
+      title: "日付型",
+      description: "日付を入力する項目です。受注日、納期、検査日などに使用します。"
+    },
+    {
+      value: 'select',
+      label: '選択肢',
+      icon: List,
+      title: "選択肢型",
+      description: "予め決められた選択肢から選ぶ項目です。進捗状況、品質ランク、優先度などに使用します。"
+    },
+    {
+      value: 'user',
+      label: '従業員',
+      icon: User,
+      title: "従業員型",
+      description: "社内の担当者を選ぶ項目です。営業担当、設計担当、検査担当などに使用します。"
+    },
+    {
+      value: 'boolean',
+      label: 'ON / OFF',
+      icon: ToggleLeft,
+      title: "ON/OFF型",
+      description: "はい/いいえを選ぶ項目です。検査合格、緊急案件、完了フラグなどに使用します。"
+    }
+  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -118,46 +167,33 @@ export function ColumnDefineArea({
                                   });
                                 }}
                               >
-                                <SelectTrigger className="w-32">
+                                <SelectTrigger className="w-40">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="text">
-                                    <div className="flex items-center gap-2">
-                                      <Type className="h-4 w-4" />
-                                      テキスト
-                                    </div>
-                                  </SelectItem>
-                                  <SelectItem value="number">
-                                    <div className="flex items-center gap-2">
-                                      <Hash className="h-4 w-4" />
-                                      数値
-                                    </div>
-                                  </SelectItem>
-                                  <SelectItem value="date">
-                                    <div className="flex items-center gap-2">
-                                      <Calendar className="h-4 w-4" />
-                                      日付
-                                    </div>
-                                  </SelectItem>
-                                  <SelectItem value="select">
-                                    <div className="flex items-center gap-2">
-                                      <List className="h-4 w-4" />
-                                      選択肢
-                                    </div>
-                                  </SelectItem>
-                                  <SelectItem value="user">
-                                    <div className="flex items-center gap-2">
-                                      <User className="h-4 w-4" />
-                                      従業員
-                                    </div>
-                                  </SelectItem>
-                                  <SelectItem value="boolean">
-                                    <div className="flex items-center gap-2">
-                                      <ToggleLeft className="h-4 w-4" />
-                                      ON / OFF
-                                    </div>
-                                  </SelectItem>
+                                  {/* <TooltipProvider> */}
+                                    {dataTypes.map((dataType) => {
+                                      const IconComponent = dataType.icon;
+                                      return (
+                                        <Tooltip key={dataType.value} delayDuration={500}>
+                                          <TooltipTrigger asChild>
+                                            <SelectItem value={dataType.value}>
+                                              <div className="flex items-center gap-2">
+                                                <IconComponent className="h-4 w-4" />
+                                                {dataType.label}
+                                              </div>
+                                            </SelectItem>
+                                          </TooltipTrigger>
+                                          <TooltipContent side="right" className="max-w-xs">
+                                            <div className="space-y-1">
+                                              <p className="text-base font-medium">{dataType.title}</p>
+                                              <p className="text-sm">{dataType.description}</p>
+                                            </div>
+                                          </TooltipContent>
+                                        </Tooltip>
+                                      );
+                                    })}
+                                  {/* </TooltipProvider> */}
                                 </SelectContent>
                               </Select>
                               
@@ -177,7 +213,7 @@ export function ColumnDefineArea({
                           <div className="flex-shrink-0 flex items-center gap-5">
                             {/* 表示設定 */}
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">データベースに表示</span>
+                              <span className="text-sm text-gray-600">テーブルに表示</span>
                               <Switch
                                 checked={column.displayEnabled}
                                 onCheckedChange={(checked) => handleUpdate(column.id, { displayEnabled: checked })}

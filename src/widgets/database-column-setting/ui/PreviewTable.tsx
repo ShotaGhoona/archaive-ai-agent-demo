@@ -127,7 +127,7 @@ export function PreviewTable({ columns }: PreviewTableProps) {
         </Button>
       </SheetTrigger>
       <SheetContent side="bottom" className="h-[50vh]">
-        <div className="flex-1 m-6 min-h-0">
+        <div className="flex-1 my-6 min-h-0">
           <BasicDataTable
             data={sampleData}
             columns={tableColumns}

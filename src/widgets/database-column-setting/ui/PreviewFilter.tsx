@@ -194,7 +194,7 @@ export function PreviewFilter({ columns }: PreviewFilterProps) {
           フィルタープレビュー
         </Button>
       </SheetTrigger>
-      <SheetContent side="right" className="p-5">
+      <SheetContent side="left" className="py-5">
         {filterColumns.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center text-gray-500">
@@ -208,7 +208,7 @@ export function PreviewFilter({ columns }: PreviewFilterProps) {
         ) : (
           <>
             {/* ヘッダーにクリアボタンを追加 */}
-            <div className="flex items-center justify-between mt-4 mb-6">
+            <div className="flex items-center justify-between mt-4 px-4">
               <h2 className="text-lg font-bold text-gray-900">
                 詳細フィルター
               </h2>
@@ -224,7 +224,7 @@ export function PreviewFilter({ columns }: PreviewFilterProps) {
             </div>
 
             {/* フィルター内容 */}
-            <div className="flex-1 overflow-y-auto space-y-4">
+            <div className="flex-1 overflow-y-auto space-y-4 px-4">
               {filterColumns.map((column, index) => (
                 <React.Fragment key={column.id}>
                   <div>

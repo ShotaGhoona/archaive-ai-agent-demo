@@ -46,7 +46,7 @@ export const generateSampleValue = (dataType: ColumnConfig['dataType'], options?
     case 'number':
       return '123';
     case 'date':
-      return '2024/01/15';
+      return 'YYYY/MM/DD';
     case 'select':
       if (options && options.length > 0) {
         // ランダムに選択肢から選ぶ
