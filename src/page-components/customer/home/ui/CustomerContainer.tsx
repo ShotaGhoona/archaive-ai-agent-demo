@@ -87,7 +87,6 @@ export default function CustomerContainer() {
             onPageChange={setCurrentPage}
           />
         </div>
-        {/* ページネーションはBasicDataTable内に統合されるため削除 */}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/shared/shadcnui/button";
 import { Input } from "@/shared/shadcnui/input";
 import { Search, Plus, Download } from "lucide-react";
-import { BasicDataTable } from "@/shared/basic-data-table/ui/BasicDataTable";
+import { TableView } from "@/shared/view/table-view";
 import { EquipmentMasterDialog } from "./EquipmentMasterDialog";
 import { EquipmentMaster, mockData, columns } from "../data/mockData";
 
@@ -96,7 +96,7 @@ export default function EquipmentMasterContainer() {
 
       {/* データテーブル */}
       <div className="flex-1 px-6 overflow-hidden">
-        <BasicDataTable
+        <TableView
           data={filteredData}
           columns={columns}
           onItemUpdate={(rowId, field, value) => {

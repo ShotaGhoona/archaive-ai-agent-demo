@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib/materialMasterColumns";
 
 interface MaterialMasterTableViewProps {
@@ -29,7 +29,7 @@ export function MaterialMasterTableView({
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={materialMasters}
       columns={MATERIAL_MASTER_COLUMNS}
       onItemUpdate={onMaterialMasterUpdate}

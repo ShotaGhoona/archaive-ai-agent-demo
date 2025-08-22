@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { List, Grid3X3, Plus } from "lucide-react";
 import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
-import { TableView } from "@/page-components/blueprint/home/ui/TableView";
+import { BlueprintTableView } from "@/page-components/blueprint/home/ui/TableView";
 import Link from "next/link";
 import { Card, CardContent, Badge } from "@/shared/shadcnui";
 import { SearchInput } from "@/shared/GenericSearch";
@@ -83,7 +83,7 @@ export default function RepeatProductSearchPanel({ isOpen, onClose }: RepeatProd
         {/* メインコンテンツ */}
         <div className="flex-1 flex flex-col min-h-0 px-4">
           {viewMode === "table" ? (
-            <TableView blueprints={filteredBlueprints} />
+            <BlueprintTableView blueprints={filteredBlueprints} />
           ) : (
             <div className="overflow-auto flex-1 relative">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-1">

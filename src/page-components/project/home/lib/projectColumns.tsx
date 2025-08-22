@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Badge, Button } from '@/shared/shadcnui';
 import { ExternalLink } from 'lucide-react';
-import { DataTableColumn } from '@/shared/basic-data-table';
+import { DataTableColumn } from '@/shared/view/table-view';
 
 export interface Project {
   projectId: string;

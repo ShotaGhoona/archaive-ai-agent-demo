@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { Customer, CUSTOMER_COLUMNS } from "../lib/customerColumns";
 
 interface CustomerTableViewProps {
@@ -31,7 +31,7 @@ export function CustomerTableView({
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={customers}
       columns={CUSTOMER_COLUMNS}
       onItemUpdate={onCustomerUpdate}

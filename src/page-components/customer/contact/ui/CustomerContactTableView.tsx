@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { Contact } from "../lib/contactColumns";
 import { CONTACT_COLUMNS } from "../lib/contactColumns";
 
@@ -32,7 +32,7 @@ export function ContactTableView({
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={contacts}
       columns={CONTACT_COLUMNS}
       onItemUpdate={onContactUpdate}

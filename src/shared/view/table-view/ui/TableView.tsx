@@ -4,13 +4,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared/shadcnui';
-import { BasicDataTableProps } from '../model';
+import { TableViewProps } from '../model';
 import { useColumnResize, useTableSort, useCellEdit } from '../lib';
 import { TableHeaderCell } from './TableHeaderCell';
 import { TableDataCell } from './TableDataCell';
 import { TablePagination } from './TablePagination';
 
-export function BasicDataTable<T>({
+export function TableView<T>({
   data,
   columns,
   onItemUpdate,
@@ -18,7 +18,7 @@ export function BasicDataTable<T>({
   className = '',
   emptyMessage = 'データがありません',
   pagination
-}: BasicDataTableProps<T>) {
+}: TableViewProps<T>) {
   // Custom hooks
   const { 
     handleMouseDown, 

@@ -55,7 +55,7 @@ export interface SortableFields {
 }
 
 // データテーブルのメイン props
-export interface BasicDataTableProps<T = unknown> {
+export interface TableViewProps<T = unknown> {
   data: T[];
   columns: DataTableColumn<T>[];
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;

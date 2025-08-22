@@ -2,8 +2,8 @@
 import { useState } from "react";
 import blueprintsData from "../data/blueprint.json";
 import { BlueprintPageHeader } from "./BlueprintPageHeader";
-import { TableView } from "./TableView";
-import { GalleryView } from "./GalleryView";
+import { BlueprintTableView } from "./TableView";
+import { BlueprintGalleryView } from "./GalleryView";
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
 import { BLUEPRINT_FILTER_CONFIG } from "../lib/blueprintFilterConfig";
 import { BLUEPRINT_SEARCHBAR_CONFIG } from "../lib/blueprintSearchbarConfig";
@@ -66,7 +66,7 @@ export default function BlueprintContainer() {
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
           {viewMode === "table" && (
-            <TableView 
+            <BlueprintTableView 
               blueprints={filteredBlueprints}
               currentPage={currentPage}
               totalItems={filteredBlueprints.length}
@@ -75,7 +75,7 @@ export default function BlueprintContainer() {
             />
           )}
           {viewMode === "gallery" && (
-            <GalleryView 
+            <BlueprintGalleryView 
               blueprints={filteredBlueprints.slice(
                 (currentPage - 1) * itemsPerPage,
                 currentPage * itemsPerPage

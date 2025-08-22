@@ -20,11 +20,11 @@ interface Blueprint {
   image: string;
 }
 
-interface GalleryViewProps {
+interface BlueprintGalleryViewProps {
   blueprints: Blueprint[];
 }
 
-export function GalleryView({ blueprints }: GalleryViewProps) {
+export function BlueprintGalleryView({ blueprints }: BlueprintGalleryViewProps) {
   return (
     <div className="overflow-auto flex-1">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb gap-6 p-1">

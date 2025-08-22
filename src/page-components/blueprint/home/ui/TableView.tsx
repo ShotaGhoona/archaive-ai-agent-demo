@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { Blueprint, createBlueprintColumns } from "../lib/blueprintColumns";
 import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 
-interface TableViewProps {
+interface BlueprintTableViewProps {
   blueprints: Blueprint[];
   onBlueprintUpdate?: (internalNumber: string, field: string, value: unknown) => void;
   // ページネーション統合のための新しいprops
@@ -13,14 +13,14 @@ interface TableViewProps {
   onPageChange?: (page: number) => void;
 }
 
-export function TableView({ 
+export function BlueprintTableView({ 
   blueprints, 
   onBlueprintUpdate,
   currentPage,
   totalItems,
   itemsPerPage,
   onPageChange
-}: TableViewProps) {
+}: BlueprintTableViewProps) {
   const [previewFile, setPreviewFile] = useState<Blueprint | null>(null);
 
   // Blueprint を PreviewableFile に変換
@@ -55,7 +55,7 @@ export function TableView({
 
   return (
     <>
-      <BasicDataTable
+      <TableView
         data={blueprints}
         columns={columns}
         onItemUpdate={onBlueprintUpdate}

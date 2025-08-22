@@ -1,5 +1,5 @@
 "use client";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { createBlueprintColumns, Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
 
 interface BlueprintTableProps {
@@ -11,7 +11,7 @@ export default function BlueprintTable({ blueprints }: BlueprintTableProps) {
 
   return (
     <div className="bg-white flex flex-col">
-      <BasicDataTable
+      <TableView
         data={blueprints}
         columns={blueprintColumns}
         getRowId={(blueprint) => blueprint.internalNumber}

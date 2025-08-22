@@ -1,4 +1,4 @@
-# BasicDataTable
+# TableView
 
 汎用的なデータテーブルコンポーネント。ソート、編集、ページネーション、固定列（sticky columns）などの機能を提供します。
 
@@ -30,7 +30,7 @@ export interface MyData {
 ### 2. カラム設定の作成
 
 ```typescript
-import { DataTableColumn } from '@/shared/basic-data-table';
+import { DataTableColumn } from '@/shared/view/table-view';
 
 export const MY_COLUMNS: DataTableColumn<MyData>[] = [
   {
@@ -75,7 +75,7 @@ export const MY_COLUMNS: DataTableColumn<MyData>[] = [
 ### 3. コンポーネントでの使用
 
 ```typescript
-import { BasicDataTable } from '@/shared/basic-data-table';
+import { TableView } from '@/shared/view/table-view';
 import { MY_COLUMNS } from './myColumns';
 
 function MyTableView({ data }: { data: MyData[] }) {
@@ -84,7 +84,7 @@ function MyTableView({ data }: { data: MyData[] }) {
   };
 
   return (
-    <BasicDataTable
+    <TableView
       data={data}
       columns={MY_COLUMNS}
       onItemUpdate={handleUpdate}
@@ -178,7 +178,7 @@ function MyTableWithPagination({ data }: { data: MyData[] }) {
   };
 
   return (
-    <BasicDataTable
+    <TableView
       data={data}
       columns={MY_COLUMNS}
       pagination={paginationConfig}
@@ -261,7 +261,7 @@ export function TableView({ blueprints, currentPage, totalItems, itemsPerPage, o
   };
 
   return (
-    <BasicDataTable
+    <TableView
       data={blueprints}
       columns={columns}
       pagination={paginationConfig}
@@ -311,7 +311,7 @@ export const PROJECT_COLUMNS: DataTableColumn<Project>[] = [
 // ProjectTableView.tsx
 export function ProjectTableView({ projects, currentPage, totalItems, itemsPerPage, onPageChange }) {
   return (
-    <BasicDataTable
+    <TableView
       data={projects}
       columns={PROJECT_COLUMNS}
       getRowId={(project) => project.projectId}
@@ -342,7 +342,7 @@ export function ProjectTableView({ projects, currentPage, totalItems, itemsPerPa
 ```
 src/shared/basic-data-table/
 ├── ui/                         # UIコンポーネント
-│   ├── BasicDataTable.tsx      # メインコンポーネント
+│   ├── TableView.tsx      # メインコンポーネント
 │   ├── TableHeaderCell.tsx     # ヘッダーセル
 │   ├── TableDataCell.tsx       # データセル
 │   └── TablePagination.tsx     # ページネーション

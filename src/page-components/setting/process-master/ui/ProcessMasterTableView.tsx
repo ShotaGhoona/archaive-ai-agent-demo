@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib/processMasterColumns";
 
 interface ProcessMasterTableViewProps {
@@ -29,7 +29,7 @@ export function ProcessMasterTableView({
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={processMasters}
       columns={PROCESS_MASTER_COLUMNS}
       onItemUpdate={onProcessMasterUpdate}

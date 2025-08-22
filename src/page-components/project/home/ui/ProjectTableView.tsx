@@ -1,5 +1,5 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
+import { TableView } from "@/shared/view/table-view";
 import { Project, PROJECT_COLUMNS } from "../lib/projectColumns";
 
 interface ProjectTableViewProps {
@@ -31,7 +31,7 @@ export function ProjectTableView({
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={projects}
       columns={PROJECT_COLUMNS}
       onItemUpdate={onProjectUpdate}
