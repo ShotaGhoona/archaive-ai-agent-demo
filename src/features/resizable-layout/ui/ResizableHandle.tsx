@@ -1,4 +1,4 @@
-import { useResizableContext } from '../lib/useResizableContext';
+import { useResizableContext } from '../lib';
 
 interface ResizableHandleProps {
   className?: string;

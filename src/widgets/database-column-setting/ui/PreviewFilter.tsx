@@ -13,9 +13,9 @@ import {
   SelectTrigger,
   SelectValue,
   Separator
-} from '@/shared/shadcnui';
+} from '@/shared';
 import { Filter, Calendar, RotateCcw } from 'lucide-react';
-import { ColumnConfig } from '../model/types';
+import { ColumnConfig } from '../model';
 import React, { useState } from 'react';
 
 interface PreviewFilterProps {

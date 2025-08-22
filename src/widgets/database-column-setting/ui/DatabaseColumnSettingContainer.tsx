@@ -1,9 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { PageHeader } from './PageHeader';
-import { ColumnDefineArea } from './ColumnDefineArea';
-import { ColumnConfig, DatabaseColumnSettingProps } from '../model/types';
+import { PageHeader, ColumnDefineArea } from '../ui';
+import { ColumnConfig, DatabaseColumnSettingProps } from '../model';
 
 export default function DatabaseColumnSettingContainer({
   defaultColumns,

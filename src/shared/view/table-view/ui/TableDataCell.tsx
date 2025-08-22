@@ -1,8 +1,8 @@
 import React from 'react';
-import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/shadcnui';
+import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared';
 import { Lock } from 'lucide-react';
 import { DataTableColumn, CellContentData } from '../model';
-import { useStickyColumns } from '../lib/useStickyColumns';
+import { useStickyColumns } from '../lib';
 
 interface TableDataCellProps<T> {
   item: T;

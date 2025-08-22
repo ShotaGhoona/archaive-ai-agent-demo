@@ -1,4 +1,4 @@
-import { TableView, DataTableColumn } from '@/shared/view/table-view';
+import { TableView, DataTableColumn } from '@/shared';
 import { 
   Button, 
   Sheet, 
@@ -8,9 +8,10 @@ import {
   Switch,
   Avatar,
   AvatarFallback
-} from '@/shared/shadcnui';
+  } from '@/shared';
 import { ExternalLink, Table } from 'lucide-react';
-import { ColumnConfig, generateSampleValue } from '../model/types';
+import { ColumnConfig } from '../model';
+import { generateSampleValue } from '../model';
 
 interface PreviewTableProps {
   columns: ColumnConfig[];

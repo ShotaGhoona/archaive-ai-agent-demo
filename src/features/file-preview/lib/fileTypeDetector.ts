@@ -1,4 +1,4 @@
-import { FileTypeInfo } from '../model/types';
+import { FileTypeInfo } from '../model';
 
 // ファイル拡張子からカテゴリを判定
 const FILE_TYPE_MAP: Record<string, FileTypeInfo['category']> = {

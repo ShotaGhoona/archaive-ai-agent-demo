@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { ResizableContextState } from '../model/types';
+import { ResizableContextState } from '../model';
 
 export const ResizableContext = createContext<ResizableContextState | null>(null);
 

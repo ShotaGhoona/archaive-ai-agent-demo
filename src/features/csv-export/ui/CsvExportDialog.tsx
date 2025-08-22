@@ -19,10 +19,9 @@ import {
   TableRow,
   ScrollArea,
   Label,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { Download, GripVertical } from "lucide-react";
-import { useCsvExport } from "../model/useCsvExport";
-import { CsvExportDialogProps } from "../model/types";
+import { useCsvExport, CsvExportDialogProps } from "../model";
 
 export function CsvExportDialog<T>({
   data,

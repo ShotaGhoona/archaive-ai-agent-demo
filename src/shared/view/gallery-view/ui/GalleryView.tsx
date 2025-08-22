@@ -1,7 +1,7 @@
 import React from 'react';
 import { GalleryViewProps } from '../model';
 import { useGalleryLayout } from '../lib';
-import { GalleryItem } from './GalleryItem';
+import { GalleryItem } from '../ui';
 
 export function GalleryView<T>({ 
   data, 

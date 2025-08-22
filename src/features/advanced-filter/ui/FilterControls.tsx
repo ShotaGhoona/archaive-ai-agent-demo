@@ -7,8 +7,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/shared/shadcnui';
-import { FilterControlProps, DateRangeFilter } from '../model/types';
+} from '@/shared';
+import { FilterControlProps, DateRangeFilter } from '../model';
 
 /**
  * 個別のフィルターコントロールを表示するコンポーネント

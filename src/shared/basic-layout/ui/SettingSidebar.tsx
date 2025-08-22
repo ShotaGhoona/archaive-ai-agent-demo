@@ -7,7 +7,7 @@ import { HelpCircle, ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { settingSections, appInfo } from "../constants/settings-sidebar";
 
-export default function SettingSidebar() {
+export function SettingSidebar() {
   const pathname = usePathname();
   const [expandedSections, setExpandedSections] = useState<string[]>(
     settingSections.map(section => section.id) // デフォルトで全て展開

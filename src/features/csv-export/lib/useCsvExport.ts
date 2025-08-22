@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CsvColumnConfig, UseCsvExportReturn } from './types';
+import { CsvColumnConfig, UseCsvExportReturn } from '../model';
 
 export function useCsvExport<T>(
   data: T[],

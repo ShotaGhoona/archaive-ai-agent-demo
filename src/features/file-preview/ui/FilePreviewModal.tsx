@@ -3,12 +3,10 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
-} from '@/shared/shadcnui';
-import { FilePreviewModalProps } from '../model/types';
-import { useFilePreview } from '../lib/useFilePreview';
-import { PreviewProviderManager, defaultPreviewProviders } from '../lib/previewProviders';
-import { PreviewToolbar } from './PreviewToolbar';
-import { PreviewViewer } from './PreviewViewer';
+} from '@/shared';
+import { FilePreviewModalProps } from '../model';
+import { useFilePreview, PreviewProviderManager, defaultPreviewProviders } from '../lib';
+import { PreviewToolbar, PreviewViewer } from '../ui';
 
 export function FilePreviewModal({
   files,

@@ -11,7 +11,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/shared/shadcnui';
+} from '@/shared';
 
 export interface TablePaginationProps {
   currentPage: number;

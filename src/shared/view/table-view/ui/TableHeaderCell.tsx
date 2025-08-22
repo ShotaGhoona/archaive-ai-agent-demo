@@ -1,8 +1,8 @@
 import React from 'react';
-import { TableHead } from '@/shared/shadcnui';
+import { TableHead } from '@/shared';
 import { ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react';
 import { DataTableColumn, SortIconData } from '../model';
-import { useStickyColumns } from '../lib/useStickyColumns';
+import { useStickyColumns } from '../lib';
 
 interface TableHeaderCellProps<T> {
   column: DataTableColumn<T>;

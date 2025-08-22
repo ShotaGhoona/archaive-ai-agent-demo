@@ -11,7 +11,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/shared/shadcnui"
+} from "@/shared"
 
 function Command({
   className,

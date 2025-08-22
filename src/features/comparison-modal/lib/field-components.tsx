@@ -1,7 +1,7 @@
 import React from 'react';
-import { Input } from "@/shared/shadcnui";
-import { ComparisonFieldProps } from "../model/types";
-import { createHighlightedTextElements } from './text-diff-highlighter';
+import { Input } from "@/shared";
+import { ComparisonFieldProps } from "../model";
+import { createHighlightedTextElements } from '../lib';
 
 /**
  * 編集可能な比較フィールド（現在のアイテム用）

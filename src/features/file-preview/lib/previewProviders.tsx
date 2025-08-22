@@ -1,8 +1,7 @@
 import React from 'react';
 import { FileImage, Download } from 'lucide-react';
-import { Button } from '@/shared/shadcnui';
-import { PreviewProvider, PreviewableFile, PreviewRenderOptions } from '../model/types';
-import { detectFileType } from './fileTypeDetector';
+import { Button } from '@/shared';
+import { PreviewProvider, PreviewableFile, PreviewRenderOptions, detectFileType } from '../model';
 
 // 画像プレビュープロバイダー
 export const imagePreviewProvider: PreviewProvider = {

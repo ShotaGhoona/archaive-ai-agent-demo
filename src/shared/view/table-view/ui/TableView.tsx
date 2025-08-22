@@ -3,12 +3,10 @@ import {
   TableBody,
   TableHeader,
   TableRow,
-} from '@/shared/shadcnui';
+} from '@/shared';
 import { TableViewProps } from '../model';
 import { useColumnResize, useTableSort, useCellEdit } from '../lib';
-import { TableHeaderCell } from './TableHeaderCell';
-import { TableDataCell } from './TableDataCell';
-import { TablePagination } from './TablePagination';
+import { TableHeaderCell, TableDataCell, TablePagination } from '../ui';
 
 export function TableView<T>({
   data,

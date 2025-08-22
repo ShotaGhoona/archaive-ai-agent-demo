@@ -1,8 +1,7 @@
-import { Button } from '@/shared/shadcnui';
+import { Button } from '@/shared';
 import { Save } from 'lucide-react';
-import { PreviewTable } from './PreviewTable';
-import { PreviewFilter } from './PreviewFilter';
-import { ColumnConfig } from '../model/types';
+import { PreviewTable, PreviewFilter } from '../ui';
+import { ColumnConfig } from '../model';
 
 interface PageHeaderProps {
   onSave: () => void;
