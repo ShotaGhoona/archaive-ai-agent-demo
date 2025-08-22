@@ -157,9 +157,12 @@ export class PathAnalyzer {
       exports.push(`export * from './${baseName}';`);
     }
     
-    // サブディレクトリからのエクスポート
+    // サブディレクトリからのエクスポート（index.tsがあるもののみ）
     for (const subDir of analysis.subDirectories) {
-      exports.push(`export * from './${subDir}';`);
+      const subDirIndexPath = path.join(analysis.path, subDir, 'index.ts');
+      if (fs.existsSync(subDirIndexPath)) {
+        exports.push(`export * from './${subDir}';`);
+      }
     }
     
     return exports.join('\n') + (exports.length > 0 ? '\n' : '');
