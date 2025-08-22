@@ -2,17 +2,12 @@
 
 import React, { useState } from 'react';
 import { ChevronRight, Plus, MoreVertical, Edit, Trash2, ChevronLeft, GripVertical } from 'lucide-react';
-import { Button } from '../../../shared/shadcnui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../../shared/shadcnui/dropdown-menu';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../../shared/shadcnui/tooltip';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared';
 import sidebarDataJson from '../init-data/v2-sidebar.json';
-import { V2SidebarItem } from '../model/types';
-import { getIconByType } from '../lib/iconUtils';
+import { V2SidebarItem, V2SidebarProps, Column } from '../model';
+import { getIconByType } from '../lib';
 import { NewItemDialog } from './NewItemDialog';
-import { V2SidebarProps, Column } from '../model/types';
-import { generateId, addItemToTree, deleteItemFromTree } from '../lib/sidebarUtils';
-import { handleItemClick, handleColumnToggle, updateColumnsAfterAdd, updateColumnsAfterDelete } from '../lib/columnLogic';
-import { DragDropState, handleDragStart as dragStart, handleDragOver, handleDrop } from '../lib/dragDropLogic';
+import { generateId, addItemToTree, deleteItemFromTree, handleItemClick, handleColumnToggle, updateColumnsAfterAdd, updateColumnsAfterDelete, handleDragStart, handleDragOver, handleDrop, DragDropState } from '../lib';
 
 export const V2Sidebar: React.FC<V2SidebarProps> = () => {
   const defaultData = sidebarDataJson as V2SidebarItem[];
@@ -67,8 +62,8 @@ export const V2Sidebar: React.FC<V2SidebarProps> = () => {
     setDragState({ draggedItemIndex: null, draggedColumnIndex: null });
   };
 
-  const handleDragStart = (e: React.DragEvent, itemIndex: number, columnIndex: number) => {
-    dragStart(e, itemIndex, columnIndex, setDragState);
+  const onDragStart = (e: React.DragEvent, itemIndex: number, columnIndex: number) => {
+    handleDragStart(e, itemIndex, columnIndex, setDragState);
   };
 
   const onDrop = (e: React.DragEvent, targetIndex: number, columnIndex: number) => {
@@ -149,7 +144,7 @@ export const V2Sidebar: React.FC<V2SidebarProps> = () => {
                   <div
                     key={item.id}
                     draggable={!isCollapsed}
-                    onDragStart={(e) => handleDragStart(e, itemIndex, index)}
+                    onDragStart={(e) => onDragStart(e, itemIndex, index)}
                     onDragOver={handleDragOver}
                     onDrop={(e) => onDrop(e, itemIndex, index)}
                     className={`flex items-center gap-2 p-2 cursor-pointer group rounded h-10 transition-colors relative ${

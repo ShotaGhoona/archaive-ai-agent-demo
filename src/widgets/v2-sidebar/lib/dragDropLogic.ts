@@ -1,4 +1,4 @@
-import { Column, V2SidebarItem } from '../model/types';
+import { Column, V2SidebarItem } from '../model';
 
 export interface DragDropState {
   draggedItemIndex: number | null;

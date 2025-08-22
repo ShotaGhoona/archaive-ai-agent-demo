@@ -4,8 +4,8 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { ViolationDetector } from './detector';
-import { PathAnalyzer } from './analyzer';
+import { ViolationDetector, ImportViolation } from './detector';
+import { PathAnalyzer, DirectoryAnalysis } from './analyzer';
 import { ViolationReporter } from './reporter';
 import { ViolationFixer } from './fixer';
 
@@ -277,7 +277,7 @@ async function runReportMode(
  */
 async function saveReport(
   reporter: ViolationReporter, 
-  violations: any[], 
+  violations: ImportViolation[], 
   options: CLIOptions
 ) {
   const outputPath = options.output!;
@@ -304,7 +304,7 @@ async function saveReport(
  */
 async function generateMissingIndexFiles(
   analyzer: PathAnalyzer, 
-  analyses: any[], 
+  analyses: DirectoryAnalysis[], 
   options: CLIOptions
 ) {
   const missing = analyses.filter(a => a.needsIndexFile && !a.hasIndexFile);

@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label } from '../../../shared/shadcnui';
-import { itemTypeOptions, iconColorOptions } from '../lib/constants';
-import { getIconByType } from '../lib/iconUtils';
-import { V2SidebarItem } from '../model/types';
+import { Button, Dialog, DialogContent, DialogHeader, DialogTitle, Input, Label } from '@/shared';
+import { itemTypeOptions, iconColorOptions, getIconByType } from '../lib';
+import { V2SidebarItem } from '../model';
 
 interface NewItemDialogProps {
   isOpen: boolean;

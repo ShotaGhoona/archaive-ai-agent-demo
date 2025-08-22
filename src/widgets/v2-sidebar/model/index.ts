@@ -1,1 +1,1 @@
-export type { SidebarItem, SidebarGroup, SidebarConfig, ItemType, ItemAction } from './types';
+export type { V2SidebarItem, V2SidebarProps, Column, ItemTypeOption, IconColorOption } from './types';
