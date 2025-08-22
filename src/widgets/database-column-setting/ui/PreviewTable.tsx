@@ -132,7 +132,6 @@ export function PreviewTable({ columns }: PreviewTableProps) {
             data={sampleData}
             columns={tableColumns}
             getRowId={(item) => item.id}
-            emptyMessage="表示する項目がありません"
           />
         </div>
       </SheetContent>

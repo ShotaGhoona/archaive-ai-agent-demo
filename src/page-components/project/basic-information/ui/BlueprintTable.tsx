@@ -15,7 +15,6 @@ export default function BlueprintTable({ blueprints }: BlueprintTableProps) {
         data={blueprints}
         columns={blueprintColumns}
         getRowId={(blueprint) => blueprint.internalNumber}
-        emptyMessage="登録されている図面はありません"
       />
     </div>
   );

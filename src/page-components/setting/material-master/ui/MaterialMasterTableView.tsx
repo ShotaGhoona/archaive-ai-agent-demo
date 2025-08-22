@@ -25,7 +25,6 @@ export function MaterialMasterTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -34,7 +33,6 @@ export function MaterialMasterTableView({
       columns={MATERIAL_MASTER_COLUMNS}
       onItemUpdate={onMaterialMasterUpdate}
       getRowId={(materialMaster) => materialMaster.id}
-      emptyMessage="材料マスターデータがありません"
       pagination={paginationConfig}
     />
   );

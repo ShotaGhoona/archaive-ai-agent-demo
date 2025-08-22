@@ -15,8 +15,6 @@ export function TableView<T>({
   columns,
   onItemUpdate,
   getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random()),
-  className = '',
-  emptyMessage = 'データがありません',
   pagination
 }: TableViewProps<T>) {
   // Custom hooks
@@ -73,20 +71,19 @@ export function TableView<T>({
       onPageChange: pagination.onPageChange,
       onItemsPerPageChange: pagination.onItemsPerPageChange,
       showItemsPerPageSelector: pagination.showItemsPerPageSelector,
-      showTotalItems: pagination.showTotalItems,
     };
   }, [pagination, data.length]);
 
   if (data.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
-        {emptyMessage}
+        データがありません
       </div>
     );
   }
 
   return (
-    <div className={`flex-1 flex flex-col min-h-0 ${className}`}>
+    <div className="flex-1 flex flex-col min-h-0">
       {/* スクロールコンテナを移動し、table要素の直接の親にする */}
       <div className="flex-1 relative overflow-auto">
         <table className="w-full caption-bottom text-base">

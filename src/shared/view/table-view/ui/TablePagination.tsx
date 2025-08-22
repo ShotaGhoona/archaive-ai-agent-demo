@@ -21,7 +21,6 @@ export interface TablePaginationProps {
   onPageChange: (page: number) => void;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   showItemsPerPageSelector?: boolean;
-  showTotalItems?: boolean;
   maxVisiblePages?: number;
   className?: string;
 }
@@ -34,7 +33,6 @@ export function TablePagination({
   onPageChange,
   onItemsPerPageChange,
   showItemsPerPageSelector = false,
-  showTotalItems = true,
   maxVisiblePages = 5,
   className = '',
 }: TablePaginationProps) {
@@ -65,11 +63,9 @@ export function TablePagination({
   return (
     <div className={`flex items-center justify-between ${className}`}>
       {/* 総項目数表示 */}
-      {showTotalItems && (
-        <div className="text-sm text-muted-foreground  whitespace-nowrap">
-          {totalItems}件中 {startItem}-{endItem}件を表示
-        </div>
-      )}
+      <div className="text-sm text-muted-foreground  whitespace-nowrap">
+        {totalItems}件中 {startItem}-{endItem}件を表示
+      </div>
 
       {/* ページネーション */}
       <Pagination>

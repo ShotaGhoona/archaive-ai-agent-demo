@@ -105,7 +105,6 @@ export default function EquipmentMasterContainer() {
             );
             setData(updatedData);
           }}
-          emptyMessage="登録された機械設備情報がありません"
         />
       </div>
 

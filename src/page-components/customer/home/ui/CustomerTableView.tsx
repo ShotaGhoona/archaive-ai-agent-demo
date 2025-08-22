@@ -27,7 +27,6 @@ export function CustomerTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -36,7 +35,6 @@ export function CustomerTableView({
       columns={CUSTOMER_COLUMNS}
       onItemUpdate={onCustomerUpdate}
       getRowId={(customer) => customer.customerCode}
-      emptyMessage="顧客データがありません"
       pagination={paginationConfig}
     />
   );

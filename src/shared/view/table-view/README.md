@@ -89,7 +89,6 @@ function MyTableView({ data }: { data: MyData[] }) {
       columns={MY_COLUMNS}
       onItemUpdate={handleUpdate}
       getRowId={(item) => item.id}
-      emptyMessage="データがありません"
     />
   );
 }
@@ -174,7 +173,6 @@ function MyTableWithPagination({ data }: { data: MyData[] }) {
     itemsPerPage,
     totalItems: data.length,
     onPageChange: setCurrentPage,
-    showTotalItems: true,
   };
 
   return (
@@ -257,7 +255,6 @@ export function TableView({ blueprints, currentPage, totalItems, itemsPerPage, o
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   };
 
   return (
@@ -265,7 +262,6 @@ export function TableView({ blueprints, currentPage, totalItems, itemsPerPage, o
       data={blueprints}
       columns={columns}
       pagination={paginationConfig}
-      emptyMessage="図面データがありません"
     />
   );
 }
@@ -321,9 +317,7 @@ export function ProjectTableView({ projects, currentPage, totalItems, itemsPerPa
         itemsPerPage,
         totalItems,
         onPageChange,
-        showTotalItems: true,
       }}
-      emptyMessage="プロジェクトがありません"
     />
   );
 }

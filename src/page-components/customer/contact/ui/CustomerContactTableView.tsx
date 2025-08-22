@@ -28,7 +28,6 @@ export function ContactTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -37,7 +36,6 @@ export function ContactTableView({
       columns={CONTACT_COLUMNS}
       onItemUpdate={onContactUpdate}
       getRowId={(contact) => contact.contactId}
-      emptyMessage="顧客データがありません"
       pagination={paginationConfig}
     />
   );

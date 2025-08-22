@@ -6,7 +6,6 @@ import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
 interface BlueprintTableViewProps {
   blueprints: Blueprint[];
   onBlueprintUpdate?: (internalNumber: string, field: string, value: unknown) => void;
-  // ページネーション統合のための新しいprops
   currentPage?: number;
   totalItems?: number;
   itemsPerPage?: number;
@@ -23,23 +22,18 @@ export function BlueprintTableView({
 }: BlueprintTableViewProps) {
   const [previewFile, setPreviewFile] = useState<Blueprint | null>(null);
 
-  // Blueprint を PreviewableFile に変換
   const convertBlueprintToPreviewable = (blueprint: Blueprint): PreviewableFile => ({
     id: blueprint.internalNumber,
     name: blueprint.filename,
-    url: blueprint.image || '/placeholder-image.png', // 画像URLまたはプレースホルダー
-    type: 'image/png', // 適切なMIMEタイプを設定
-    size: 0, // サイズ情報がない場合は0
+    url: blueprint.image || '/placeholder-image.png', 
+    type: 'image/png', 
+    size: 0, 
     metadata: {
       orderSource: blueprint.orderSource,
       productName: blueprint.productName,
       customerNumber: blueprint.customerNumber,
     }
   });
-
-  // const handlePreview = (blueprint: Blueprint) => {
-  //   setPreviewFile(blueprint);
-  // };
 
   const columns = createBlueprintColumns();
 
@@ -50,7 +44,6 @@ export function BlueprintTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -60,7 +53,6 @@ export function BlueprintTableView({
         columns={columns}
         onItemUpdate={onBlueprintUpdate}
         getRowId={(blueprint) => blueprint.internalNumber}
-        emptyMessage="図面データがありません"
         pagination={paginationConfig}
       />
 

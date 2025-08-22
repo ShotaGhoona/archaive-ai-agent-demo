@@ -60,8 +60,6 @@ export interface TableViewProps<T = unknown> {
   columns: DataTableColumn<T>[];
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
   getRowId?: (item: T) => string;
-  className?: string;
-  emptyMessage?: string;
   pagination?: PaginationConfig;
 }
 
@@ -91,5 +89,4 @@ export interface PaginationConfig {
   onPageChange: (page: number) => void;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   showItemsPerPageSelector?: boolean;
-  showTotalItems?: boolean;
 }

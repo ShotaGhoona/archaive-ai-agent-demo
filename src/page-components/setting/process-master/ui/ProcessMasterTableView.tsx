@@ -25,7 +25,6 @@ export function ProcessMasterTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -34,7 +33,6 @@ export function ProcessMasterTableView({
       columns={PROCESS_MASTER_COLUMNS}
       onItemUpdate={onProcessMasterUpdate}
       getRowId={(processMaster) => processMaster.id}
-      emptyMessage="工程マスターデータがありません"
       pagination={paginationConfig}
     />
   );

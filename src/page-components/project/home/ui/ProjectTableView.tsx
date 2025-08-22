@@ -27,7 +27,6 @@ export function ProjectTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
@@ -36,7 +35,6 @@ export function ProjectTableView({
       columns={PROJECT_COLUMNS}
       onItemUpdate={onProjectUpdate}
       getRowId={(project) => project.projectId}
-      emptyMessage="プロジェクトデータがありません"
       pagination={paginationConfig}
     />
   );
