@@ -46,7 +46,7 @@ export class ViolationReporter {
   ): void {
     const violationsByFile = this.groupViolationsByFile(violations);
 
-    for (const [filePath, fileViolations] of violationsByFile) {
+    for (const [filePath, fileViolations] of Array.from(violationsByFile)) {
       const relativeFilePath = filePath.replace(process.cwd(), '.');
       console.log(chalk.blue.bold(`📁 ${relativeFilePath}`));
 
@@ -174,7 +174,7 @@ export class ViolationReporter {
 
     markdown += '## Violations by File\n\n';
     
-    for (const [filePath, fileViolations] of violationsByFile) {
+    for (const [filePath, fileViolations] of Array.from(violationsByFile)) {
       const relativeFilePath = filePath.replace(process.cwd(), '.');
       markdown += `### ${relativeFilePath}\n\n`;
       

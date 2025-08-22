@@ -43,9 +43,9 @@ export class PathAnalyzer {
     }
 
     const contents = await fs.readdir(absolutePath);
-    const tsFiles = contents.filter(file => 
+    const tsFiles = contents.filter((file: string) => 
       file.endsWith('.ts') || file.endsWith('.tsx')
-    ).filter(file => file !== 'index.ts'); // index.tsは除外
+    ).filter((file: string) => file !== 'index.ts'); // index.tsは除外
 
     const subDirectories = [];
     for (const item of contents) {
@@ -208,7 +208,6 @@ export class PathAnalyzer {
   private async findAnalysisTargets(rootDir: string): Promise<string[]> {
     const pattern = path.join(rootDir, '**/*/').replace(/\\/g, '/');
     const directories = await glob(pattern, { 
-      onlyDirectories: true,
       ignore: ['**/node_modules/**', '**/.git/**']
     });
     
