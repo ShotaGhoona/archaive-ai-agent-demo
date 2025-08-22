@@ -1,4 +1,4 @@
-import SettingSidebar from "@/shared/basic-layout/ui/SettingSidebar";
+import { SettingSidebar } from "@/shared/basic-layout/ui/SettingSidebar";
 
 export default function SettingLayout({
   children,

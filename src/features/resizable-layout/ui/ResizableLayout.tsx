@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { ResizableContext } from '../lib';
+import { useResizableContext } from '../lib';
 import { ResizableLayoutConfig } from '../model';
 
 interface ResizableLayoutProps {
