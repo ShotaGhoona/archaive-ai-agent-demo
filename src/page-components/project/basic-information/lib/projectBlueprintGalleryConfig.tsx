@@ -1,8 +1,13 @@
 import React from 'react';
 import { GalleryViewConfig } from '@/shared/view/gallery-view';
 import { Blueprint } from '@/page-components/blueprint/home/lib/blueprintColumns';
+import { Button } from '@/shared/shadcnui';
+import { Expand, ExternalLink } from 'lucide-react';
 
-export const createProjectBlueprintGalleryConfig = (): GalleryViewConfig<Blueprint> => ({
+export const createProjectBlueprintGalleryConfig = (
+  onPopup: (blueprint: Blueprint) => void,
+  onFullPage: (blueprint: Blueprint) => void
+): GalleryViewConfig<Blueprint> => ({
   layoutConfig: {
     grid: { xs: 2, lg: 3 },
     aspectRatio: 'video'
@@ -11,6 +16,30 @@ export const createProjectBlueprintGalleryConfig = (): GalleryViewConfig<Bluepri
   itemConfig: {
     showThumbnail: true,
     getThumbnailUrl: (blueprint) => blueprint.image || "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+    thumbnailOverlayRender: (blueprint) => (
+      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
+        <Button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onPopup(blueprint);
+          }}
+        >
+          <Expand size={16} />
+          ポップアップ
+        </Button>
+        <Button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onFullPage(blueprint);
+          }}
+        >
+          <ExternalLink size={16} />
+          フルページ
+        </Button>
+      </div>
+    ),
     contentRender: (blueprint) => (
       <div className="space-y-1">
         <p className="text-sm font-medium truncate" title={blueprint.filename}>
@@ -21,13 +50,6 @@ export const createProjectBlueprintGalleryConfig = (): GalleryViewConfig<Bluepri
         </p>
       </div>
     )
-  },
-  
-  behaviorConfig: {
-    linkConfig: {
-      enabled: true,
-      getHref: (blueprint) => `/blueprint/${blueprint.internalNumber}/basic-information`
-    }
   },
   
   getRowId: (blueprint) => blueprint.internalNumber

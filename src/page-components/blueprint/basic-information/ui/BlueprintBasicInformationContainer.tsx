@@ -2,12 +2,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, Input } from "@/shared/shadcnui";
 import { Save } from "lucide-react";
-import { BasicInformation as BasicInfo } from "@/widgets/blueprint-detail-layout/model/types";
+import { BasicInformation, BlueprintDetailLayout } from "@/widgets/blueprint-detail-layout";
 import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
 
 const basicInputFields: Array<{
   label: string;
-  key: keyof BasicInfo;
+  key: keyof BasicInformation;
   readOnly?: boolean;
 }> = [
   { label: "ファイル名", key: "fileName", readOnly: true },
@@ -32,7 +32,7 @@ const basicInputFields: Array<{
 ];
 
 export default function BlueprintBasicInformationContainer() {
-  const [formData, setFormData] = useState<Partial<BasicInfo>>(blueprintData.basicInformation || {});
+  const [formData, setFormData] = useState<Partial<BasicInformation>>(blueprintData.basicInformation || {});
   const [isModified, setIsModified] = useState(false);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function BlueprintBasicInformationContainer() {
     setIsModified(false);
   }, []);
 
-  const handleInputChange = (field: keyof BasicInfo, value: string) => {
+  const handleInputChange = (field: keyof BasicInformation, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -54,35 +54,37 @@ export default function BlueprintBasicInformationContainer() {
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {basicInputFields.map((field) => (
-            <div key={field.key} className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                {field.label}
-              </label>
-              <Input
-                value={formData[field.key] || ''}
-                onChange={(e) => handleInputChange(field.key, e.target.value)}
-                readOnly={field.readOnly}
-              />
-            </div>
-          ))}
+    <BlueprintDetailLayout>
+      <div className="h-full flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {basicInputFields.map((field) => (
+              <div key={field.key} className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  {field.label}
+                </label>
+                <Input
+                  value={formData[field.key] || ''}
+                  onChange={(e) => handleInputChange(field.key, e.target.value)}
+                  readOnly={field.readOnly}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div className="p-4 border-t">
+          <Button
+            onClick={handleSave}
+            disabled={!isModified}
+            className="w-full gap-2"
+            variant={isModified ? "default" : "outline"}
+          >
+            <Save className="h-4 w-4" />
+            基本情報を保存
+          </Button>
         </div>
       </div>
-      
-      <div className="p-4 border-t">
-        <Button
-          onClick={handleSave}
-          disabled={!isModified}
-          className="w-full gap-2"
-          variant={isModified ? "default" : "outline"}
-        >
-          <Save className="h-4 w-4" />
-          基本情報を保存
-        </Button>
-      </div>
-    </div>
+    </BlueprintDetailLayout>
   );
 }

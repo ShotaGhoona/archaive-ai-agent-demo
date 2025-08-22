@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { GalleryView } from "@/shared/view/gallery-view";
 import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
-import { SimilarBlueprint, BlueprintView } from "@/widgets/blueprint-detail-layout/model/types";
+import { SimilarBlueprint, BlueprintView, BlueprintDetailLayout } from "@/widgets/blueprint-detail-layout";
 import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
 import { createSimilarBlueprintGalleryConfig } from "../lib/similarBlueprintGalleryConfig";
 
@@ -56,52 +56,58 @@ export default function BlueprintSimilarContainer() {
   // 初期ローディング状態のUI
   if (isInitialLoading) {
     return (
-      <div className="h-full flex flex-col items-center justify-center">
-        <div className="flex-1 flex items-center justify-center p-4">
-          <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="relative">
-              <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-            </div>
-            <div className="text-center space-y-2">
-              <p className="text-sm font-medium text-gray-700">類似図面を検索中...</p>
-              <p className="text-xs text-gray-500">AIが図面を解析しています</p>
+      <BlueprintDetailLayout>
+        <div className="h-full flex flex-col items-center justify-center">
+          <div className="flex-1 flex items-center justify-center p-4">
+            <div className="flex flex-col items-center justify-center space-y-4">
+              <div className="relative">
+                <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+              </div>
+              <div className="text-center space-y-2">
+                <p className="text-sm font-medium text-gray-700">類似図面を検索中...</p>
+                <p className="text-xs text-gray-500">AIが図面を解析しています</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </BlueprintDetailLayout>
     );
   }
 
   if (similarBlueprints.length === 0) {
     return (
-      <div className="h-full flex flex-col items-center justify-center">
-        <div className="flex-1 flex items-center justify-center p-4">
-          <div className="text-center space-y-2">
-            <div className="text-4xl text-gray-300">🔍</div>
-            <div className="text-sm text-gray-500">
-              類似図面が見つかりませんでした
+      <BlueprintDetailLayout>
+        <div className="h-full flex flex-col items-center justify-center">
+          <div className="flex-1 flex items-center justify-center p-4">
+            <div className="text-center space-y-2">
+              <div className="text-4xl text-gray-300">🔍</div>
+              <div className="text-sm text-gray-500">
+                類似図面が見つかりませんでした
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </BlueprintDetailLayout>
     );
   }
 
   return (
-    <div className="h-full">
-      <div className="flex-1 overflow-y-auto p-4">
-        <GalleryView
-          data={sortedSimilarBlueprints}
-          config={galleryConfig}
+    <BlueprintDetailLayout>
+      <div className="h-full">
+        <div className="flex-1 overflow-y-auto p-4">
+          <GalleryView
+            data={sortedSimilarBlueprints}
+            config={galleryConfig}
+          />
+        </div>
+        
+        <SimilarBlueprintCompareModal
+          isOpen={isCompareOpen}
+          onClose={handleCloseCompare}
+          currentView={activeView}
+          similarBlueprint={compareBlueprint}
         />
       </div>
-      
-      <SimilarBlueprintCompareModal
-        isOpen={isCompareOpen}
-        onClose={handleCloseCompare}
-        currentView={activeView}
-        similarBlueprint={compareBlueprint}
-      />
-    </div>
+    </BlueprintDetailLayout>
   );
 }
