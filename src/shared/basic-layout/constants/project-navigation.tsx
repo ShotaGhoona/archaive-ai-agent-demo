@@ -6,7 +6,8 @@ import {
   Send, 
   FileSearch, 
   CreditCard, 
-  FolderOpen
+  FolderOpen,
+  Upload
 } from "lucide-react";
 
 export interface BlueprintDetailTab {
@@ -24,6 +25,13 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     href: (id) => `/project/${id}/basic-information`,
     icon: <FileText className="h-4 w-4" />, 
     description: "案件の基本情報" 
+  },
+  { 
+    id: "blueprint-register", 
+    label: "図面登録", 
+    href: (id) => `/project/${id}/blueprint-register`,
+    icon: <Upload className="h-4 w-4" />, 
+    description: "図面の新規登録・アップロード" 
   },
   { 
     id: "blueprint", 
