@@ -1,4 +1,4 @@
-export * from './index';
+export { default } from './index';
 export * from './agents';
 export * from './hooks';
 export * from './shared';
