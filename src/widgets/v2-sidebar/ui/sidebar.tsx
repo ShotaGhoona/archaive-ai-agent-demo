@@ -5,9 +5,8 @@ import { ChevronRight, Plus, MoreVertical, Edit, Trash2, ChevronLeft, GripVertic
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/shared';
 import sidebarDataJson from '../init-data/v2-sidebar.json';
 import { V2SidebarItem, V2SidebarProps, Column } from '../model';
-import { getIconByType } from '../lib';
-import { NewItemDialog } from './NewItemDialog';
-import { generateId, addItemToTree, deleteItemFromTree, handleItemClick, handleColumnToggle, updateColumnsAfterAdd, updateColumnsAfterDelete, handleDragStart, handleDragOver, handleDrop, DragDropState } from '../lib';
+import { NewItemDialog } from '../ui';
+import { generateId, addItemToTree, deleteItemFromTree, handleItemClick, handleColumnToggle, updateColumnsAfterAdd, updateColumnsAfterDelete, handleDragStart, handleDragOver, handleDrop, DragDropState, getIconByType } from '../lib';
 
 export const V2Sidebar: React.FC<V2SidebarProps> = () => {
   const defaultData = sidebarDataJson as V2SidebarItem[];

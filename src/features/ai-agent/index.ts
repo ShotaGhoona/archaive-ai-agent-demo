@@ -1,4 +1,4 @@
-export { default } from './index';
+export { default } from './index.tsx';
 export * from './agents';
 export * from './hooks';
 export * from './shared';

@@ -1,1 +1,1 @@
-export { useResizableContext } from './useResizableContext';
+export { useResizableContext, ResizableContext } from './useResizableContext';
