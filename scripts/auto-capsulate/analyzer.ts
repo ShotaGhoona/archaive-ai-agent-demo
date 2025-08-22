@@ -151,26 +151,10 @@ export class PathAnalyzer {
   generateIndexContent(analysis: DirectoryAnalysis): string {
     const exports: string[] = [];
     
-    // TypeScriptファイルからのエクスポート
+    // TypeScriptファイルからのエクスポート（シンプルに統一）
     for (const fileName of analysis.tsFiles) {
       const baseName = fileName.replace(/\.(ts|tsx)$/, '');
-      
-      // ファイル固有のエクスポートがある場合は名前付きエクスポート
-      const fileExports = analysis.exports.filter(exp => 
-        // この実装は簡略化。実際はより複雑な判定が必要
-        true
-      );
-      
-      if (fileExports.some(exp => exp.isDefault)) {
-        exports.push(`export { default } from './${baseName}';`);
-      }
-      
-      const namedExports = fileExports.filter(exp => !exp.isDefault);
-      if (namedExports.length > 0) {
-        exports.push(`export * from './${baseName}';`);
-      } else {
-        exports.push(`export * from './${baseName}';`);
-      }
+      exports.push(`export * from './${baseName}';`);
     }
     
     // サブディレクトリからのエクスポート
