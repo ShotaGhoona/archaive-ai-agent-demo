@@ -1,5 +1,4 @@
 'use client';
-import Link from "next/link";
 import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger, Button } from "@/shared/shadcnui";
 import { RevisionBlueprint } from "../model/revisionBlueprintTypes";
 import { FileText, GitCompareArrows, ExternalLink, Briefcase } from "lucide-react";

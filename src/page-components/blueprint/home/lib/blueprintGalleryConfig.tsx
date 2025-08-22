@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, CardContent } from '@/shared/shadcnui';
+import { Badge } from '@/shared/shadcnui';
 import { GalleryViewConfig } from '@/shared/view/gallery-view';
 import { Blueprint } from './blueprintColumns';
 

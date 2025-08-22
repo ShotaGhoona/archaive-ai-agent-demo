@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, CardContent } from '@/shared/shadcnui';
+import { Button } from '@/shared/shadcnui';
 import { Search, GitCompareArrows } from 'lucide-react';
 import { GalleryViewConfig } from '@/shared/view/gallery-view';
 import { SimilarBlueprint } from '@/widgets/blueprint-detail-layout/model/types';

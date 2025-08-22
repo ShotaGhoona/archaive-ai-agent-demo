@@ -14,7 +14,7 @@ interface RepeatProductSearchPanelProps {
   onClose: () => void;
 }
 
-export default function RepeatProductSearchPanel({ isOpen, onClose }: RepeatProductSearchPanelProps) {
+export default function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelProps) {
   const [viewMode, setViewMode] = useState<"table" | "gallery">("gallery");
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredBlueprint, setHoveredBlueprint] = useState<string | null>(null);
