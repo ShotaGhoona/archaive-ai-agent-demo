@@ -1,8 +1,7 @@
 import React from "react";
-import { BlueprintView, SimilarBlueprint } from "@/widgets/blueprint-detail-layout/model/types";
-import { ComparisonModal } from "@/features/comparison-modal";
-import { SIMILAR_COMPARISON_CONFIG } from "../lib/similarComparisonConfig";
-import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
+import { BlueprintView, SimilarBlueprint, blueprintData } from "@/widgets";
+import { ComparisonModal } from "@/features";
+import { SIMILAR_COMPARISON_CONFIG } from "../lib";
 
 interface SimilarBlueprintCompareModalProps {
   isOpen: boolean;
@@ -11,7 +10,7 @@ interface SimilarBlueprintCompareModalProps {
   similarBlueprint: SimilarBlueprint | null;
 }
 
-export function SimilarBlueprintCompareModal({
+export function BlueprintSimilarCompareModal({
   isOpen,
   onClose,
   currentView,

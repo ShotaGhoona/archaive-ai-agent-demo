@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/shared/shadcnui/button";
-import { Input } from "@/shared/shadcnui/input";
+import { Button, Input, TableView } from "@/shared";
 import { Search, Plus, Download } from "lucide-react";
-import { TableView } from "@/shared/view/table-view";
-import { EquipmentMasterDialog } from "./EquipmentMasterDialog";
-import { EquipmentMaster, mockData, columns } from "../data/mockData";
+import { EquipmentMasterDialog } from "../ui";
+import { EquipmentMaster, mockData, columns } from "../data";
 
-export default function EquipmentMasterContainer() {
+export function EquipmentMasterContainer() {
   const [data, setData] = useState<EquipmentMaster[]>(mockData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);

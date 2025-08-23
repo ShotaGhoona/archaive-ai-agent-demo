@@ -1,5 +1,5 @@
-import { CsvColumnConfig } from '@/features/csv-export';
-import { Customer } from './customerColumns';
+import { CsvColumnConfig } from '@/features';
+import { Customer } from '../lib';
 
 export const CUSTOMER_CSV_COLUMNS: Omit<CsvColumnConfig<Customer>, 'enabled'>[] = [
   { key: 'customerCode', label: '取引先コード' },

@@ -1,6 +1,6 @@
 import React from "react";
-import { TableView } from "@/shared/view/table-view";
-import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib/materialMasterColumns";
+import { TableView } from "@/shared";
+import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib";
 
 interface MaterialMasterTableViewProps {
   materialMasters: MaterialMaster[];

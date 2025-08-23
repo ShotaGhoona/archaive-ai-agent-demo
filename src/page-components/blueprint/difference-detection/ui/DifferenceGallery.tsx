@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import mockData from "../data/mockData.json";
+import { differenceDetectionData } from "../data";
 
 interface Difference {
   id: string;
@@ -20,7 +20,7 @@ interface DifferenceGalleryProps {
 export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: DifferenceGalleryProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [differences, setDifferences] = useState<Difference[]>([]);
-  const baseImageUrl = mockData.differenceDetection.difference.imageUrl;
+  const baseImageUrl = differenceDetectionData.differenceDetection.difference.imageUrl;
 
   // 許容誤差変更時のローディング処理
   useEffect(() => {
@@ -30,7 +30,7 @@ export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: Diff
     const loadingTime = Math.random() * 1000 + 500; // 500ms～1.5s
     
     const timer = setTimeout(() => {
-      const newDifferences = (mockData.differencesByTolerance[tolerance] || []) as Difference[];
+      const newDifferences = (differenceDetectionData.differencesByTolerance[tolerance] || []) as Difference[];
       setDifferences(newDifferences);
       setIsLoading(false);
     }, loadingTime);
@@ -41,7 +41,7 @@ export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: Diff
   // 初期ローディング
   useEffect(() => {
     const timer = setTimeout(() => {
-      const initialDifferences = (mockData.differencesByTolerance[tolerance] || []) as Difference[];
+      const initialDifferences = (differenceDetectionData.differencesByTolerance[tolerance] || []) as Difference[];
       setDifferences(initialDifferences);
       setIsLoading(false);
     }, 800);

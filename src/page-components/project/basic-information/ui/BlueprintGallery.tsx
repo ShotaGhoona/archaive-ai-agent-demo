@@ -1,15 +1,15 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { GalleryView } from "@/shared/view/gallery-view";
-import { Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
-import { createProjectBlueprintGalleryConfig } from "../lib/projectBlueprintGalleryConfig";
+import { GalleryView } from "@/shared";
+import { Blueprint } from "@/page-components";
+import { createProjectBlueprintGalleryConfig } from "../lib";
 
 interface BlueprintGalleryProps {
   blueprints: Blueprint[];
 }
 
-export default function BlueprintGallery({ blueprints }: BlueprintGalleryProps) {
+export function BlueprintGallery({ blueprints }: BlueprintGalleryProps) {
   const router = useRouter();
 
   const handlePopup = (blueprint: Blueprint) => {

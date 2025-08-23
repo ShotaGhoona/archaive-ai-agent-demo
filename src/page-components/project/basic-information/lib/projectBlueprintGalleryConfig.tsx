@@ -1,7 +1,6 @@
 import React from 'react';
-import { GalleryViewConfig } from '@/shared/view/gallery-view';
-import { Blueprint } from '@/page-components/blueprint/home/lib/blueprintColumns';
-import { Button } from '@/shared/shadcnui';
+import { GalleryViewConfig, Button } from '@/shared';
+import { Blueprint } from '@/page-components';
 import { Expand, ExternalLink } from 'lucide-react';
 
 export const createProjectBlueprintGalleryConfig = (

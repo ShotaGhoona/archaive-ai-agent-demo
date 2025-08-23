@@ -3,17 +3,16 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@/shared/shadcnui";
+  FilterToggleButton,
+  SearchInput
+} from "@/shared";
 import {
   Grid3X3,
   List,
 } from "lucide-react";
-import { FilterToggleButton } from "@/features/advanced-filter";
-import { Blueprint } from "../lib/blueprintColumns";
-import { CsvExportDialog } from "@/features/csv-export";
-import { SimilarBlueprintSearchDialog } from "./SimilarBlueprintSearchDialog";
-import { BLUEPRINT_CSV_COLUMNS } from "../lib/blueprintCsvConfig";
-import { SearchInput } from "@/shared/GenericSearch";
+import { CsvExportDialog } from "@/features";
+import { SimilarBlueprintSearchDialog } from "../ui";
+import { Blueprint, BLUEPRINT_CSV_COLUMNS } from "../lib";
 
 interface BlueprintPageHeaderProps {
   searchTerm: string;

@@ -14,9 +14,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/shared/shadcnui';
+} from '@/shared';
 import { Plus } from 'lucide-react';
-import { Project } from '../lib/projectColumns';
+import { Project } from '../lib';
 
 interface NewProjectDialogProps {
   onSubmit?: (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => void;

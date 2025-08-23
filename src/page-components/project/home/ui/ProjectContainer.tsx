@@ -1,16 +1,12 @@
 "use client";
 import { useState } from "react";
-import projectsData from "../data/project.json";
-import { ProjectPageHeader } from "./ProjectPageHeader";
-import { ProjectTableView } from "./ProjectTableView";
-import { ProjectKanbanView } from "./ProjectKanbanView";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
-import { PROJECT_FILTER_CONFIG } from "../lib/projectFilterConfig";
-import { PROJECT_SEARCHBAR_CONFIG } from "../lib/projectSearchbarConfig";
-import { Project } from "../lib/projectColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { projectData } from "../data";
+import { ProjectPageHeader, ProjectTableView, ProjectKanbanView } from "../ui";
+import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { Project, PROJECT_SEARCHBAR_CONFIG, PROJECT_FILTER_CONFIG } from "../lib";
+import { useSearchbar } from "@/shared";
 
-export default function ProjectContainer() {
+export function ProjectContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
   const itemsPerPage = 20;
@@ -20,7 +16,7 @@ export default function ProjectContainer() {
     searchTerm,
     setSearchTerm,
     filteredData: searchFiltered,
-  } = useSearchbar(projectsData as Project[], PROJECT_SEARCHBAR_CONFIG);
+  } = useSearchbar(projectData as Project[], PROJECT_SEARCHBAR_CONFIG);
 
   const {
     filteredData: filteredProjects,

@@ -1,6 +1,6 @@
 import React from "react";
-import { TableView } from "@/shared/view/table-view";
-import { Customer, CUSTOMER_COLUMNS } from "../lib/customerColumns";
+import { TableView } from "@/shared";
+import { Customer, CUSTOMER_COLUMNS } from "../lib";
 
 interface CustomerTableViewProps {
   customers: Customer[];

@@ -1,6 +1,6 @@
 "use client";
 import { Upload } from "lucide-react";
-import registerBlueprintsData from "../data/registerBlueprints.json";
+import { registerBlueprintsData } from "../data";
 
 interface RegisterBlueprint {
   id: string;
@@ -10,7 +10,7 @@ interface RegisterBlueprint {
   uploadDate: string;
 }
 
-export default function BlueprintUploadGallery() {
+export function BlueprintUploadGallery() {
   const blueprints: RegisterBlueprint[] = registerBlueprintsData;
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

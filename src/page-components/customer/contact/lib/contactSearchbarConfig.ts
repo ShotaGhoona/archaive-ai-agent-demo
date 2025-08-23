@@ -1,5 +1,5 @@
-import type { SearchConfig } from "@/shared/GenericSearch";
-import type { Contact } from "./contactColumns";
+import type { SearchConfig } from "@/shared";
+import type { Contact } from "../lib";
 
 export const CONTACT_SEARCHBAR_CONFIG: SearchConfig<Contact> = {
   searchableFields: ['contactName', 'department', 'position', 'contactType'],

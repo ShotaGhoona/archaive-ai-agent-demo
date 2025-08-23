@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
+import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
 import { Save } from "lucide-react";
-import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "@/widgets/blueprint-detail-layout/model/types";
-import { EditableComparisonField, ReadOnlyComparisonField } from "../lib/comparison-field-components";
+import { BlueprintFile, SimilarBlueprint, BasicInformation, EstimateInformation } from "@/widgets";
+import { EditableComparisonField, ReadOnlyComparisonField } from "../lib";
 
 interface SimilarBlueprintCompareModalProps {
   isOpen: boolean;
@@ -58,7 +58,7 @@ const estimateInputFields: Array<{
   { label: "備考", key: "remarks" }
 ];
 
-export function SimilarBlueprintCompareModal({
+export function ProjectSimilarBlueprintCompareModal({
   isOpen,
   onClose,
   currentBlueprint,

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { DragItem } from '../model/type';
+import { DragItem } from '../model';
 
 export function useDragAndDrop() {
   const [draggedItem, setDraggedItem] = useState<DragItem | null>(null);

@@ -11,26 +11,22 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-} from "@/shared/shadcnui/dialog";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/shadcnui/form";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/shadcnui/select";
-import { Input } from "@/shared/shadcnui/input";
-import { Button } from "@/shared/shadcnui/button";
+  Input,
+  Button,
+} from "@/shared";
 import { Plus } from "lucide-react";
-import { Customer } from "../lib/customerColumns";
+import { Customer } from "../lib";
 
 const formSchema = z.object({
   customerName: z.string().min(1, "取引先名は必須です").max(100, "取引先名は100文字以内で入力してください"),

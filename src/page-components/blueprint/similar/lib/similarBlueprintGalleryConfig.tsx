@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button } from '@/shared/shadcnui';
+import { Button, GalleryViewConfig } from '@/shared';
 import { Search, GitCompareArrows } from 'lucide-react';
-import { GalleryViewConfig } from '@/shared/view/gallery-view';
-import { SimilarBlueprint } from '@/widgets/blueprint-detail-layout/model/types';
+import { SimilarBlueprint } from '@/widgets';
 
 export const createSimilarBlueprintGalleryConfig = (
   handleDifferenceDetection: (blueprint: SimilarBlueprint) => void,

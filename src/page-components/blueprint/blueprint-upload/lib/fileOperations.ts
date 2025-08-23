@@ -1,4 +1,4 @@
-import { UploadedFile, FileStack, FileUploadData } from "../model/type";
+import { UploadedFile, FileStack, FileUploadData } from "../model";
 
 /**
  * ファイル操作のビジネスロジック

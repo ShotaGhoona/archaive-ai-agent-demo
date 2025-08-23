@@ -1,15 +1,12 @@
 "use client";
 import { useState } from "react";
 import customersData from "../data/customer.json";
-import { CustomerPageHeader } from "./CustomerPageHeader";
-import { CustomerTableView } from "./CustomerTableView";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
-import { CUSTOMER_FILTER_CONFIG } from "../lib/customerFilterConfig";
-import { CUSTOMER_SEARCHBAR_CONFIG } from "../lib/customerSearchbarConfig";
-import { Customer } from "../lib/customerColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { CustomerPageHeader, CustomerTableView } from "../ui";
+import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG, Customer } from "../lib";
+import { useSearchbar } from "@/shared";
 
-export default function CustomerContainer() {
+export function CustomerContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);
   const itemsPerPage = 20;

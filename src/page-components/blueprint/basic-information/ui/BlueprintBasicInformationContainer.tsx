@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button, Input } from "@/shared/shadcnui";
+import { Button, Input } from "@/shared";
 import { Save } from "lucide-react";
-import { BasicInformation, BlueprintDetailLayout } from "@/widgets/blueprint-detail-layout";
-import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
+import { BasicInformation, BlueprintDetailLayout, blueprintData } from "@/widgets";
 
 const basicInputFields: Array<{
   label: string;
@@ -31,7 +30,7 @@ const basicInputFields: Array<{
   { label: "備考", key: "remarks" }
 ];
 
-export default function BlueprintBasicInformationContainer() {
+export function BlueprintBasicInformationContainer() {
   const [formData, setFormData] = useState<Partial<BasicInformation>>(blueprintData.basicInformation || {});
   const [isModified, setIsModified] = useState(false);
 

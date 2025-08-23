@@ -8,14 +8,14 @@ import {
   Card,
   CardContent,
   Badge,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { Plus, Loader2, Upload } from "lucide-react";
 
 interface BlueprintUploadDialogProps {
   onUploadComplete?: () => void;
 }
 
-export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialogProps) {
+export function ProjectBlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);

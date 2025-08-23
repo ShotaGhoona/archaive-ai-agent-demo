@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import QuotationForm from "./QuotationForm";
-import QuotationPreview from "./QuotationPreview";
+import { QuotationForm, QuotationPreview } from "../ui";
 
 interface TableRow {
   id: string;
@@ -30,7 +29,7 @@ interface FormData {
   };
 }
 
-export default function QuotationContainer() {
+export function QuotationContainer() {
   const [formData, setFormData] = useState<FormData>({
     clientName: "",
     honorific: "御中",

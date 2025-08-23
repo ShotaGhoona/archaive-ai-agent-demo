@@ -1,11 +1,9 @@
-import { FilterToggleButton } from "@/features/advanced-filter";
-import { CsvExportDialog } from "@/features/csv-export";
-import { CONTACT_CSV_COLUMNS } from "../lib/contactCsvConfig";
-import { CreateContactDialog } from "./CreateContactDialog";
-import { Contact } from "../lib/contactColumns";
-import { SearchInput } from "@/shared/GenericSearch";
+import { FilterToggleButton, CsvExportDialog } from "@/features";
+import { CONTACT_CSV_COLUMNS, Contact } from "../lib";
+import { CreateContactDialog } from "../ui";
+import { SearchInput } from "@/shared";
 
-interface ContactPageHeaderProps {
+interface CustomerContactPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   onToggleFilterSidebar: () => void;
@@ -15,7 +13,7 @@ interface ContactPageHeaderProps {
   onContactCreate?: (contact: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => void;
 }
 
-export function ContactPageHeader({
+export function CustomerContactPageHeader({
   searchTerm,
   setSearchTerm,
   onToggleFilterSidebar,
@@ -23,7 +21,7 @@ export function ContactPageHeader({
   contacts = [],
   customerId,
   onContactCreate,
-}: ContactPageHeaderProps) {
+}: CustomerContactPageHeaderProps) {
   const handleContactCreate = (contact: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => {
     onContactCreate?.(contact);
   };

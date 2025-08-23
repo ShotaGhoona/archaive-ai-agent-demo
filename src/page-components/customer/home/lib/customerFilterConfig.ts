@@ -1,5 +1,5 @@
-import { FilterConfig } from '@/features/advanced-filter';
-import { Customer } from './customerColumns';
+import { FilterConfig } from '@/features';
+import { Customer } from '../lib';
 
 export const CUSTOMER_FILTER_CONFIG: FilterConfig<Customer>[] = [
   {

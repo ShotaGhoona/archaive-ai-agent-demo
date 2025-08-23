@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { TableView } from "@/shared/view/table-view";
-import { Blueprint, createBlueprintColumns } from "../lib/blueprintColumns";
-import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
+import { TableView, FilePreviewModal, PreviewableFile } from "@/shared";
+import { Blueprint, createBlueprintColumns } from "../lib";
 
 interface BlueprintTableViewProps {
   blueprints: Blueprint[];

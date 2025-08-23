@@ -1,9 +1,8 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
+import { Button, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared";
 import { ZoomIn, ZoomOut, Maximize2, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
-import mockData from "../data/mockData.json";
+import { differenceDetectionData } from "../data";
 
 type ViewMode = "difference" | "old" | "new";
 
@@ -154,11 +153,11 @@ export function BlueprintCompareViewer({ onStateChange, externalZoom, externalPo
 
   // 画像URL取得（mockDataから取得）
   const getImageUrl = () => {
-    return mockData.differenceDetection[viewMode].imageUrl;
+    return differenceDetectionData.differenceDetection[viewMode].imageUrl;
   };
 
   const getViewModeLabel = () => {
-    return mockData.differenceDetection[viewMode].label;
+    return differenceDetectionData.differenceDetection[viewMode].label;
   };
 
   const handleToleranceChange = (newTolerance: ToleranceLevel) => {

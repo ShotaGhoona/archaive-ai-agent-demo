@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { BlueprintSortingState, ProjectAssignment, Project, UploadedFile, FileStack, DragItem } from '../model/type';
+import { BlueprintSortingState, ProjectAssignment, BlueprintProject, UploadedFile, FileStack, DragItem } from '../model';
 
 export function useBlueprintSorting() {
   const [state, setState] = useState<BlueprintSortingState>({
@@ -35,7 +35,7 @@ export function useBlueprintSorting() {
     const projectId = `project-${Date.now()}`;
     const projectCount = state.projects.length + 1;
     
-    const newProject: Project = {
+    const newProject: BlueprintProject = {
       id: projectId,
       name: `案件${projectCount}`,
       fileCount: files.length,

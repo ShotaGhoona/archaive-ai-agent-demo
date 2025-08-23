@@ -1,4 +1,4 @@
-import ProjectContainer from "@/page-components/project/home/ui/ProjectContainer";
+import { ProjectContainer } from "@/page-components/project/home/ui/ProjectContainer";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function Project() {

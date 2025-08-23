@@ -1,9 +1,8 @@
 import React from "react";
-import { SearchInput } from "@/shared/GenericSearch";
-import { MaterialMaster } from "../lib/materialMasterColumns";
-import { CreateMaterialDialog } from "./CreateMaterialDialog";
-import { CsvExportDialog } from "@/features/csv-export";
-import { MATERIAL_MASTER_CSV_COLUMNS } from "../lib/materialMasterCsvConfig";
+import { SearchInput } from "@/shared";
+import { CsvExportDialog } from "@/features";
+import { MaterialMaster, MATERIAL_MASTER_CSV_COLUMNS } from "../lib";
+import { CreateMaterialDialog } from "../ui";
 
 interface MaterialMasterPageHeaderProps {
   searchTerm: string;

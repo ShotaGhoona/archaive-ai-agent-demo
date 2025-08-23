@@ -1,9 +1,8 @@
 import React from "react";
-import { TableView } from "@/shared/view/table-view";
-import { Contact } from "../lib/contactColumns";
-import { CONTACT_COLUMNS } from "../lib/contactColumns";
+import { TableView } from "@/shared";
+import { Contact, CONTACT_COLUMNS } from "../lib";
 
-interface ContactTableViewProps {
+interface CustomerContactTableViewProps {
   contacts: Contact[];
   onContactUpdate?: (contactId: string, field: string, value: unknown) => void;
   // ページネーション統合のための新しいprops
@@ -13,14 +12,14 @@ interface ContactTableViewProps {
   onPageChange?: (page: number) => void;
 }
 
-export function ContactTableView({ 
+export function CustomerContactTableView({ 
   contacts, 
   onContactUpdate,
   currentPage,
   totalItems,
   itemsPerPage,
   onPageChange
-}: ContactTableViewProps) {
+}: CustomerContactTableViewProps) {
   // ページネーション設定
   const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
     enabled: true,

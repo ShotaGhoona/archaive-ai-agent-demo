@@ -1,16 +1,15 @@
 "use client";
 import { useState } from "react";
-import materialMasterData from "../data/materialMaster.json";
-import { MaterialMasterPageHeader } from "./MaterialMasterPageHeader";
-import { MaterialMasterTableView } from "./MaterialMasterTableView";
-import { MaterialMaster } from "../lib/materialMasterColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { materialMasterData } from "../data";
+import { MaterialMasterPageHeader, MaterialMasterTableView } from "../ui";
+import { MaterialMaster } from "../lib";
+import { useSearchbar } from "@/shared";
 
 const MATERIAL_MASTER_SEARCHBAR_CONFIG = {
   searchableFields: ["materialName", "materialCategory", "formula", "supplier", "remarks"] as (keyof MaterialMaster)[],
 };
 
-export default function MaterialMasterContainer() {
+export function MaterialMasterContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState<MaterialMaster[]>(materialMasterData as MaterialMaster[]);
   const itemsPerPage = 20;

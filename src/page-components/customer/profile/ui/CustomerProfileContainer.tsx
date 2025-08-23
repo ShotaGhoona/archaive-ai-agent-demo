@@ -1,3 +1,3 @@
-export default function CustomerProfileContainer() {
+export function CustomerProfileContainer() {
   return <p>基本情報</p>;
 }

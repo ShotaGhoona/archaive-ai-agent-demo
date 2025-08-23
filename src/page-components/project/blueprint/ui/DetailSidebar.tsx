@@ -12,9 +12,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { Plus, Loader2, X } from "lucide-react";
-import { BlueprintFile } from "@/widgets/blueprint-detail-layout/model/types";
+import { BlueprintFile } from "@/widgets";
 
 interface DetailSidebarProps {
   files: BlueprintFile[];

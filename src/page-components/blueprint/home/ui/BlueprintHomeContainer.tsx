@@ -1,16 +1,11 @@
 "use client";
 import { useState } from "react";
-import blueprintsData from "../data/blueprint.json";
-import { BlueprintPageHeader } from "./BlueprintPageHeader";
-import { BlueprintTableView } from "./TableView";
-import { BlueprintGalleryView } from "./GalleryView";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
-import { BLUEPRINT_FILTER_CONFIG } from "../lib/blueprintFilterConfig";
-import { BLUEPRINT_SEARCHBAR_CONFIG } from "../lib/blueprintSearchbarConfig";
-import { Blueprint } from "../lib/blueprintColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { blueprintData } from "../data";
+import { BlueprintPageHeader, BlueprintTableView, BlueprintGalleryView } from "../ui";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
+import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG, Blueprint } from "../lib";
 
-export default function BlueprintContainer() {
+export function BlueprintHomeContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
   const itemsPerPage = 20;
@@ -22,7 +17,7 @@ export default function BlueprintContainer() {
     selectedFilter,
     setSelectedFilter,
     filteredData: searchFiltered,
-  } = useSearchbar(blueprintsData as Blueprint[], BLUEPRINT_SEARCHBAR_CONFIG);
+  } = useSearchbar(blueprintData as Blueprint[], BLUEPRINT_SEARCHBAR_CONFIG);
 
   const {
     filteredData: filteredBlueprints,

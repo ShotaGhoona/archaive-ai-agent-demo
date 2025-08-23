@@ -1,11 +1,10 @@
 "use client";
 import { useState } from "react";
 import { Search } from "lucide-react";
-import { Button } from "@/shared/shadcnui";
-import BlueprintUploadGallery from "./BlueprintUploadGallery";
-import RepeatProductSearchPanel from "./RepeatProductSearchPanel";
+import { Button } from "@/shared";
+import { BlueprintUploadGallery, RepeatProductSearchPanel } from "../ui";
 
-export default function BlueprintRegisterContainer() {
+export function BlueprintRegisterContainer() {
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
 
   const handleRepeatSearch = () => {

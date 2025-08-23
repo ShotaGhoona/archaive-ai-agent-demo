@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
   Textarea,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { SectionConfig, FieldConfig, ProjectData } from "../data";
 
 interface FormFieldProps {
@@ -122,7 +122,7 @@ interface ProjectInfoFormProps {
   onChange: (key: keyof ProjectData, value: string) => void;
 }
 
-export default function ProjectInfoForm({ formData, fieldConfig, onChange }: ProjectInfoFormProps) {
+export function ProjectInfoForm({ formData, fieldConfig, onChange }: ProjectInfoFormProps) {
   return (
     <div className="border-r bg-white flex flex-col">
       <div className="flex-1 overflow-y-auto p-6 space-y-6">

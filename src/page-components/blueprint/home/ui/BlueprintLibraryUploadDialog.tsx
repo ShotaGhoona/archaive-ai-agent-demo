@@ -17,7 +17,7 @@ interface BlueprintUploadDialogProps {
   onUploadComplete?: () => void;
 }
 
-export function BlueprintUploadDialog({ onUploadComplete }: BlueprintUploadDialogProps) {
+export function BlueprintLibraryUploadDialog({ onUploadComplete }: BlueprintUploadDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [uploadedFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);

@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import { BlueprintCompareViewer } from "./BlueprintCompareViewer";
-import { NavigationPanel } from "./NavigationPanel";
-import { DifferenceGallery } from "./DifferenceGallery";
-import mockData from "../data/mockData.json";
+import { BlueprintCompareViewer } from "../ui";
+import { NavigationPanel } from "../ui";
+import { DifferenceGallery } from "../ui";
+import { differenceDetectionData } from "../data";
 
 type ToleranceLevel = "1px" | "5px" | "10px" | "15px";
 
@@ -22,7 +22,7 @@ export function DifferenceDetectionContainer() {
     position: { x: 0, y: 0 },
     containerSize: { width: 0, height: 0 },
     imageSize: { width: 0, height: 0 },
-    currentImageUrl: mockData.differenceDetection.difference.imageUrl
+    currentImageUrl: differenceDetectionData.differenceDetection.difference.imageUrl
   });
 
   const handleViewerStateChange = (

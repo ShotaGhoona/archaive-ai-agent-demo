@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { GalleryView } from "@/shared/view/gallery-view";
-import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
-import { SimilarBlueprint, BlueprintView, BlueprintDetailLayout } from "@/widgets/blueprint-detail-layout";
-import blueprintData from "@/widgets/blueprint-detail-layout/data/blueprints.json";
-import { createSimilarBlueprintGalleryConfig } from "../lib/similarBlueprintGalleryConfig";
+import { GalleryView } from "@/shared";
+import { BlueprintSimilarCompareModal } from "../ui";
+import { SimilarBlueprint, BlueprintView, BlueprintDetailLayout, blueprintData } from "@/widgets";
+import { createSimilarBlueprintGalleryConfig } from "../lib";
 
-export default function BlueprintSimilarContainer() {
+export function BlueprintSimilarContainer() {
   const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
   const [isInitialLoading, setIsInitialLoading] = useState(true);
@@ -101,7 +100,7 @@ export default function BlueprintSimilarContainer() {
           />
         </div>
         
-        <SimilarBlueprintCompareModal
+        <BlueprintSimilarCompareModal
           isOpen={isCompareOpen}
           onClose={handleCloseCompare}
           currentView={activeView}

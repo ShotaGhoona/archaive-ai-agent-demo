@@ -13,7 +13,7 @@ import {
   SelectValue,
   Textarea,
   Button,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { Plus, X } from "lucide-react";
 
 interface TableRow {
@@ -48,7 +48,7 @@ interface QuotationFormProps {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
 }
 
-export default function QuotationForm({ formData, setFormData }: QuotationFormProps) {
+export function QuotationForm({ formData, setFormData }: QuotationFormProps) {
   const addRow = () => {
     const newRow: TableRow = {
       id: Date.now().toString(),

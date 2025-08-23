@@ -1,12 +1,12 @@
 "use client";
-import { TableView } from "@/shared/view/table-view";
-import { createBlueprintColumns, Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
+import { TableView } from "@/shared";
+import { createBlueprintColumns, Blueprint } from "@/page-components";
 
 interface BlueprintTableProps {
   blueprints: Blueprint[];
 }
 
-export default function BlueprintTable({ blueprints }: BlueprintTableProps) {
+export function BlueprintTable({ blueprints }: BlueprintTableProps) {
   const blueprintColumns = createBlueprintColumns();
 
   return (

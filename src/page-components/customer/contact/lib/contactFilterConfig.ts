@@ -1,5 +1,5 @@
-import { FilterConfig } from "@/features/advanced-filter";
-import { Contact } from "./contactColumns";
+import { FilterConfig } from "@/features";
+import { Contact } from "../lib";
 
 export const CONTACT_FILTER_CONFIG: FilterConfig<Contact>[] = [
   {

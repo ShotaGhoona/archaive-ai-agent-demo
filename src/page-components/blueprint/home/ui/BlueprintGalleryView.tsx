@@ -1,7 +1,6 @@
 import React from 'react';
-import { GalleryView } from '@/shared/view/gallery-view';
-import { Blueprint } from '../lib/blueprintColumns';
-import { createBlueprintGalleryConfig } from '../lib/blueprintGalleryConfig';
+import { GalleryView } from '@/shared';
+import { Blueprint, createBlueprintGalleryConfig } from '../lib';
 
 interface BlueprintGalleryViewProps {
   blueprints: Blueprint[];

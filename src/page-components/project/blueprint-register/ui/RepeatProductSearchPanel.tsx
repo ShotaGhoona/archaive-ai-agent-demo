@@ -1,25 +1,21 @@
 "use client";
 import { useState } from "react";
 import { List, Grid3X3, Plus } from "lucide-react";
-import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
-import { BlueprintTableView } from "@/page-components/blueprint/home/ui/TableView";
+import { Button, Tooltip, TooltipTrigger, TooltipContent, Card, CardContent, Badge, SearchInput } from "@/shared";
+import { BlueprintTableView, Blueprint, blueprintsData } from "@/page-components";
 import Link from "next/link";
-import { Card, CardContent, Badge } from "@/shared/shadcnui";
-import { SearchInput } from "@/shared/GenericSearch";
-import { Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
-import blueprintsData from "@/page-components/blueprint/home/data/blueprint.json";
 
 interface RepeatProductSearchPanelProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelProps) {
+export function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelProps) {
   const [viewMode, setViewMode] = useState<"table" | "gallery">("gallery");
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredBlueprint, setHoveredBlueprint] = useState<string | null>(null);
   
-  const blueprints: Blueprint[] = blueprintsData as Blueprint[];
+  const blueprints: Blueprint[] = blueprintsData as unknown as Blueprint[];
   
   // 検索フィルタリング
   const filteredBlueprints = blueprints.filter(blueprint =>

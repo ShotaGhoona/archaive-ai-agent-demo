@@ -1,7 +1,6 @@
 import React from 'react';
-import { Badge } from '@/shared/shadcnui';
-import { GalleryViewConfig } from '@/shared/view/gallery-view';
-import { Blueprint } from './blueprintColumns';
+import { Badge, GalleryViewConfig } from '@/shared';
+import { Blueprint } from '../lib';
 
 export const createBlueprintGalleryConfig = (): GalleryViewConfig<Blueprint> => ({
   layoutConfig: {

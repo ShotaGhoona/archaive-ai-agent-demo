@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { Badge } from "@/shared/shadcnui";
+import { Badge } from "@/shared";
 import { Plus, Loader2 } from "lucide-react";
-import { AddFileCardProps, FileUploadData } from "../../model/type";
+import { AddFileCardProps, FileUploadData } from "../../model";
 
 export function AddFileCard({ onAddFiles }: AddFileCardProps) {
   const [isUploading, setIsUploading] = useState(false);

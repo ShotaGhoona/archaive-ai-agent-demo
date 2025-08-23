@@ -1,0 +1,1 @@
+export { default as materialMasterData } from './materialMaster.json';

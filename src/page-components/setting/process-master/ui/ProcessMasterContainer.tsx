@@ -1,16 +1,15 @@
 "use client";
 import { useState } from "react";
-import processMasterData from "../data/processMaster.json";
-import { ProcessMasterPageHeader } from "./ProcessMasterPageHeader";
-import { ProcessMasterTableView } from "./ProcessMasterTableView";
-import { ProcessMaster } from "../lib/processMasterColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { processMasterData } from "../data";
+import { ProcessMasterPageHeader, ProcessMasterTableView } from "../ui";
+import { ProcessMaster } from "../lib";
+import { useSearchbar } from "@/shared";
 
 const PROCESS_MASTER_SEARCHBAR_CONFIG = {
   searchableFields: ["processName", "processCategory", "customFormula", "remarks"] as (keyof ProcessMaster)[],
 };
 
-export default function ProcessMasterContainer() {
+export function ProcessMasterContainer() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 

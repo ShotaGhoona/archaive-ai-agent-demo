@@ -1,9 +1,7 @@
 import React from 'react';
-import { UploadGalleryView } from './ui/UploadGalleryView';
-import { ProjectBoxList } from './ui/ProjectBoxList';
-import { useBlueprintSorting } from './hooks/useBlueprintSorting';
-import { useDragAndDrop } from './hooks/useDragAndDrop';
-import { ViewMode, FileUploadData } from './model/type';
+import { UploadGalleryView, ProjectBoxList } from '../ui';
+import { useBlueprintSorting, useDragAndDrop } from '../lib';
+import { ViewMode, FileUploadData } from '../model';
 
 interface BlueprintSortingPageProps {
   // 基本的なプロパティ（既存のページから引き継ぎ）

@@ -1,13 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { UploadPageHeader } from "./UploadPageHeader";
-import { UploadGalleryView } from "./UploadGalleryView";
-import { ProjectBoxList } from "./ProjectBoxList";
-import { UploadedFile, FileStack, ViewMode, FileUploadData } from "../model/type";
-import { FileOperations } from "../lib/fileOperations";
-import { StackOperations } from "../lib/stackOperations";
-import { useBlueprintSorting } from "../hooks/useBlueprintSorting";
-import { useDragAndDrop } from "../hooks/useDragAndDrop";
+import { UploadPageHeader } from "../ui";
+import { UploadGalleryView } from "../ui";
+import { ProjectBoxList } from "../ui";
+import { UploadedFile, FileStack, ViewMode, FileUploadData } from "../model";
+import { FileOperations, StackOperations, useBlueprintSorting, useDragAndDrop } from "../lib";
 
 export function BlueprintUploadContainer() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);

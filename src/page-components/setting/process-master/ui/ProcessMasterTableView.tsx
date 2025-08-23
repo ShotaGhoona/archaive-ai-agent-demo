@@ -1,6 +1,6 @@
 import React from "react";
-import { TableView } from "@/shared/view/table-view";
-import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib/processMasterColumns";
+import { TableView } from "@/shared";
+import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib";
 
 interface ProcessMasterTableViewProps {
   processMasters: ProcessMaster[];

@@ -1,5 +1,5 @@
-import { CsvColumnConfig } from "@/features/csv-export";
-import { Contact } from "./contactColumns";
+import { CsvColumnConfig } from "@/features";
+import { Contact } from "../lib";
 
 export const CONTACT_CSV_COLUMNS: Omit<CsvColumnConfig<Contact>, 'enabled'>[] = [
   { key: 'contactId', label: '連絡先ID' },

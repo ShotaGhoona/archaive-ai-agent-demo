@@ -1,6 +1,5 @@
 import React from 'react';
-import { Badge } from '@/shared/shadcnui';
-import { DataTableColumn } from '@/shared/view/table-view';
+import { Badge, DataTableColumn } from '@/shared';
 
 export interface ProcessMaster {
   id: string;

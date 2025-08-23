@@ -1,6 +1,6 @@
 import React from "react";
-import { TableView } from "@/shared/view/table-view";
-import { Project, PROJECT_COLUMNS } from "../lib/projectColumns";
+import { TableView } from "@/shared";
+import { Project, PROJECT_COLUMNS } from "../lib";
 
 interface ProjectTableViewProps {
   projects: Project[];
