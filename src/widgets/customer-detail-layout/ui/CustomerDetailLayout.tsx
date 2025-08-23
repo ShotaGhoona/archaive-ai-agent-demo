@@ -1,5 +1,5 @@
 'use client';
-import { CustomerTabNavigation } from "@/shared/basic-layout/ui/CustomerTabNavigation";
+import { CustomerTabNavigation } from "@/shared";
 
 interface CustomerDetailLayoutProps {
   children: React.ReactNode;

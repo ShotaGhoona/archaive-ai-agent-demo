@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button } from '@/shared/shadcnui';
+import { Button, DataTableColumn } from '@/shared';
 import { ExternalLink } from 'lucide-react';
-import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Blueprint {
   filename: string;

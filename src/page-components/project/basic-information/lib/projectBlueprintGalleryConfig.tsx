@@ -1,0 +1,55 @@
+import React from 'react';
+import { GalleryViewConfig, Button } from '@/shared';
+import { Blueprint } from '@/page-components';
+import { Expand, ExternalLink } from 'lucide-react';
+
+export const createProjectBlueprintGalleryConfig = (
+  onPopup: (blueprint: Blueprint) => void,
+  onFullPage: (blueprint: Blueprint) => void
+): GalleryViewConfig<Blueprint> => ({
+  layoutConfig: {
+    grid: { xs: 2, lg: 3 },
+    aspectRatio: 'video'
+  },
+  
+  itemConfig: {
+    showThumbnail: true,
+    getThumbnailUrl: (blueprint) => blueprint.image || "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+    thumbnailOverlayRender: (blueprint) => (
+      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
+        <Button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onPopup(blueprint);
+          }}
+        >
+          <Expand size={16} />
+          ポップアップ
+        </Button>
+        <Button 
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            onFullPage(blueprint);
+          }}
+        >
+          <ExternalLink size={16} />
+          フルページ
+        </Button>
+      </div>
+    ),
+    contentRender: (blueprint) => (
+      <div className="space-y-1">
+        <p className="text-sm font-medium truncate" title={blueprint.filename}>
+          {blueprint.filename}
+        </p>
+        <p className="text-xs text-gray-500 truncate" title={blueprint.productName}>
+          {blueprint.productName}
+        </p>
+      </div>
+    )
+  },
+  
+  getRowId: (blueprint) => blueprint.internalNumber
+});

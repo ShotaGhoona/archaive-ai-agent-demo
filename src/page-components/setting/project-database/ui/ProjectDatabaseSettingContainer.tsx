@@ -1,9 +1,9 @@
 'use client';
 
-import { DatabaseColumnSettingContainer } from '@/widgets/database-column-setting';
-import { PROJECT_COLUMN_SETTING_CONFIGS } from '../lib/projectColumnSettingConfig';
+import { DatabaseColumnSettingContainer } from '@/widgets';
+import { PROJECT_COLUMN_SETTING_CONFIGS } from '../lib';
 
-export default function ProjectDatabaseSettingContainer() {
+export function ProjectDatabaseSettingContainer() {
   return (
     <DatabaseColumnSettingContainer 
       defaultColumns={PROJECT_COLUMN_SETTING_CONFIGS}

@@ -1,6 +1,6 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
-import { Project, PROJECT_COLUMNS } from "../lib/projectColumns";
+import { TableView } from "@/shared";
+import { Project, PROJECT_COLUMNS } from "../lib";
 
 interface ProjectTableViewProps {
   projects: Project[];
@@ -27,16 +27,14 @@ export function ProjectTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={projects}
       columns={PROJECT_COLUMNS}
       onItemUpdate={onProjectUpdate}
       getRowId={(project) => project.projectId}
-      emptyMessage="プロジェクトデータがありません"
       pagination={paginationConfig}
     />
   );

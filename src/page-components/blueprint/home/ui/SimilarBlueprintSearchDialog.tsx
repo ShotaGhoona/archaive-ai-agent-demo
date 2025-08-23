@@ -5,7 +5,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/shared/shadcnui";
+} from "@/shared";
 import { Search, Upload } from "lucide-react";
 
 export function SimilarBlueprintSearchDialog() {

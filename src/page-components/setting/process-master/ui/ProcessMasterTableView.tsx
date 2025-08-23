@@ -1,6 +1,6 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
-import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib/processMasterColumns";
+import { TableView } from "@/shared";
+import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib";
 
 interface ProcessMasterTableViewProps {
   processMasters: ProcessMaster[];
@@ -25,16 +25,14 @@ export function ProcessMasterTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={processMasters}
       columns={PROCESS_MASTER_COLUMNS}
       onItemUpdate={onProcessMasterUpdate}
       getRowId={(processMaster) => processMaster.id}
-      emptyMessage="工程マスターデータがありません"
       pagination={paginationConfig}
     />
   );

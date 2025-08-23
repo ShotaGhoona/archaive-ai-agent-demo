@@ -1,8 +1,8 @@
 'use client';
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
-import { customerMenuItems } from "../constants/customer-navigation";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared";
+import { customerMenuItems } from "../constants";
 
 export function CustomerTabNavigation() {
   const pathname = usePathname();

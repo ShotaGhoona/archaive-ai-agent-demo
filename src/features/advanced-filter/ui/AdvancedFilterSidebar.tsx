@@ -2,10 +2,10 @@ import React from 'react';
 import {
   Button,
   Separator,
-} from '@/shared/shadcnui';
+} from '@/shared';
 import { ChevronLeft, RotateCcw } from 'lucide-react';
-import { AdvancedFilterProps } from '../model/types';
-import { FilterControl } from './FilterControls';
+import { AdvancedFilterProps } from '../model';
+import { FilterControl } from '../ui';
 
 /**
  * 高度なフィルター機能を提供するサイドバーコンポーネント

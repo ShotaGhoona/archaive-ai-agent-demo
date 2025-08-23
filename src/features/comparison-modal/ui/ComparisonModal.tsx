@@ -1,9 +1,8 @@
 import React from "react";
-import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
+import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
 import { Save } from "lucide-react";
-import { ComparisonModalProps } from "../model/types";
-import { useComparisonModal } from "../model/useComparisonModal";
-import { EditableComparisonField, ReadOnlyComparisonField } from "../lib/field-components";
+import { ComparisonModalProps, useComparisonModal } from "../model";
+import { EditableComparisonField, ReadOnlyComparisonField } from "../lib";
 
 export function ComparisonModal({
   isOpen,

@@ -1,6 +1,6 @@
-import { Button, ScrollArea, Card, CardContent } from "@/shared/shadcnui";
+import { Button, ScrollArea, Card, CardContent } from "@/shared";
 import { FolderPlus, FileImage } from "lucide-react";
-import { ProjectBoxListProps } from "../model/type";
+import { ProjectBoxListProps } from "../model";
 import Link from "next/link";
 
 export function ProjectBoxList({ 

@@ -4,7 +4,7 @@ import {
   Building2, ShoppingBag, Box
 } from "lucide-react";
 import { FaFolder } from "react-icons/fa";
-import { ItemTypeOption, IconColorOption } from "../model/types";
+import { ItemTypeOption, IconColorOption } from "../model";
 
 export const itemTypeOptions: ItemTypeOption[] = [
   // フォルダ系（優先度高）

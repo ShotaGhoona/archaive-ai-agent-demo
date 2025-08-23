@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { Card, CardContent, Badge } from "@/shared/shadcnui";
+import { Card, CardContent, Badge } from "@/shared";
 import { User, Clock } from "lucide-react";
-import { Project } from "../lib/projectColumns";
+import { Project } from "../lib";
 import { useRouter } from "next/navigation";
 
 interface ProjectKanbanViewProps {

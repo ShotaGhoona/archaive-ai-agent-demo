@@ -1,9 +1,9 @@
 'use client';
 
-import { DatabaseColumnSettingContainer } from '@/widgets/database-column-setting';
-import { BLUEPRINT_COLUMN_SETTING_CONFIGS } from '../lib/blueprintColumnSettingConfig';
+import { DatabaseColumnSettingContainer } from '@/widgets';
+import { BLUEPRINT_COLUMN_SETTING_CONFIGS } from '../lib';
 
-export default function BlueprintDatabaseSettingContainer() {
+export function BlueprintDatabaseSettingContainer() {
   return (
     <DatabaseColumnSettingContainer 
       defaultColumns={BLUEPRINT_COLUMN_SETTING_CONFIGS}

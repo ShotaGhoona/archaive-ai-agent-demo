@@ -1,8 +1,7 @@
 'use client';
-import Link from "next/link";
-import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
+import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger, Button } from "@/shared/shadcnui";
 import { SameProjectBlueprint } from "../model/sameProjectBlueprintTypes";
-import { FileText } from "lucide-react";
+import { FileText, ExternalLink, Briefcase } from "lucide-react";
 
 interface SameProjectBlueprintBarProps {
   blueprints: SameProjectBlueprint[];
@@ -27,6 +26,19 @@ export function SameProjectBlueprintBar({
     }
   };
 
+  const handleOpenBlueprintPage = (blueprintId: string, path: string) => {
+    window.open(`/blueprint/${blueprintId}/${path}`, '_blank');
+  };
+
+  const handleOpenProjectPage = (projectNumber: string) => {
+    window.open(`/project/${projectNumber}/basic-information`, '_blank');
+  };
+
+  const handleButtonClick = (e: React.MouseEvent, action: () => void) => {
+    e.preventDefault();
+    e.stopPropagation();
+    action();
+  };
 
   return (
     <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-white via-white/50 to-transparent backdrop-blur-sm border-b">
@@ -34,15 +46,8 @@ export function SameProjectBlueprintBar({
         {blueprints.map((blueprint) => (
           <Tooltip key={blueprint.id} delayDuration={300}>
             <TooltipTrigger asChild>
-              <Link
-                href={`/blueprint/${blueprint.id}/${currentPath}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-shrink-0"
-              >
-                <Card className={`w-40 cursor-pointer transition-all duration-200 hover:shadow-md p-0 ${
-                  blueprint.isActive ? 'ring-2 ring-primary' : 'hover:bg-gray-50'
-                }`}>
+              <div className="flex-shrink-0">
+                <Card className={`w-40 transition-all duration-200 p-0`}>
                   <CardContent className="p-2">
                     <div className="space-y-2">
                       {/* 画像部分 - aspect-videoで16:9比率 */}
@@ -69,7 +74,7 @@ export function SameProjectBlueprintBar({
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
+              </div>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="w-96 p-0 border-0 shadow-2xl backdrop-blur-sm" style={{ filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.25))' }}>
               <div className="bg-white rounded-lg overflow-hidden">
@@ -98,6 +103,26 @@ export function SameProjectBlueprintBar({
                     </div>
                   </div>
                   <p className="text-sm text-gray-500">{blueprint.filename}</p>
+                  <div className="mt-3 pt-2 border-t">
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={(e) => handleButtonClick(e, () => handleOpenBlueprintPage(blueprint.id, currentPath))}
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        図面ページを開く
+                      </Button>
+                      <Button
+                        onClick={(e) => handleButtonClick(e, () => handleOpenProjectPage(blueprint.projectId))}
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <Briefcase className="h-3 w-3 mr-1" />
+                        案件ページを開く
+                      </Button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </TooltipContent>

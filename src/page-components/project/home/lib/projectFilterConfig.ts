@@ -1,5 +1,5 @@
-import { FilterConfig } from '@/features/advanced-filter';
-import { Project } from './projectColumns';
+import { FilterConfig } from '@/features';
+import { Project } from '../lib';
 
 export const PROJECT_FILTER_CONFIG: FilterConfig<Project>[] = [
   {

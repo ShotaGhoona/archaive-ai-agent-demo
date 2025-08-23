@@ -1,4 +1,4 @@
-import { BasicDataTable, DataTableColumn } from '@/shared/basic-data-table';
+import { TableView, DataTableColumn } from '@/shared';
 import { 
   Button, 
   Sheet, 
@@ -8,9 +8,10 @@ import {
   Switch,
   Avatar,
   AvatarFallback
-} from '@/shared/shadcnui';
+  } from '@/shared';
 import { ExternalLink, Table } from 'lucide-react';
-import { ColumnConfig, generateSampleValue } from '../model/types';
+import { ColumnConfig } from '../model';
+import { generateSampleValue } from '../model';
 
 interface PreviewTableProps {
   columns: ColumnConfig[];
@@ -28,7 +29,7 @@ export function PreviewTable({ columns }: PreviewTableProps) {
     .filter(col => col.displayEnabled)
     .sort((a, b) => a.order - b.order);
 
-  // BasicDataTable用の列定義を生成
+  // TableView用の列定義を生成
   const tableColumns: DataTableColumn<PreviewRecord>[] = [
     // 操作列を追加
     {
@@ -128,11 +129,10 @@ export function PreviewTable({ columns }: PreviewTableProps) {
       </SheetTrigger>
       <SheetContent side="bottom" className="h-[50vh]">
         <div className="flex-1 my-6 min-h-0">
-          <BasicDataTable
+          <TableView
             data={sampleData}
             columns={tableColumns}
             getRowId={(item) => item.id}
-            emptyMessage="表示する項目がありません"
           />
         </div>
       </SheetContent>

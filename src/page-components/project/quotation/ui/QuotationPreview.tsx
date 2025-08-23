@@ -1,6 +1,6 @@
 "use client";
 
-import { Separator } from "@/shared/shadcnui";
+import { Separator } from "@/shared";
 
 interface TableRow {
   id: string;
@@ -33,7 +33,7 @@ interface QuotationPreviewProps {
   formData: FormData;
 }
 
-export default function QuotationPreview({ formData }: QuotationPreviewProps) {
+export function QuotationPreview({ formData }: QuotationPreviewProps) {
   const {
     clientName,
     honorific,

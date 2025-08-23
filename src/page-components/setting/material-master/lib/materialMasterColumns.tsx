@@ -1,6 +1,5 @@
 import React from 'react';
-import { Badge } from '@/shared/shadcnui';
-import { DataTableColumn } from '@/shared/basic-data-table';
+import { Badge, DataTableColumn } from '@/shared';
 
 export interface MaterialMaster {
   id: string;

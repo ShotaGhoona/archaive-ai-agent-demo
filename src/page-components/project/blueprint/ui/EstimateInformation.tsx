@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
+import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared";
 import { Save, Plus, Trash2, Edit, Check, X } from "lucide-react";
-import { BlueprintFile, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-detail-layout/model/types";
-import materialMasterData from "@/page-components/setting/material-master/data/materialMaster.json";
-import processMasterData from "@/page-components/setting/process-master/data/processMaster.json";
+import { BlueprintFile, EstimateInformation as EstimateInfo } from "@/widgets";
+import { materialMasterData, processMasterData } from "@/page-components";
 
 interface EstimateInformationProps {
   activeFile: BlueprintFile | null;

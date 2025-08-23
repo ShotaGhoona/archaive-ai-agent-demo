@@ -1,9 +1,7 @@
-import { FilterToggleButton } from "@/features/advanced-filter";
-import { CsvExportDialog } from "@/features/csv-export";
-import { CUSTOMER_CSV_COLUMNS } from "../lib/customerCsvConfig";
-import { CreateCustomerDialog } from "./CreateCustomerDialog";
-import { Customer } from "../lib/customerColumns";
-import { SearchInput } from "@/shared/GenericSearch";
+import { FilterToggleButton, CsvExportDialog } from "@/features";
+import { CUSTOMER_CSV_COLUMNS, Customer } from "../lib";
+import { CreateCustomerDialog } from "../ui";
+import { SearchInput } from "@/shared";
 
 interface CustomerPageHeaderProps {
   searchTerm: string;

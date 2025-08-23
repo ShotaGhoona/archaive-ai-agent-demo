@@ -9,28 +9,27 @@ import {
   DialogContent,
   DialogTrigger,
   DialogFooter,
-} from "@/shared/shadcnui/dialog";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/shadcnui/form";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/shadcnui/select";
-import { Input } from "@/shared/shadcnui/input";
-import { Button } from "@/shared/shadcnui/button";
-import { Textarea } from "@/shared/shadcnui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/shared/shadcnui/card";
+  Input,
+  Button,
+  Textarea,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/shared";
 import { Plus } from "lucide-react";
-import { MaterialMaster } from "../lib/materialMasterColumns";
+import { MaterialMaster } from "../lib";
 
 const formSchema = z.object({
   materialName: z.string().min(1, "材料名は必須です").max(50, "材料名は50文字以内で入力してください"),

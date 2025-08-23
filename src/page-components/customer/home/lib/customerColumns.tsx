@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button } from '@/shared/shadcnui';
+import { Badge, Button, DataTableColumn } from '@/shared';
 import { ExternalLink } from 'lucide-react';
-import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Customer {
   customerCode: string;

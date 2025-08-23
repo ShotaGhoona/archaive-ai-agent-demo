@@ -1,4 +1,4 @@
-import { Input } from "@/shared/shadcnui";
+import { Input } from "@/shared";
 import { Search } from "lucide-react";
 
 interface SearchInputProps {

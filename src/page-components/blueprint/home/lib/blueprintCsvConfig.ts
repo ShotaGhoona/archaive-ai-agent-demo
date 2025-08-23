@@ -1,5 +1,5 @@
-import { CsvColumnConfig } from '@/features/csv-export';
-import { Blueprint } from './blueprintColumns';
+import { CsvColumnConfig } from '@/features';
+import { Blueprint } from '../lib';
 
 export const BLUEPRINT_CSV_COLUMNS: Omit<CsvColumnConfig<Blueprint>, 'enabled'>[] = [
   { key: 'filename', label: 'ファイル名' },

@@ -1,4 +1,4 @@
-import { ResizableLayoutConfig } from "@/features/resizable-layout";
+import { ResizableLayoutConfig } from "@/features";
 
 // プロジェクト図面ページ用設定（左: サイドバー, 中央: ビューア、右: ユーティリティ）
 export const projectBlueprintConfig: ResizableLayoutConfig = {

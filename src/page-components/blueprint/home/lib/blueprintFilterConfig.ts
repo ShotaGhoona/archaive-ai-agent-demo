@@ -1,5 +1,5 @@
-import { FilterConfig } from '@/features/advanced-filter';
-import { Blueprint } from './blueprintColumns';
+import { FilterConfig } from '@/features';
+import { Blueprint } from '../lib';
 
 export const BLUEPRINT_FILTER_CONFIG: FilterConfig<Blueprint>[] = [
   {

@@ -1,5 +1,5 @@
 import { CsvColumnConfig } from '@/features/csv-export';
-import { MaterialMaster } from './materialMasterColumns';
+import { MaterialMaster } from '../lib';
 
 export const MATERIAL_MASTER_CSV_COLUMNS: Omit<CsvColumnConfig<MaterialMaster>, 'enabled'>[] = [
   { key: 'id', label: 'ID' },

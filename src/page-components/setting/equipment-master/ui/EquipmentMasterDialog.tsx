@@ -10,25 +10,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@/shared/shadcnui/dialog";
-import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/shared/shadcnui/form";
+} from "@/shared";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/shadcnui/select";
-import { Input } from "@/shared/shadcnui/input";
-import { Textarea } from "@/shared/shadcnui/textarea";
-import { Button } from "@/shared/shadcnui/button";
+  Input,
+  Textarea,
+  Button,
+} from "@/shared";
 
 const formSchema = z.object({
   category: z.string().min(1, "設備カテゴリは必須です"),

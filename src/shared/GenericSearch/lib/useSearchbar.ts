@@ -1,6 +1,6 @@
 "use client";
 import { useState, useMemo } from "react";
-import type { SearchConfig, UseSearchbarReturn } from "../model/types";
+import type { SearchConfig, UseSearchbarReturn } from "../model";
 
 export function useSearchbar<T>(
   data: T[],

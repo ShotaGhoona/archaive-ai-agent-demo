@@ -1,4 +1,4 @@
-import BasicInfoContainer from "@/page-components/project/basic-information/ui/BasicInfoContainer";
+import { BasicInfoContainer } from "@/page-components/project/basic-information/ui/BasicInfoContainer";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function BlueprintDetailPage() {

@@ -20,9 +20,9 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger
-} from '@/shared/shadcnui';
-import { ColumnConfig, SelectOption } from '../model/types';
-import { SelectOptionsManager } from './SelectOptionsManager';
+} from '@/shared';
+import { ColumnConfig, SelectOption } from '../model';
+import { SelectOptionsManager } from '../ui';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
 interface ColumnDefineAreaProps {

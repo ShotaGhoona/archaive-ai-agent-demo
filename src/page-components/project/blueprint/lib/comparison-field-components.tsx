@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input } from "@/shared/shadcnui";
-import { createHighlightedTextElements } from './text-diff-highlighter';
+import { Input } from "@/shared";
+import { createHighlightedTextElements } from '../lib';
 
 interface EditableComparisonFieldProps {
   value: string;

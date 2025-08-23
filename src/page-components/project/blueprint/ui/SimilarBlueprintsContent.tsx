@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@/shared/shadcnui";
+import { Button } from "@/shared";
 import { Search, GitCompareArrows } from "lucide-react";
-import { SimilarBlueprintCompareModal } from "./SimilarBlueprintCompareModal";
-import { BlueprintFile, SimilarBlueprint } from "@/widgets/blueprint-detail-layout/model/types";
+import { ProjectSimilarBlueprintCompareModal } from "../ui";
+import { BlueprintFile, SimilarBlueprint } from "@/widgets";
 
 interface SimilarBlueprintsContentProps {
   activeFile: BlueprintFile | null;
@@ -146,7 +146,7 @@ export function SimilarBlueprintsContent({
         </div>
       </div>
       
-      <SimilarBlueprintCompareModal
+      <ProjectSimilarBlueprintCompareModal
         isOpen={isCompareOpen}
         onClose={handleCloseCompare}
         currentBlueprint={activeFile}

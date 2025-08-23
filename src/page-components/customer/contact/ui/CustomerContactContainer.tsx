@@ -1,20 +1,17 @@
 "use client";
 import { useState } from "react";
 import contactsData from "../data/contact.json";
-import { ContactPageHeader } from "./CustomerContactPageHeader";
-import { ContactTableView } from "./CustomerContactTableView";
+import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
 // import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features/advanced-filter";
-import { CONTACT_FILTER_CONFIG } from "../lib/contactFilterConfig";
-import { CONTACT_SEARCHBAR_CONFIG } from "../lib/contactSearchbarConfig";
-import { Contact } from "../lib/contactColumns";
-import { useSearchbar } from "@/shared/GenericSearch";
+import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG, Contact } from "../lib";
+import { useSearchbar } from "@/shared";
 
 interface CustomerContactContainerProps {
   customerId: string;
 }
 
-export default function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
+export function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [contacts, setContacts] = useState<Contact[]>(contactsData as Contact[]);
   const itemsPerPage = 20;
@@ -78,7 +75,7 @@ export default function CustomerContactContainer({ customerId }: CustomerContact
         }`}
       >
         <div className="flex-shrink-0 p-4">
-          <ContactPageHeader
+          <CustomerContactPageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             onToggleFilterSidebar={toggleSidebar}
@@ -89,7 +86,7 @@ export default function CustomerContactContainer({ customerId }: CustomerContact
           />
         </div>
         <div className="flex-1 flex flex-col min-h-0 px-4">
-          <ContactTableView 
+          <CustomerContactTableView 
             contacts={filteredContacts}
             onContactUpdate={handleContactUpdate}
             currentPage={currentPage}

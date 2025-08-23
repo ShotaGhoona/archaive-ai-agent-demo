@@ -1,0 +1,1 @@
+export { CustomerNotesContainer } from './CustomerNotesContainer';

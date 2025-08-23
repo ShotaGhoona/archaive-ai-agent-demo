@@ -1,21 +1,20 @@
 "use client";
-import { BasicDataTable } from "@/shared/basic-data-table";
-import { createBlueprintColumns, Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumns";
+import { TableView } from "@/shared";
+import { createBlueprintColumns, Blueprint } from "@/page-components";
 
 interface BlueprintTableProps {
   blueprints: Blueprint[];
 }
 
-export default function BlueprintTable({ blueprints }: BlueprintTableProps) {
+export function BlueprintTable({ blueprints }: BlueprintTableProps) {
   const blueprintColumns = createBlueprintColumns();
 
   return (
     <div className="bg-white flex flex-col">
-      <BasicDataTable
+      <TableView
         data={blueprints}
         columns={blueprintColumns}
         getRowId={(blueprint) => blueprint.internalNumber}
-        emptyMessage="登録されている図面はありません"
       />
     </div>
   );

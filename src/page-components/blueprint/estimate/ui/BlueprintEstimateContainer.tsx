@@ -1,14 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/shadcnui";
+import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared";
 import { Save, Plus, Trash2, Edit, Check, X } from "lucide-react";
-import { BlueprintFile, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-detail-layout/model/types";
-import materialMasterData from "@/page-components/setting/material-master/data/materialMaster.json";
-import processMasterData from "@/page-components/setting/process-master/data/processMaster.json";
+import { BlueprintFile, EstimateInformation, BlueprintDetailLayout } from "@/widgets";
+import { materialMasterData, processMasterData } from "@/page-components";
 
 interface BlueprintEstimateContainerProps {
   activeFile: BlueprintFile | null;
-  onSave?: (estimateData: Partial<EstimateInfo>) => void;
+  onSave?: (estimateData: Partial<EstimateInformation >) => void;
 }
 
 interface MaterialSelection {
@@ -226,9 +225,10 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
   };
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* 1. 材料選択 */}
+    <BlueprintDetailLayout>
+      <div className="h-full flex flex-col">
+        <div className="flex-1 overflow-y-auto p-4 space-y-6">
+          {/* 1. 材料選択 */}
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">材料選択</h3>
@@ -486,17 +486,18 @@ export function BlueprintEstimateContainer({ activeFile, onSave }: BlueprintEsti
         </div>
       </div>
       
-      <div className="p-4 border-t">
-        <Button
-          onClick={handleSave}
-          disabled={!isModified}
-          className="w-full gap-2"
-          variant={isModified ? "default" : "outline"}
-        >
-          <Save className="h-4 w-4" />
-          見積もりを確定
-        </Button>
+        <div className="p-4 border-t">
+          <Button
+            onClick={handleSave}
+            disabled={!isModified}
+            className="w-full gap-2"
+            variant={isModified ? "default" : "outline"}
+          >
+            <Save className="h-4 w-4" />
+            見積もりを確定
+          </Button>
+        </div>
       </div>
-    </div>
+    </BlueprintDetailLayout>
   );
 }

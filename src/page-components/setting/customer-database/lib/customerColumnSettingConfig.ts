@@ -1,4 +1,4 @@
-import { ColumnConfig } from '@/widgets/database-column-setting';
+import { ColumnConfig } from '@/widgets';
 
 // Customerに特化したカラム定義（customerColumns.tsxベース）
 export const CUSTOMER_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [

@@ -1,5 +1,5 @@
 import { CsvColumnConfig } from '@/features/csv-export';
-import { ProcessMaster } from './processMasterColumns';
+import { ProcessMaster } from '../lib';
 
 export const PROCESS_MASTER_CSV_COLUMNS: Omit<CsvColumnConfig<ProcessMaster>, 'enabled'>[] = [
   { key: 'id', label: 'ID' },

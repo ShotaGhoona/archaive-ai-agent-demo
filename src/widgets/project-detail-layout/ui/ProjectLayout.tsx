@@ -1,5 +1,5 @@
 'use client';
-import { ProjectTabNavigation } from "@/shared/basic-layout/ui/ProjectTabNavigation";
+import { ProjectTabNavigation } from "@/shared";
 
 interface ProjectLayoutProps {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-import { ColumnConfig } from '@/widgets/database-column-setting';
+import { ColumnConfig } from '@/widgets';
 
 // Projectに特化したカラム定義（projectColumns.tsxベース）
 export const PROJECT_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [

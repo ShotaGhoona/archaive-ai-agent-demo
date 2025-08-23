@@ -1,6 +1,6 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
-import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib/materialMasterColumns";
+import { TableView } from "@/shared";
+import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib";
 
 interface MaterialMasterTableViewProps {
   materialMasters: MaterialMaster[];
@@ -25,16 +25,14 @@ export function MaterialMasterTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={materialMasters}
       columns={MATERIAL_MASTER_COLUMNS}
       onItemUpdate={onMaterialMasterUpdate}
       getRowId={(materialMaster) => materialMaster.id}
-      emptyMessage="材料マスターデータがありません"
       pagination={paginationConfig}
     />
   );

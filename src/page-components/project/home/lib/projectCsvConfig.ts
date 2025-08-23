@@ -1,5 +1,5 @@
-import { CsvColumnConfig } from '@/features/csv-export';
-import { Project } from './projectColumns';
+import { CsvColumnConfig } from '@/features';
+import { Project } from '../lib';
 
 export const PROJECT_CSV_COLUMNS: Omit<CsvColumnConfig<Project>, 'enabled'>[] = [
   { key: 'projectId', label: '案件ID' },

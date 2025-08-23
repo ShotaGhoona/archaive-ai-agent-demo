@@ -1,0 +1,1 @@
+export { default as registerBlueprintsData } from './registerBlueprints.json';

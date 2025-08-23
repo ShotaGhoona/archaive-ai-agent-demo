@@ -1,9 +1,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/shadcnui';
+import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DataTableColumn } from '@/shared';
 import { Phone, User, Mail, MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
-import { DataTableColumn } from '@/shared/basic-data-table';
 
 export interface Contact {
   contactId: string;

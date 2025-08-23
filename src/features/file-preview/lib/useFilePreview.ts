@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { PreviewableFile, PreviewOptions, PreviewProvider } from '../model/types';
-import { PreviewProviderManager, defaultPreviewProviders } from './previewProviders';
+import { PreviewableFile, PreviewOptions, PreviewProvider } from '../model';
+import { PreviewProviderManager, defaultPreviewProviders } from '../lib';
 
 interface UseFilePreviewProps {
   files: PreviewableFile[];

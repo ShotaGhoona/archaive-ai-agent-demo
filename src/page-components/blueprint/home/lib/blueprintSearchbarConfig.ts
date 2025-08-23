@@ -1,5 +1,5 @@
-import type { SearchConfig } from "@/shared/GenericSearch";
-import type { Blueprint } from "./blueprintColumns";
+import type { SearchConfig } from "@/shared";
+import type { Blueprint } from "../lib";
 
 export const BLUEPRINT_SEARCHBAR_CONFIG: SearchConfig<Blueprint> = {
   searchableFields: ['filename', 'orderSource', 'productName', 'internalNumber', 'customerNumber'],

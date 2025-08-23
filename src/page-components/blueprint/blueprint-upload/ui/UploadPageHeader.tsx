@@ -1,4 +1,4 @@
-import { Button, Tabs, TabsList, TabsTrigger } from "@/shared/shadcnui";
+import { Button, Tabs, TabsList, TabsTrigger } from "@/shared";
 import { 
   CheckSquare, 
   Square, 
@@ -8,7 +8,7 @@ import {
   Upload,
   Layers
 } from "lucide-react";
-import { UploadPageHeaderProps } from "../model/type";
+import { UploadPageHeaderProps } from "../model";
 
 export function UploadPageHeader({
   viewMode,

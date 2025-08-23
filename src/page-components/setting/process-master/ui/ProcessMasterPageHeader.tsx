@@ -1,9 +1,8 @@
 import React from "react";
-import { SearchInput } from "@/shared/GenericSearch";
-import { ProcessMaster } from "../lib/processMasterColumns";
-import { CreateProcessDialog } from "./CreateProcessDialog";
-import { CsvExportDialog } from "@/features/csv-export";
-import { PROCESS_MASTER_CSV_COLUMNS } from "../lib/processMasterCsvConfig";
+import { SearchInput } from "@/shared";
+import { CsvExportDialog } from "@/features";
+import { ProcessMaster, PROCESS_MASTER_CSV_COLUMNS } from "../lib";
+import { CreateProcessDialog } from "../ui";
 
 interface ProcessMasterPageHeaderProps {
   searchTerm: string;

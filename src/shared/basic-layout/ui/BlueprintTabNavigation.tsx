@@ -1,8 +1,8 @@
 'use client';
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/shadcnui";
-import { blueprintTabs } from "../constants/blueprint-navigation";
+import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@/shared";
+import { blueprintTabs } from "../constants";
 
 export function BlueprintTabNavigation() {
   const pathname = usePathname();

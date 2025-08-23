@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/shared/shadcnui/button";
-import { Input } from "@/shared/shadcnui/input";
+import { Button, Input, TableView } from "@/shared";
 import { Search, Plus, Download } from "lucide-react";
-import { BasicDataTable } from "@/shared/basic-data-table/ui/BasicDataTable";
-import { EquipmentMasterDialog } from "./EquipmentMasterDialog";
-import { EquipmentMaster, mockData, columns } from "../data/mockData";
+import { EquipmentMasterDialog } from "../ui";
+import { EquipmentMaster, mockData, columns } from "../data";
 
-export default function EquipmentMasterContainer() {
+export function EquipmentMasterContainer() {
   const [data, setData] = useState<EquipmentMaster[]>(mockData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -96,7 +94,7 @@ export default function EquipmentMasterContainer() {
 
       {/* データテーブル */}
       <div className="flex-1 px-6 overflow-hidden">
-        <BasicDataTable
+        <TableView
           data={filteredData}
           columns={columns}
           onItemUpdate={(rowId, field, value) => {
@@ -105,7 +103,6 @@ export default function EquipmentMasterContainer() {
             );
             setData(updatedData);
           }}
-          emptyMessage="登録された機械設備情報がありません"
         />
       </div>
 

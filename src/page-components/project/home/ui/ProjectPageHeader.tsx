@@ -1,17 +1,15 @@
-import { FilterToggleButton } from "@/features/advanced-filter";
-import { CsvExportDialog } from "@/features/csv-export";
-import { PROJECT_CSV_COLUMNS } from "../lib/projectCsvConfig";
-import { SearchInput } from "@/shared/GenericSearch";
+import { FilterToggleButton, CsvExportDialog } from "@/features";
 import { 
   Button, 
   Tooltip, 
   TooltipTrigger, 
-  TooltipContent 
-} from "@/shared/shadcnui";
+  TooltipContent,
+  SearchInput,
+} from "@/shared";
 import { Plus, List, Kanban } from "lucide-react";
-import { Project } from "../lib/projectColumns";
+import { Project, PROJECT_CSV_COLUMNS } from "../lib";
 import Link from "next/link";
-import { BlueprintUploadDialog } from "./BlueprintUploadDialog";
+import { ProjectBlueprintUploadDialog } from "../ui";
 
 interface ProjectPageHeaderProps {
   searchTerm: string;
@@ -85,7 +83,7 @@ export function ProjectPageHeader({
           initialColumns={PROJECT_CSV_COLUMNS}
           defaultFilename="projects"
         />
-        <BlueprintUploadDialog />
+        <ProjectBlueprintUploadDialog />
         <Link href="/blueprint/upload">
           <Button size="lg" className="bg-primary hover:bg-primary/90">
             <Plus className="h-4 w-4 mr-2" />

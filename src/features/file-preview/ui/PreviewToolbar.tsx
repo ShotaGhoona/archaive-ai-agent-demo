@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/shared/shadcnui';
+import { Button } from '@/shared';
 import { 
   ZoomIn, 
   ZoomOut, 
@@ -7,7 +7,7 @@ import {
   Download, 
   Layers
 } from 'lucide-react';
-import { PreviewableFile, PreviewAction } from '../model/types';
+import { PreviewableFile, PreviewAction } from '../model';
 
 interface PreviewToolbarProps {
   currentFile: PreviewableFile;

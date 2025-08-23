@@ -15,7 +15,7 @@ export interface FileStack {
   createdAt: Date;
 }
 
-export interface Project {
+export interface BlueprintProject {
   id: string;
   name: string;
   fileCount: number;
@@ -34,7 +34,7 @@ export interface ProjectAssignment {
 export interface BlueprintSortingState {
   files: UploadedFile[];
   fileStacks: FileStack[];
-  projects: Project[];
+  projects: BlueprintProject[];
   assignments: ProjectAssignment[];
   selectedFiles: string[];
   selectedStacks: string[];
@@ -100,7 +100,7 @@ export interface StackedCardProps {
 }
 
 export interface ProjectBoxListProps {
-  projects?: Project[];
+  projects?: BlueprintProject[];
   onBatchRegister?: () => void;
   onDropToNewProject?: (item: DragItem) => void;
   onDropToProject?: (item: DragItem, projectId: string) => void;

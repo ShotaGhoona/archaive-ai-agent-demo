@@ -1,6 +1,6 @@
 import React from "react";
-import { BasicDataTable } from "@/shared/basic-data-table";
-import { Customer, CUSTOMER_COLUMNS } from "../lib/customerColumns";
+import { TableView } from "@/shared";
+import { Customer, CUSTOMER_COLUMNS } from "../lib";
 
 interface CustomerTableViewProps {
   customers: Customer[];
@@ -27,16 +27,14 @@ export function CustomerTableView({
     itemsPerPage,
     totalItems,
     onPageChange,
-    showTotalItems: true,
   } : undefined;
 
   return (
-    <BasicDataTable
+    <TableView
       data={customers}
       columns={CUSTOMER_COLUMNS}
       onItemUpdate={onCustomerUpdate}
       getRowId={(customer) => customer.customerCode}
-      emptyMessage="顧客データがありません"
       pagination={paginationConfig}
     />
   );

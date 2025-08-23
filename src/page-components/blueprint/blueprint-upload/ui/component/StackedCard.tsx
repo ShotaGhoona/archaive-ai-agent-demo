@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/shared/shadcnui";
+import { Button } from "@/shared";
 import { 
   FileImage, 
   ZoomIn, 
@@ -7,8 +7,8 @@ import {
   Trash2,
   Layers
 } from "lucide-react";
-import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
-import { StackedCardProps, UploadedFile, DragItem } from "../../model/type";
+import { FilePreviewModal, PreviewableFile } from "@/features";
+import { StackedCardProps, UploadedFile, DragItem } from "../../model";
 
 export function StackedCard({
   stackedFiles,

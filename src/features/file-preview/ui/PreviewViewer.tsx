@@ -5,11 +5,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/shared/shadcnui';
-import type { CarouselApi } from '@/shared/shadcnui';
-import { PreviewableFile, PreviewRenderOptions } from '../model/types';
-// import { useFilePreview } from '../lib/useFilePreview';
-import { PreviewProviderManager } from '../lib/previewProviders';
+} from '@/shared';
+import type { CarouselApi } from '@/shared';
+import { PreviewableFile, PreviewRenderOptions } from '../model';
+import { PreviewProviderManager } from '../lib';
 
 interface PreviewViewerProps {
   files: PreviewableFile[];

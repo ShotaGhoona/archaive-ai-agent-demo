@@ -16,9 +16,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/shared/shadcnui';
+} from '@/shared';
 import { Settings, Plus, Trash2 } from 'lucide-react';
-import { SelectOption } from '../model/types';
+import { SelectOption } from '../model';
 
 interface SelectOptionsManagerProps {
   options: SelectOption[];

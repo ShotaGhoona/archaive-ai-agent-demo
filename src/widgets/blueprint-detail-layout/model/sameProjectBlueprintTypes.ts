@@ -44,6 +44,7 @@ export interface SameProjectBlueprint {
   filename: string;
   status: 'completed' | 'in_progress' | 'pending';
   imageUrl: string;
+  projectId: string; // 案件ID
   isActive: boolean;
   basicInformation: BasicInformation;
   estimateInformation: EstimateInformation;

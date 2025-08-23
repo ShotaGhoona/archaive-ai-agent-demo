@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { Button } from "@/shared/shadcnui";
+import { Button } from "@/shared";
 import { 
   FileImage, 
   ZoomIn, 
   RotateCcw, 
   Trash2
 } from "lucide-react";
-import { FilePreviewModal, PreviewableFile } from "@/features/file-preview";
+import { FilePreviewModal, PreviewableFile } from "@/features";
 import { AddFileCard } from "./component/AddFileCard";
 import { StackedCard } from "./component/StackedCard";
-import { UploadGalleryViewProps, UploadedFile, DragItem } from "../model/type";
+import { UploadGalleryViewProps, UploadedFile, DragItem } from "../model";
 
 export function UploadGalleryView({
   files,

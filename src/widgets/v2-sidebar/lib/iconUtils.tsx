@@ -4,7 +4,7 @@ import {
   Building2, ShoppingBag, Box
 } from "lucide-react";
 import { FaFolder } from "react-icons/fa";
-import { V2SidebarItem } from "../model/types";
+import { V2SidebarItem } from "../model";
 
 export const getIconByType = (type: V2SidebarItem['type']): React.ReactNode => {
   switch (type) {

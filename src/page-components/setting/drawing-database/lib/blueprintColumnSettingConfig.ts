@@ -1,4 +1,4 @@
-import { ColumnConfig } from '@/widgets/database-column-setting';
+import { ColumnConfig } from '@/widgets';
 
 export const BLUEPRINT_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [
   {

@@ -1,4 +1,4 @@
-import { V2SidebarItem } from '../model/types';
+import { V2SidebarItem } from '../model';
 
 export const findItemById = (items: V2SidebarItem[], id: string): V2SidebarItem | null => {
   for (const item of items) {

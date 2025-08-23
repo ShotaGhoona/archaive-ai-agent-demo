@@ -1,10 +1,8 @@
 import React, { useState, useRef } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/shadcnui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
 import { Search, Settings, Calculator } from "lucide-react";
-import { SimilarBlueprintsContent } from "./SimilarBlueprintsContent";
-import { BasicInformation } from "./BasicInformation";
-import { EstimateInformation } from "./EstimateInformation";
-import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets/blueprint-detail-layout/model/types";
+import { SimilarBlueprintsContent, BasicInformation, EstimateInformation } from "../ui";
+import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets";
 
 interface BlueprintUtilitiesProps {
   activeFile: BlueprintFile | null;
