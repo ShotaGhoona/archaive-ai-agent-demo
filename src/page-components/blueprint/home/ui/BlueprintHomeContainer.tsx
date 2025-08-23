@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { blueprintData } from "../data";
 import { BlueprintPageHeader, BlueprintTableView, BlueprintGalleryView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
+import { useSearchbar } from "@/shared";
+import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
 import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG, Blueprint } from "../lib";
 
 export function BlueprintHomeContainer() {

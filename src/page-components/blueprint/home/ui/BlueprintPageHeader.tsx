@@ -3,9 +3,9 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-  FilterToggleButton,
   SearchInput
 } from "@/shared";
+import { FilterToggleButton } from "@/features";
 import {
   Grid3X3,
   List,

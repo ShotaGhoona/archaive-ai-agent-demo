@@ -1,3 +1,3 @@
-export * from './FloatingLayout';
-export * from './FullpageLayout';
-export * from './SidebarLayout';
+export { default as FloatingLayout } from './FloatingLayout';
+export { default as FullpageLayout } from './FullpageLayout';
+export { default as SidebarLayout } from './SidebarLayout';
