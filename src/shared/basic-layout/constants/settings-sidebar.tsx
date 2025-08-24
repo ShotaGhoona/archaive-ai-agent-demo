@@ -1,19 +1,15 @@
 import { 
   User, 
-  Bell, 
-  Palette,
   Building2,
   Users,
-  CreditCard,
-  Zap,
-  Mail,
+  FileText,
   Lock,
-  Monitor,
   Settings,
   Package,
   GitBranch,
   Database,
-  HardDrive
+  HardDrive,
+  ScrollText
 } from "lucide-react";
 
 export interface SettingItem {
@@ -26,7 +22,6 @@ export interface SettingItem {
 export interface SettingSection {
   id: string;
   title: string;
-  icon: React.ReactNode;
   items: SettingItem[];
 }
 
@@ -34,7 +29,6 @@ export const settingSections: SettingSection[] = [
   {
     id: "basic",
     title: "基本設定",
-    icon: <Settings className="w-5 h-5" />,
     items: [
       {
         id: "profile",
@@ -43,65 +37,34 @@ export const settingSections: SettingSection[] = [
         href: "/setting/profile"
       },
       {
-        id: "account-security",
-        label: "アカウントセキュリティ",
+        id: "company-info",
+        label: "自社情報設定",
+        icon: <Building2 className="w-4 h-4" />,
+        href: "/setting/company-info"
+      },
+      {
+        id: "customer-list",
+        label: "顧客リスト",
+        icon: <Users className="w-4 h-4" />,
+        href: "/setting/customer-list"
+      },
+      {
+        id: "reports",
+        label: "帳票設定",
+        icon: <FileText className="w-4 h-4" />,
+        href: "/setting/reports"
+      },
+      {
+        id: "security",
+        label: "セキュリティ設定",
         icon: <Lock className="w-4 h-4" />,
         href: "/setting/security"
-      },
-      {
-        id: "notifications",
-        label: "通知設定",
-        icon: <Bell className="w-4 h-4" />,
-        href: "/setting/notifications"
-      },
-      {
-        id: "email",
-        label: "メール設定",
-        icon: <Mail className="w-4 h-4" />,
-        href: "/setting/email"
-      },
-      {
-        id: "organization",
-        label: "組織情報",
-        icon: <Building2 className="w-4 h-4" />,
-        href: "/setting/organization"
-      },
-      {
-        id: "members",
-        label: "メンバー管理",
-        icon: <Users className="w-4 h-4" />,
-        href: "/setting/members"
-      },
-      {
-        id: "billing",
-        label: "請求・支払い",
-        icon: <CreditCard className="w-4 h-4" />,
-        href: "/setting/billing"
-      },
-      {
-        id: "appearance",
-        label: "外観",
-        icon: <Palette className="w-4 h-4" />,
-        href: "/setting/appearance"
-      },
-      {
-        id: "display",
-        label: "表示",
-        icon: <Monitor className="w-4 h-4" />,
-        href: "/setting/display"
-      },
-      {
-        id: "shortcuts",
-        label: "ショートカット",
-        icon: <Zap className="w-4 h-4" />,
-        href: "/setting/shortcuts"
       }
     ]
   },
   {
     id: "master",
     title: "マスター設定",
-    icon: <Package className="w-5 h-5" />,
     items: [
       {
         id: "material-master",
@@ -120,7 +83,6 @@ export const settingSections: SettingSection[] = [
   {
     id: "database",
     title: "データベース設定",
-    icon: <Database className="w-5 h-5" />,
     items: [
       {
         id: "drawing-database",
@@ -139,6 +101,18 @@ export const settingSections: SettingSection[] = [
         label: "顧客データベース設定",
         icon: <Database className="w-4 h-4" />,
         href: "/setting/customer-database"
+      }
+    ]
+  },
+  {
+    id: "other",
+    title: "その他",
+    items: [
+      {
+        id: "terms-of-service",
+        label: "サービス利用規約",
+        icon: <ScrollText className="w-4 h-4" />,
+        href: "/setting/terms-of-service"
       }
     ]
   }

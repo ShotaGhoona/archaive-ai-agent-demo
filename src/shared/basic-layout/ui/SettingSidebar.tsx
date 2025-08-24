@@ -32,14 +32,9 @@ export function SettingSidebar() {
               onClick={() => toggleSection(section.id)}
               className="w-full px-6 py-2 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <div className="text-gray-500 dark:text-gray-400">
-                  {section.icon}
-                </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {section.title}
-                </span>
-              </div>
+              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                {section.title}
+              </span>
               <ChevronDown
                 className={cn(
                   "w-4 h-4 text-gray-400 transition-transform duration-200",
