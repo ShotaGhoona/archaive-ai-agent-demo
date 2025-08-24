@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import { QuotationForm, QuotationPreview } from "../ui";
+import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features/resizable-layout";
+import { quotationConfig } from "../lib/resizableLayoutConfig";
 
 interface TableRow {
   id: string;
@@ -54,14 +56,20 @@ export function QuotationContainer() {
   });
 
   return (
-    <div className="h-full grid grid-cols-5 grid-rows-1">
-      {/* 左側 - 入力画面 */}
-      <div className="col-span-2 overflow-hidden">
-        <QuotationForm formData={formData} setFormData={setFormData} />
-      </div>
-      <div className="col-span-3 overflow-hidden">
-        <QuotationPreview formData={formData} />
-      </div>
-    </div>
+    <ResizableLayout config={quotationConfig} className="h-full">
+      <ResizablePanel index={0}>
+        <div className="h-full overflow-hidden">
+          <QuotationForm formData={formData} setFormData={setFormData} />
+        </div>
+      </ResizablePanel>
+      
+      <ResizableHandle />
+      
+      <ResizablePanel index={1}>
+        <div className="h-full overflow-hidden">
+          <QuotationPreview formData={formData} />
+        </div>
+      </ResizablePanel>
+    </ResizableLayout>
   );
 }
