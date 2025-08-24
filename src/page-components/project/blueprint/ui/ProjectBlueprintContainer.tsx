@@ -6,7 +6,7 @@ import { BlueprintUtilities } from "../ui";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features";
 import { projectBlueprintConfig } from "../lib";
 import { blueprintsData } from "../data";
-import { BlueprintFile, BasicInformation as BasicInfo, EstimateInformation as EstimateInfo } from "@/widgets";
+import { BlueprintFile, BasicInformation, EstimateInformation } from "@/widgets";
 
 export function ProjectBlueprintContainer() {
   const [blueprintFiles, setBlueprintFiles] = useState<BlueprintFile[]>(blueprintsData);
@@ -52,13 +52,9 @@ export function ProjectBlueprintContainer() {
     });
   };
 
-  // ファイル追加ハンドラー
-  const handleFileAdd = (newFile: BlueprintFile) => {
-    setBlueprintFiles(prev => [...prev, newFile]);
-  };
 
   // 基本情報保存ハンドラー
-  const handleBasicSave = (basicData: Partial<BasicInfo>) => {
+  const handleBasicSave = (basicData: Partial<BasicInformation>) => {
     if (activeFile) {
       setBlueprintFiles(prev => prev.map(file => 
         file.id === activeFile.id 
@@ -70,7 +66,7 @@ export function ProjectBlueprintContainer() {
   };
 
   // 見積もり情報保存ハンドラー
-  const handleEstimateSave = (estimateData: Partial<EstimateInfo>) => {
+  const handleEstimateSave = (estimateData: Partial<EstimateInformation>) => {
     if (activeFile) {
       setBlueprintFiles(prev => prev.map(file => 
         file.id === activeFile.id 
@@ -88,7 +84,6 @@ export function ProjectBlueprintContainer() {
         files={blueprintFiles}
         onFileSelect={handleFileSelect}
         onFileRemove={handleFileRemove}
-        onFileAdd={handleFileAdd}
       />
       
       {/* 中央・右側エリア */}

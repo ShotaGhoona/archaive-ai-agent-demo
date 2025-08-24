@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "name": "メインアセンブリ図面.dwg",
+    "name": "製品A.dwg",
     "description": "製品のメインアセンブリ図面",
     "size": 2048576,
     "type": "application/dwg",
@@ -189,7 +189,7 @@
   },
   {
     "id": "2", 
-    "name": "詳細寸法図.dwg",
+    "name": "製品B.dwg",
     "description": "部品の詳細寸法を示した図面",
     "size": 1536000,
     "type": "application/dwg", 
