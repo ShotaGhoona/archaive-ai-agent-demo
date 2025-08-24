@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { HelpCircle, ChevronDown } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared";
 import { settingSections, appInfo } from "../constants";
 
 export function SettingSidebar() {
@@ -50,31 +51,37 @@ export function SettingSidebar() {
                   const isActive = pathname === item.href;
                   
                   return (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      className={cn(
-                        "flex items-center gap-3 px-6 py-2 text-sm transition-colors relative",
-                        "hover:bg-gray-100 dark:hover:bg-gray-800",
-                        isActive && "bg-primary/10 text-primary",
-                        !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-                      )}
-                    >
-                      {/* アクティブインジケーター */}
-                      {isActive && (
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-                      )}
-                      
-                      <div className={cn(
-                        "flex-shrink-0",
-                        isActive ? "text-primary" : "text-gray-400 dark:text-gray-500"
-                      )}>
-                        {item.icon}
-                      </div>
-                      <span className="flex-1">
-                        {item.label}
-                      </span>
-                    </Link>
+                    <Tooltip key={item.id} delayDuration={500}>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={item.href}
+                          className={cn(
+                            "flex items-center gap-3 px-6 py-2 text-sm transition-colors relative",
+                            "hover:bg-gray-100 dark:hover:bg-gray-800",
+                            isActive && "bg-primary/10 text-primary",
+                            !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                          )}
+                        >
+                          {/* アクティブインジケーター */}
+                          {isActive && (
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+                          )}
+                          
+                          <div className={cn(
+                            "flex-shrink-0",
+                            isActive ? "text-primary" : "text-gray-400 dark:text-gray-500"
+                          )}>
+                            {item.icon}
+                          </div>
+                          <span className="flex-1">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <p>{item.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   );
                 })}
               </div>
