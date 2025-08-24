@@ -1,5 +1,7 @@
+import { CustomerContainer } from '@/page-components/customer/home/ui/CustomerContainer';
+
 export function CustomerListSettingContainer() {
   return (
-    <p>顧客リスト設定ページ</p>
+    <CustomerContainer />
   );
 }
