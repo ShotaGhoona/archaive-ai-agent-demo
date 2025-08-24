@@ -19,9 +19,9 @@ export function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelPro
   
   // 検索フィルタリング
   const filteredBlueprints = blueprints.filter(blueprint =>
-    blueprint.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blueprint.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blueprint.customerNumber.toLowerCase().includes(searchTerm.toLowerCase())
+    (blueprint.filename || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.productName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.customerNumber || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleRegisterAsRepeat = (blueprint: Blueprint) => {
