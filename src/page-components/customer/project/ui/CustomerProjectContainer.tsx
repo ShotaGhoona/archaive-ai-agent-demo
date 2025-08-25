@@ -1,10 +1,7 @@
 import { ProjectDataViewContainer } from "@/widgets/project/project-data-view";
 
-interface CustomerProjectContainerProps {
-  customerId: string;
-}
 
-export function CustomerProjectContainer({ customerId }: CustomerProjectContainerProps) {
+export function CustomerProjectContainer() {
   // TODO: 将来的にはcustomerIdで案件をフィルターしたデータを渡す
   return <ProjectDataViewContainer />;
 }

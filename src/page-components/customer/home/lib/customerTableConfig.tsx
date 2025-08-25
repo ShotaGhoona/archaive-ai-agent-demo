@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button } from '@/shared';
 import { ExternalLink } from 'lucide-react';
-import { TableViewConfig } from '@/shared/view/table-view';
+import { Button, TableViewConfig } from '@/shared';
 
 export interface Customer {
   id: number;

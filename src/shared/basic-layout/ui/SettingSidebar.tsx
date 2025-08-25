@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { HelpCircle, ChevronDown } from "lucide-react";
-import { cn } from "@/shared";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared";
-import { settingSections, appInfo } from "../constants";
+import { ChevronDown } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger, cn } from "@/shared";
+import { settingSections } from "../constants";
 
 export function SettingSidebar() {
   const pathname = usePathname();

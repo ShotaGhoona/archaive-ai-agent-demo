@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { Button } from '@/shared';
-import { LoadingSpinner, LoadingScreen, PageLoading, LoadingSkeleton } from '@/shared/loading';
+import { Button, LoadingSpinner, LoadingScreen, PageLoading, LoadingSkeleton } from '@/shared';
 
 export default function TestPage() {
   const [showFullScreen, setShowFullScreen] = useState(false);
@@ -82,11 +81,11 @@ export default function TestPage() {
       <div className="bg-gray-50 rounded-lg p-6">
         <h2 className="text-xl font-semibold mb-4">使用例</h2>
         <div className="space-y-2 text-sm font-mono text-gray-700">
-          <p>import {`{ LoadingSpinner, LoadingScreen, PageLoading, LoadingSkeleton }`} from '@/shared/loading';</p>
-          <p>&lt;LoadingSpinner size="md" /&gt;</p>
-          <p>&lt;LoadingScreen message="データを読み込んでいます..." /&gt;</p>
-          <p>&lt;PageLoading fullScreen={`{true}`} /&gt;</p>
-          <p>&lt;LoadingSkeleton rows={`{3}`} /&gt;</p>
+          <p>import {`{ LoadingSpinner, LoadingScreen, PageLoading, LoadingSkeleton }`} from &apos;@/shared&apos;;</p>
+          <p>&lt;LoadingSpinner size=&quot;md&quot; /&gt;</p>
+          <p>&lt;LoadingScreen message=&quot;データを読み込んでいます...&quot; /&gt;</p>
+          <p>&lt;PageLoading fullScreen=&#123;true&#125; /&gt;</p>
+          <p>&lt;LoadingSkeleton rows=&#123;3&#125; /&gt;</p>
         </div>
       </div>
 

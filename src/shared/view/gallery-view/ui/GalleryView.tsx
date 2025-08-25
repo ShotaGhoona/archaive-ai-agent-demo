@@ -2,12 +2,10 @@ import React from 'react';
 import { GalleryViewProps } from '../model';
 import { useGalleryLayout, usePaginatedGallery } from '../lib';
 import { GalleryItem, GalleryPagination } from '../ui';
-import { LoadingSkeleton } from '@/shared';
 
 export function GalleryView<T>({ 
   data, 
-  config, 
-  loading = false 
+  config
 }: GalleryViewProps<T>) {
   const { gridClasses, aspectRatioClass } = useGalleryLayout(config.layoutConfig);
   

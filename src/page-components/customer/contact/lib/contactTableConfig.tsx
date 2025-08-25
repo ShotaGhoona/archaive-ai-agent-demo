@@ -1,6 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
 import { Phone, User, Mail, MoreHorizontal, Trash2 } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 

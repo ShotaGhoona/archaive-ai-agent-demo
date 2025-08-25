@@ -1,4 +1,4 @@
-import { FileText, Users, Settings, Briefcase, PenTool } from "lucide-react";
+import { Users, Settings, Briefcase, PenTool } from "lucide-react";
 
 export const headerNavigations = [
   {
