@@ -69,39 +69,41 @@ export function GalleryPagination({
         {totalItems}件中 {startItem}-{endItem}件を表示
       </div>
 
-      {/* ページネーション */}
-      <Pagination>
-        <PaginationContent>
-          {/* 前のページ */}
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-              className={currentPage <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-            />
-          </PaginationItem>
-
-          {/* ページ番号 */}
-          {visiblePages.map((page) => (
-            <PaginationItem key={page}>
-              <PaginationLink
-                onClick={() => onPageChange(page)}
-                isActive={page === currentPage}
-                className="cursor-pointer"
-              >
-                {page}
-              </PaginationLink>
+      {/* ページネーション（ページ数が2以上の場合のみ表示） */}
+      {totalPages > 1 && (
+        <Pagination>
+          <PaginationContent>
+            {/* 前のページ */}
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
+                className={currentPage <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              />
             </PaginationItem>
-          ))}
 
-          {/* 次のページ */}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-              className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            {/* ページ番号 */}
+            {visiblePages.map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  onClick={() => onPageChange(page)}
+                  isActive={page === currentPage}
+                  className="cursor-pointer"
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {/* 次のページ */}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
+                className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
       {/* ページ当たり項目数セレクター */}
       {showItemsPerPageSelector && onItemsPerPageChange && (

@@ -2,10 +2,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features";
-import { EstimateCalculation } from "@/widgets/estimate-calculation";
-import { BlueprintViewer } from "@/widgets/blueprint-detail-layout/ui/BlueprintViewer";
-import { BasicInformationForm } from "@/widgets/basic-information-form";
-import { SimilarBlueprintGallery } from "@/widgets/similar-blueprint-gallery";
+import { EstimateCalculation, BlueprintViewer, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
 import { QuotationBlueprint } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 

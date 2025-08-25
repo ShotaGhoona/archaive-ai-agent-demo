@@ -67,8 +67,8 @@ export function SimilarBlueprintGallery({
   }
 
   return (
-    <div className={`h-full ${className}`}>
-      <div className="flex-1 overflow-y-auto p-4">
+    <div className={`h-full flex flex-col ${className}`}>
+      <div className="flex-1 overflow-y-auto p-4 min-h-0">
         <GalleryView
           data={sortedSimilarBlueprints}
           config={galleryConfig}

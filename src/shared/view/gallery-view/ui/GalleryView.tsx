@@ -50,9 +50,9 @@ export function GalleryView<T>({
   }
 
   return (
-    <div className={`flex-1 flex flex-col min-h-0 ${config.className || ''}`}>
+    <div className={`h-full flex flex-col ${config.className || ''}`}>
       {/* ギャラリーアイテム */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto min-h-0">
         <div className={`${gridClasses} gap-6 p-1`}>
           {displayData.map((item) => {
             const rowId = config.getRowId?.(item) || String(Math.random());
@@ -69,7 +69,7 @@ export function GalleryView<T>({
       </div>
       
       {/* ページネーション */}
-      {paginationConfig.enabled && totalPages > 1 && (
+      {paginationConfig.enabled && (
         <div className="flex-shrink-0 px-4 py-2 bg-white border-t">
           <GalleryPagination
             currentPage={currentPage}
