@@ -46,5 +46,13 @@ export const createBlueprintGalleryConfig = (): GalleryViewConfig<Blueprint> => 
     }
   },
   
+  pagination: {
+    enabled: true,
+    defaultItemsPerPage: 20,
+    allowedItemsPerPage: [10, 20, 50, 100],
+    showItemsPerPageSelector: true,
+    maxVisiblePages: 7,
+  },
+  
   getRowId: (blueprint) => blueprint.internalNumber
 });
