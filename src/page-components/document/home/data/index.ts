@@ -1,6 +1,15 @@
-export { default as quotationData } from './quotation.json';
-export { default as orderData } from './order.json';
-export { default as deliveryData } from './delivery.json';
-export { default as invoiceData } from './invoice.json';
-export { default as specificationData } from './specification.json';
-export { default as inspectionData } from './inspection.json';
+import quotationDataJson from './quotation.json';
+import orderDataJson from './order.json';
+import deliveryDataJson from './delivery.json';
+import invoiceDataJson from './invoice.json';
+import specificationDataJson from './specification.json';
+import inspectionDataJson from './inspection.json';
+
+import type { Quotation, Order, Delivery, Invoice, Specification, Inspection } from '../model';
+
+export const quotationData = quotationDataJson as Quotation[];
+export const orderData = orderDataJson as Order[];
+export const deliveryData = deliveryDataJson as Delivery[];
+export const invoiceData = invoiceDataJson as Invoice[];
+export const specificationData = specificationDataJson as Specification[];
+export const inspectionData = inspectionDataJson as Inspection[];

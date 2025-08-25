@@ -5,7 +5,8 @@ import { DocumentPageHeader } from "./DocumentPageHeader";
 import { DocumentTableView } from "./DocumentTableView";
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
 import { useSearchbar } from "@/shared";
-import { DocumentType } from "../model";
+import { FilterConfig } from "@/features";
+import { DocumentData, DocumentType } from "../model";
 import { 
   QUOTATION_SEARCHBAR_CONFIG,
   ORDER_SEARCHBAR_CONFIG,
@@ -80,7 +81,7 @@ export function DocumentHomeContainer() {
     searchTerm,
     setSearchTerm,
     filteredData: searchFiltered,
-  } = useSearchbar(currentData as unknown[], currentSearchbarConfig);
+  } = useSearchbar(currentData as DocumentData[], currentSearchbarConfig as any);
 
   // アドバンスドフィルター機能
   const {
@@ -90,7 +91,7 @@ export function DocumentHomeContainer() {
     filters,
     setFilters,
     clearFilters,
-  } = useAdvancedFilter(searchFiltered, currentFilterConfig);
+  } = useAdvancedFilter(searchFiltered, currentFilterConfig as FilterConfig<DocumentData>[]);
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
@@ -101,7 +102,7 @@ export function DocumentHomeContainer() {
         filters={filters}
         onFiltersChange={setFilters}
         onClearFilters={clearFilters}
-        config={currentFilterConfig}
+        config={currentFilterConfig as FilterConfig<DocumentData>[]}
       />
       
       {/* メインコンテンツ */}
@@ -110,13 +111,8 @@ export function DocumentHomeContainer() {
           isFilterSidebarOpen ? 'ml-80' : 'ml-0'
         }`}
       >
-        {/* ページタイトル */}
-        <div className="flex-shrink-0 p-4 pb-0">
-          <h1 className="text-2xl font-bold">帳票管理</h1>
-        </div>
-
         {/* タブ選択ヘッダー */}
-        <div className="flex-shrink-0 px-4">
+        <div className="flex-shrink-0">
           <DocumentTypeHeader
             selectedType={selectedType}
             onTypeChange={setSelectedType}

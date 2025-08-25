@@ -29,7 +29,7 @@ export const createDeliveryTableConfig = (): TableViewConfig<Delivery> => ({
       label: '帳票名',
       width: 200,
       sortable: true,
-      editable: false,
+      editable: true,
       locked: false,
       sortType: 'string',
     },

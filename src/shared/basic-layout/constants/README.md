@@ -25,6 +25,14 @@
 - 見積もり: `Calculator`
 - 検索: `Search`
 
+### ドキュメント系
+- 見積書: `Calculator`
+- 発注書: `ShoppingCart`
+- 納品書: `Package`
+- 請求書: `Receipt`
+- 仕様書: `FileCheck`
+- 検査表: `ClipboardList`
+
 ## 新機能追加時の注意
 - 基本情報画面は `Info` を使用
 - 図面関連機能は `PenTool` を使用

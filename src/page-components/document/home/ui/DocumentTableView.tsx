@@ -35,9 +35,9 @@ export function DocumentTableView({
 
   return (
     <ConfigBasedTableView
-      data={documents}
+      data={documents as any}
       config={getTableConfig()}
-      getRowId={(document) => document.id.toString()}
+      getRowId={(document: any) => document.id.toString()}
     />
   );
 }
