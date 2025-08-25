@@ -11,7 +11,7 @@ import { Project, PROJECT_CSV_COLUMNS } from "../lib";
 import Link from "next/link";
 import { ProjectBlueprintUploadDialog } from "../ui";
 
-interface ProjectPageHeaderProps {
+interface ProjectDataViewPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   viewMode: "table" | "kanban";
@@ -21,7 +21,7 @@ interface ProjectPageHeaderProps {
   projects?: unknown[];
 }
 
-export function ProjectPageHeader({
+export function ProjectDataViewPageHeader({
   searchTerm,
   setSearchTerm,
   viewMode,
@@ -29,7 +29,7 @@ export function ProjectPageHeader({
   onToggleFilterSidebar,
   isFilterSidebarOpen,
   projects = [],
-}: ProjectPageHeaderProps) {
+}: ProjectDataViewPageHeaderProps) {
 
   return (
     <div className="flex items-center justify-between">

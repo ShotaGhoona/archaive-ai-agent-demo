@@ -3,4 +3,4 @@
 export * from './blueprint';
 export * from './customer-detail-layout';
 export * from './database-column-setting';
-export * from './project-detail-layout';
+export * from './project';

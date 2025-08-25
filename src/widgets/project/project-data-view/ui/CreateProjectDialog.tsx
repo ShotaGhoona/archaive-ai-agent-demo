@@ -20,17 +20,17 @@ import {
 import { Plus } from 'lucide-react';
 import { Project } from '../lib';
 
-interface NewProjectDialogProps {
+interface CreateProjectDialogProps {
   onSubmit?: (project: Omit<Project, 'projectId' | 'lastUpdatedBy' | 'lastUpdatedAt'>) => void;
   buttonText?: string;
   buttonVariant?: 'default' | 'outline' | 'secondary' | 'destructive' | 'ghost' | 'link';
 }
 
-export function NewProjectDialog({ 
+export function CreateProjectDialog({ 
   onSubmit, 
   buttonText = "新規案件登録",
   buttonVariant = "default" 
-}: NewProjectDialogProps) {
+}: CreateProjectDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     customerName: '',
