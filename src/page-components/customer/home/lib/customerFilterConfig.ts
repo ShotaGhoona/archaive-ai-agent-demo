@@ -1,5 +1,5 @@
 import { FilterConfig } from '@/features';
-import { Customer } from '../lib';
+import { Customer } from '../model';
 
 export const CUSTOMER_FILTER_CONFIG: FilterConfig<Customer>[] = [
   {

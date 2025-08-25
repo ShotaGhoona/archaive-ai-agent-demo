@@ -1,5 +1,6 @@
 import { FilterToggleButton, CsvExportDialog } from "@/features";
-import { CUSTOMER_CSV_COLUMNS, Customer } from "../lib";
+import { CUSTOMER_CSV_COLUMNS } from "../lib";
+import { Customer } from "../model/type";
 import { CreateCustomerDialog } from "../ui";
 import { SearchInput } from "@/shared";
 
@@ -9,7 +10,7 @@ interface CustomerPageHeaderProps {
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
   customers?: unknown[];
-  onCustomerCreate?: (customer: Omit<Customer, 'customerCode'>) => void;
+  onCustomerCreate?: (customer: Omit<Customer, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => void;
 }
 
 export function CustomerPageHeader({
@@ -20,7 +21,7 @@ export function CustomerPageHeader({
   customers = [],
   onCustomerCreate,
 }: CustomerPageHeaderProps) {
-  const handleCustomerCreate = (customer: Omit<Customer, 'customerCode'>) => {
+  const handleCustomerCreate = (customer: Omit<Customer, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => {
     onCustomerCreate?.(customer);
   };
 
@@ -34,7 +35,7 @@ export function CustomerPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="取引先名、コード、担当者、業界で検索"
+          placeholder="顧客名で検索"
         />
       </div>
       <div className="flex items-center gap-3">

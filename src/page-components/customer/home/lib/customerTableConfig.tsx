@@ -1,24 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
-import { Button, TableViewConfig } from '@/shared';
+import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
+import { Customer } from '../model/type';
 
-export interface Customer {
-  id: number;
-  company_id: number;
-  name: string;
-  created_at: string;
-  updated_at: string;
-}
-
-
-// 顧客管理用のコールバック型
 export interface CustomerColumnCallbacks {
-  onEdit?: (customer: Customer) => void;
   onDelete?: (customer: Customer) => void;
 }
 
-export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
+export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {}): TableViewConfig<Customer> => ({
   columns: [
     {
       key: 'detail',
@@ -43,9 +33,8 @@ export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
       label: '顧客名',
       width: 300,
       sortable: true,
-      editable: true,
+      editable: false,
       locked: false,
-      inputType: 'text',
       sortType: 'string',
       render: (customer: Customer, value: unknown) => (
         <div className="font-medium text-gray-900">
@@ -65,6 +54,33 @@ export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
         <div className="text-sm text-gray-600">
           {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
         </div>
+      ),
+    },
+    {
+      key: 'actions',
+      label: '操作',
+      width: 80,
+      minWidth: 80,
+      sortable: false,
+      editable: false,
+      locked: false,
+      render: (customer: Customer) => (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem 
+              className="text-red-600"
+              onClick={() => callbacks?.onDelete?.(customer)}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              削除
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ),
     },
   ],
