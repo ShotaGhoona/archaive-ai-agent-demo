@@ -5,26 +5,13 @@ import { ExternalLink } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
 export interface Customer {
-  customerCode: string;
-  customerName: string;
-  contactPerson: string;
-  salesRepresentative: string;
-  phoneNumber: string;
-  faxNumber: string;
-  rank: 'S' | 'A' | 'B' | 'C';
-  industry: string;
+  id: number;
+  company_id: number;
+  name: string;
+  created_at: string;
+  updated_at: string;
 }
 
-// ランクのバッジバリアントを取得する関数
-export const getRankVariant = (rank: string) => {
-  switch (rank) {
-    case 'S': return 'default'; // 青系
-    case 'A': return 'secondary'; // グレー系
-    case 'B': return 'outline'; // アウトライン
-    case 'C': return 'destructive'; // 赤系
-    default: return 'outline';
-  }
-};
 
 // 顧客管理用のコールバック型
 export interface CustomerColumnCallbacks {
@@ -37,14 +24,14 @@ export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
     {
       key: 'detail',
       label: '詳細',
-      width: 50,
+      width: 80,
       minWidth: 0,
       sortable: false,
       editable: false,
       locked: true,
       stickyLeft: 0,
       render: (customer: Customer) => (
-        <Link href={`/customer/${customer.customerCode}`}>
+        <Link href={`/customer/${customer.id}`}>
           <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
             <ExternalLink className="h-3 w-3" />
             開く
@@ -53,23 +40,9 @@ export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
       ),
     },
     {
-      key: 'customerCode',
-      label: '取引先コード',
-      width: 140,
-      sortable: true,
-      editable: false,
-      locked: true,
-      sortType: 'string',
-      render: (customer: Customer, value: unknown) => (
-        <span className="font-mono text-sm font-medium">
-          {String(value)}
-        </span>
-      ),
-    },
-    {
-      key: 'customerName',
-      label: '取引先名',
-      width: 200,
+      key: 'name',
+      label: '顧客名',
+      width: 300,
       sortable: true,
       editable: true,
       locked: false,
@@ -82,91 +55,17 @@ export const createCustomerTableConfig = (): TableViewConfig<Customer> => ({
       ),
     },
     {
-      key: 'contactPerson',
-      label: '取引先担当者',
-      width: 120,
+      key: 'updated_at',
+      label: '最終更新日',
+      width: 150,
       sortable: true,
-      editable: true,
+      editable: false,
       locked: false,
-      inputType: 'text',
-      sortType: 'string',
-    },
-    {
-      key: 'salesRepresentative',
-      label: '営業担当者',
-      width: 120,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'text',
-      sortType: 'string',
-    },
-    {
-      key: 'phoneNumber',
-      label: '電話番号',
-      width: 130,
-      sortable: false,
-      editable: true,
-      locked: false,
-      inputType: 'text',
+      sortType: 'date',
       render: (customer: Customer, value: unknown) => (
-        <div className="flex items-center gap-1 text-sm"> 
-          <span className="font-mono">{String(value)}</span>
+        <div className="text-sm text-gray-600">
+          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
         </div>
-      ),
-    },
-    {
-      key: 'faxNumber',
-      label: 'FAX',
-      width: 130,
-      sortable: false,
-      editable: true,
-      locked: false,
-      inputType: 'text',
-      render: (customer: Customer, value: unknown) => (
-        <div className="flex items-center gap-1 text-sm">
-          <span className="font-mono">{String(value)}</span>
-        </div>
-      ),
-    },
-    {
-      key: 'rank',
-      label: 'ランク',
-      width: 80,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'select',
-      selectOptions: ['S', 'A', 'B', 'C'],
-      sortType: 'string',
-      render: (customer: Customer, value: unknown) => (
-        <Badge variant={getRankVariant(value as string)} className="font-semibold">
-          {String(value)}
-        </Badge>
-      ),
-    },
-    {
-      key: 'industry',
-      label: '業界',
-      width: 120,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'select',
-      selectOptions: [
-        '自動車部品',
-        '産業機械',
-        '電子部品',
-        '食品加工',
-        '医療機器',
-        '航空宇宙',
-        'その他'
-      ],
-      sortType: 'string',
-      render: (customer: Customer, value: unknown) => (
-        <Badge variant="outline" className="text-xs">
-          {String(value)}
-        </Badge>
       ),
     },
   ],
