@@ -1,20 +1,15 @@
-import { FileText, Users, Settings, FolderOpen } from "lucide-react";
+import { FileText, Users, Settings, Briefcase, PenTool } from "lucide-react";
 
 export const headerNavigations = [
   {
-    label: "(v2.1)",
-    href: "/v2",
-    icon: <FolderOpen className="w-4 h-4" />
-  },
-  {
     label: "図面管理",
     href: "/blueprint",
-    icon: <FileText className="w-4 h-4" />
+    icon: <PenTool className="w-4 h-4" />
   },
   {
     label: "案件管理",
     href: "/project",
-    icon: <FileText className="w-4 h-4" />
+    icon: <Briefcase className="w-4 h-4" />
   },
   {
     label: "顧客管理",

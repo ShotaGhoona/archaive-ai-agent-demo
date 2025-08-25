@@ -1,17 +1,28 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/shared";
-import { Bell, User, Menu, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Button, Popover, PopoverContent, PopoverTrigger } from "@/shared";
+import { User, Menu, X, LogOut, Settings, UserCircle } from "lucide-react";
 import { headerNavigations, defaultUser } from "../constants";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleSettings = () => {
+    router.push('/setting/profile');
+  };
+
+  const handleLogout = () => {
+    // TODO: ログアウト処理を実装
+    console.log("ログアウト処理");
+    // 例: signOut() や router.push('/login') など
   };
 
   return (
@@ -45,22 +56,58 @@ export function Header() {
             </nav>
           </div>
 
-          {/* Right side - Icons and User info */}
+          {/* Right side - User info */}
           <div className="ml-auto flex items-center space-x-3">
-            {/* Notification */}
-            <Button variant="ghost" size="sm" className="relative p-1.5 text-white hover:text-white hover:bg-white/10">
-              <Bell className="w-4 h-4" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-secondary rounded-full"></span>
-            </Button>
             {/* User section */}
-            <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                <User className="text-white w-3 h-3" />
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-xs font-medium text-white">{defaultUser.name}</p>
-              </div>
-            </div>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="flex items-center space-x-2 p-1 text-white hover:text-white hover:bg-white/10 rounded-md"
+                >
+                  <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
+                    <User className="text-white w-3 h-3" />
+                  </div>
+                  <div className="hidden sm:block">
+                    <p className="text-xs font-medium text-white">{defaultUser.name}</p>
+                  </div>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56" align="end">
+                <div className="space-y-1">
+                  <div className="flex items-center space-x-3 p-2">
+                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                      <UserCircle className="w-4 h-4 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-gray-900">{defaultUser.name}</p>
+                      <p className="text-xs text-gray-500">{defaultUser.email}</p>
+                    </div>
+                  </div>
+                  <div className="border-t pt-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      onClick={handleSettings}
+                    >
+                      <Settings className="w-4 h-4 mr-2" />
+                      設定
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      ログアウト
+                    </Button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
 
             {/* Mobile menu button */}
             <Button 

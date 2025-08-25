@@ -94,20 +94,6 @@ export function SettingSidebar() {
           </div>
         ))}
       </nav>
-
-      {/* フッター */}
-      <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex-shrink-0">
-        <Link
-          href="/setting/help"
-          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-        >
-          <HelpCircle className="w-4 h-4" />
-          <span>ヘルプ & サポート</span>
-        </Link>
-        <div className="mt-3 text-xs text-gray-500 dark:text-gray-500">
-          Version {appInfo.version}
-        </div>
-      </div>
     </aside>
   );
 }
