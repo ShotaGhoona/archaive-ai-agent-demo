@@ -1,9 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { SimilarBlueprint, BlueprintView, BlueprintDetailLayout, blueprintData, SimilarBlueprintGallery } from "@/widgets";
 import { BlueprintSimilarCompareModal } from "../ui";
-import { SimilarBlueprint, BlueprintView, BlueprintDetailLayout, blueprintData } from "@/widgets";
-import { SimilarBlueprintGallery } from "@/widgets/similar-blueprint-gallery";
-
 export function BlueprintSimilarContainer() {
   const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
