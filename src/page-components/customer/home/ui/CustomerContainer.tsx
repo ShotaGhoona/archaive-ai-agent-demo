@@ -7,9 +7,7 @@ import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG, Customer } from "../
 import { useSearchbar } from "@/shared";
 
 export function CustomerContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);
-  const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -78,10 +76,6 @@ export function CustomerContainer() {
           <CustomerTableView 
             customers={filteredCustomers}
             onCustomerUpdate={handleCustomerUpdate}
-            currentPage={currentPage}
-            totalItems={filteredCustomers.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
           />
         </div>
       </div>

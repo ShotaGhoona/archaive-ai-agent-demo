@@ -1,39 +1,24 @@
 import React from "react";
-import { TableView } from "@/shared";
-import { MaterialMaster, MATERIAL_MASTER_COLUMNS } from "../lib";
+import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { MaterialMaster, createMaterialMasterTableConfig } from "../lib";
 
 interface MaterialMasterTableViewProps {
   materialMasters: MaterialMaster[];
   onMaterialMasterUpdate?: (id: string, field: string, value: unknown) => void;
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function MaterialMasterTableView({ 
   materialMasters, 
-  onMaterialMasterUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onMaterialMasterUpdate
 }: MaterialMasterTableViewProps) {
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const tableConfig = createMaterialMasterTableConfig();
 
   return (
-    <TableView
+    <ConfigBasedTableView
       data={materialMasters}
-      columns={MATERIAL_MASTER_COLUMNS}
+      config={tableConfig}
       onItemUpdate={onMaterialMasterUpdate}
       getRowId={(materialMaster) => materialMaster.id}
-      pagination={paginationConfig}
     />
   );
 }

@@ -1,39 +1,24 @@
 import React from "react";
-import { TableView } from "@/shared";
-import { ProcessMaster, PROCESS_MASTER_COLUMNS } from "../lib";
+import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { ProcessMaster, createProcessMasterTableConfig } from "../lib";
 
 interface ProcessMasterTableViewProps {
   processMasters: ProcessMaster[];
   onProcessMasterUpdate?: (id: string, field: string, value: unknown) => void;
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function ProcessMasterTableView({ 
   processMasters, 
-  onProcessMasterUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onProcessMasterUpdate
 }: ProcessMasterTableViewProps) {
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const tableConfig = createProcessMasterTableConfig();
 
   return (
-    <TableView
+    <ConfigBasedTableView
       data={processMasters}
-      columns={PROCESS_MASTER_COLUMNS}
+      config={tableConfig}
       onItemUpdate={onProcessMasterUpdate}
       getRowId={(processMaster) => processMaster.id}
-      pagination={paginationConfig}
     />
   );
 }

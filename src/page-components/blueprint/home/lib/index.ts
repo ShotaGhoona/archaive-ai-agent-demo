@@ -1,4 +1,4 @@
-export * from './blueprintColumns';
+export * from './blueprintTableConfig';
 export * from './blueprintCsvConfig';
 export * from './blueprintFilterConfig';
 export * from './blueprintGalleryConfig';

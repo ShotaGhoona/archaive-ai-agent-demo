@@ -10,9 +10,7 @@ const MATERIAL_MASTER_SEARCHBAR_CONFIG = {
 };
 
 export function MaterialMasterContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [data, setData] = useState<MaterialMaster[]>(materialMasterData as MaterialMaster[]);
-  const itemsPerPage = 20;
 
   const {
     searchTerm,
@@ -43,10 +41,6 @@ export function MaterialMasterContainer() {
       <div className="flex-1 flex flex-col min-h-0 px-4">
         <MaterialMasterTableView 
           materialMasters={filteredMaterialMasters}
-          currentPage={currentPage}
-          totalItems={filteredMaterialMasters.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
         />
       </div>
     </div>

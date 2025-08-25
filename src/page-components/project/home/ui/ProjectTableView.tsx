@@ -1,41 +1,24 @@
 import React from "react";
-import { TableView } from "@/shared";
-import { Project, PROJECT_COLUMNS } from "../lib";
+import { ConfigBasedTableView } from "@/shared";
+import { Project, createProjectTableConfig } from "../lib/projectTableConfig";
 
 interface ProjectTableViewProps {
   projects: Project[];
   onProjectUpdate?: (projectId: string, field: string, value: unknown) => void;
-  // ページネーション統合のための新しいprops
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function ProjectTableView({ 
   projects, 
-  onProjectUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onProjectUpdate
 }: ProjectTableViewProps) {
-  // ページネーション設定
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const config = createProjectTableConfig();
 
   return (
-    <TableView
+    <ConfigBasedTableView
       data={projects}
-      columns={PROJECT_COLUMNS}
+      config={config}
       onItemUpdate={onProjectUpdate}
       getRowId={(project) => project.projectId}
-      pagination={paginationConfig}
     />
   );
 }

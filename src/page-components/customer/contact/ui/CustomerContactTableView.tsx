@@ -1,41 +1,24 @@
 import React from "react";
-import { TableView } from "@/shared";
-import { Contact, CONTACT_COLUMNS } from "../lib";
+import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { Contact, createContactTableConfig } from "../lib";
 
 interface CustomerContactTableViewProps {
   contacts: Contact[];
   onContactUpdate?: (contactId: string, field: string, value: unknown) => void;
-  // ページネーション統合のための新しいprops
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function CustomerContactTableView({ 
   contacts, 
-  onContactUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onContactUpdate
 }: CustomerContactTableViewProps) {
-  // ページネーション設定
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const tableConfig = createContactTableConfig();
 
   return (
-    <TableView
+    <ConfigBasedTableView
       data={contacts}
-      columns={CONTACT_COLUMNS}
+      config={tableConfig}
       onItemUpdate={onContactUpdate}
       getRowId={(contact) => contact.contactId}
-      pagination={paginationConfig}
     />
   );
 }

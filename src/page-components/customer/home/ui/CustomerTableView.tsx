@@ -1,41 +1,24 @@
 import React from "react";
-import { TableView } from "@/shared";
-import { Customer, CUSTOMER_COLUMNS } from "../lib";
+import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { Customer, createCustomerTableConfig } from "../lib";
 
 interface CustomerTableViewProps {
   customers: Customer[];
   onCustomerUpdate?: (customerCode: string, field: string, value: unknown) => void;
-  // ページネーション統合のための新しいprops
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function CustomerTableView({ 
   customers, 
-  onCustomerUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onCustomerUpdate
 }: CustomerTableViewProps) {
-  // ページネーション設定
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const tableConfig = createCustomerTableConfig();
 
   return (
-    <TableView
+    <ConfigBasedTableView
       data={customers}
-      columns={CUSTOMER_COLUMNS}
+      config={tableConfig}
       onItemUpdate={onCustomerUpdate}
       getRowId={(customer) => customer.customerCode}
-      pagination={paginationConfig}
     />
   );
 }

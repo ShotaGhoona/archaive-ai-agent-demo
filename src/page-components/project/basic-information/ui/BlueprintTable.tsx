@@ -1,6 +1,6 @@
 "use client";
 import { TableView } from "@/shared";
-import { createBlueprintColumns, Blueprint } from "@/page-components";
+import { createBlueprintColumns, Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumnsConfig";
 
 interface BlueprintTableProps {
   blueprints: Blueprint[];

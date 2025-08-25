@@ -7,9 +7,7 @@ import { Project, PROJECT_SEARCHBAR_CONFIG, PROJECT_FILTER_CONFIG } from "../lib
 import { useSearchbar } from "@/shared";
 
 export function ProjectContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
-  const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -60,10 +58,6 @@ export function ProjectContainer() {
           {viewMode === "table" && (
             <ProjectTableView 
               projects={filteredProjects}
-              currentPage={currentPage}
-              totalItems={filteredProjects.length}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setCurrentPage}
             />
           )}
           {viewMode === "kanban" && (

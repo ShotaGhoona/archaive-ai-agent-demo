@@ -63,6 +63,14 @@ export interface TableViewProps<T = unknown> {
   pagination?: PaginationConfig;
 }
 
+// Config-based TableView props
+export interface ConfigBasedTableViewProps<T = unknown> {
+  data: T[];
+  config: TableViewConfig<T>;
+  onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
+  getRowId?: (item: T) => string;
+}
+
 // Cell content の戻り値型
 export interface CellContentData {
   isEditing: boolean;
@@ -89,4 +97,18 @@ export interface PaginationConfig {
   onPageChange: (page: number) => void;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   showItemsPerPageSelector?: boolean;
+}
+
+// Config-based Table設定
+export interface TablePaginationConfig {
+  enabled: boolean;
+  defaultItemsPerPage: number;
+  allowedItemsPerPage: number[];
+  showItemsPerPageSelector: boolean;
+  maxVisiblePages: number;
+}
+
+export interface TableViewConfig<T = unknown> {
+  columns: DataTableColumn<T>[];
+  pagination?: TablePaginationConfig;
 }

@@ -12,9 +12,7 @@ interface CustomerContactContainerProps {
 }
 
 export function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
-  const [currentPage, setCurrentPage] = useState(1);
   const [contacts, setContacts] = useState<Contact[]>(contactsData as Contact[]);
-  const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -89,10 +87,6 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
           <CustomerContactTableView 
             contacts={filteredContacts}
             onContactUpdate={handleContactUpdate}
-            currentPage={currentPage}
-            totalItems={filteredContacts.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
           />
         </div>
       </div>
