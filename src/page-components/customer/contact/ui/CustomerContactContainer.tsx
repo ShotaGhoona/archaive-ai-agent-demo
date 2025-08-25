@@ -2,7 +2,6 @@
 import { useState } from "react";
 import contactsData from "../data/contact.json";
 import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
-// import { CustomerPagination } from "./CustomerPagination"; // 統合ページネーションのため不要
 import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
 import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG, Contact } from "../lib";
 import { useSearchbar } from "@/shared";
@@ -30,28 +29,22 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
     clearFilters,
   } = useAdvancedFilter(searchFiltered, CONTACT_FILTER_CONFIG);
 
-  // 顧客更新ハンドラー
-  const handleContactUpdate = (contactId: string, field: string, value: unknown) => {
-    setContacts(prev => prev.map(contact => 
-      contact.contactId === contactId 
-        ? { ...contact, [field]: value }
-        : contact
-    ));
-  };
 
-  // 新規連絡先作成ハンドラー
-  const handleContactCreate = (contactData: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => {
-    const newContactId = `CONT-2024-${String(contacts.length + 1).padStart(3, '0')}`;
+  // 新規担当者作成ハンドラー
+  const handleContactCreate = (contactData: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => {
     const now = new Date().toISOString();
     const newContact: Contact = {
-      contactId: newContactId,
-      customerId: customerId,
-      isActive: true,
-      createdAt: now,
-      updatedAt: now,
+      id: contacts.length + 1,
+      customer_id: Number(customerId),
+      created_at: now,
+      updated_at: now,
       ...contactData,
     };
     setContacts(prev => [...prev, newContact]);
+  };
+
+  const handleContactDelete = (contact: Contact) => {
+    setContacts(prev => prev.filter(c => c.id !== contact.id));
   };
 
   return (
@@ -86,7 +79,7 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
         <div className="flex-1 flex flex-col min-h-0 px-4">
           <CustomerContactTableView 
             contacts={filteredContacts}
-            onContactUpdate={handleContactUpdate}
+            onContactDelete={handleContactDelete}
           />
         </div>
       </div>
