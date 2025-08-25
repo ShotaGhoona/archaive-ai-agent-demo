@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Dialog, DialogContent, Button, Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
 import { Save } from "lucide-react";

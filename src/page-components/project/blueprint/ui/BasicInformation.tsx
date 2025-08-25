@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
 import { Button, Input } from "@/shared";
 import { Save } from "lucide-react";

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useCallback } from 'react';
 import { BlueprintSortingState, ProjectAssignment, BlueprintProject, UploadedFile, FileStack, DragItem } from '../model';
 

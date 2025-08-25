@@ -1,4 +1,4 @@
-import { EquipmentMasterContainer } from "@/page-components/setting/equipment-master/ui/EquipmentMasterContainer";
+import { EquipmentMasterContainer } from "@/page-components";
 
 export default function EquipmentMaster() {
   return <EquipmentMasterContainer />;

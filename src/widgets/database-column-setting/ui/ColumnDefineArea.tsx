@@ -1,3 +1,4 @@
+"use client";
 import { Plus, GripVertical, Trash2, Type, Hash, Calendar, List, User, ToggleLeft } from 'lucide-react';
 import { 
   Button, 

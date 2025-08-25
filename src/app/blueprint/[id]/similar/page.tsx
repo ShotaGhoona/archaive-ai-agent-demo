@@ -1,4 +1,4 @@
-import { BlueprintSimilarContainer } from "@/page-components/blueprint/similar/ui/BlueprintSimilarContainer";
+import { BlueprintSimilarContainer } from "@/page-components";
 
 export default function BlueprintSimilarPage() {
   return <BlueprintSimilarContainer />;

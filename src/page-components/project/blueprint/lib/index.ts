@@ -1,3 +1,3 @@
 export * from './comparison-field-components';
-export * from './resizableLayoutConfig';
+export * from './projectBlueprintResizableLayoutConfig';
 export * from './text-diff-highlighter';

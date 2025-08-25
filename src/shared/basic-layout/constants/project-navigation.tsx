@@ -4,8 +4,6 @@ import {
   ShoppingCart, 
   Truck, 
   Send, 
-  FileSearch, 
-  CreditCard, 
   FolderOpen,
   Upload
 } from "lucide-react";
@@ -33,13 +31,13 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     icon: <Upload className="h-4 w-4" />, 
     description: "図面の新規登録・アップロード" 
   },
-  { 
-    id: "blueprint", 
-    label: "図面", 
-    href: (id) => `/project/${id}/blueprint`,
-    icon: <FileText className="h-4 w-4" />, 
-    description: "設計図面・CADデータ" 
-  },
+  // { 
+  //   id: "blueprint", 
+  //   label: "図面別見積もり", 
+  //   href: (id) => `/project/${id}/blueprint`,
+  //   icon: <FileText className="h-4 w-4" />, 
+  //   description: "設計図面・CADデータ" 
+  // },
   { 
     id: "quotation", 
     label: "見積書", 
@@ -67,20 +65,6 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     href: (id) => `/project/${id}/shipping`,
     icon: <Send className="h-4 w-4" />, 
     description: "配送伝票" 
-  },
-  { 
-    id: "specification", 
-    label: "仕様書", 
-    href: (id) => `/project/${id}/specification`,
-    icon: <FileSearch className="h-4 w-4" />, 
-    description: "製品仕様書" 
-  },
-  { 
-    id: "invoice", 
-    label: "請求書", 
-    href: (id) => `/project/${id}/invoice`,
-    icon: <CreditCard className="h-4 w-4" />, 
-    description: "代金請求書類" 
   },
   { 
     id: "others", 
