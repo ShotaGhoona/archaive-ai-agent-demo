@@ -1,4 +1,4 @@
-import { CompanyInfoSettingContainer } from '@/page-components/setting/company-info/ui/CompanyInfoSettingContainer';
+import { CompanyInfoSettingContainer } from '@/page-components';
 
 export default function CompanyInfoPage() {
   return <CompanyInfoSettingContainer />;

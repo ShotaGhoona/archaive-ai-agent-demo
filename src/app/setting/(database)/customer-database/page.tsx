@@ -1,4 +1,4 @@
-import { CustomerDatabaseSettingContainer } from '@/page-components/setting/customer-database/ui/CustomerDatabaseSettingContainer';
+import { CustomerDatabaseSettingContainer } from '@/page-components';
 
 export default function CustomerDatabasePage() {
   return <CustomerDatabaseSettingContainer />;

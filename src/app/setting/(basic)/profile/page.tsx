@@ -1,4 +1,4 @@
-import { ProfileSettingContainer } from '@/page-components/setting/profile/ui/ProfileSettingContainer';
+import { ProfileSettingContainer } from '@/page-components';
 
 export default function ProfilePage() {
   return <ProfileSettingContainer />;

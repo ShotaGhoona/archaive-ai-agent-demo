@@ -1,4 +1,4 @@
-import { CustomerContainer } from "@/page-components/customer/home/ui/CustomerContainer";
+import { CustomerContainer } from "@/page-components";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function Customer() {

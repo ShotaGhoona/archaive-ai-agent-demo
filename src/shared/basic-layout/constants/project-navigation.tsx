@@ -4,8 +4,6 @@ import {
   ShoppingCart, 
   Truck, 
   Send, 
-  FileSearch, 
-  CreditCard, 
   FolderOpen,
   Upload
 } from "lucide-react";

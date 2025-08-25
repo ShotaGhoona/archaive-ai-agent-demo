@@ -1,4 +1,4 @@
-import { TermsOfServiceSettingContainer } from '@/page-components/setting/terms-of-service/ui/TermsOfServiceSettingContainer';
+import { TermsOfServiceSettingContainer } from '@/page-components';
 
 export default function TermsOfServicePage() {
   return <TermsOfServiceSettingContainer />;

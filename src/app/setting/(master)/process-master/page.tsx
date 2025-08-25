@@ -1,4 +1,4 @@
-import { ProcessMasterContainer } from "@/page-components/setting/process-master/ui/ProcessMasterContainer";
+import { ProcessMasterContainer } from "@/page-components";
 
 export default function ProcessMaster() {
   return <ProcessMasterContainer />;

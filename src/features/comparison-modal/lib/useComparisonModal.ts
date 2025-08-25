@@ -1,5 +1,6 @@
+"use client";
 import { useState, useCallback, useEffect } from "react";
-import { ComparisonConfig, ComparisonData, UseComparisonModalReturn } from "./types";
+import { ComparisonConfig, ComparisonData, UseComparisonModalReturn } from "../model";
 
 export function useComparisonModal(
   config: ComparisonConfig,

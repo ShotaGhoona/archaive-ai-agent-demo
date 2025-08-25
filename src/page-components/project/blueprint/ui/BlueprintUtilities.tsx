@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useRef } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared";
 import { Search, Settings, Calculator } from "lucide-react";

@@ -1,4 +1,4 @@
-import { FilterConfig, FilterState, DateRangeFilter } from './types';
+import { FilterConfig, FilterState, DateRangeFilter } from '../model';
 
 /**
  * フィルター条件に基づいてデータをフィルタリングする

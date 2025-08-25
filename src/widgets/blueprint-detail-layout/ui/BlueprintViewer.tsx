@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef, useState, useCallback, useEffect } from "react";
 import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
 import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Pencil } from "lucide-react";

@@ -1,4 +1,4 @@
-import { ProjectBlueprintContainer } from "@/page-components/project/blueprint/ui/ProjectBlueprintContainer";
+import { ProjectBlueprintContainer } from "@/page-components";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function BlueprintDetailPage() {

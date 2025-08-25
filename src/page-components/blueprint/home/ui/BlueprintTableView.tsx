@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { TableView } from "@/shared";
 import { FilePreviewModal, PreviewableFile } from "@/features";

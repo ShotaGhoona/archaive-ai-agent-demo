@@ -1,5 +1,4 @@
-"use client";
-import { BlueprintUploadContainer } from "@/page-components/blueprint/blueprint-upload/ui/BlueprintUploadContainer";
+import { BlueprintUploadContainer } from "@/page-components";
 
 export default function UploadPage() {
   return <BlueprintUploadContainer />;

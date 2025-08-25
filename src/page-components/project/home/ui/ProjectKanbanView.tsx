@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo } from "react";
 import { Card, CardContent, Badge } from "@/shared";
 import { User, Clock } from "lucide-react";

@@ -4,7 +4,6 @@ import {
   Users,
   FileText,
   Lock,
-  Settings,
   Package,
   GitBranch,
   Database,

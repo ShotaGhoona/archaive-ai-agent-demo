@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { FormData, QuotationBlueprint } from "../model";
 import { GalleryView } from "@/shared";

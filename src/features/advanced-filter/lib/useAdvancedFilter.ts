@@ -1,6 +1,7 @@
+"use client";
 import { useState, useMemo, useCallback } from 'react';
-import { FilterConfig, FilterState } from './types';
-import { applyFilters, createInitialFilters, hasActiveFilters } from './filterUtils';
+import { FilterConfig, FilterState } from '../model';
+import { applyFilters, createInitialFilters, hasActiveFilters } from '../lib';
 
 export interface UseAdvancedFilterReturn<T> {
   // フィルター状態

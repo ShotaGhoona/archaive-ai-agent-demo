@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useCallback } from 'react';
 import { PreviewableFile, PreviewOptions, PreviewProvider } from '../model';
 import { PreviewProviderManager, defaultPreviewProviders } from '../lib';
