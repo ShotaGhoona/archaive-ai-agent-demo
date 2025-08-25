@@ -1,4 +1,4 @@
-import { Users, Settings, Briefcase, PenTool } from "lucide-react";
+import { Users, Settings, Briefcase, PenTool, FileText } from "lucide-react";
 
 export const headerNavigations = [
   {
@@ -10,6 +10,11 @@ export const headerNavigations = [
     label: "案件管理",
     href: "/project",
     icon: <Briefcase className="w-4 h-4" />
+  },
+  {
+    label: "帳票管理",
+    href: "/document",
+    icon: <FileText className="w-4 h-4" />
   },
   {
     label: "顧客管理",
