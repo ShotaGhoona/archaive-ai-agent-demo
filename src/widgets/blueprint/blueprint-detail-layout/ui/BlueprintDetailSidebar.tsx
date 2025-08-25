@@ -13,10 +13,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/shared/shadcnui";
+  LoadingSpinner
+} from "@/shared";
 import { Plus, X, FileText, Expand } from "lucide-react";
-import { BlueprintView } from "../model/types";
-import { LoadingSpinner } from "@/shared/loading/ui/LoadingSpinner";
+import { BlueprintView } from "../model";
 
 interface BlueprintDetailSidebarProps {
   views: BlueprintView[];

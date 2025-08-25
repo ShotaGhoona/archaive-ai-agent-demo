@@ -11,9 +11,9 @@ import {
   CardHeader,
   CardTitle,
   Badge,
-} from "@/shared/shadcnui";
+  Loading
+} from "@/shared";
 import { Plus, Upload } from "lucide-react";
-import { Loading } from "@/shared/loading/ui/Loading";
 import { useRouter } from "next/navigation";
 
 interface BlueprintUploadDialogProps {
