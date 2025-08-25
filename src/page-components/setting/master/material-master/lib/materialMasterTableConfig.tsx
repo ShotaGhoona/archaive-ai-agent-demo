@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, DataTableColumn } from '@/shared';
+import { Badge } from '@/shared';
 import { TableViewConfig } from '@/shared/view/table-view';
 
 export interface MaterialMaster {
@@ -147,5 +147,3 @@ export const createMaterialMasterTableConfig = (): TableViewConfig<MaterialMaste
   },
 });
 
-// 後方互換性のため
-export const MATERIAL_MASTER_COLUMNS = createMaterialMasterTableConfig().columns;

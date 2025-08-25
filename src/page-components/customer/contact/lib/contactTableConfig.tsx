@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DataTableColumn } from '@/shared';
+import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
 import { Phone, User, Mail, MoreHorizontal, Eye, Edit, Trash2 } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
@@ -195,7 +195,3 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
   },
 });
 
-// 後方互換性のため
-export const createContactColumns = (callbacks: ContactColumnCallbacks): DataTableColumn<Contact>[] => 
-  createContactTableConfig(callbacks).columns;
-export const CONTACT_COLUMNS = createContactTableConfig({}).columns;

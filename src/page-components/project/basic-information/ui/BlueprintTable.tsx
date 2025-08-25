@@ -1,19 +1,19 @@
 "use client";
-import { TableView } from "@/shared";
-import { createBlueprintColumns, Blueprint } from "@/page-components/blueprint/home/lib/blueprintColumnsConfig";
+import { ConfigBasedTableView } from "@/shared";
+import { Blueprint, createBlueprintTableConfig } from "@/page-components/blueprint/home/lib/blueprintTableConfig";
 
 interface BlueprintTableProps {
   blueprints: Blueprint[];
 }
 
 export function BlueprintTable({ blueprints }: BlueprintTableProps) {
-  const blueprintColumns = createBlueprintColumns();
+  const config = createBlueprintTableConfig();
 
   return (
     <div className="bg-white flex flex-col">
-      <TableView
+      <ConfigBasedTableView
         data={blueprints}
-        columns={blueprintColumns}
+        config={config}
         getRowId={(blueprint) => blueprint.internalNumber}
       />
     </div>

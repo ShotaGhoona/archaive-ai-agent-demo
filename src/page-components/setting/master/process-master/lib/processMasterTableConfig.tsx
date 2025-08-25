@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, DataTableColumn } from '@/shared';
+import { Badge } from '@/shared';
 import { TableViewConfig } from '@/shared/view/table-view';
 
 export interface ProcessMaster {
@@ -131,5 +131,3 @@ export const createProcessMasterTableConfig = (): TableViewConfig<ProcessMaster>
   },
 });
 
-// 後方互換性のため
-export const PROCESS_MASTER_COLUMNS = createProcessMasterTableConfig().columns;

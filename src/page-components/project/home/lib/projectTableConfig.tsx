@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button, DataTableColumn } from '@/shared';
+import { Badge, Button } from '@/shared';
 import { ExternalLink } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
@@ -239,5 +239,3 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
   },
 });
 
-// 後方互換性のため
-export const PROJECT_COLUMNS = createProjectTableConfig().columns;

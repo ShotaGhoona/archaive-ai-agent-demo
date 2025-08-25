@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Button, DataTableColumn } from '@/shared';
+import { Button } from '@/shared';
 import { ExternalLink } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
@@ -191,5 +191,3 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
   },
 });
 
-// 後方互換性のため
-export const BLUEPRINT_COLUMNS = createBlueprintTableConfig().columns;

@@ -54,15 +54,6 @@ export interface SortableFields {
   };
 }
 
-// データテーブルのメイン props
-export interface TableViewProps<T = unknown> {
-  data: T[];
-  columns: DataTableColumn<T>[];
-  onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
-  getRowId?: (item: T) => string;
-  pagination?: PaginationConfig;
-}
-
 // Config-based TableView props
 export interface ConfigBasedTableViewProps<T = unknown> {
   data: T[];
