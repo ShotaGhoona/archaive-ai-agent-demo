@@ -1,4 +1,4 @@
-import { ProjectLayout } from "@/widgets/project-detail-layout/ui/ProjectLayout";
+import { ProjectTabNavigation } from "@/shared";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -6,8 +6,15 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <ProjectLayout>
-      {children}
-    </ProjectLayout>
+    <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
+      <div className="flex-shrink-0 p-4 border-b bg-white">
+        <div className="flex items-center justify-between">
+          <ProjectTabNavigation />
+        </div>
+      </div>
+      <div className="flex-1 overflow-hidden">
+        {children}
+      </div>
+    </div>
   );
 }

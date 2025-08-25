@@ -1,1 +1,1 @@
-export * from './project-detail-layout';
+export * from './project-data-view';
