@@ -14,13 +14,13 @@
 
 ### 1. 設定ファイルの作成
 
-`lib/resizableLayoutConfig.ts`にConfig設定を定義します：
+`lib/***ResizableLayoutConfig.ts`にConfig設定を定義します（ファイル名は用途に応じて命名）：
 
 ```typescript
-// src/page-components/project/example/lib/resizableLayoutConfig.ts
+// src/page-components/project/example/lib/exampleResizableLayoutConfig.ts
 import { ResizableLayoutConfig } from "@/features";
 
-export const exampleConfig: ResizableLayoutConfig = {
+export const exampleResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
   panels: [
     { initialWidth: 60, minWidth: 20, maxWidth: 80 },
@@ -33,11 +33,11 @@ export const exampleConfig: ResizableLayoutConfig = {
 
 ```tsx
 import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/features/resizable-layout';
-import { exampleConfig } from '../lib/resizableLayoutConfig';
+import { exampleResizableLayoutConfig } from '../lib';
 
 function MyComponent() {
   return (
-    <ResizableLayout config={exampleConfig} className="h-full">
+    <ResizableLayout config={exampleResizableLayoutConfig} className="h-full">
       <ResizablePanel index={0}>
         <div>左側コンテンツ</div>
       </ResizablePanel>
@@ -83,8 +83,8 @@ interface ResizableLayoutConfig {
 ### 水平分割（エディタ風）
 
 ```typescript
-// lib/resizableLayoutConfig.ts
-export const editorConfig: ResizableLayoutConfig = {
+// lib/editorResizableLayoutConfig.ts
+export const editorResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
   panels: [
     { initialWidth: 70, minWidth: 30, maxWidth: 90 }, // エディタ
@@ -96,8 +96,8 @@ export const editorConfig: ResizableLayoutConfig = {
 ### 垂直分割（チャット風）
 
 ```typescript
-// lib/resizableLayoutConfig.ts
-export const chatConfig: ResizableLayoutConfig = {
+// lib/chatResizableLayoutConfig.ts
+export const chatResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'vertical',
   panels: [
     { initialHeight: 80, minHeight: 50, maxHeight: 95 }, // メッセージエリア
@@ -109,8 +109,8 @@ export const chatConfig: ResizableLayoutConfig = {
 ### 固定サイドバー風
 
 ```typescript
-// lib/resizableLayoutConfig.ts
-export const sidebarConfig: ResizableLayoutConfig = {
+// lib/sidebarResizableLayoutConfig.ts
+export const sidebarResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
   panels: [
     { initialWidth: 20, minWidth: 15, maxWidth: 40 }, // サイドバー
@@ -133,4 +133,4 @@ export const sidebarConfig: ResizableLayoutConfig = {
 - `ResizablePanel`の`index`は`0`または`1`のみ
 - `ResizableHandle`は`ResizableLayout`内に配置する必要があります
 - 親要素に適切な高さ・幅を設定してください（`h-full`など）
-- **設定ファイルは必ず`lib/resizableLayoutConfig.ts`に配置してください** - コンポーネント内でのインライン定義は避けてください
+- **設定ファイルは必ず`lib/***ResizableLayoutConfig.ts`に配置してください** - コンポーネント内でのインライン定義は避けてください

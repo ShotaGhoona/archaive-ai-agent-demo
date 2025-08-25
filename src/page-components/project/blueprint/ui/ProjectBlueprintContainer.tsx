@@ -4,7 +4,7 @@ import { DetailSidebar } from "../ui";
 import { BlueprintViewer } from "@/widgets";
 import { BlueprintUtilities } from "../ui";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features";
-import { projectBlueprintConfig } from "../lib";
+import { projectBlueprintResizableLayoutConfig } from "../lib";
 import { blueprintsData } from "../data";
 import { BlueprintFile, BasicInformation, EstimateInformation } from "@/widgets";
 
@@ -88,7 +88,7 @@ export function ProjectBlueprintContainer() {
       
       {/* 中央・右側エリア */}
       <ResizableLayout 
-        config={projectBlueprintConfig}
+        config={projectBlueprintResizableLayoutConfig}
         className="flex-1 min-h-0"
       >
         {/* 中央コンテンツエリア */}

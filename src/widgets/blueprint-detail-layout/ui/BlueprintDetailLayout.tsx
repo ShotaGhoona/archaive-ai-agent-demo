@@ -7,7 +7,7 @@ import { SameProjectBlueprintBar } from "./SameProjectBlueprintBar";
 import { RevisionBlueprintBar } from "./RevisionBlueprintBar";
 import { RevisionBlueprintCompareModal } from "./RevisionBlueprintCompareModal";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features/resizable-layout";
-import { blueprintDetailConfig } from "../lib/resizableLayoutConfig";
+import { blueprintDetailResizableLayoutConfig } from "../lib";
 import { BlueprintDetailSidebar } from "./BlueprintDetailSidebar";
 import { Button } from "@/shared/shadcnui";
 import { Layers3, ChevronLeft, History } from "lucide-react";
@@ -184,7 +184,7 @@ export function BlueprintDetailLayout({
         )}
         <div className="flex-1 min-w-0">
           <ResizableLayout 
-            config={blueprintDetailConfig}
+            config={blueprintDetailResizableLayoutConfig}
             className="h-full"
           >
             {/* 右: BlueprintViewer */}
