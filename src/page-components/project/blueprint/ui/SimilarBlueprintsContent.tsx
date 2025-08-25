@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button } from "@/shared";
+import { Button, Loading } from "@/shared";
 import { Search, GitCompareArrows } from "lucide-react";
 import { ProjectSimilarBlueprintCompareModal } from "../ui";
 import { BlueprintFile, SimilarBlueprint } from "@/widgets";
@@ -57,19 +57,11 @@ export function SimilarBlueprintsContent({
   // 初期ローディング状態のUI
   if (isInitialLoading) {
     return (
-      <div className="h-full flex flex-col items-center justify-center">
-        <div className="flex-1 flex items-center justify-center p-4">
-          <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="relative">
-              <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-            </div>
-            <div className="text-center space-y-2">
-              <p className="text-sm font-medium text-gray-700">類似図面を検索中...</p>
-              <p className="text-xs text-gray-500">AIが図面を解析しています</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <Loading 
+        fullHeight={true}
+        title="類似図面を検索中..."
+        description="AIが図面を解析しています"
+      />
     );
   }
 

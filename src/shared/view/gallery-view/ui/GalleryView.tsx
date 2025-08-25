@@ -2,6 +2,7 @@ import React from 'react';
 import { GalleryViewProps } from '../model';
 import { useGalleryLayout, usePaginatedGallery } from '../lib';
 import { GalleryItem, GalleryPagination } from '../ui';
+import { LoadingSkeleton } from '@/shared';
 
 export function GalleryView<T>({ 
   data, 
@@ -30,16 +31,6 @@ export function GalleryView<T>({
 
   // 表示するデータを決定
   const displayData = paginationConfig.enabled ? currentData : data;
-
-  // ローディング状態
-  if (loading) {
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-gray-500">読み込み中...</div>
-      </div>
-    );
-  }
-
   // 空の状態
   if (data.length === 0) {
     return (

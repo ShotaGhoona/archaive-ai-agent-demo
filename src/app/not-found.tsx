@@ -35,17 +35,6 @@ export default function NotFound() {
               ホームに戻る
             </Link>
           </Button>
-          
-          <Button 
-            variant="outline" 
-            asChild 
-            className="w-full"
-          >
-            <Link href="/blueprint">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              図面管理に戻る
-            </Link>
-          </Button>
         </div>
       </div>
     </div>

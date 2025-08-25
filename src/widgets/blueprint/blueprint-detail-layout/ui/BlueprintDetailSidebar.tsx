@@ -14,8 +14,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/shared/shadcnui";
-import { Plus, Loader2, X, FileText, Expand } from "lucide-react";
+import { Plus, X, FileText, Expand } from "lucide-react";
 import { BlueprintView } from "../model/types";
+import { LoadingSpinner } from "@/shared/loading/ui/LoadingSpinner";
 
 interface BlueprintDetailSidebarProps {
   views: BlueprintView[];
@@ -134,7 +135,7 @@ export function BlueprintDetailSidebar({
           
           {isUploading ? (
             <div className="space-y-2">
-              <Loader2 className="h-6 w-6 text-blue-600 animate-spin mx-auto" />
+              <LoadingSpinner size="sm" className="text-blue-600 mx-auto" />
               <div className="text-xs text-blue-600 font-medium">
                 アップロード中...
               </div>

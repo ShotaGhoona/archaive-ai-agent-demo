@@ -7,3 +7,4 @@ export * from './view/gallery-view';
 export * from './view/table-view';
 export * from './basic-layout';
 export * from './step-indicator';
+export * from './loading';

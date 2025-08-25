@@ -10,8 +10,9 @@ import {
   Card,
   CardContent,
   Badge,
+  Loading,
 } from "@/shared";
-import { Plus, Loader2, Upload } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
 
 interface BlueprintUploadDialogProps {
   onUploadComplete?: () => void;
@@ -81,19 +82,11 @@ export function ProjectBlueprintUploadDialog({ onUploadComplete }: BlueprintUplo
               />
               
               {isUploading ? (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center">
-                    <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-blue-800">
-                      アップロード中...
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      しばらくお待ちください
-                    </p>
-                  </div>
-                </div>
+                <Loading 
+                  size="md"
+                  title="アップロード中..."
+                  description="しばらくお待ちください"
+                />
               ) : (
                 <div className="space-y-2">
                   <Upload className="h-8 w-8 text-gray-400 mx-auto" />
