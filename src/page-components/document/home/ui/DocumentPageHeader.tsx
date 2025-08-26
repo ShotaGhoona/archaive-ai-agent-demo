@@ -69,6 +69,7 @@ export function DocumentPageHeader({
       </div>
       <div className="flex items-center gap-3">
         <CsvExportDialog
+          key={selectedType}
           data={documents as any}
           initialColumns={getCsvColumns(selectedType) as any}
           defaultFilename={getFilename(selectedType)}
