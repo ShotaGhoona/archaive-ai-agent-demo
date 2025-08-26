@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared";
-import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features";
+import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { EstimateCalculation, BlueprintViewer, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
 import { QuotationBlueprint } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";

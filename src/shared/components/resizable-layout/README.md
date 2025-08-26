@@ -18,7 +18,7 @@
 
 ```typescript
 // src/page-components/project/example/lib/exampleResizableLayoutConfig.ts
-import { ResizableLayoutConfig } from "@/features";
+import { ResizableLayoutConfig } from "@/shared";
 
 export const exampleResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
@@ -32,7 +32,7 @@ export const exampleResizableLayoutConfig: ResizableLayoutConfig = {
 ### 2. コンポーネントでの使用
 
 ```tsx
-import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/features/resizable-layout';
+import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/shared';
 import { exampleResizableLayoutConfig } from '../lib';
 
 function MyComponent() {

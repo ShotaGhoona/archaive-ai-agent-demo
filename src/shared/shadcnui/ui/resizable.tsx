@@ -53,4 +53,8 @@ function ResizableHandle({
   )
 }
 
-export { ResizablePanelGroup, ResizablePanel, ResizableHandle }
+export { 
+  ResizablePanelGroup, 
+  ResizablePanel as ShadcnResizablePanel, 
+  ResizableHandle as ShadcnResizableHandle 
+}

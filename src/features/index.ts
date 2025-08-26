@@ -4,4 +4,3 @@ export * from './ai-agent';
 export * from './comparison-modal';
 export * from './csv-export';
 export * from './file-preview';
-export * from './resizable-layout';

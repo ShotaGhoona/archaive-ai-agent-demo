@@ -1,22 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
 import { usePathname, useParams } from "next/navigation";
-import { BlueprintViewer } from "./BlueprintViewer";
-import { BlueprintTabNavigation } from "@/shared/basic-layout/ui/BlueprintTabNavigation";
-import { SameProjectBlueprintBar } from "./SameProjectBlueprintBar";
-import { RevisionBlueprintBar } from "./RevisionBlueprintBar";
-import { RevisionBlueprintCompareModal } from "./RevisionBlueprintCompareModal";
-import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features/resizable-layout";
-import { blueprintDetailResizableLayoutConfig } from "../lib";
-import { BlueprintDetailSidebar } from "./BlueprintDetailSidebar";
-import { Button } from "@/shared/shadcnui";
 import { Layers3, ChevronLeft, History } from "lucide-react";
+import Link from "next/link";
+import { ResizableLayout, ResizablePanel, ResizableHandle, BlueprintTabNavigation, Button } from "@/shared";
+import { blueprintDetailResizableLayoutConfig } from "../lib";
+import { BlueprintView, RevisionBlueprint, RevisionBlueprintsData, SameProjectBlueprintsData } from "../model";
+import { BlueprintViewer, BlueprintDetailSidebar, RevisionBlueprintCompareModal, RevisionBlueprintBar, SameProjectBlueprintBar } from "../ui";
 import blueprintData from "../data/blueprints.json";
 import blueprintDetailData from "../data/blueprints.json";
-import { BlueprintView } from "../model/types";
-import { SameProjectBlueprintsData } from "../model/sameProjectBlueprintTypes";
-import { RevisionBlueprintsData, RevisionBlueprint } from "../model/revisionBlueprintTypes";
-import Link from "next/link";
 
 interface BlueprintDetailLayoutProps {
   children: React.ReactNode;
