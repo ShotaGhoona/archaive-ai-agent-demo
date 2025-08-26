@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { TableView } from "@/shared/view/table-view";
 import { MaterialMaster, createMaterialMasterTableConfig } from "../lib";
 
 interface MaterialMasterTableViewProps {
@@ -14,7 +14,7 @@ export function MaterialMasterTableView({
   const tableConfig = createMaterialMasterTableConfig();
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={materialMasters}
       config={tableConfig}
       onItemUpdate={onMaterialMasterUpdate}

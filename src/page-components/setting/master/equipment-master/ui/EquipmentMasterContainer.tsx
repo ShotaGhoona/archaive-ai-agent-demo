@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Input, ConfigBasedTableView } from "@/shared";
+import { Button, Input, TableView } from "@/shared";
 import { Search, Plus, Download } from "lucide-react";
 import { EquipmentMasterDialog } from "../ui";
 import { EquipmentMaster, createEquipmentMasterTableConfig } from "../lib";
@@ -96,7 +96,7 @@ export function EquipmentMasterContainer() {
 
       {/* データテーブル */}
       <div className="flex-1 px-6 overflow-hidden">
-        <ConfigBasedTableView
+        <TableView
           data={filteredData}
           config={config}
           onItemUpdate={(rowId, field, value) => {

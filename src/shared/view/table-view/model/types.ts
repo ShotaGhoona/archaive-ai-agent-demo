@@ -54,8 +54,8 @@ export interface SortableFields {
   };
 }
 
-// Config-based TableView props
-export interface ConfigBasedTableViewProps<T = unknown> {
+// TableView props
+export interface TableViewProps<T = unknown> {
   data: T[];
   config: TableViewConfig<T>;
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;

@@ -1,5 +1,5 @@
 "use client";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { Blueprint, createBlueprintTableConfig } from "@/page-components/blueprint/home/lib/blueprintTableConfig";
 
 interface BlueprintTableProps {
@@ -11,7 +11,7 @@ export function BlueprintTable({ blueprints }: BlueprintTableProps) {
 
   return (
     <div className="bg-white flex flex-col">
-      <ConfigBasedTableView
+      <TableView
         data={blueprints}
         config={config}
         getRowId={(blueprint) => blueprint.internalNumber}

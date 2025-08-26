@@ -4,16 +4,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared';
-import { ConfigBasedTableViewProps } from '../model';
+import { TableViewProps } from '../model';
 import { useColumnResize, useTableSort, useCellEdit, usePaginatedTable } from '../lib';
 import { TableHeaderCell, TableDataCell, TablePagination } from '../ui';
 
-export function ConfigBasedTableView<T>({
+export function TableView<T>({
   data,
   config,
   onItemUpdate,
   getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random())
-}: ConfigBasedTableViewProps<T>) {
+}: TableViewProps<T>) {
   const { columns, pagination } = config;
 
   // ページネーション設定

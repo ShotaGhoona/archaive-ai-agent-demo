@@ -1,4 +1,4 @@
-import { ConfigBasedTableView } from '@/shared';
+import { TableView } from '@/shared';
 import { 
   Button, 
   Sheet, 
@@ -141,7 +141,7 @@ export function PreviewTable({ columns }: PreviewTableProps) {
       </SheetTrigger>
       <SheetContent side="bottom" className="h-[50vh]">
         <div className="flex-1 my-6 min-h-0">
-          <ConfigBasedTableView
+          <TableView
             data={sampleData}
             config={config}
             getRowId={(item) => item.id}
