@@ -29,7 +29,7 @@ export const createRepeatBlueprintGalleryConfig = ({
   onRepeatRegister
 }: CreateRepeatBlueprintGalleryConfigOptions): GalleryViewConfig<RepeatBlueprint> => ({
   layoutConfig: {
-    grid: { xs: 1, md: 2, lg: 2 },
+    grid: { xs: 1, md: 2, lg: 3 },
     aspectRatio: 'video'
   },
   
@@ -46,7 +46,6 @@ export const createRepeatBlueprintGalleryConfig = ({
             e.stopPropagation();
             onRepeatRegister(blueprint);
           }}
-          className="bg-primary hover:bg-primary/90"
         >
           <Plus className="h-4 w-4 mr-2" />
           リピート品として登録
@@ -55,30 +54,14 @@ export const createRepeatBlueprintGalleryConfig = ({
     ),
     
     contentRender: (blueprint) => (
-      <>
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-gray-600 truncate">
-            {blueprint.orderSource}
-          </p>
-          <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-            {blueprint.companyField}
-          </span>
-        </div>
-        <h3 className="font-medium text-gray-900 mb-1 line-clamp-1">
+      <div className="space-y-1">
+        <p className="text-xs font-medium truncate" title={blueprint.filename}>
+          {blueprint.filename}
+        </p>
+        <p className="text-xs text-gray-500 truncate" title={blueprint.productName}>
           {blueprint.productName}
-        </h3>
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs text-gray-500 font-mono">
-            {blueprint.customerNumber}
-          </span>
-          <span className="text-xs text-gray-500">
-            {blueprint.orderQuantity}個
-          </span>
-        </div>
-        <div className="text-xs text-gray-500">
-          {blueprint.orderDate} 〜 {blueprint.deliveryDate}
-        </div>
-      </>
+        </p>
+      </div>
     )
   },
   

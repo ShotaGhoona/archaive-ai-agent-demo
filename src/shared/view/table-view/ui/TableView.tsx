@@ -112,7 +112,7 @@ export function TableView<T>({
       <div className="flex-1 relative overflow-auto">
         <table className="w-full caption-bottom text-base">
           {/* 固定ヘッダー */}
-          <TableHeader className="sticky top-0 bg-white z-50 shadow-sm border-b backdrop-blur-sm">
+          <TableHeader className="sticky top-0 z-50 shadow-sm border-b backdrop-blur-lg">
             <TableRow>
               {columns.map((column) => (
                 <TableHeaderCell

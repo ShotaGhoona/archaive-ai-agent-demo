@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { List, Grid3X3 } from "lucide-react";
 import { Button, Tooltip, TooltipTrigger, TooltipContent, SearchInput } from "@/shared";
 import { TableView } from "@/shared/view/table-view";
@@ -23,13 +23,11 @@ export function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelPro
   const blueprints: RepeatBlueprint[] = repeatBlueprintData;
   
   // 検索フィルタリング
-  const filteredBlueprints = useMemo(() => 
-    blueprints.filter(blueprint =>
-      (blueprint.filename || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (blueprint.productName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (blueprint.customerNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (blueprint.orderSource || '').toLowerCase().includes(searchTerm.toLowerCase())
-    ), [blueprints, searchTerm]
+  const filteredBlueprints = blueprints.filter(blueprint =>
+    (blueprint.filename || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.productName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.customerNumber || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.orderSource || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // リピート品登録処理
@@ -39,23 +37,17 @@ export function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelPro
   };
 
   // Gallery設定
-  const galleryConfig = useMemo(
-    () => createRepeatBlueprintGalleryConfig({ onRepeatRegister: handleRepeatRegister }),
-    []
-  );
+  const galleryConfig = createRepeatBlueprintGalleryConfig({ onRepeatRegister: handleRepeatRegister });
 
   // Table設定
-  const tableConfig = useMemo(
-    () => createRepeatBlueprintTableConfig({ onRepeatRegister: handleRepeatRegister }),
-    []
-  );
+  const tableConfig = createRepeatBlueprintTableConfig({ onRepeatRegister: handleRepeatRegister });
 
 
   if (!isOpen) return null;
 
   return (
     <div className="min-w-1/2 max-w-1/2 p-4">
-      <div className="h-full bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col animate-in slide-in-from-right-full duration-300">        
+      <div className="h-full bg-gray-50 rounded-lg shadow-lg border border-gray-200 flex flex-col animate-in slide-in-from-right-full duration-300">        
         {/* 検索・フィルターヘッダー */}
         <div className="flex items-center gap-5 px-6 py-4">
           <div className="flex items-center gap-1 border border-gray-200 rounded-lg bg-background">
