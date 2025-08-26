@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { projectData } from "../data";
 import { ProjectDataViewPageHeader, ProjectTableView, ProjectKanbanView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { Project, PROJECT_SEARCHBAR_CONFIG, PROJECT_FILTER_CONFIG } from "../lib";
-import { useSearchbar } from "@/shared";
 
 export function ProjectDataViewContainer() {
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");

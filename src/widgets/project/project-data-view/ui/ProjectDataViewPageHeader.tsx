@@ -1,10 +1,11 @@
-import { FilterToggleButton } from "@/features";
+
 import { 
   Button, 
   Tooltip, 
   TooltipTrigger, 
   TooltipContent,
   SearchInput,
+  FilterToggleButton,
   CsvExportDialog,
 } from "@/shared";
 import { Plus, List, Kanban } from "lucide-react";

@@ -3,9 +3,7 @@ import { useState } from "react";
 import { DocumentTypeHeader } from "./DocumentTypeHeader";
 import { DocumentPageHeader } from "./DocumentPageHeader";
 import { DocumentTableView } from "./DocumentTableView";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
-import { useSearchbar } from "@/shared";
-import { FilterConfig } from "@/features";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar, FilterConfig } from "@/shared";
 import { DocumentData, DocumentType } from "../model";
 import { 
   QUOTATION_SEARCHBAR_CONFIG,

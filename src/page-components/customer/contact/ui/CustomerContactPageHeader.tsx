@@ -1,7 +1,6 @@
-import { FilterToggleButton } from "@/features";
 import { CONTACT_CSV_COLUMNS, Contact } from "../lib";
 import { CreateContactDialog } from "../ui";
-import { SearchInput, CsvExportDialog } from "@/shared";
+import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
 
 interface CustomerContactPageHeaderProps {
   searchTerm: string;

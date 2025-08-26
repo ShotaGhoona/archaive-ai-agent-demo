@@ -2,9 +2,8 @@
 import { useState } from "react";
 import contactsData from "../data/contact.json";
 import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG, Contact } from "../lib";
-import { useSearchbar } from "@/shared";
 
 interface CustomerContactContainerProps {
   customerId: string;

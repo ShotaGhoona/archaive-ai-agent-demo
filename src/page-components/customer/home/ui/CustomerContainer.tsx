@@ -2,10 +2,9 @@
 import { useState } from "react";
 import customersData from "../data/customer.json";
 import { CustomerPageHeader, CustomerTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG } from "../lib";
-import { Customer } from "../model/type";
-import { useSearchbar } from "@/shared";
+import { Customer } from "../model";
 
 export function CustomerContainer() {
   const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);

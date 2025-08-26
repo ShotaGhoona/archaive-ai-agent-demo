@@ -4,9 +4,9 @@ import {
   TooltipTrigger,
   TooltipContent,
   SearchInput,
-  CsvExportDialog
+  CsvExportDialog,
+  FilterToggleButton
 } from "@/shared";
-import { FilterToggleButton } from "@/features";
 import {
   Grid3X3,
   List,

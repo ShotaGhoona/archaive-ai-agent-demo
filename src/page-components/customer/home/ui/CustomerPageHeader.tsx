@@ -1,8 +1,7 @@
-import { FilterToggleButton } from "@/features";
 import { CUSTOMER_CSV_COLUMNS } from "../lib";
 import { Customer } from "../model/type";
 import { CreateCustomerDialog } from "../ui";
-import { SearchInput, CsvExportDialog } from "@/shared";
+import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
 
 interface CustomerPageHeaderProps {
   searchTerm: string;
