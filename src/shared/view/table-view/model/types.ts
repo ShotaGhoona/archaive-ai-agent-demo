@@ -91,13 +91,17 @@ export interface PaginationConfig {
 }
 
 // Config-based Table設定
-export interface TablePaginationConfig {
-  enabled: boolean;
-  defaultItemsPerPage: number;
-  allowedItemsPerPage: number[];
-  showItemsPerPageSelector: boolean;
-  maxVisiblePages: number;
-}
+export type TablePaginationConfig = 
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      defaultItemsPerPage: number;
+      allowedItemsPerPage: number[];
+      showItemsPerPageSelector: boolean;
+      maxVisiblePages: number;
+    };
 
 export interface TableViewConfig<T = unknown> {
   columns: DataTableColumn<T>[];

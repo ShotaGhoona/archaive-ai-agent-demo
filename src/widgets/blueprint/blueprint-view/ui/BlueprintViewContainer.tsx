@@ -1,15 +1,15 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
-import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Pencil } from "lucide-react";
-import { BlueprintFile, BlueprintView } from "../model/types";
+import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared";
+import { ZoomIn, ZoomOut, Maximize2, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
+import { BlueprintFile, BlueprintView } from "../model";
 
-interface BlueprintViewerProps {
+interface BlueprintViewContainerProps {
   activeFile: BlueprintFile | BlueprintView | null;
 }
 
-export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
+export function BlueprintViewContainer({ activeFile }: BlueprintViewContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
@@ -99,54 +99,6 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
     }
   }, [isZoomLocked]);
 
-  // File operations
-  const downloadFile = useCallback((imageUrl: string, fileName: string) => {
-    try {
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error('Download failed:', error);
-    }
-  }, []);
-
-  const printFile = useCallback((imageUrl: string, fileName: string) => {
-    try {
-      const printWindow = window.open('', '_blank');
-      if (printWindow) {
-        printWindow.document.write(`
-          <html>
-            <head>
-              <title>印刷: ${fileName}</title>
-              <style>
-                body {
-                  margin: 0;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  min-height: 100vh;
-                }
-                img {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
-              </style>
-            </head>
-            <body>
-              <img src="${imageUrl}" alt="${fileName}" />
-            </body>
-          </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
-      }
-    } catch (error) {
-      console.error('Print failed:', error);
-    }
-  }, []);
 
   if (!activeFile) {
     return (
@@ -197,34 +149,6 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
         />
       </div>
 
-      <div className="absolute top-6 right-6 space-y-2">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => downloadFile(activeFile.imageUrl, activeFile.name)}
-            title="ダウンロード"
-          >
-            <Download className="h-5 w-5" />
-            <span className="text-sm">ダウンロード</span>
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => printFile(activeFile.imageUrl, activeFile.name)}
-            title="印刷"
-          >
-            <Printer className="h-5 w-5" />
-            <span className="text-sm">印刷</span>
-          </Button>
-          
-          <Button size="lg">
-            <Pencil className="h-5 w-5" />
-            <span className="text-sm">書き込み</span>
-          </Button>
-        </div>
-      </div>
 
       <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 space-y-2">
         <div className="flex flex-col items-center gap-2">
