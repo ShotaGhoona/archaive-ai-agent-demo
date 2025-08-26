@@ -1,4 +1,4 @@
-import { FilterConfig } from "@/features";
+import { FilterConfig } from "@/shared";
 import { Contact } from "../lib";
 
 export const CONTACT_FILTER_CONFIG: FilterConfig<Contact>[] = [

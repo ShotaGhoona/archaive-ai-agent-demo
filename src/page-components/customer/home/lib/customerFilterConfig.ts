@@ -1,4 +1,4 @@
-import { FilterConfig } from '@/features';
+import { FilterConfig } from '@/shared';
 import { Customer } from '../model';
 
 export const CUSTOMER_FILTER_CONFIG: FilterConfig<Customer>[] = [

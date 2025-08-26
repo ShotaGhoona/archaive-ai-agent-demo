@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features';
+import { CsvColumnConfig } from '@/shared';
 import { Quotation, Order, Delivery, Invoice, Specification, Inspection } from '../model';
 
 export const QUOTATION_CSV_COLUMNS: Omit<CsvColumnConfig<Quotation>, 'enabled'>[] = [

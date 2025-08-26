@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features/csv-export';
+import { CsvColumnConfig } from '@/shared';
 import { MaterialMaster } from '../lib';
 
 export const MATERIAL_MASTER_CSV_COLUMNS: Omit<CsvColumnConfig<MaterialMaster>, 'enabled'>[] = [

@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features';
+import { CsvColumnConfig } from '@/shared';
 import { Customer } from '../model';
 
 export const CUSTOMER_CSV_COLUMNS: Omit<CsvColumnConfig<Customer>, 'enabled'>[] = [

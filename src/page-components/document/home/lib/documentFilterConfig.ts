@@ -1,4 +1,4 @@
-import { FilterConfig } from '@/features';
+import { FilterConfig } from '@/shared';
 import { Quotation, Order, Delivery, Invoice, Specification, Inspection } from '../model';
 
 export const QUOTATION_FILTER_CONFIG: FilterConfig<Quotation>[] = [

@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features';
+import { CsvColumnConfig } from '@/shared';
 import { Blueprint } from '../lib';
 
 export const BLUEPRINT_CSV_COLUMNS: Omit<CsvColumnConfig<Blueprint>, 'enabled'>[] = [

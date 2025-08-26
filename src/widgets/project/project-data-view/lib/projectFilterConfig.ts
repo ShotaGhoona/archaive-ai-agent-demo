@@ -1,4 +1,4 @@
-import { FilterConfig } from '@/features';
+import { FilterConfig } from '@/shared';
 import { Project } from '../lib';
 
 export const PROJECT_FILTER_CONFIG: FilterConfig<Project>[] = [

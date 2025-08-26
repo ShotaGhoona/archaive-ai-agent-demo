@@ -1,4 +1,4 @@
-import { FilterConfig } from '@/features';
+import { FilterConfig } from '@/shared';
 import { Blueprint } from '../lib';
 
 export const BLUEPRINT_FILTER_CONFIG: FilterConfig<Blueprint>[] = [

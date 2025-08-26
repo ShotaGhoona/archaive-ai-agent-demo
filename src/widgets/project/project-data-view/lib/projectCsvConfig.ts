@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features';
+import { CsvColumnConfig } from '@/shared';
 import { Project } from '../lib';
 
 export const PROJECT_CSV_COLUMNS: Omit<CsvColumnConfig<Project>, 'enabled'>[] = [

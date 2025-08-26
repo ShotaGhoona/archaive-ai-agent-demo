@@ -104,24 +104,7 @@ export function BlueprintDetailLayout({
       {/* 全体上部: タブナビゲーション */}
       <div className="flex-shrink-0 p-4 border-b">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-3">
-              <Link href="/blueprint">
-                <Button variant="outline" size="lg" className="h-12 p-0">
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-              </Link>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-gray-900">
-                  {blueprintData.productName}
-                </span>
-                <span className="text-sm text-gray-400">
-                  {blueprintId}
-                </span>
-              </div>
-            </div>
-            <BlueprintTabNavigation />
-          </div>
+          <BlueprintTabNavigation />
           
           <div className="flex items-center gap-3">
             {/* 同一案件図面ボタン */}

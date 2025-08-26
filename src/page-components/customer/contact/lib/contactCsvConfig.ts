@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from "@/features";
+import { CsvColumnConfig } from "@/shared";
 import { Contact } from "../lib";
 
 export const CONTACT_CSV_COLUMNS: Omit<CsvColumnConfig<Contact>, 'enabled'>[] = [
