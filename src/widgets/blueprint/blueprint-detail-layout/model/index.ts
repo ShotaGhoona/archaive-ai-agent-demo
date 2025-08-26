@@ -1,6 +1,5 @@
 export type { 
   BasicInformation, 
-  BlueprintView, 
   EstimateInformation,
   SimilarBlueprint,
   BlueprintFile

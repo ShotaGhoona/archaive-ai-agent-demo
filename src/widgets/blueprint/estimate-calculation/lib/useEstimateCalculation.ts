@@ -1,6 +1,6 @@
 "use client"
 import { useState, useMemo } from 'react';
-import { UseEstimateCalculationResult, EstimateQuantities } from '../model';
+import { UseEstimateCalculationResult, EstimateQuantities, EstimateItem, ProcessItem, EstimateState } from '../model';
 import {
   calculateUnitCosts,
   createMaterial,
@@ -20,10 +20,10 @@ import {
 
 export const useEstimateCalculation = (): UseEstimateCalculationResult => {
   // 状態管理
-  const [materials, setMaterials] = useState(() => []);
-  const [processes, setProcesses] = useState(() => []);
-  const [setupCosts, setSetupCosts] = useState(() => []);
-  const [otherCosts, setOtherCosts] = useState(() => []);
+  const [materials, setMaterials] = useState<EstimateItem[]>([]);
+  const [processes, setProcesses] = useState<ProcessItem[]>([]);
+  const [setupCosts, setSetupCosts] = useState<EstimateItem[]>([]);
+  const [otherCosts, setOtherCosts] = useState<EstimateItem[]>([]);
   const [quantities, setQuantities] = useState<EstimateQuantities>({
     material: 1,
     process: 1,

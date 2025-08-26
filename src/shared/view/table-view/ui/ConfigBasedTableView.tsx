@@ -63,7 +63,7 @@ export function ConfigBasedTableView<T>({
     setItemsPerPage,
   } = usePaginatedTable({
     data: sortedData,
-    initialItemsPerPage: paginationConfig.defaultItemsPerPage,
+    initialItemsPerPage: paginationConfig.enabled ? paginationConfig.defaultItemsPerPage : 10,
     initialPage: 1,
   });
 
@@ -83,13 +83,13 @@ export function ConfigBasedTableView<T>({
       itemsPerPage,
       onPageChange: setCurrentPage,
       onItemsPerPageChange: setItemsPerPage,
-      showItemsPerPageSelector: paginationConfig.showItemsPerPageSelector,
-      maxVisiblePages: paginationConfig.maxVisiblePages,
+      showItemsPerPageSelector: paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
+      maxVisiblePages: paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
     };
   }, [
     paginationConfig.enabled,
-    paginationConfig.showItemsPerPageSelector,
-    paginationConfig.maxVisiblePages,
+    paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
+    paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
     currentPage,
     totalPages,
     totalItems,
