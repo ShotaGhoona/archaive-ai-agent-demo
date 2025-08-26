@@ -1,4 +1,4 @@
-import { BasicInformation } from "@/widgets";
+import { BasicInformation } from "../../blueprint-detail-layout/model/types";
 
 export interface BasicInformationField {
   label: string;

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { BasicInformation } from "@/widgets";
+import { BasicInformation } from "../../blueprint-detail-layout/model/types";
 
 export function useBasicInformationForm(initialData?: Partial<BasicInformation>) {
   const [formData, setFormData] = useState<Partial<BasicInformation>>(initialData || {});

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { SimilarBlueprint, BlueprintView } from "@/widgets";
+import { SimilarBlueprint, BlueprintView } from "../../blueprint-detail-layout/model/types";
 
 interface UseSimilarBlueprintGalleryProps {
   similarBlueprints?: SimilarBlueprint[];
