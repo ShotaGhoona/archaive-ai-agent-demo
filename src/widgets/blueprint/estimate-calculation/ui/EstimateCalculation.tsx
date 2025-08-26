@@ -68,7 +68,7 @@ export function EstimateCalculation({
                     className="w-24"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">円/個</span>
+                  <span className="text-sm text-gray-600">個</span>
                 </div>
               </div>
             ))}
@@ -114,7 +114,7 @@ export function EstimateCalculation({
                     className="w-16"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">分</span>
+                  <span className="text-sm text-gray-600">個</span>
                   <span className="text-sm text-gray-600">×</span>
                   <Input
                     type="number"
@@ -123,10 +123,10 @@ export function EstimateCalculation({
                     className="w-20"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">円/分</span>
+                  <span className="text-sm text-gray-600">個</span>
                   <span className="text-sm text-gray-600">=</span>
                   <div className="font-medium min-w-[80px] text-right">
-                    {(process.timeMinutes * process.chargeRate).toLocaleString()}円/個
+                    {(process.timeMinutes * process.chargeRate).toLocaleString()}<span className="text-sm text-gray-600">円/個</span>
                   </div>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export function EstimateCalculation({
 
         {/* 3. 段取り工程費用 */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">段取り工程費用</h3>
+          <h3 className="text-lg font-semibold">段取工程費</h3>
           <div className="border rounded-lg py-2 bg-gray-50">
             {state.setupCosts.map((cost) => (
               <div key={cost.id} className="flex justify-between items-center px-3 py-1">
@@ -173,7 +173,7 @@ export function EstimateCalculation({
                     className="w-24"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">円/個</span>
+                  <span className="text-sm text-gray-600">個</span>
                 </div>
               </div>
             ))}
@@ -192,7 +192,7 @@ export function EstimateCalculation({
 
         {/* 4. その他費用 */}
         <div className="space-y-3">
-          <h3 className="text-lg font-semibold">その他費用</h3>
+          <h3 className="text-lg font-semibold">その他</h3>
           <div className="border rounded-lg py-2 bg-gray-50">
             {state.otherCosts.map((cost) => (
               <div key={cost.id} className="flex justify-between items-center px-3 py-1">
@@ -236,88 +236,96 @@ export function EstimateCalculation({
         </div>
 
         {/* 5. 見積もり結果 */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-semibold">見積もり結果</h3>
-          <div className="border rounded-lg p-4 bg-gray-50">
+        {(state.materials.length > 0 || state.processes.length > 0 || state.setupCosts.length > 0 || state.otherCosts.length > 0) && (
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold">見積もり結果</h3>
+          <div className="border rounded-lg p-4 bg-primary/10 border-primary/30">
             <div className="space-y-3">
-              <div className="flex justify-between items-center">
-                <span>材料費:</span>
-                <div className="flex items-center gap-2">
-                  <span>{costs.materialUnitCost.toLocaleString()}円/個</span>
-                  <span className="text-sm text-gray-600">×</span>
-                  <Input
-                    type="number"
-                    value={state.quantities.material}
-                    onChange={(e) => actions.updateMaterialQuantity(Number(e.target.value))}
-                    className="w-16"
-                    min="1"
-                    placeholder="1"
-                  />
-                  <span className="text-sm text-gray-600">個</span>
-                  <span className="text-sm text-gray-600">=</span>
-                  <span className="font-medium min-w-[80px] text-right">
-                    {costs.materialTotalCost.toLocaleString()}円
-                  </span>
+              {state.materials.length > 0 && (
+                <div className="flex justify-between items-center">
+                  <span>材料費:</span>
+                  <div className="flex items-center gap-2">
+                    <span>{costs.materialUnitCost.toLocaleString()}<span className="text-sm text-gray-600">円/個</span></span>
+                    <span className="text-sm text-gray-600">×</span>
+                    <Input
+                      type="number"
+                      value={state.quantities.material}
+                      onChange={(e) => actions.updateMaterialQuantity(Number(e.target.value))}
+                      className="w-16"
+                      min="1"
+                      placeholder="1"
+                    />
+                    <span className="text-sm text-gray-600">個</span>
+                    <span className="text-sm text-gray-600">=</span>
+                    <span className="font-medium min-w-[80px] text-right">
+                      {costs.materialTotalCost.toLocaleString()}<span className="text-sm text-gray-600">円</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
               
-              <div className="flex justify-between items-center">
-                <span>工程費:</span>
-                <div className="flex items-center gap-2">
-                  <span>{costs.processUnitCost.toLocaleString()}円/個</span>
-                  <span className="text-sm text-gray-600">×</span>
-                  <Input
-                    type="number"
-                    value={state.quantities.process}
-                    onChange={(e) => actions.updateProcessQuantity(Number(e.target.value))}
-                    className="w-16"
-                    min="1"
-                    placeholder="1"
-                  />
-                  <span className="text-sm text-gray-600">個</span>
-                  <span className="text-sm text-gray-600">=</span>
-                  <span className="font-medium min-w-[80px] text-right">
-                    {costs.processTotalCost.toLocaleString()}円
-                  </span>
+              {state.processes.length > 0 && (
+                <div className="flex justify-between items-center">
+                  <span>工程費:</span>
+                  <div className="flex items-center gap-2">
+                    <span>{costs.processUnitCost.toLocaleString()}<span className="text-sm text-gray-600">円/個</span></span>
+                    <span className="text-sm text-gray-600">×</span>
+                    <Input
+                      type="number"
+                      value={state.quantities.process}
+                      onChange={(e) => actions.updateProcessQuantity(Number(e.target.value))}
+                      className="w-16"
+                      min="1"
+                      placeholder="1"
+                    />
+                    <span className="text-sm text-gray-600">個</span>
+                    <span className="text-sm text-gray-600">=</span>
+                    <span className="font-medium min-w-[80px] text-right">
+                      {costs.processTotalCost.toLocaleString()}<span className="text-sm text-gray-600">円</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
               
-              <div className="flex justify-between items-center">
-                <span>段取り工程費用:</span>
-                <div className="flex items-center gap-2">
-                  <span>{costs.setupUnitCost.toLocaleString()}円/個</span>
-                  <span className="text-sm text-gray-600">×</span>
-                  <Input
-                    type="number"
-                    value={state.quantities.setup}
-                    onChange={(e) => actions.updateSetupQuantity(Number(e.target.value))}
-                    className="w-16"
-                    min="1"
-                    placeholder="1"
-                  />
-                  <span className="text-sm text-gray-600">個</span>
-                  <span className="text-sm text-gray-600">=</span>
-                  <span className="font-medium min-w-[80px] text-right">
-                    {costs.setupTotalCost.toLocaleString()}円
-                  </span>
+              {state.setupCosts.length > 0 && (
+                <div className="flex justify-between items-center">
+                  <span>段取工程費:</span>
+                  <div className="flex items-center gap-2">
+                    <span>{costs.setupUnitCost.toLocaleString()}<span className="text-sm text-gray-600">円/個</span></span>
+                    <span className="text-sm text-gray-600">×</span>
+                    <Input
+                      type="number"
+                      value={state.quantities.setup}
+                      onChange={(e) => actions.updateSetupQuantity(Number(e.target.value))}
+                      className="w-16"
+                      min="1"
+                      placeholder="1"
+                    />
+                    <span className="text-sm text-gray-600">個</span>
+                    <span className="text-sm text-gray-600">=</span>
+                    <span className="font-medium min-w-[80px] text-right">
+                      {costs.setupTotalCost.toLocaleString()}<span className="text-sm text-gray-600">円</span>
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
               
-              <div className="flex justify-between items-center">
-                <span>その他:</span>
-                <span>{costs.otherCost.toLocaleString()}円</span>
-              </div>
-              
-              <hr className="my-2" />
-              <div className="flex justify-between text-lg font-bold">
-                <span>最終見積金額:</span>
+              {state.otherCosts.length > 0 && (
+                <div className="flex justify-between items-center">
+                  <span>その他:</span>
+                  <span>{costs.otherCost.toLocaleString()}<span className="text-sm text-gray-600">円</span></span>
+                </div>
+              )}
+              <div className="flex justify-between text-lg font-bold border-t pt-2 border-primary/30">
+                <span>合計:</span>
                 <span>
-                  {costs.finalTotal.toLocaleString()}円
+                  {costs.finalTotal.toLocaleString()}<span className="text-sm text-gray-600">円</span>
                 </span>
               </div>
             </div>
           </div>
-        </div>
+          </div>
+        )}
       </div>
       
       {onSave && (
