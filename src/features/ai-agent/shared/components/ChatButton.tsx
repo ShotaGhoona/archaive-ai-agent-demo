@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/shared/shadcnui';
 import { MessageCircle, Plus, X } from 'lucide-react';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared';
 import { AIAgentConfig } from '../../types/types';
 import AgentSelector from './AgentSelector';
 

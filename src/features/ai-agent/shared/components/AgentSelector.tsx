@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/shared/shadcnui';
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared';
 import { AIAgentConfig } from '../../types/types';
 
 // =============================================================================

@@ -1,6 +1,6 @@
 import { ColumnConfig } from '@/widgets';
 
-// Projectに特化したカラム定義（projectColumns.tsxベース）
+// Projectに特化したカラム定義（projectTableConfig.tsxベース）
 export const PROJECT_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [
   {
     id: 'projectId',

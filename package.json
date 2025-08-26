@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "capsulate:check": "tsx scripts/auto-capsulate/index.ts --check",
     "capsulate:fix": "tsx scripts/auto-capsulate/index.ts --fix",
     "capsulate:generate-index": "tsx scripts/auto-capsulate/index.ts --generate-index",

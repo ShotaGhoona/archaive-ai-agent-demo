@@ -17,58 +17,39 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Input,
-  Textarea,
   Button,
 } from "@/shared";
 import { Plus } from "lucide-react";
 import { Contact } from "../lib";
 
 const formSchema = z.object({
-  contactName: z.string().min(1, "連絡先名は必須です").max(50, "連絡先名は50文字以内で入力してください"),
-  department: z.string().min(1, "部門は必須です"),
-  position: z.string().min(1, "役職は必須です"),
-  contactType: z.enum(['primary', 'secondary', 'emergency']),
-  phoneNumber: z.string()
-    .min(1, "電話番号は必須です")
-    .regex(/^[\d-]+$/, "電話番号は数字とハイフンのみ使用できます")
-    .min(10, "電話番号は10文字以上で入力してください"),
-  mobileNumber: z.string()
+  name: z.string().min(1, "担当者名は必須です").max(50, "担当者名は50文字以内で入力してください"),
+  phone_number: z.string()
     .optional()
-    .refine(val => !val || /^[\d-]+$/.test(val), "携帯電話番号は数字とハイフンのみ使用できます"),
+    .refine(val => !val || /^[\d-]+$/.test(val), "電話番号は数字とハイフンのみ使用できます"),
   email: z.string()
-    .min(1, "メールアドレスは必須です")
-    .email("有効なメールアドレスを入力してください"),
-  notes: z.string().optional(),
+    .optional()
+    .refine(val => !val || z.string().email().safeParse(val).success, "有効なメールアドレスを入力してください"),
 });
 
 type FormData = z.infer<typeof formSchema>;
 
 interface CreateContactDialogProps {
-  customerId: string;
-  onSubmit: (data: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => void;
+  customerId: number;
+  onSubmit: (data: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => void;
 }
 
-export function CreateContactDialog({ /* customerId, */ onSubmit }: CreateContactDialogProps) {
+export function CreateContactDialog({ customerId, onSubmit }: CreateContactDialogProps) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      contactName: "",
-      department: "",
-      position: "",
-      contactType: "secondary",
-      phoneNumber: "",
-      mobileNumber: "",
+      name: "",
+      phone_number: "",
       email: "",
-      notes: "",
     },
   });
 
@@ -76,7 +57,10 @@ export function CreateContactDialog({ /* customerId, */ onSubmit }: CreateContac
     setIsSubmitting(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API call
-      onSubmit(data);
+      onSubmit({
+        ...data,
+        customer_id: customerId
+      } as Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>);
       form.reset();
       setOpen(false);
     } catch (error) {
@@ -94,159 +78,49 @@ export function CreateContactDialog({ /* customerId, */ onSubmit }: CreateContac
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="flex items-center gap-2">
+        <Button size="lg" className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
-          新規連絡先登録
+          新規担当者登録
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>新規連絡先登録</DialogTitle>
+          <DialogTitle>新規担当者登録</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              {/* 連絡先名 */}
-              <FormField
-                control={form.control}
-                name="contactName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      連絡先名 <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="例: 田中太郎" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            {/* 担当者名 */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    担当者名 <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="例: 田中太郎" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* 部門 */}
-              <FormField
-                control={form.control}
-                name="department"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      部門 <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="部門を選択" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="営業部">営業部</SelectItem>
-                        <SelectItem value="技術部">技術部</SelectItem>
-                        <SelectItem value="製造部">製造部</SelectItem>
-                        <SelectItem value="品質管理部">品質管理部</SelectItem>
-                        <SelectItem value="経理部">経理部</SelectItem>
-                        <SelectItem value="総務部">総務部</SelectItem>
-                        <SelectItem value="企画部">企画部</SelectItem>
-                        <SelectItem value="その他">その他</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* 役職 */}
-              <FormField
-                control={form.control}
-                name="position"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      役職 <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="役職を選択" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="取締役">取締役</SelectItem>
-                        <SelectItem value="部長">部長</SelectItem>
-                        <SelectItem value="課長">課長</SelectItem>
-                        <SelectItem value="係長">係長</SelectItem>
-                        <SelectItem value="主任">主任</SelectItem>
-                        <SelectItem value="担当者">担当者</SelectItem>
-                        <SelectItem value="その他">その他</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* 連絡先タイプ */}
-              <FormField
-                control={form.control}
-                name="contactType"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      連絡先タイプ <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="タイプを選択" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="primary">主要連絡先</SelectItem>
-                        <SelectItem value="secondary">副次連絡先</SelectItem>
-                        <SelectItem value="emergency">緊急連絡先</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* 電話番号 */}
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      電話番号 <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="例: 03-1234-5678" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              {/* 携帯電話番号 */}
-              <FormField
-                control={form.control}
-                name="mobileNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>携帯電話番号</FormLabel>
-                    <FormControl>
-                      <Input placeholder="例: 090-1234-5678" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            {/* 電話番号 */}
+            <FormField
+              control={form.control}
+              name="phone_number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>電話番号</FormLabel>
+                  <FormControl>
+                    <Input placeholder="例: 03-1234-5678" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             {/* メールアドレス */}
             <FormField
@@ -254,32 +128,11 @@ export function CreateContactDialog({ /* customerId, */ onSubmit }: CreateContac
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>
-                    メールアドレス <span className="text-red-500">*</span>
-                  </FormLabel>
+                  <FormLabel>メールアドレス</FormLabel>
                   <FormControl>
                     <Input 
                       type="email" 
                       placeholder="例: tanaka@example.co.jp" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            {/* 備考 */}
-            <FormField
-              control={form.control}
-              name="notes"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>備考</FormLabel>
-                  <FormControl>
-                    <Textarea 
-                      placeholder="その他の情報があれば記入してください"
-                      className="min-h-[80px]"
                       {...field} 
                     />
                   </FormControl>

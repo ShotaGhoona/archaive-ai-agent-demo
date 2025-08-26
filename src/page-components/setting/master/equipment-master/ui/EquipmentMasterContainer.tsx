@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Input, TableView } from "@/shared";
+import { Button, Input, ConfigBasedTableView } from "@/shared";
 import { Search, Plus, Download } from "lucide-react";
 import { EquipmentMasterDialog } from "../ui";
-import { EquipmentMaster, mockData, columns } from "../data";
+import { EquipmentMaster, createEquipmentMasterTableConfig } from "../lib";
+import { mockData } from "../data";
 
 export function EquipmentMasterContainer() {
   const [data, setData] = useState<EquipmentMaster[]>(mockData);
   const [searchTerm, setSearchTerm] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const config = createEquipmentMasterTableConfig();
 
   const filteredData = data.filter(item => 
     item.equipmentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -33,9 +35,9 @@ export function EquipmentMasterContainer() {
   };
 
   const handleExportCSV = () => {
-    const headers = columns.map(col => col.label).join(',');
+    const headers = config.columns.map(col => col.label).join(',');
     const rows = filteredData.map(item => 
-      columns.map(col => {
+      config.columns.map(col => {
         const value = item[col.key as keyof EquipmentMaster];
         return typeof value === 'string' && value.includes(',') ? `"${value}"` : value;
       }).join(',')
@@ -94,15 +96,16 @@ export function EquipmentMasterContainer() {
 
       {/* データテーブル */}
       <div className="flex-1 px-6 overflow-hidden">
-        <TableView
+        <ConfigBasedTableView
           data={filteredData}
-          columns={columns}
+          config={config}
           onItemUpdate={(rowId, field, value) => {
             const updatedData = data.map(item => 
               item.id === rowId ? { ...item, [field]: value } : item
             );
             setData(updatedData);
           }}
+          getRowId={(item) => item.id}
         />
       </div>
 

@@ -1,4 +1,4 @@
-export * from './contactColumns';
+export * from './contactTableConfig';
 export * from './contactFilterConfig';
 export * from './contactCsvConfig';
 export * from './contactSearchbarConfig';

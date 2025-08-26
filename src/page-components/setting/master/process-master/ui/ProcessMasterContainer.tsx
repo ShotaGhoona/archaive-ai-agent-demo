@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { processMasterData } from "../data";
 import { ProcessMasterPageHeader, ProcessMasterTableView } from "../ui";
 import { ProcessMaster } from "../lib";
@@ -10,8 +9,6 @@ const PROCESS_MASTER_SEARCHBAR_CONFIG = {
 };
 
 export function ProcessMasterContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20;
 
   const {
     searchTerm,
@@ -31,10 +28,6 @@ export function ProcessMasterContainer() {
       <div className="flex-1 flex flex-col min-h-0 px-4">
         <ProcessMasterTableView 
           processMasters={filteredProcessMasters}
-          currentPage={currentPage}
-          totalItems={filteredProcessMasters.length}
-          itemsPerPage={itemsPerPage}
-          onPageChange={setCurrentPage}
         />
       </div>
     </div>

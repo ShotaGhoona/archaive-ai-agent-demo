@@ -1,2 +1,2 @@
-export * from './materialMasterColumns';
+export * from './materialMasterTableConfig';
 export * from './materialMasterCsvConfig';

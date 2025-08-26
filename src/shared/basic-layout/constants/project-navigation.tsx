@@ -1,11 +1,11 @@
 import { 
-  FileText, 
+  Info, 
   Receipt, 
   ShoppingCart, 
   Truck, 
   Send, 
   FolderOpen,
-  Upload
+  PenTool
 } from "lucide-react";
 
 export interface BlueprintDetailTab {
@@ -21,14 +21,14 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     id: "basic-information", 
     label: "基本情報", 
     href: (id) => `/project/${id}/basic-information`,
-    icon: <FileText className="h-4 w-4" />, 
+    icon: <Info className="h-4 w-4" />, 
     description: "案件の基本情報" 
   },
   { 
     id: "blueprint-register", 
     label: "図面登録", 
     href: (id) => `/project/${id}/blueprint-register`,
-    icon: <Upload className="h-4 w-4" />, 
+    icon: <PenTool className="h-4 w-4" />, 
     description: "図面の新規登録・アップロード" 
   },
   // { 

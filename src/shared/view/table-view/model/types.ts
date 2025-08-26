@@ -54,13 +54,12 @@ export interface SortableFields {
   };
 }
 
-// データテーブルのメイン props
-export interface TableViewProps<T = unknown> {
+// Config-based TableView props
+export interface ConfigBasedTableViewProps<T = unknown> {
   data: T[];
-  columns: DataTableColumn<T>[];
+  config: TableViewConfig<T>;
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
   getRowId?: (item: T) => string;
-  pagination?: PaginationConfig;
 }
 
 // Cell content の戻り値型
@@ -89,4 +88,18 @@ export interface PaginationConfig {
   onPageChange: (page: number) => void;
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   showItemsPerPageSelector?: boolean;
+}
+
+// Config-based Table設定
+export interface TablePaginationConfig {
+  enabled: boolean;
+  defaultItemsPerPage: number;
+  allowedItemsPerPage: number[];
+  showItemsPerPageSelector: boolean;
+  maxVisiblePages: number;
+}
+
+export interface TableViewConfig<T = unknown> {
+  columns: DataTableColumn<T>[];
+  pagination?: TablePaginationConfig;
 }

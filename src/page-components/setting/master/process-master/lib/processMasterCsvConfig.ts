@@ -1,4 +1,4 @@
-import { CsvColumnConfig } from '@/features/csv-export';
+import { CsvColumnConfig } from '@/shared';
 import { ProcessMaster } from '../lib';
 
 export const PROCESS_MASTER_CSV_COLUMNS: Omit<CsvColumnConfig<ProcessMaster>, 'enabled'>[] = [

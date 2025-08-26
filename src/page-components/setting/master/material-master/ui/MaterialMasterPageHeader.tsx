@@ -1,6 +1,5 @@
 import React from "react";
-import { SearchInput } from "@/shared";
-import { CsvExportDialog } from "@/features";
+import { SearchInput, CsvExportDialog } from "@/shared";
 import { MaterialMaster, MATERIAL_MASTER_CSV_COLUMNS } from "../lib";
 import { CreateMaterialDialog } from "../ui";
 

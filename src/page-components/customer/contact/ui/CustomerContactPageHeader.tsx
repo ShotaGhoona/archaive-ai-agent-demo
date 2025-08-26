@@ -1,7 +1,6 @@
-import { FilterToggleButton, CsvExportDialog } from "@/features";
 import { CONTACT_CSV_COLUMNS, Contact } from "../lib";
 import { CreateContactDialog } from "../ui";
-import { SearchInput } from "@/shared";
+import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
 
 interface CustomerContactPageHeaderProps {
   searchTerm: string;
@@ -10,7 +9,7 @@ interface CustomerContactPageHeaderProps {
   isFilterSidebarOpen: boolean;
   contacts?: unknown[];
   customerId: string;
-  onContactCreate?: (contact: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => void;
+  onContactCreate?: (contact: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => void;
 }
 
 export function CustomerContactPageHeader({
@@ -22,7 +21,7 @@ export function CustomerContactPageHeader({
   customerId,
   onContactCreate,
 }: CustomerContactPageHeaderProps) {
-  const handleContactCreate = (contact: Omit<Contact, 'contactId' | 'customerId' | 'createdAt' | 'updatedAt' | 'isActive'>) => {
+  const handleContactCreate = (contact: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => {
     onContactCreate?.(contact);
   };
 
@@ -36,7 +35,7 @@ export function CustomerContactPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="連絡先名、部門、メール、電話番号で検索"
+          placeholder="担当者名、メールアドレスで検索"
         />
       </div>
       <div className="flex items-center gap-3">
@@ -46,9 +45,9 @@ export function CustomerContactPageHeader({
           initialColumns={CONTACT_CSV_COLUMNS}
           defaultFilename="contacts"
         />
-        {/* 新規連絡先登録ボタン */}
+        {/* 新規担当者登録ボタン */}
         <CreateContactDialog
-          customerId={customerId}
+          customerId={Number(customerId)}
           onSubmit={handleContactCreate}
         />
       </div>

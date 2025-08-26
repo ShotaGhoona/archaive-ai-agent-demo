@@ -1,2 +1,2 @@
-export * from './processMasterColumns';
+export * from './processMasterTableConfig';
 export * from './processMasterCsvConfig';

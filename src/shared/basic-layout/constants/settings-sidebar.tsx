@@ -1,5 +1,5 @@
 import { 
-  User, 
+  Info, 
   Building2,
   Users,
   FileText,
@@ -7,7 +7,7 @@ import {
   Package,
   GitBranch,
   Database,
-  HardDrive,
+  PenTool,
   ScrollText
 } from "lucide-react";
 
@@ -33,7 +33,7 @@ export const settingSections: SettingSection[] = [
       {
         id: "profile",
         label: "プロフィール",
-        icon: <User className="w-4 h-4" />,
+        icon: <Info className="w-4 h-4" />,
         href: "/setting/profile",
         description: "ユーザーのプロフィール情報を管理"
       },
@@ -94,7 +94,7 @@ export const settingSections: SettingSection[] = [
       {
         id: "drawing-database",
         label: "図面データベース設定",
-        icon: <HardDrive className="w-4 h-4" />,
+        icon: <PenTool className="w-4 h-4" />,
         href: "/setting/drawing-database",
         description: "図面テーブルの自由項目設定"
       },

@@ -1,4 +1,4 @@
-import { ResizableLayoutConfig } from "@/features";
+import { ResizableLayoutConfig } from "@/shared";
 
 // 図面見積もりダイアログ用設定（左: 将来拡張用, 右: 見積もり画面）
 export const blueprintEstimateDialogResizableLayoutConfig: ResizableLayoutConfig = {

@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { StepIndicator, Button } from "@/shared";
-import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/features";
+import { StepIndicator, Button, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { quotationResizableLayoutConfig } from "../lib";
 import { FormData } from "../model";
 import { QuotationPreview, QuotationProjectInfoStep, QuotationBlueprintInfoStep, QuotationCompanyInfoStep } from "../ui";

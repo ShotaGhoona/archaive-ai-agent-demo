@@ -2,14 +2,11 @@
 import { useState } from "react";
 import { blueprintData } from "../data";
 import { BlueprintPageHeader, BlueprintTableView, BlueprintGalleryView } from "../ui";
-import { useSearchbar } from "@/shared";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG, Blueprint } from "../lib";
 
 export function BlueprintHomeContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
-  const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -64,18 +61,11 @@ export function BlueprintHomeContainer() {
           {viewMode === "table" && (
             <BlueprintTableView 
               blueprints={filteredBlueprints}
-              currentPage={currentPage}
-              totalItems={filteredBlueprints.length}
-              itemsPerPage={itemsPerPage}
-              onPageChange={setCurrentPage}
             />
           )}
           {viewMode === "gallery" && (
             <BlueprintGalleryView 
-              blueprints={filteredBlueprints.slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage
-              )} 
+              blueprints={filteredBlueprints} 
             />
           )}
         </div>
