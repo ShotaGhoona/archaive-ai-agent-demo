@@ -16,7 +16,6 @@ export interface CsvExportDialogProps<T = Record<string, unknown>> {
   data: T[];
   initialColumns: Omit<CsvColumnConfig<T>, 'enabled'>[];
   defaultFilename: string;
-  title?: string;
   maxPreviewRows?: number;
 }
 

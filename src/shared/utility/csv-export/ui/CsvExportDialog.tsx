@@ -29,7 +29,6 @@ export function CsvExportDialog<T>({
   data,
   initialColumns,
   defaultFilename,
-  title = "CSV出力設定",
   maxPreviewRows = 10,
 }: CsvExportDialogProps<T>) {
   const {
