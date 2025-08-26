@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Button } from "@/shared";
 import { 
@@ -7,7 +8,7 @@ import {
   Trash2,
   Layers
 } from "lucide-react";
-import { FilePreviewModal, PreviewableFile } from "@/features";
+import { FilePreviewModal, PreviewableFile } from "@/widgets";
 import { StackedCardProps, UploadedFile, DragItem } from "../../model";
 
 export function StackedCard({

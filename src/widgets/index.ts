@@ -1,6 +1,7 @@
 // Widgets
-export * from './blueprint-detail-layout';
-export * from './customer-detail-layout';
-export * from './database-column-setting';
-export * from './project-detail-layout';
-export * from './v2-sidebar';
+
+export * from './blueprint';
+export * from './common';
+export * from './document';
+export * from './project';
+export * from './setting';

@@ -1,24 +1,34 @@
 import React from 'react';
 import { GalleryViewProps } from '../model';
-import { useGalleryLayout } from '../lib';
-import { GalleryItem } from '../ui';
+import { useGalleryLayout, usePaginatedGallery } from '../lib';
+import { GalleryItem, GalleryPagination } from '../ui';
 
 export function GalleryView<T>({ 
   data, 
-  config, 
-  loading = false 
+  config
 }: GalleryViewProps<T>) {
   const { gridClasses, aspectRatioClass } = useGalleryLayout(config.layoutConfig);
+  
+  // ページネーション設定
+  const paginationConfig = config.pagination || { enabled: false };
+  
+  // ページネーション機能
+  const {
+    currentData,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    totalItems,
+    setCurrentPage,
+    setItemsPerPage,
+  } = usePaginatedGallery({
+    data,
+    initialItemsPerPage: paginationConfig.enabled ? (paginationConfig.defaultItemsPerPage || 20) : data.length,
+    initialPage: 1,
+  });
 
-  // ローディング状態
-  if (loading) {
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <div className="text-gray-500">読み込み中...</div>
-      </div>
-    );
-  }
-
+  // 表示するデータを決定
+  const displayData = paginationConfig.enabled ? currentData : data;
   // 空の状態
   if (data.length === 0) {
     return (
@@ -29,20 +39,40 @@ export function GalleryView<T>({
   }
 
   return (
-    <div className={`overflow-auto flex-1 ${config.className || ''}`}>
-      <div className={`${gridClasses} gap-6 p-1`}>
-        {data.map((item) => {
-          const rowId = config.getRowId?.(item) || String(Math.random());
-          return (
-            <GalleryItem
-              key={rowId}
-              item={item}
-              config={config}
-              aspectRatioClass={aspectRatioClass}
-            />
-          );
-        })}
+    <div className={`h-full flex flex-col ${config.className || ''}`}>
+      {/* ギャラリーアイテム */}
+      <div className="flex-1 overflow-auto min-h-0">
+        <div className={`${gridClasses} gap-6 p-1`}>
+          {displayData.map((item) => {
+            const rowId = config.getRowId?.(item) || String(Math.random());
+            return (
+              <GalleryItem
+                key={rowId}
+                item={item}
+                config={config}
+                aspectRatioClass={aspectRatioClass}
+              />
+            );
+          })}
+        </div>
       </div>
+      
+      {/* ページネーション */}
+      {paginationConfig.enabled && (
+        <div className="flex-shrink-0 px-4 py-2 bg-white border-t">
+          <GalleryPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={setItemsPerPage}
+            showItemsPerPageSelector={paginationConfig.showItemsPerPageSelector}
+            maxVisiblePages={paginationConfig.maxVisiblePages}
+            allowedItemsPerPage={paginationConfig.allowedItemsPerPage}
+          />
+        </div>
+      )}
     </div>
   );
 }

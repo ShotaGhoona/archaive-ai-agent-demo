@@ -45,11 +45,21 @@ export interface GalleryBehaviorConfig<T> {
   };
 }
 
+// ページネーション設定
+export interface GalleryPaginationConfig {
+  enabled: boolean;
+  defaultItemsPerPage: number;
+  allowedItemsPerPage: number[];
+  showItemsPerPageSelector: boolean;
+  maxVisiblePages: number;
+}
+
 // 統合設定
 export interface GalleryViewConfig<T> {
   layoutConfig: GalleryLayoutConfig;
   itemConfig: GalleryItemConfig<T>;
   behaviorConfig?: GalleryBehaviorConfig<T>;
+  pagination?: GalleryPaginationConfig;
   getRowId?: (item: T) => string;
   className?: string;
 }

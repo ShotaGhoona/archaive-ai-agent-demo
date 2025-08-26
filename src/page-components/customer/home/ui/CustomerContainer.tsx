@@ -2,14 +2,12 @@
 import { useState } from "react";
 import customersData from "../data/customer.json";
 import { CustomerPageHeader, CustomerTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter } from "@/features";
-import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG, Customer } from "../lib";
-import { useSearchbar } from "@/shared";
+import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
+import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG } from "../lib";
+import { Customer } from "../model";
 
 export function CustomerContainer() {
-  const [currentPage, setCurrentPage] = useState(1);
   const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);
-  const itemsPerPage = 20;
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -27,23 +25,23 @@ export function CustomerContainer() {
     clearFilters,
   } = useAdvancedFilter(searchFiltered, CUSTOMER_FILTER_CONFIG);
 
-  // 顧客更新ハンドラー
-  const handleCustomerUpdate = (customerCode: string, field: string, value: unknown) => {
-    setCustomers(prev => prev.map(customer => 
-      customer.customerCode === customerCode 
-        ? { ...customer, [field]: value }
-        : customer
-    ));
-  };
 
   // 新規顧客作成ハンドラー
-  const handleCustomerCreate = (customerData: Omit<Customer, 'customerCode'>) => {
-    const newCustomerCode = `CUST-2024-${String(customers.length + 1).padStart(3, '0')}`;
+  const handleCustomerCreate = (customerData: Omit<Customer, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => {
+    const newId = Math.max(...customers.map(c => c.id), 0) + 1;
     const newCustomer: Customer = {
-      customerCode: newCustomerCode,
+      id: newId,
+      company_id: 1,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
       ...customerData,
     };
     setCustomers(prev => [...prev, newCustomer]);
+  };
+
+  // 顧客削除ハンドラー
+  const handleCustomerDelete = (customer: Customer) => {
+    setCustomers(prev => prev.filter(c => c.id !== customer.id));
   };
 
   return (
@@ -77,11 +75,7 @@ export function CustomerContainer() {
         <div className="flex-1 flex flex-col min-h-0 px-4">
           <CustomerTableView 
             customers={filteredCustomers}
-            onCustomerUpdate={handleCustomerUpdate}
-            currentPage={currentPage}
-            totalItems={filteredCustomers.length}
-            itemsPerPage={itemsPerPage}
-            onPageChange={setCurrentPage}
+            onCustomerDelete={handleCustomerDelete}
           />
         </div>
       </div>

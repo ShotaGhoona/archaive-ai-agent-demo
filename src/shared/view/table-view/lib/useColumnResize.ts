@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useCallback } from 'react';
 import { ColumnWidths, ResizeState, DataTableColumn } from '../model';
 

@@ -1,4 +1,4 @@
-import { BlueprintHomeContainer } from "@/page-components/blueprint/home/ui/BlueprintHomeContainer";
+import { BlueprintHomeContainer } from "@/page-components";
 import ChatUIManager from "@/features/ai-agent";
 
 export default function Blueprint() {

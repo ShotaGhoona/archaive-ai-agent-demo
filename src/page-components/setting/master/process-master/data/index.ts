@@ -1,0 +1,1 @@
+export { default as processMasterData } from '@/shared/data/master/processMaster.json';

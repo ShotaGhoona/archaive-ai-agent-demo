@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Message } from "../../types/types";
 import { User } from "lucide-react";
-import { cn } from '@/shared/lib/utils';
+import { cn } from '@/shared';
 import { AIAgentConfig } from '../../types/types';
 
 interface ChatMessageProps {

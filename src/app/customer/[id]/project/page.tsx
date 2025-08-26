@@ -1,4 +1,4 @@
-import { CustomerProjectContainer } from "@/page-components/customer/project/ui/CustomerProjectContainer";
+import { CustomerProjectContainer } from "@/page-components";
 
 export default function CustomerProjectPage() {
   return <CustomerProjectContainer />;

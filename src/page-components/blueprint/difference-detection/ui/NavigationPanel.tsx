@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import { Loading } from "@/shared";
 
 interface NavigationPanelProps {
   imageUrl: string;
@@ -34,10 +35,7 @@ export function NavigationPanel({
             height: `${overviewSize * 0.6}px` 
           }}
         >
-          <div className="text-center text-gray-400">
-            <div className="text-2xl mb-1">📐</div>
-            <div className="text-xs">読み込み中...</div>
-          </div>
+          <Loading size="sm" title="読み込み中..." className="text-gray-400" />
         </div>
         <div className="text-xs text-gray-500 text-center">
           ズーム: {Math.round(currentZoom * 100)}%

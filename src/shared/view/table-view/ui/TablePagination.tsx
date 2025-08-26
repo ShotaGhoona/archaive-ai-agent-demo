@@ -104,7 +104,7 @@ export function TablePagination({
       {/* ページ当たり項目数セレクター */}
       {showItemsPerPageSelector && onItemsPerPageChange && (
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">表示件数:</span>
+          <span className="text-sm text-muted-foreground whitespace-nowrap">表示件数:</span>
           <Select
             value={itemsPerPage.toString()}
             onValueChange={(value) => onItemsPerPageChange(parseInt(value, 10))}

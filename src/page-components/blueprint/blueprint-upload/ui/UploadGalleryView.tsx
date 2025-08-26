@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Button } from "@/shared";
 import { 
@@ -6,9 +7,8 @@ import {
   RotateCcw, 
   Trash2
 } from "lucide-react";
-import { FilePreviewModal, PreviewableFile } from "@/features";
-import { AddFileCard } from "./component/AddFileCard";
-import { StackedCard } from "./component/StackedCard";
+import { FilePreviewModal, PreviewableFile } from "@/widgets";
+import { AddFileCard, StackedCard } from "../ui";
 import { UploadGalleryViewProps, UploadedFile, DragItem } from "../model";
 
 export function UploadGalleryView({

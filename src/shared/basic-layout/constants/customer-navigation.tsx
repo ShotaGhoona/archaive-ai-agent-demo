@@ -1,7 +1,7 @@
 import { 
-  User, 
+  Info, 
   Phone, 
-  FileText, 
+  Briefcase, 
   MessageSquare
 } from "lucide-react";
 
@@ -18,7 +18,7 @@ export const customerMenuItems: CustomerMenuItem[] = [
     id: "profile",
     label: "基本情報",
     href: "/customer/[id]/profile",
-    icon: <User className="w-4 h-4" />,
+    icon: <Info className="w-4 h-4" />,
     description: "顧客の基本的な情報を管理"
   },
   {
@@ -32,7 +32,7 @@ export const customerMenuItems: CustomerMenuItem[] = [
     id: "project",
     label: "案件履歴",
     href: "/customer/[id]/project",
-    icon: <FileText className="w-4 h-4" />,
+    icon: <Briefcase className="w-4 h-4" />,
     description: "過去の案件と進行中のプロジェクト"
   },
   {

@@ -1,0 +1,1 @@
+export { default as inspectionData } from './inspection.json';

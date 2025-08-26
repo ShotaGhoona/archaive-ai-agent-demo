@@ -1,24 +1,18 @@
+"use client";
+
 import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { FilePreviewModal, PreviewableFile } from "@/features";
-import { Blueprint, createBlueprintColumns } from "../lib";
+import { ConfigBasedTableView } from "@/shared";
+import { FilePreviewModal, PreviewableFile } from "@/widgets";
+import { Blueprint, createBlueprintTableConfig } from "../lib";
 
 interface BlueprintTableViewProps {
   blueprints: Blueprint[];
   onBlueprintUpdate?: (internalNumber: string, field: string, value: unknown) => void;
-  currentPage?: number;
-  totalItems?: number;
-  itemsPerPage?: number;
-  onPageChange?: (page: number) => void;
 }
 
 export function BlueprintTableView({ 
   blueprints, 
-  onBlueprintUpdate,
-  currentPage,
-  totalItems,
-  itemsPerPage,
-  onPageChange
+  onBlueprintUpdate
 }: BlueprintTableViewProps) {
   const [previewFile, setPreviewFile] = useState<Blueprint | null>(null);
 
@@ -35,25 +29,15 @@ export function BlueprintTableView({
     }
   });
 
-  const columns = createBlueprintColumns();
-
-  // ページネーション設定
-  const paginationConfig = currentPage && totalItems && itemsPerPage && onPageChange ? {
-    enabled: true,
-    currentPage,
-    itemsPerPage,
-    totalItems,
-    onPageChange,
-  } : undefined;
+  const config = createBlueprintTableConfig();
 
   return (
     <>
-      <TableView
+      <ConfigBasedTableView
         data={blueprints}
-        columns={columns}
+        config={config}
         onItemUpdate={onBlueprintUpdate}
         getRowId={(blueprint) => blueprint.internalNumber}
-        pagination={paginationConfig}
       />
 
       {/* プレビューモーダル */}

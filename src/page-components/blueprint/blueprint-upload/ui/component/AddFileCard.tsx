@@ -1,6 +1,7 @@
+"use client";
 import { useState, useRef } from "react";
-import { Badge } from "@/shared";
-import { Plus, Loader2 } from "lucide-react";
+import { Badge, LoadingSpinner } from "@/shared";
+import { Plus } from "lucide-react";
 import { AddFileCardProps, FileUploadData } from "../../model";
 
 export function AddFileCard({ onAddFiles }: AddFileCardProps) {
@@ -87,7 +88,7 @@ export function AddFileCard({ onAddFiles }: AddFileCardProps) {
       <div className="aspect-video flex flex-col items-center justify-center p-8">
         {isUploading ? (
           <div className="text-center space-y-4">
-            <Loader2 className="h-10 w-10 text-blue-500 animate-spin mx-auto" />
+            <LoadingSpinner size="lg" className="mx-auto border-blue-500/30 border-t-blue-500" />
             <p className="text-sm text-blue-600 font-medium">
               アップロード中...
             </p>

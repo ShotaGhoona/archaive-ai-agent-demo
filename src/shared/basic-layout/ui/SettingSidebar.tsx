@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { HelpCircle, ChevronDown } from "lucide-react";
-import { cn } from "@/shared/lib/utils";
-import { settingSections, appInfo } from "../constants";
+import { ChevronDown } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger, cn } from "@/shared";
+import { settingSections } from "../constants";
 
 export function SettingSidebar() {
   const pathname = usePathname();
@@ -32,14 +32,9 @@ export function SettingSidebar() {
               onClick={() => toggleSection(section.id)}
               className="w-full px-6 py-2 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
             >
-              <div className="flex items-center gap-2">
-                <div className="text-gray-500 dark:text-gray-400">
-                  {section.icon}
-                </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {section.title}
-                </span>
-              </div>
+              <span className="text-sm font-bold text-gray-700 dark:text-gray-300">
+                {section.title}
+              </span>
               <ChevronDown
                 className={cn(
                   "w-4 h-4 text-gray-400 transition-transform duration-200",
@@ -55,31 +50,37 @@ export function SettingSidebar() {
                   const isActive = pathname === item.href;
                   
                   return (
-                    <Link
-                      key={item.id}
-                      href={item.href}
-                      className={cn(
-                        "flex items-center gap-3 px-6 py-2 text-sm transition-colors relative",
-                        "hover:bg-gray-100 dark:hover:bg-gray-800",
-                        isActive && "bg-primary/10 text-primary",
-                        !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-                      )}
-                    >
-                      {/* アクティブインジケーター */}
-                      {isActive && (
-                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
-                      )}
-                      
-                      <div className={cn(
-                        "flex-shrink-0",
-                        isActive ? "text-primary" : "text-gray-400 dark:text-gray-500"
-                      )}>
-                        {item.icon}
-                      </div>
-                      <span className="flex-1">
-                        {item.label}
-                      </span>
-                    </Link>
+                    <Tooltip key={item.id} delayDuration={500}>
+                      <TooltipTrigger asChild>
+                        <Link
+                          href={item.href}
+                          className={cn(
+                            "flex items-center gap-3 px-6 py-2 text-sm transition-colors relative",
+                            "hover:bg-gray-100 dark:hover:bg-gray-800",
+                            isActive && "bg-primary/10 text-primary",
+                            !isActive && "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+                          )}
+                        >
+                          {/* アクティブインジケーター */}
+                          {isActive && (
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />
+                          )}
+                          
+                          <div className={cn(
+                            "flex-shrink-0",
+                            isActive ? "text-primary" : "text-gray-400 dark:text-gray-500"
+                          )}>
+                            {item.icon}
+                          </div>
+                          <span className="flex-1">
+                            {item.label}
+                          </span>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">
+                        <p>{item.description}</p>
+                      </TooltipContent>
+                    </Tooltip>
                   );
                 })}
               </div>
@@ -92,20 +93,6 @@ export function SettingSidebar() {
           </div>
         ))}
       </nav>
-
-      {/* フッター */}
-      <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-800 flex-shrink-0">
-        <Link
-          href="/setting/help"
-          className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 transition-colors"
-        >
-          <HelpCircle className="w-4 h-4" />
-          <span>ヘルプ & サポート</span>
-        </Link>
-        <div className="mt-3 text-xs text-gray-500 dark:text-gray-500">
-          Version {appInfo.version}
-        </div>
-      </div>
     </aside>
   );
 }

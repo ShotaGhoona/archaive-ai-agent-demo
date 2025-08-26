@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { EditingCell, EditableFields, DataTableColumn, CellContentData } from '../model';
 

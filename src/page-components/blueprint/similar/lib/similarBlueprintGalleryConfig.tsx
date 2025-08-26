@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, GalleryViewConfig } from '@/shared';
 import { Search, GitCompareArrows } from 'lucide-react';
-import { SimilarBlueprint } from '@/widgets';
+import { SimilarBlueprint } from '@/widgets/blueprint/blueprint-detail-layout/model/types';
 
 export const createSimilarBlueprintGalleryConfig = (
   handleDifferenceDetection: (blueprint: SimilarBlueprint) => void,
@@ -47,6 +47,14 @@ export const createSimilarBlueprintGalleryConfig = (
         {blueprint.name}
       </h4>
     )
+  },
+  
+  pagination: {
+    enabled: true,
+    defaultItemsPerPage: 20,
+    allowedItemsPerPage: [10, 20, 50, 100],
+    showItemsPerPageSelector: true,
+    maxVisiblePages: 7,
   },
   
   getRowId: (blueprint) => blueprint.id

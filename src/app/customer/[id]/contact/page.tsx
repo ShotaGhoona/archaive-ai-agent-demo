@@ -1,4 +1,4 @@
-import { CustomerContactContainer } from "@/page-components/customer/contact/ui/CustomerContactContainer";
+import { CustomerContactContainer } from "@/page-components";
 
 interface CustomerContactPageProps {
   params: Promise<{

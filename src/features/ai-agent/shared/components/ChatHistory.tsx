@@ -14,7 +14,7 @@
 //   Edit,
 //   Pin
 // } from 'lucide-react';
-// import { cn } from '@/shared/lib/utils';
+// import { cn } from '@/shared';
 
 // interface ChatSession {
 //   id: string;

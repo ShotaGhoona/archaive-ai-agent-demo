@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Loading } from "@/shared";
 import { differenceDetectionData } from "../data";
 
 interface Difference {
@@ -77,15 +78,11 @@ export function DifferenceGallery({ tolerance = "1px", onDifferenceClick }: Diff
   if (isLoading) {
     return (
       <div className="overflow-y-auto">
-        <div className="flex flex-col items-center justify-center h-64 space-y-4">
-          <div className="relative">
-            <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
-          </div>
-          <div className="text-center space-y-2">
-            <p className="text-sm font-medium text-gray-700">差分を解析中...</p>
-            <p className="text-xs text-gray-500">許容誤差: {tolerance}</p>
-          </div>
-        </div>
+        <Loading
+          title="差分を解析中..."
+          description={`許容誤差: ${tolerance}`}
+          className="h-64"
+        />
       </div>
     );
   }

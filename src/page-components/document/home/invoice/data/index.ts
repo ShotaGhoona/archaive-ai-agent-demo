@@ -1,0 +1,1 @@
+export { default as invoiceData } from './invoice.json';

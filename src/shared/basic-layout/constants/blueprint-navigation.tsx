@@ -1,5 +1,5 @@
 import { 
-  FileText, 
+  Info, 
   Search, 
   Calculator, 
   BookOpen, 
@@ -19,7 +19,7 @@ export const blueprintTabs: BlueprintTab[] = [
     id: "basic-information", 
     label: "図面基本情報", 
     href: (blueprintId) => `/blueprint/${blueprintId}/basic-information`,
-    icon: <FileText className="h-4 w-4" />, 
+    icon: <Info className="h-4 w-4" />, 
     description: "図面の基本情報と詳細データ" 
   },
   { 

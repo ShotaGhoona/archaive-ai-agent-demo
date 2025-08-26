@@ -1,4 +1,4 @@
-import { CustomerNotesContainer } from "@/page-components/customer/notes/ui/CustomerNotesContainer";
+import { CustomerNotesContainer } from "@/page-components";
 
 export default function CustomerNotesPage() {
   return <CustomerNotesContainer />;

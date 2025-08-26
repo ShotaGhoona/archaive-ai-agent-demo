@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { List, Grid3X3, Plus } from "lucide-react";
 import { Button, Tooltip, TooltipTrigger, TooltipContent, Card, CardContent, Badge, SearchInput } from "@/shared";
-import { BlueprintTableView, Blueprint, blueprintsData } from "@/page-components";
+import { BlueprintTableView, Blueprint } from "@/page-components";
+import blueprintData from "@/widgets/blueprint/blueprint-detail-layout/data/blueprints.json";
 import Link from "next/link";
 
 interface RepeatProductSearchPanelProps {
@@ -15,13 +16,13 @@ export function RepeatProductSearchPanel({ isOpen }: RepeatProductSearchPanelPro
   const [searchTerm, setSearchTerm] = useState("");
   const [hoveredBlueprint, setHoveredBlueprint] = useState<string | null>(null);
   
-  const blueprints: Blueprint[] = blueprintsData as unknown as Blueprint[];
+  const blueprints: Blueprint[] = blueprintData as unknown as Blueprint[];
   
   // 検索フィルタリング
   const filteredBlueprints = blueprints.filter(blueprint =>
-    blueprint.filename.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blueprint.productName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    blueprint.customerNumber.toLowerCase().includes(searchTerm.toLowerCase())
+    (blueprint.filename || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.productName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (blueprint.customerNumber || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleRegisterAsRepeat = (blueprint: Blueprint) => {

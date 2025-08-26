@@ -1,3 +1,4 @@
+"use client";
 import { useState, useCallback } from 'react';
 import { SortConfig, SortableFields, DataTableColumn, SortIconData } from '../model';
 

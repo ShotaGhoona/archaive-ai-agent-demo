@@ -1,13 +1,10 @@
-import { CsvColumnConfig } from '@/features';
-import { Customer } from '../lib';
+import { CsvColumnConfig } from '@/shared';
+import { Customer } from '../model';
 
 export const CUSTOMER_CSV_COLUMNS: Omit<CsvColumnConfig<Customer>, 'enabled'>[] = [
-  { key: 'customerCode', label: '取引先コード' },
-  { key: 'customerName', label: '取引先名' },
-  { key: 'contactPerson', label: '取引先担当者' },
-  { key: 'salesRepresentative', label: '営業担当者' },
-  { key: 'phoneNumber', label: '電話番号' },
-  { key: 'faxNumber', label: 'FAX番号' },
-  { key: 'rank', label: 'ランク' },
-  { key: 'industry', label: '業界' },
+  { key: 'id', label: '顧客ID' },
+  { key: 'name', label: '顧客名' },
+  { key: 'company_id', label: '会社ID' },
+  { key: 'created_at', label: '作成日' },
+  { key: 'updated_at', label: '更新日' },
 ];
