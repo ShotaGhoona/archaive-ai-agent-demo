@@ -1,7 +1,7 @@
-import { FilterToggleButton, CsvExportDialog } from "@/features";
+import { FilterToggleButton } from "@/features";
 import { CONTACT_CSV_COLUMNS, Contact } from "../lib";
 import { CreateContactDialog } from "../ui";
-import { SearchInput } from "@/shared";
+import { SearchInput, CsvExportDialog } from "@/shared";
 
 interface CustomerContactPageHeaderProps {
   searchTerm: string;

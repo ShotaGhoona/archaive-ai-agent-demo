@@ -1,10 +1,11 @@
-import { FilterToggleButton, CsvExportDialog } from "@/features";
+import { FilterToggleButton } from "@/features";
 import { 
   Button, 
   Tooltip, 
   TooltipTrigger, 
   TooltipContent,
   SearchInput,
+  CsvExportDialog,
 } from "@/shared";
 import { Plus, List, Kanban } from "lucide-react";
 import { Project, PROJECT_CSV_COLUMNS } from "../lib";

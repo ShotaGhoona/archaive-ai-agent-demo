@@ -1,6 +1,5 @@
 import React from "react";
-import { SearchInput } from "@/shared";
-import { CsvExportDialog } from "@/features";
+import { SearchInput, CsvExportDialog } from "@/shared";
 import { ProcessMaster, PROCESS_MASTER_CSV_COLUMNS } from "../lib";
 import { CreateProcessDialog } from "../ui";
 
