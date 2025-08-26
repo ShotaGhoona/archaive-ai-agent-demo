@@ -1,5 +1,4 @@
-import { ComparisonConfig } from '@/features/comparison-modal';
-import { CommonExtractors } from '@/features/comparison-modal';
+import { ComparisonConfig, CommonExtractors } from '@/widgets';
 
 export const REVISION_COMPARISON_CONFIG: ComparisonConfig = {
   tabs: [
