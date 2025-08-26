@@ -1,7 +1,7 @@
 import { useResizableContext } from '../lib';
 
 interface ResizablePanelProps {
-  index: 0 | 1;
+  index: number;
   children: React.ReactNode;
   className?: string;
 }

@@ -52,6 +52,35 @@ function MyComponent() {
 }
 ```
 
+### 3パネルレイアウトの使用例
+
+```tsx
+import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/shared';
+import { tripleLayoutConfig } from '../lib';
+
+function TripleLayoutComponent() {
+  return (
+    <ResizableLayout config={tripleLayoutConfig} className="h-full">
+      <ResizablePanel index={0}>
+        <div>左パネル</div>
+      </ResizablePanel>
+      
+      <ResizableHandle />
+      
+      <ResizablePanel index={1}>
+        <div>中央パネル</div>
+      </ResizablePanel>
+      
+      <ResizableHandle />
+      
+      <ResizablePanel index={2}>
+        <div>右パネル</div>
+      </ResizablePanel>
+    </ResizableLayout>
+  );
+}
+```
+
 ## Config設定項目
 
 ### ResizableLayoutConfig
@@ -119,6 +148,35 @@ export const sidebarResizableLayoutConfig: ResizableLayoutConfig = {
 } as const;
 ```
 
+### 3パネルレイアウト
+
+```typescript
+// lib/tripleLayoutConfig.ts
+export const tripleLayoutConfig: ResizableLayoutConfig = {
+  direction: 'horizontal',
+  panels: [
+    { initialWidth: 25, minWidth: 15, maxWidth: 40 }, // 左パネル
+    { initialWidth: 50, minWidth: 30, maxWidth: 70 }, // 中央パネル
+    { initialWidth: 25, minWidth: 15, maxWidth: 40 }  // 右パネル
+  ]
+} as const;
+```
+
+### 4パネルレイアウト
+
+```typescript
+// lib/quadLayoutConfig.ts
+export const quadLayoutConfig: ResizableLayoutConfig = {
+  direction: 'horizontal',
+  panels: [
+    { initialWidth: 25, minWidth: 10, maxWidth: 40 },
+    { initialWidth: 25, minWidth: 10, maxWidth: 40 },
+    { initialWidth: 25, minWidth: 10, maxWidth: 40 },
+    { initialWidth: 25, minWidth: 10, maxWidth: 40 }
+  ]
+} as const;
+```
+
 ## 技術的特徴
 
 - **Context API**: パネル間の状態共有にReact Contextを使用
@@ -129,8 +187,10 @@ export const sidebarResizableLayoutConfig: ResizableLayoutConfig = {
 
 ## 注意事項
 
-- パネルは必ず2つのみ対応
-- `ResizablePanel`の`index`は`0`または`1`のみ
+- パネルは2つ以上の任意の数に対応
+- `ResizablePanel`の`index`は`0`から始まる連続した数値
+- `ResizableHandle`の数は「パネル数 - 1」個必要（3パネル = 2ハンドル）
 - `ResizableHandle`は`ResizableLayout`内に配置する必要があります
+- パネルとハンドルは交互に配置してください（Panel → Handle → Panel → Handle → Panel）
 - 親要素に適切な高さ・幅を設定してください（`h-full`など）
 - **設定ファイルは必ず`lib/***ResizableLayoutConfig.ts`に配置してください** - コンポーネント内でのインライン定義は避けてください

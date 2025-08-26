@@ -1,4 +1,4 @@
-import { ResizableLayoutConfig } from "@/features";
+import { ResizableLayoutConfig } from "@/shared";
 
 // 見積作成ページ用設定（左: フォーム, 右: プレビュー）
 export const quotationResizableLayoutConfig: ResizableLayoutConfig = {

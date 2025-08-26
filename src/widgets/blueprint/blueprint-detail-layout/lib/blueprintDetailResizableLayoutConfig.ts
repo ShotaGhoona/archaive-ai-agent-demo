@@ -1,4 +1,4 @@
-import { ResizableLayoutConfig } from "@/features/resizable-layout";
+import { ResizableLayoutConfig } from "@/shared";
 
 // 図面詳細ページ用設定（2パネル: 左: ビューア、右: 詳細パネル）
 export const blueprintDetailResizableLayoutConfig: ResizableLayoutConfig = {

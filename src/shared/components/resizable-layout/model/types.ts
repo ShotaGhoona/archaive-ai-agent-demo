@@ -9,14 +9,15 @@ export interface PanelConfig {
 
 export interface ResizableLayoutConfig {
   direction: 'horizontal' | 'vertical';
-  panels: [PanelConfig, PanelConfig];
+  panels: PanelConfig[];
 }
 
 export interface ResizableContextState {
   config: ResizableLayoutConfig;
-  panelSizes: [number, number];
+  panelSizes: number[];
   isDragging: boolean;
-  setPanelSizes: (sizes: [number, number]) => void;
-  setIsDragging: (isDragging: boolean) => void;
+  dragHandleIndex?: number;
+  setPanelSizes: (sizes: number[]) => void;
+  setIsDragging: (isDragging: boolean, handleIndex?: number) => void;
   containerRef: React.RefObject<HTMLDivElement | null>;
 }

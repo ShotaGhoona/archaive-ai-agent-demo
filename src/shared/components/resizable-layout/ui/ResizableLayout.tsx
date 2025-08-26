@@ -10,53 +10,106 @@ interface ResizableLayoutProps {
 }
 
 export function ResizableLayout({ config, children, className = '' }: ResizableLayoutProps) {
-  const [panelSizes, setPanelSizes] = useState<[number, number]>(() => {
-    if (config.direction === 'horizontal') {
-      return [
-        config.panels[0].initialWidth ?? 50,
-        config.panels[1].initialWidth ?? 50
-      ];
-    } else {
-      return [
-        config.panels[0].initialHeight ?? 50,
-        config.panels[1].initialHeight ?? 50
-      ];
-    }
+  const [panelSizes, setPanelSizes] = useState<number[]>(() => {
+    return config.panels.map(panel => {
+      if (config.direction === 'horizontal') {
+        return panel.initialWidth ?? (100 / config.panels.length);
+      } else {
+        return panel.initialHeight ?? (100 / config.panels.length);
+      }
+    });
   });
   
   const [isDragging, setIsDragging] = useState(false);
+  const [dragHandleIndex, setDragHandleIndex] = useState<number | undefined>();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!isDragging || !containerRef.current || dragHandleIndex === undefined) return;
     
     const containerRect = containerRef.current.getBoundingClientRect();
+    const newSizes = [...panelSizes];
     
     if (config.direction === 'horizontal') {
       const containerWidth = containerRect.width;
       const mouseXInContainer = e.clientX - containerRect.left;
-      const newFirstPanelWidth = (mouseXInContainer / containerWidth) * 100;
+      const mousePercentage = (mouseXInContainer / containerWidth) * 100;
       
-      const minWidth = config.panels[0].minWidth ?? 10;
-      const maxWidth = config.panels[0].maxWidth ?? 90;
-      const clampedWidth = Math.max(minWidth, Math.min(maxWidth, newFirstPanelWidth));
+      // 現在のハンドル位置を計算
+      let currentPosition = 0;
+      for (let i = 0; i <= dragHandleIndex; i++) {
+        currentPosition += newSizes[i];
+      }
       
-      setPanelSizes([clampedWidth, 100 - clampedWidth]);
+      const diff = mousePercentage - currentPosition;
+      
+      // 左パネル（dragHandleIndex）と右パネル（dragHandleIndex + 1）のサイズを調整
+      const leftPanel = config.panels[dragHandleIndex];
+      const rightPanel = config.panels[dragHandleIndex + 1];
+      
+      const leftMin = leftPanel.minWidth ?? 10;
+      const leftMax = leftPanel.maxWidth ?? 90;
+      const rightMin = rightPanel.minWidth ?? 10;
+      const rightMax = rightPanel.maxWidth ?? 90;
+      
+      let newLeftSize = newSizes[dragHandleIndex] + diff;
+      let newRightSize = newSizes[dragHandleIndex + 1] - diff;
+      
+      // 制約チェック
+      newLeftSize = Math.max(leftMin, Math.min(leftMax, newLeftSize));
+      newRightSize = Math.max(rightMin, Math.min(rightMax, newRightSize));
+      
+      // 実際の調整値を再計算
+      const totalChange = (newLeftSize - newSizes[dragHandleIndex]) + (newRightSize - newSizes[dragHandleIndex + 1]);
+      if (Math.abs(totalChange) < 0.1) {
+        newSizes[dragHandleIndex] = newLeftSize;
+        newSizes[dragHandleIndex + 1] = newRightSize;
+      }
     } else {
+      // 垂直方向も同様の処理
       const containerHeight = containerRect.height;
       const mouseYInContainer = e.clientY - containerRect.top;
-      const newFirstPanelHeight = (mouseYInContainer / containerHeight) * 100;
+      const mousePercentage = (mouseYInContainer / containerHeight) * 100;
       
-      const minHeight = config.panels[0].minHeight ?? 10;
-      const maxHeight = config.panels[0].maxHeight ?? 90;
-      const clampedHeight = Math.max(minHeight, Math.min(maxHeight, newFirstPanelHeight));
+      let currentPosition = 0;
+      for (let i = 0; i <= dragHandleIndex; i++) {
+        currentPosition += newSizes[i];
+      }
       
-      setPanelSizes([clampedHeight, 100 - clampedHeight]);
+      const diff = mousePercentage - currentPosition;
+      
+      const topPanel = config.panels[dragHandleIndex];
+      const bottomPanel = config.panels[dragHandleIndex + 1];
+      
+      const topMin = topPanel.minHeight ?? 10;
+      const topMax = topPanel.maxHeight ?? 90;
+      const bottomMin = bottomPanel.minHeight ?? 10;
+      const bottomMax = bottomPanel.maxHeight ?? 90;
+      
+      let newTopSize = newSizes[dragHandleIndex] + diff;
+      let newBottomSize = newSizes[dragHandleIndex + 1] - diff;
+      
+      newTopSize = Math.max(topMin, Math.min(topMax, newTopSize));
+      newBottomSize = Math.max(bottomMin, Math.min(bottomMax, newBottomSize));
+      
+      const totalChange = (newTopSize - newSizes[dragHandleIndex]) + (newBottomSize - newSizes[dragHandleIndex + 1]);
+      if (Math.abs(totalChange) < 0.1) {
+        newSizes[dragHandleIndex] = newTopSize;
+        newSizes[dragHandleIndex + 1] = newBottomSize;
+      }
     }
-  }, [isDragging, config]);
+    
+    setPanelSizes(newSizes);
+  }, [isDragging, dragHandleIndex, panelSizes, config]);
 
   const handleMouseUp = useCallback(() => {
     setIsDragging(false);
+    setDragHandleIndex(undefined);
+  }, []);
+
+  const handleSetIsDragging = useCallback((dragging: boolean, handleIndex?: number) => {
+    setIsDragging(dragging);
+    setDragHandleIndex(handleIndex);
   }, []);
 
   useEffect(() => {
@@ -74,8 +127,9 @@ export function ResizableLayout({ config, children, className = '' }: ResizableL
     config,
     panelSizes,
     isDragging,
+    dragHandleIndex,
     setPanelSizes,
-    setIsDragging,
+    setIsDragging: handleSetIsDragging,
     containerRef
   };
 
