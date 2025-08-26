@@ -137,7 +137,6 @@ export function QuotationForm({ formData, setFormData }: QuotationFormProps) {
           <GalleryView
             data={blueprints}
             config={galleryConfig}
-            loading={false}
           />
         </div>
       </div>

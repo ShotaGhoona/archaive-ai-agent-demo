@@ -1,10 +1,10 @@
 import React from 'react';
 import { GalleryViewConfig, Button } from '@/shared';
 import { Blueprint } from '@/page-components';
-import { Expand, ExternalLink } from 'lucide-react';
+import { Eye, Focus } from 'lucide-react';
 
 export const createProjectBlueprintGalleryConfig = (
-  onPopup: (blueprint: Blueprint) => void,
+  onShowDetail: (blueprint: Blueprint) => void,
   onFullPage: (blueprint: Blueprint) => void
 ): GalleryViewConfig<Blueprint> => ({
   layoutConfig: {
@@ -21,11 +21,11 @@ export const createProjectBlueprintGalleryConfig = (
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            onPopup(blueprint);
+            onShowDetail(blueprint);
           }}
         >
-          <Expand size={16} />
-          ポップアップ
+          <Eye size={16} />
+          ちょっと見る
         </Button>
         <Button 
           onClick={(e) => {
@@ -34,8 +34,8 @@ export const createProjectBlueprintGalleryConfig = (
             onFullPage(blueprint);
           }}
         >
-          <ExternalLink size={16} />
-          フルページ
+          <Focus size={16} />
+          しっかり見る
         </Button>
       </div>
     ),
