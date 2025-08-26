@@ -1,9 +1,8 @@
 'use client';
 import React from "react";
-import { BlueprintView } from "../model/types";
-import { RevisionBlueprint } from "../model/revisionBlueprintTypes";
-import { ComparisonModal } from "../../comparison-modal/ui/ComparisonModal";
-import { REVISION_COMPARISON_CONFIG } from "../lib/revisionComparisonConfig";
+import { BlueprintView, RevisionBlueprint } from "../model";
+import { ComparisonModal } from "@/features";
+import { REVISION_COMPARISON_CONFIG } from "../lib";
 import blueprintData from "../data/blueprints.json";
 
 interface RevisionBlueprintCompareModalProps {
