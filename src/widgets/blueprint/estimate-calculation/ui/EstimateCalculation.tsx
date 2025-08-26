@@ -1,203 +1,186 @@
 "use client";
 import React from "react";
-import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared";
-import { Save, Plus, Trash2, Edit, Check, X } from "lucide-react";
-import { EstimateCalculationProps } from "../model/types";
+import { Button, Input } from "@/shared";
+import { Save, Plus, Trash2 } from "lucide-react";
 import { useEstimateCalculation } from "../lib/useEstimateCalculation";
-import { materialMasterData, processMasterData } from "@/shared/data/master";
+
+interface EstimateCalculationProps {
+  dimensions: {
+    length: number;
+    width: number;
+    height: number;
+    weight: number;
+  };
+  onSave?: (data: any) => void;
+  className?: string;
+}
 
 export function EstimateCalculation({
   dimensions,
-  initialState,
   onSave,
   className = ""
 }: EstimateCalculationProps) {
-  const {
-    state,
-    result,
-    handlers: {
-      handleMaterialSelect,
-      handleMaterialRemove,
-      handleProcessAdd,
-      handleProcessTimeChange,
-      handleProcessRemove,
-      handleOtherCostAdd,
-      handleOtherCostChange,
-      handleOtherCostRemove,
-      handleMultiplierChange,
-      handleStartManualEdit,
-      handleCancelManualEdit,
-      handleConfirmManualEdit,
-      handleManualCostChange
-    },
-    utils: { getProcessDisplayPrice }
-  } = useEstimateCalculation(dimensions, initialState);
+  const { state, costs, actions } = useEstimateCalculation();
 
+  // 保存処理
   const handleSave = () => {
     if (onSave) {
       const estimateData = {
-        materialCost: result.materialCost.toString(),
-        processingCost: result.processCost.toString(),
-        totalCost: result.totalCost.toString(),
+        materialCost: costs.materialUnitCost.toString(),
+        processingCost: costs.processUnitCost.toString(),
+        setupCost: costs.setupUnitCost.toString(),
+        otherCost: costs.otherCost.toString(),
+        totalCost: costs.finalTotal.toString(),
       };
       onSave(estimateData);
     }
-    console.log("見積もり情報保存:", { 
-      materialSelection: state.materialSelection, 
-      processSelections: state.processSelections, 
-      otherCosts: state.otherCosts, 
-      totalCost: result.totalCost 
-    });
   };
 
   return (
     <div className={`h-full flex flex-col ${className}`}>
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {/* 1. 材料選択 */}
+        {/* 1. 材料費 */}
         <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">材料選択</h3>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">掛け率:</span>
-              <Input
-                type="number"
-                value={state.materialMultiplier}
-                onChange={(e) => handleMultiplierChange('material', Number(e.target.value))}
-                className="w-20"
-                min="0"
-                step="1"
-              />
-              <span className="text-sm text-gray-600">%</span>
-            </div>
-          </div>
-          <div className="border rounded-lg bg-gray-50">
-            {state.materialSelection ? (
-              <div className="flex justify-between items-center p-3">
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleMaterialRemove}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                  <span>{state.materialSelection.materialName}</span>
-                </div>
-                <div className="font-medium">{result.materialCost.toLocaleString()}円</div>
-              </div>
-            ) : (
-              <Select onValueChange={handleMaterialSelect}>
-                <SelectTrigger className="w-full border-0">
-                  <Plus className="h-4 w-4 mr-2" />
-                  <SelectValue placeholder="材料を選択" />
-                </SelectTrigger>
-                <SelectContent>
-                  {materialMasterData.map((material) => (
-                    <SelectItem key={material.id} value={material.id}>
-                      {material.materialName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            )}
-          </div>
-        </div>
-
-        {/* 2. 工程選択 */}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">工程選択</h3>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">掛け率:</span>
-              <Input
-                type="number"
-                value={state.processMultiplier}
-                onChange={(e) => handleMultiplierChange('process', Number(e.target.value))}
-                className="w-20"
-                min="0"
-                step="1"
-              />
-              <span className="text-sm text-gray-600">%</span>
-            </div>
-          </div>
+          <h3 className="text-lg font-semibold">材料費</h3>
           <div className="border rounded-lg py-2 bg-gray-50">
-            {state.processSelections.map((process) => (
-              <div key={process.id} className="flex justify-between items-center px-3 py-1">
+            {state.materials.map((material) => (
+              <div key={material.id} className="flex justify-between items-center px-3 py-1">
                 <div className="flex items-center gap-3">
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleProcessRemove(process.id)}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                  <span>{process.processName}</span>
-                  <div className="flex items-center gap-1">
-                    <Input
-                      type="number"
-                      value={process.time}
-                      onChange={(e) => handleProcessTimeChange(process.id, Number(e.target.value))}
-                      className="w-16"
-                      placeholder="0"
-                    />
-                    <span className="text-sm text-gray-600">分</span>
-                  </div>
-                </div>
-                <div className="font-medium">{getProcessDisplayPrice(process).toLocaleString()}円</div>
-              </div>
-            ))}
-            <Select onValueChange={handleProcessAdd} value="">
-              <SelectTrigger className="w-full border-0">
-                <Plus className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="工程を追加" />
-              </SelectTrigger>
-              <SelectContent>
-                {processMasterData.map((process) => (
-                  <SelectItem key={process.id} value={process.id}>
-                    {process.processName}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* 3. その他費用 */}
-        <div className="space-y-3">
-          <h3 className="text-lg font-semibold">その他費用</h3>
-          <div className="border rounded-lg py-2 bg-gray-50">
-            {state.otherCosts.map((cost) => (
-              <div key={cost.id} className="flex justify-between items-center px-3 py-1">
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleOtherCostRemove(cost.id)}
+                    onClick={() => actions.deleteMaterial(material.id)}
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
                   <Input
-                    value={cost.name}
-                    onChange={(e) => handleOtherCostChange(cost.id, 'name', e.target.value)}
-                    placeholder="項目名を入力"
+                    value={material.name}
+                    onChange={(e) => actions.updateMaterialField(material.id, 'name', e.target.value)}
+                    placeholder="材料名を入力"
                     className="w-48"
                   />
                 </div>
-                <div>
+                <div className="flex items-center gap-1">
                   <Input
                     type="number"
-                    value={cost.price}
-                    onChange={(e) => handleOtherCostChange(cost.id, 'price', Number(e.target.value))}
-                    className="w-32"
-                    placeholder="円"
+                    value={material.price}
+                    onChange={(e) => actions.updateMaterialField(material.id, 'price', Number(e.target.value))}
+                    className="w-24"
+                    placeholder="0"
                   />
+                  <span className="text-sm text-gray-600">円/個</span>
                 </div>
               </div>
             ))}
             <div className="">
               <Button
                 variant="ghost"
-                onClick={handleOtherCostAdd}
+                onClick={actions.addMaterial}
+                className="w-full"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                材料を追加
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. 工程費 */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold">工程費</h3>
+          <div className="border rounded-lg py-2 bg-gray-50">
+            {state.processes.map((process) => (
+              <div key={process.id} className="flex justify-between items-center px-3 py-1">
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => actions.deleteProcess(process.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                  <Input
+                    value={process.name}
+                    onChange={(e) => actions.updateProcessField(process.id, 'name', e.target.value)}
+                    placeholder="工程名を入力"
+                    className="w-40"
+                  />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="number"
+                    value={process.timeMinutes}
+                    onChange={(e) => actions.updateProcessField(process.id, 'timeMinutes', Number(e.target.value))}
+                    className="w-16"
+                    placeholder="0"
+                  />
+                  <span className="text-sm text-gray-600">分</span>
+                  <span className="text-sm text-gray-600">×</span>
+                  <Input
+                    type="number"
+                    value={process.chargeRate}
+                    onChange={(e) => actions.updateProcessField(process.id, 'chargeRate', Number(e.target.value))}
+                    className="w-20"
+                    placeholder="0"
+                  />
+                  <span className="text-sm text-gray-600">円/分</span>
+                  <span className="text-sm text-gray-600">=</span>
+                  <div className="font-medium min-w-[80px] text-right">
+                    {(process.timeMinutes * process.chargeRate).toLocaleString()}円/個
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="">
+              <Button
+                variant="ghost"
+                onClick={actions.addProcess}
+                className="w-full"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                工程を追加
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. 段取り工程費用 */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold">段取り工程費用</h3>
+          <div className="border rounded-lg py-2 bg-gray-50">
+            {state.setupCosts.map((cost) => (
+              <div key={cost.id} className="flex justify-between items-center px-3 py-1">
+                <div className="flex items-center gap-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => actions.deleteSetupCost(cost.id)}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                  <Input
+                    value={cost.name}
+                    onChange={(e) => actions.updateSetupCostField(cost.id, 'name', e.target.value)}
+                    placeholder="項目名を入力"
+                    className="w-48"
+                  />
+                </div>
+                <div className="flex items-center gap-1">
+                  <Input
+                    type="number"
+                    value={cost.price}
+                    onChange={(e) => actions.updateSetupCostField(cost.id, 'price', Number(e.target.value))}
+                    className="w-24"
+                    placeholder="0"
+                  />
+                  <span className="text-sm text-gray-600">円/個</span>
+                </div>
+              </div>
+            ))}
+            <div className="">
+              <Button
+                variant="ghost"
+                onClick={actions.addSetupCost}
                 className="w-full"
               >
                 <Plus className="h-4 w-4 mr-2" />
@@ -207,88 +190,130 @@ export function EstimateCalculation({
           </div>
         </div>
 
-        {/* 4. 見積もり結果 */}
+        {/* 4. その他費用 */}
         <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">見積もり結果</h3>
-            <div className="flex items-center gap-2">
-              {!state.isManualEdit ? (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleStartManualEdit}
-                  className="gap-2"
-                >
-                  <Edit className="h-4 w-4" />
-                  手動編集
-                </Button>
-              ) : (
-                <div className="flex gap-1">
+          <h3 className="text-lg font-semibold">その他費用</h3>
+          <div className="border rounded-lg py-2 bg-gray-50">
+            {state.otherCosts.map((cost) => (
+              <div key={cost.id} className="flex justify-between items-center px-3 py-1">
+                <div className="flex items-center gap-3">
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    onClick={handleConfirmManualEdit}
-                    className="gap-1"
+                    onClick={() => actions.deleteOtherCost(cost.id)}
                   >
-                    <Check className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleCancelManualEdit}
-                    className="gap-1"
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                  <Input
+                    value={cost.name}
+                    onChange={(e) => actions.updateOtherCostField(cost.id, 'name', e.target.value)}
+                    placeholder="項目名を入力"
+                    className="w-48"
+                  />
                 </div>
-              )}
+                <div>
+                  <Input
+                    type="number"
+                    value={cost.price}
+                    onChange={(e) => actions.updateOtherCostField(cost.id, 'price', Number(e.target.value))}
+                    className="w-32"
+                    placeholder="円"
+                  />
+                </div>
+              </div>
+            ))}
+            <div className="">
+              <Button
+                variant="ghost"
+                onClick={actions.addOtherCost}
+                className="w-full"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                項目を追加
+              </Button>
             </div>
           </div>
+        </div>
+
+        {/* 5. 見積もり結果 */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold">見積もり結果</h3>
           <div className="border rounded-lg p-4 bg-gray-50">
-            <div className="space-y-2">
+            <div className="space-y-3">
               <div className="flex justify-between items-center">
                 <span>材料費:</span>
-                {state.isManualEdit ? (
+                <div className="flex items-center gap-2">
+                  <span>{costs.materialUnitCost.toLocaleString()}円/個</span>
+                  <span className="text-sm text-gray-600">×</span>
                   <Input
                     type="number"
-                    value={state.manualMaterialCost}
-                    onChange={(e) => handleManualCostChange('material', Number(e.target.value))}
-                    className="w-32 text-right"
+                    value={state.quantities.material}
+                    onChange={(e) => actions.updateMaterialQuantity(Number(e.target.value))}
+                    className="w-16"
+                    min="1"
+                    placeholder="1"
                   />
-                ) : (
-                  <span>{result.materialCost.toLocaleString()}円</span>
-                )}
+                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">=</span>
+                  <span className="font-medium min-w-[80px] text-right">
+                    {costs.materialTotalCost.toLocaleString()}円
+                  </span>
+                </div>
               </div>
+              
               <div className="flex justify-between items-center">
                 <span>工程費:</span>
-                {state.isManualEdit ? (
+                <div className="flex items-center gap-2">
+                  <span>{costs.processUnitCost.toLocaleString()}円/個</span>
+                  <span className="text-sm text-gray-600">×</span>
                   <Input
                     type="number"
-                    value={state.manualProcessCost}
-                    onChange={(e) => handleManualCostChange('process', Number(e.target.value))}
-                    className="w-32 text-right"
+                    value={state.quantities.process}
+                    onChange={(e) => actions.updateProcessQuantity(Number(e.target.value))}
+                    className="w-16"
+                    min="1"
+                    placeholder="1"
                   />
-                ) : (
-                  <span>{result.processCost.toLocaleString()}円</span>
-                )}
+                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">=</span>
+                  <span className="font-medium min-w-[80px] text-right">
+                    {costs.processTotalCost.toLocaleString()}円
+                  </span>
+                </div>
               </div>
+              
+              <div className="flex justify-between items-center">
+                <span>段取り工程費用:</span>
+                <div className="flex items-center gap-2">
+                  <span>{costs.setupUnitCost.toLocaleString()}円/個</span>
+                  <span className="text-sm text-gray-600">×</span>
+                  <Input
+                    type="number"
+                    value={state.quantities.setup}
+                    onChange={(e) => actions.updateSetupQuantity(Number(e.target.value))}
+                    className="w-16"
+                    min="1"
+                    placeholder="1"
+                  />
+                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">=</span>
+                  <span className="font-medium min-w-[80px] text-right">
+                    {costs.setupTotalCost.toLocaleString()}円
+                  </span>
+                </div>
+              </div>
+              
               <div className="flex justify-between items-center">
                 <span>その他:</span>
-                {state.isManualEdit ? (
-                  <Input
-                    type="number"
-                    value={state.manualOtherCost}
-                    onChange={(e) => handleManualCostChange('other', Number(e.target.value))}
-                    className="w-32 text-right"
-                  />
-                ) : (
-                  <span>{result.otherCost.toLocaleString()}円</span>
-                )}
+                <span>{costs.otherCost.toLocaleString()}円</span>
               </div>
+              
               <hr className="my-2" />
               <div className="flex justify-between text-lg font-bold">
-                <span>合計:</span>
-                <span>{result.totalCost.toLocaleString()}円</span>
+                <span>最終見積金額:</span>
+                <span>
+                  {costs.finalTotal.toLocaleString()}円
+                </span>
               </div>
             </div>
           </div>
@@ -299,9 +324,7 @@ export function EstimateCalculation({
         <div className="p-4 border-t">
           <Button
             onClick={handleSave}
-            disabled={!state.isModified}
             className="w-full gap-2"
-            variant={state.isModified ? "default" : "outline"}
           >
             <Save className="h-4 w-4" />
             見積もりを確定

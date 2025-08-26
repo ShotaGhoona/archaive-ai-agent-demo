@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { EstimateCalculation, BlueprintViewer, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
-import { BlueprintView } from "@/widgets/blueprint/blueprint-detail-layout/model";
+import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery, BlueprintView, BlueprintViewContainer } from "@/widgets";
 import { QuotationBlueprint, EstimateData } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 
@@ -43,7 +42,7 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="min-w-7xl max-w-7xl w-full h-[90vh] p-0">
+      <DialogContent className="min-w-[90vw] max-w-[90vw] w-full h-[90vh] p-0">
         <ResizableLayout config={blueprintEstimateDialogResizableLayoutConfig} className="h-full">
           {/* 左側: タブコンテンツ */}
           <ResizablePanel index={0}>
@@ -61,7 +60,7 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
               <div className="flex-1 min-h-0">
                 <Tabs value={activeTab} className="h-full">
                   <TabsContent value="blueprint" className="h-full m-0 p-0">
-                    <BlueprintViewer activeFile={mockActiveFile} />
+                    <BlueprintViewContainer activeFile={mockActiveFile} />
                   </TabsContent>
                   
                   <TabsContent value="basic-info" className="h-full m-0 p-0">
