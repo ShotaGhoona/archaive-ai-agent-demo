@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
-import { BlueprintView, RevisionBlueprint } from "../model";
+import { BlueprintView } from "../../blueprint-view/model";
+import { RevisionBlueprint } from "../model";
 import { ComparisonModal } from "@/features";
 import { REVISION_COMPARISON_CONFIG } from "../lib";
 import blueprintData from "../data/blueprints.json";

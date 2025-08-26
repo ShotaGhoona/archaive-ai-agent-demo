@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef } from "react";
 import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared";
 import { ZoomIn, ZoomOut, Maximize2, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
 import { BlueprintFile, BlueprintView } from "../model";
+import { useBlueprintView } from "../lib";
 
 interface BlueprintViewContainerProps {
   activeFile: BlueprintFile | BlueprintView | null;
@@ -13,91 +14,23 @@ export function BlueprintViewContainer({ activeFile }: BlueprintViewContainerPro
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Zoom state
-  const [zoom, setZoom] = useState(1);
-  const [isZoomLocked, setIsZoomLocked] = useState(false);
-  
-  // Drag state
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  
-  // Rotation state
-  const [rotation, setRotation] = useState(0);
-
-  // Reset all when activeFile changes
-  useEffect(() => {
-    setZoom(1);
-    setPosition({ x: 0, y: 0 });
-    setRotation(0);
-    setIsDragging(false);
-  }, [activeFile?.id]);
-
-  // Zoom functions
-  const zoomIn = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(prev => Math.min(prev * 1.2, 5));
-    }
-  }, [isZoomLocked]);
-
-  const zoomOut = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(prev => Math.max(prev / 1.2, 0.1));
-    }
-  }, [isZoomLocked]);
-
-  const fitToScreen = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(1);
-      setPosition({ x: 0, y: 0 });
-    }
-  }, [isZoomLocked]);
-
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (!isZoomLocked) {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? 0.9 : 1.1;
-      setZoom(prev => Math.max(0.1, Math.min(5, prev * delta)));
-    }
-  }, [isZoomLocked]);
-
-  const toggleZoomLock = useCallback(() => {
-    setIsZoomLocked(prev => !prev);
-  }, []);
-
-  // Drag functions
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y
-    });
-  }, [position]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y
-    });
-  }, [isDragging, dragStart]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  // Rotation functions
-  const rotateClockwise = useCallback(() => {
-    if (!isZoomLocked) {
-      setRotation(prev => (prev + 90) % 360);
-    }
-  }, [isZoomLocked]);
-
-  const rotateCounterClockwise = useCallback(() => {
-    if (!isZoomLocked) {
-      setRotation(prev => prev - 90);
-    }
-  }, [isZoomLocked]);
+  const {
+    zoom,
+    isZoomLocked,
+    position,
+    isDragging,
+    rotation,
+    zoomIn,
+    zoomOut,
+    fitToScreen,
+    handleWheel,
+    toggleZoomLock,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    rotateClockwise,
+    rotateCounterClockwise,
+  } = useBlueprintView({ activeFileId: activeFile?.id });
 
 
   if (!activeFile) {

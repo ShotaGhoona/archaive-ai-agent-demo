@@ -16,7 +16,7 @@ import {
   LoadingSpinner
 } from "@/shared";
 import { Plus, X, FileText, Expand } from "lucide-react";
-import { BlueprintView } from "../model";
+import { BlueprintView } from "../../blueprint-view/model";
 
 interface BlueprintDetailSidebarProps {
   views: BlueprintView[];
