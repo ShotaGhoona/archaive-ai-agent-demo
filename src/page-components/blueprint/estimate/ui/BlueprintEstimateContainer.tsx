@@ -16,14 +16,9 @@ const DIMENSIONS = {
 };
 
 export function BlueprintEstimateContainer({ onSave }: BlueprintEstimateContainerProps) {
-  const handleSave = (estimateData: { materialCost: number; processCost: number; totalCost: number }) => {
-    const formattedData = {
-      materialCost: estimateData.materialCost.toString(),
-      processingCost: estimateData.processCost.toString(), 
-      totalCost: estimateData.totalCost.toString(),
-    };
+  const handleSave = (estimateData: { materialCost: string; processingCost: string; totalCost: string }) => {
     if (onSave) {
-      onSave(formattedData);
+      onSave(estimateData);
     }
   };
 
