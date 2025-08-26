@@ -1,6 +1,5 @@
 import React from "react";
-import { BlueprintView, SimilarBlueprint, blueprintData } from "@/widgets";
-import { ComparisonModal } from "@/features";
+import { BlueprintView, SimilarBlueprint, blueprintData, ComparisonModal } from "@/widgets";
 import { SIMILAR_COMPARISON_CONFIG } from "../lib";
 
 interface SimilarBlueprintCompareModalProps {
