@@ -2,7 +2,7 @@
 import React from "react";
 import { BlueprintView } from "../model/types";
 import { RevisionBlueprint } from "../model/revisionBlueprintTypes";
-import { ComparisonModal } from "@/widgets";
+import { ComparisonModal } from "../../comparison-modal/ui/ComparisonModal";
 import { REVISION_COMPARISON_CONFIG } from "../lib/revisionComparisonConfig";
 import blueprintData from "../data/blueprints.json";
 

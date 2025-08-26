@@ -1,4 +1,4 @@
-import { SimilarBlueprint, BlueprintView } from "@/widgets";
+import { SimilarBlueprint, BlueprintView } from "../../blueprint-detail-layout/model/types";
 
 export interface SimilarBlueprintGalleryProps {
   similarBlueprints?: SimilarBlueprint[];

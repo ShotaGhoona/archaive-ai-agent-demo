@@ -1,5 +1,4 @@
 import { ComparisonConfig, CommonExtractors } from '@/widgets';
-
 export const REVISION_COMPARISON_CONFIG: ComparisonConfig = {
   tabs: [
     {

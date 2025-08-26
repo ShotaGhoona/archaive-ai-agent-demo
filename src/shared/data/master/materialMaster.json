@@ -1,0 +1,47 @@
+[
+  {
+    "id": "MM001",
+    "materialName": "SS400 板材",
+    "materialCategory": "鉄鋼",
+    "formula": "length * width * 0.25",
+    "supplier": "田中鋼材株式会社",
+    "remarks": "一般構造用圧延鋼材。板厚6mm標準",
+    "updatedAt": "2024-08-11T10:30:00.000Z"
+  },
+  {
+    "id": "MM002",
+    "materialName": "A5052 アルミ板",
+    "materialCategory": "アルミニウム",
+    "formula": "length * width * 0.45",
+    "supplier": "アルミテック工業",
+    "remarks": "耐食性良好。板厚3mm標準",
+    "updatedAt": "2024-08-11T09:15:00.000Z"
+  },
+  {
+    "id": "MM003",
+    "materialName": "SUS304 ステンレス板",
+    "materialCategory": "ステンレス",
+    "formula": "length * width * 0.85",
+    "supplier": "ステンレス商事",
+    "remarks": "オーステナイト系ステンレス鋼。板厚2mm標準",
+    "updatedAt": "2024-08-10T16:45:00.000Z"
+  },
+  {
+    "id": "MM004",
+    "materialName": "ABS樹脂",
+    "materialCategory": "樹脂",
+    "formula": "weight * 280",
+    "supplier": "プラスチック資材",
+    "remarks": "射出成形用。高強度グレード",
+    "updatedAt": "2024-08-10T14:20:00.000Z"
+  },
+  {
+    "id": "MM005",
+    "materialName": "S45C 丸棒",
+    "materialCategory": "鉄鋼",
+    "formula": "length * width * height * 0.02",
+    "supplier": "田中鋼材株式会社",
+    "remarks": "機械構造用炭素鋼。直径φ50mm標準",
+    "updatedAt": "2024-08-09T11:30:00.000Z"
+  }
+]

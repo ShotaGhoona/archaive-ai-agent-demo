@@ -1,1 +1,1 @@
-export { default as materialMasterData } from './materialMaster.json';
+export { default as materialMasterData } from '@/shared/data/master/materialMaster.json';

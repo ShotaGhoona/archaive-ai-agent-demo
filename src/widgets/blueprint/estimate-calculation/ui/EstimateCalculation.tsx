@@ -4,7 +4,7 @@ import { Button, Input, Select, SelectContent, SelectItem, SelectTrigger, Select
 import { Save, Plus, Trash2, Edit, Check, X } from "lucide-react";
 import { EstimateCalculationProps } from "../model/types";
 import { useEstimateCalculation } from "../lib/useEstimateCalculation";
-import { materialMasterData, processMasterData } from "@/page-components";
+import { materialMasterData, processMasterData } from "@/shared/data/master";
 
 export function EstimateCalculation({
   dimensions,

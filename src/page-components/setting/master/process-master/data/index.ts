@@ -1,1 +1,1 @@
-export { default as processMasterData } from './processMaster.json';
+export { default as processMasterData } from '@/shared/data/master/processMaster.json';

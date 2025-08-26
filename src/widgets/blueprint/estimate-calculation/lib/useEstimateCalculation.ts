@@ -9,7 +9,7 @@ import {
   EstimateResult 
 } from "../model/types";
 import { calculateFormula } from "./calculateFormula";
-import { materialMasterData, processMasterData } from "@/page-components";
+import { materialMasterData, processMasterData } from "@/shared/data/master";
 
 // 初期状態
 const initialState: EstimateCalculationState = {
