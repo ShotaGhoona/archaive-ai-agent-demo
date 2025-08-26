@@ -1,0 +1,1 @@
+export { default as quotationData } from './quotation.json';

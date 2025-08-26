@@ -2,5 +2,6 @@
 
 export * from './blueprint';
 export * from './common';
-export * from './setting';
+export * from './document';
 export * from './project';
+export * from './setting';
