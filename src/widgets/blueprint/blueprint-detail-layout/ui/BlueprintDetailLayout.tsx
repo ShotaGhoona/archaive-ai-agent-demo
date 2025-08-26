@@ -1,8 +1,7 @@
 'use client';
 import { useState, useEffect } from "react";
 import { usePathname, useParams } from "next/navigation";
-import { Layers3, ChevronLeft, History } from "lucide-react";
-import Link from "next/link";
+import { Layers3, History } from "lucide-react";
 import { ResizableLayout, ResizablePanel, ResizableHandle, BlueprintTabNavigation, Button } from "@/shared";
 import { blueprintDetailResizableLayoutConfig } from "../lib";
 import { BlueprintView, RevisionBlueprint, RevisionBlueprintsData, SameProjectBlueprintsData } from "../model";
@@ -19,7 +18,6 @@ export function BlueprintDetailLayout({
 }: BlueprintDetailLayoutProps) {
   const pathname = usePathname();
   const params = useParams();
-  const blueprintId = params.id as string;
   const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews);
   const [activeView, setActiveView] = useState<BlueprintView | null>(null);
   const [showSameProjectBlueprints, setShowSameProjectBlueprints] = useState(false);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FormData, QuotationBlueprint } from "../model";
+import { FormData, QuotationBlueprint, EstimateData } from "../model";
 import { GalleryView } from "@/shared";
 import { createQuotationBlueprintGalleryConfig } from "../lib";
 import { BlueprintEstimateDialog } from "./BlueprintEstimateDialog";
@@ -12,7 +12,7 @@ interface QuotationBlueprintInfoStepProps {
   setFormData: (data: FormData) => void;
 }
 
-export function QuotationBlueprintInfoStep({ formData, setFormData }: QuotationBlueprintInfoStepProps) {
+export function QuotationBlueprintInfoStep({}: QuotationBlueprintInfoStepProps) {
   const [blueprints, setBlueprints] = useState<QuotationBlueprint[]>(blueprintsData as QuotationBlueprint[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBlueprint, setSelectedBlueprint] = useState<QuotationBlueprint | null>(null);
@@ -30,7 +30,7 @@ export function QuotationBlueprintInfoStep({ formData, setFormData }: QuotationB
   };
 
   // 見積もりデータ保存
-  const handleSaveEstimate = (blueprintId: string, estimateData: any) => {
+  const handleSaveEstimate = (blueprintId: string, estimateData: EstimateData) => {
     // 図面データを更新
     setBlueprints(prev => prev.map(blueprint => 
       blueprint.id === blueprintId 

@@ -8,6 +8,12 @@ export interface TableRow {
   detail: string;
 }
 
+export interface EstimateData {
+  materialCost: string;
+  processingCost: string;
+  totalCost: string;
+}
+
 export interface FormData {
   clientName: string;
   honorific: string;
@@ -78,7 +84,7 @@ export interface QuotationBlueprint {
     imageUrl: string;
     similarity: number;
     createdAt: string;
-    basicInformation: any;
-    estimateInformation: any;
+    basicInformation: QuotationBlueprint['basicInformation'];
+    estimateInformation: QuotationBlueprint['estimateInformation'];
   }>;
 }

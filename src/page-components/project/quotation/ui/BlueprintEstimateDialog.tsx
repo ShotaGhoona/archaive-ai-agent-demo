@@ -2,14 +2,15 @@
 import { useState } from "react";
 import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { EstimateCalculation, BlueprintViewer, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
-import { QuotationBlueprint } from "../model";
+import { BlueprintView } from "@/widgets/blueprint/blueprint-detail-layout/model";
+import { QuotationBlueprint, EstimateData } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 
 interface BlueprintEstimateDialogProps {
   isOpen: boolean;
   onClose: () => void;
   blueprint: QuotationBlueprint | null;
-  onSave: (blueprintId: string, estimateData: any) => void;
+  onSave: (blueprintId: string, estimateData: EstimateData) => void;
 }
 
 export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: BlueprintEstimateDialogProps) {
@@ -25,16 +26,19 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
     weight: 2.5 // デフォルト値
   };
 
-  const handleSave = (estimateData: any) => {
+  const handleSave = (estimateData: EstimateData) => {
     onSave(blueprint.id, estimateData);
   };
 
   // BlueprintViewerで使用する擬似的なactiveFileを作成
-  const mockActiveFile = {
+  const mockActiveFile: BlueprintView = {
     id: blueprint.id,
-    title: blueprint.basicInformation.productName,
+    name: blueprint.basicInformation.productName || blueprint.name,
+    description: blueprint.description,
+    viewType: "blueprint",
     imageUrl: blueprint.imageUrl,
-    isActive: true
+    isActive: true,
+    createdAt: blueprint.createdAt
   };
 
   return (
