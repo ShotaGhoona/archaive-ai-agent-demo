@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ConfigBasedTableView } from "@/shared";
-import { FilePreviewModal, PreviewableFile } from "@/features";
+import { FilePreviewModal, PreviewableFile } from "@/widgets";
 import { Blueprint, createBlueprintTableConfig } from "../lib";
 
 interface BlueprintTableViewProps {
