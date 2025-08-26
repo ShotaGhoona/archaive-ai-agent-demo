@@ -52,6 +52,6 @@ export interface EstimateResult {
 export interface EstimateCalculationProps {
   dimensions: Dimensions;
   initialState?: Partial<EstimateCalculationState>;
-  onSave?: (estimateData: { materialCost: number; processCost: number; otherCost: number; totalCost: number }) => void;
+  onSave?: (estimateData: { materialCost: string; processingCost: string; totalCost: string }) => void;
   className?: string;
 }
