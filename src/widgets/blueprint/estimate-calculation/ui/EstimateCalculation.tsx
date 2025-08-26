@@ -68,7 +68,7 @@ export function EstimateCalculation({
                     className="w-24"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">円/個</span>
                 </div>
               </div>
             ))}
@@ -173,7 +173,7 @@ export function EstimateCalculation({
                     className="w-24"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">円/個</span>
                 </div>
               </div>
             ))}

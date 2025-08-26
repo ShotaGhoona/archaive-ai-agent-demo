@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery, BlueprintView, BlueprintViewContainer } from "@/widgets";
+import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery, BlueprintViewContainer, BlueprintView } from "@/widgets";
 import { QuotationBlueprint, EstimateData } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 
