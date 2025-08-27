@@ -11,12 +11,11 @@ interface EstimateCalculationProps {
     height: number;
     weight: number;
   };
-  onSave?: (data: any) => void;
+  onSave?: (data: { materialCost: string; processingCost: string; totalCost: string }) => void;
   className?: string;
 }
 
 export function EstimateCalculation({
-  dimensions,
   onSave,
   className = ""
 }: EstimateCalculationProps) {
@@ -114,16 +113,16 @@ export function EstimateCalculation({
                     className="w-16"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">円/分</span>
                   <span className="text-sm text-gray-600">×</span>
                   <Input
                     type="number"
                     value={process.chargeRate}
                     onChange={(e) => actions.updateProcessField(process.id, 'chargeRate', Number(e.target.value))}
-                    className="w-20"
+                    className="w-16"
                     placeholder="0"
                   />
-                  <span className="text-sm text-gray-600">個</span>
+                  <span className="text-sm text-gray-600">分</span>
                   <span className="text-sm text-gray-600">=</span>
                   <div className="font-medium min-w-[80px] text-right">
                     {(process.timeMinutes * process.chargeRate).toLocaleString()}<span className="text-sm text-gray-600">円/個</span>

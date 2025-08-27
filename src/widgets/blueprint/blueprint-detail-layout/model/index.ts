@@ -7,5 +7,7 @@ export type {
 } from './revisionBlueprintTypes';
 export type { 
   SameProjectBlueprint, 
-  SameProjectBlueprintsData 
+  SameProjectBlueprintsData,
+  BasicInformation,
+  EstimateInformation
 } from './sameProjectBlueprintTypes';
