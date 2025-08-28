@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { Project, createProjectTableConfig } from "../lib/projectTableConfig";
 
 interface ProjectTableViewProps {
@@ -14,7 +14,7 @@ export function ProjectTableView({
   const config = createProjectTableConfig();
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={projects}
       config={config}
       onItemUpdate={onProjectUpdate}

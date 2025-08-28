@@ -4,16 +4,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/shared';
-import { ConfigBasedTableViewProps } from '../model';
+import { TableViewProps } from '../model';
 import { useColumnResize, useTableSort, useCellEdit, usePaginatedTable } from '../lib';
 import { TableHeaderCell, TableDataCell, TablePagination } from '../ui';
 
-export function ConfigBasedTableView<T>({
+export function TableView<T>({
   data,
   config,
   onItemUpdate,
   getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random())
-}: ConfigBasedTableViewProps<T>) {
+}: TableViewProps<T>) {
   const { columns, pagination } = config;
 
   // ページネーション設定
@@ -63,7 +63,7 @@ export function ConfigBasedTableView<T>({
     setItemsPerPage,
   } = usePaginatedTable({
     data: sortedData,
-    initialItemsPerPage: paginationConfig.defaultItemsPerPage,
+    initialItemsPerPage: paginationConfig.enabled ? paginationConfig.defaultItemsPerPage : 10,
     initialPage: 1,
   });
 
@@ -83,13 +83,13 @@ export function ConfigBasedTableView<T>({
       itemsPerPage,
       onPageChange: setCurrentPage,
       onItemsPerPageChange: setItemsPerPage,
-      showItemsPerPageSelector: paginationConfig.showItemsPerPageSelector,
-      maxVisiblePages: paginationConfig.maxVisiblePages,
+      showItemsPerPageSelector: paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
+      maxVisiblePages: paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
     };
   }, [
     paginationConfig.enabled,
-    paginationConfig.showItemsPerPageSelector,
-    paginationConfig.maxVisiblePages,
+    paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
+    paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
     currentPage,
     totalPages,
     totalItems,
@@ -112,7 +112,7 @@ export function ConfigBasedTableView<T>({
       <div className="flex-1 relative overflow-auto">
         <table className="w-full caption-bottom text-base">
           {/* 固定ヘッダー */}
-          <TableHeader className="sticky top-0 bg-white z-50 shadow-sm border-b backdrop-blur-sm">
+          <TableHeader className="sticky top-0 z-50 shadow-sm border-b backdrop-blur-lg">
             <TableRow>
               {columns.map((column) => (
                 <TableHeaderCell

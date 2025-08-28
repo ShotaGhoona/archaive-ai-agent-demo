@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createSpecificationTableConfig } from "../lib";
 import { Specification } from "../model";
 import {
@@ -50,7 +50,7 @@ export function DocumentHomeSpecificationTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={specifications}
         config={tableConfig}
         getRowId={(specification) => specification.id.toString()}

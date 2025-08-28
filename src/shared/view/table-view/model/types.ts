@@ -54,8 +54,8 @@ export interface SortableFields {
   };
 }
 
-// Config-based TableView props
-export interface ConfigBasedTableViewProps<T = unknown> {
+// TableView props
+export interface TableViewProps<T = unknown> {
   data: T[];
   config: TableViewConfig<T>;
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
@@ -91,13 +91,17 @@ export interface PaginationConfig {
 }
 
 // Config-based Table設定
-export interface TablePaginationConfig {
-  enabled: boolean;
-  defaultItemsPerPage: number;
-  allowedItemsPerPage: number[];
-  showItemsPerPageSelector: boolean;
-  maxVisiblePages: number;
-}
+export type TablePaginationConfig = 
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      defaultItemsPerPage: number;
+      allowedItemsPerPage: number[];
+      showItemsPerPageSelector: boolean;
+      maxVisiblePages: number;
+    };
 
 export interface TableViewConfig<T = unknown> {
   columns: DataTableColumn<T>[];

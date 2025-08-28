@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createOrderTableConfig } from "../lib";
 import { Order } from "../model";
 import {
@@ -50,7 +50,7 @@ export function DocumentHomeOrderTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={orders}
         config={tableConfig}
         getRowId={(order) => order.id.toString()}

@@ -1,5 +1,5 @@
 import React from "react";
-import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { TableView } from "@/shared/view/table-view";
 import { ProcessMaster, createProcessMasterTableConfig } from "../lib";
 
 interface ProcessMasterTableViewProps {
@@ -14,7 +14,7 @@ export function ProcessMasterTableView({
   const tableConfig = createProcessMasterTableConfig();
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={processMasters}
       config={tableConfig}
       onItemUpdate={onProcessMasterUpdate}

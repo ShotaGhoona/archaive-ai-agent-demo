@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared/view/table-view";
+import { TableView } from "@/shared/view/table-view";
 import { Contact, createContactTableConfig } from "../lib";
 import {
   AlertDialog,
@@ -49,7 +49,7 @@ export function CustomerContactTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={contacts}
         config={tableConfig}
         getRowId={(contact) => String(contact.id)}

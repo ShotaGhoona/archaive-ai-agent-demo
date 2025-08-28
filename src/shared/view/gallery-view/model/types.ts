@@ -46,13 +46,17 @@ export interface GalleryBehaviorConfig<T> {
 }
 
 // ページネーション設定
-export interface GalleryPaginationConfig {
-  enabled: boolean;
-  defaultItemsPerPage: number;
-  allowedItemsPerPage: number[];
-  showItemsPerPageSelector: boolean;
-  maxVisiblePages: number;
-}
+export type GalleryPaginationConfig = 
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      defaultItemsPerPage: number;
+      allowedItemsPerPage: number[];
+      showItemsPerPageSelector: boolean;
+      maxVisiblePages: number;
+    };
 
 // 統合設定
 export interface GalleryViewConfig<T> {

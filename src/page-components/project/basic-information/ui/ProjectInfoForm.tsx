@@ -1,5 +1,4 @@
 "use client";
-import { Clock } from "lucide-react";
 import {
   Input,
   Label,
@@ -135,38 +134,6 @@ export function ProjectInfoForm({ formData, fieldConfig, onChange }: ProjectInfo
             onChange={onChange}
           />
         ))}
-      </div>
-      
-      {/* 更新履歴 - 下部固定 */}
-      <div className="border-t bg-gray-50 p-4">
-        <div className="space-y-3">
-          <h3 className="font-medium text-gray-900 flex items-center gap-2 text-sm">
-            <Clock className="h-4 w-4" />
-            更新履歴
-          </h3>
-          <div className="text-xs space-y-1">
-            <div className="flex justify-between">
-              <span className="text-gray-600">作成者:</span>
-              <span className="font-medium">{formData.lastUpdatedBy}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">作成日時:</span>
-              <span className="font-medium">
-                {new Date(formData.lastUpdatedAt).toLocaleDateString('ja-JP')}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">最終更新者:</span>
-              <span className="font-medium">{formData.lastUpdatedBy}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-600">最終更新日時:</span>
-              <span className="font-medium">
-                {new Date(formData.lastUpdatedAt).toLocaleDateString('ja-JP')}
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

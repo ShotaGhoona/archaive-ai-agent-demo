@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { FilePreviewModal, PreviewableFile } from "@/widgets";
 import { Blueprint, createBlueprintTableConfig } from "../lib";
 
@@ -33,7 +33,7 @@ export function BlueprintTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={blueprints}
         config={config}
         onItemUpdate={onBlueprintUpdate}

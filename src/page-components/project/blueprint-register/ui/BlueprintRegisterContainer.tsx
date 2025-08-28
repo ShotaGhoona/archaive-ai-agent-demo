@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { Button } from "@/shared";
-import { BlueprintUploadGallery, RepeatProductSearchPanel } from "../ui";
+import { BlueprintUploadGallery, RepeatProductSearchPanel, BlueprintUploadButton } from "../ui";
 
 export function BlueprintRegisterContainer() {
   const [isRightPanelOpen, setIsRightPanelOpen] = useState(false);
@@ -15,6 +15,11 @@ export function BlueprintRegisterContainer() {
     setIsRightPanelOpen(false);
   };
 
+  const handleFileUpload = (files: FileList) => {
+    console.log("Files to upload:", Array.from(files));
+    // TODO: ファイルアップロード処理を実装
+  };
+
   return (
     <div className="flex h-full bg-white">
       {/* メインコンテンツエリア */}
@@ -22,13 +27,16 @@ export function BlueprintRegisterContainer() {
         {/* ページヘッダー */}
         <div className="flex justify-between items-center p-6 pb-0">
           <h3 className="text-lg font-semibold">図面登録</h3>
-          <Button onClick={isRightPanelOpen ? handleCloseRightPanel : handleRepeatSearch} size="lg">
-            <Search className="h-4 w-4 mr-2" />
-            {isRightPanelOpen ? "パネルを閉じる" : "リピート品を探す"}
-          </Button>
+          <div className="flex items-center gap-3">
+            <BlueprintUploadButton onFileUpload={handleFileUpload} />
+            <Button onClick={isRightPanelOpen ? handleCloseRightPanel : handleRepeatSearch} size="lg">
+              <Search className="h-4 w-4 mr-2" />
+              {isRightPanelOpen ? "パネルを閉じる" : "リピート品を探す"}
+            </Button>
+          </div>
         </div>
         {/* 図面アップロードギャラリー */}
-        <div className={`transition-all duration-300 ${isRightPanelOpen ? 'w-1/2' : 'w-full'}`}>
+        <div className="transition-all duration-300">
           <BlueprintUploadGallery />
         </div>
 

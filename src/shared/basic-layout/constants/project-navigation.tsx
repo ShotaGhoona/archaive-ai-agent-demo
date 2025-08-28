@@ -40,7 +40,7 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
   // },
   { 
     id: "quotation", 
-    label: "見積書", 
+    label: "見積書作成", 
     href: (id) => `/project/${id}/quotation`,
     icon: <Receipt className="h-4 w-4" />, 
     description: "価格見積もり書類" 

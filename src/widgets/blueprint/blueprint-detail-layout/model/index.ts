@@ -1,9 +1,5 @@
 export type { 
-  BasicInformation, 
-  BlueprintView, 
-  EstimateInformation,
-  SimilarBlueprint,
-  BlueprintFile
+  SimilarBlueprint
 } from './types';
 export type { 
   RevisionBlueprint, 
@@ -11,5 +7,7 @@ export type {
 } from './revisionBlueprintTypes';
 export type { 
   SameProjectBlueprint, 
-  SameProjectBlueprintsData 
+  SameProjectBlueprintsData,
+  BasicInformation,
+  EstimateInformation
 } from './sameProjectBlueprintTypes';

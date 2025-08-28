@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createInspectionTableConfig } from "../lib";
 import { Inspection } from "../model";
 import {
@@ -50,7 +50,7 @@ export function DocumentHomeInspectionTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={inspections}
         config={tableConfig}
         getRowId={(inspection) => inspection.id.toString()}

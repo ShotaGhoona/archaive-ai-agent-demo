@@ -1,152 +1,37 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
-import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared/shadcnui";
-import { ZoomIn, ZoomOut, Maximize2, Download, Printer, Lock, Unlock, RotateCw, RotateCcw, Pencil } from "lucide-react";
-import { BlueprintFile, BlueprintView } from "../model/types";
+import { useRef } from "react";
+import { Button, Tooltip, TooltipTrigger, TooltipContent } from "@/shared";
+import { ZoomIn, ZoomOut, Maximize2, Lock, Unlock, RotateCw, RotateCcw } from "lucide-react";
+import { BlueprintFile, BlueprintView } from "../model";
+import { useBlueprintView } from "../lib";
 
-interface BlueprintViewerProps {
+interface BlueprintViewContainerProps {
   activeFile: BlueprintFile | BlueprintView | null;
 }
 
-export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
+export function BlueprintViewContainer({ activeFile }: BlueprintViewContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // Zoom state
-  const [zoom, setZoom] = useState(1);
-  const [isZoomLocked, setIsZoomLocked] = useState(false);
-  
-  // Drag state
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  
-  // Rotation state
-  const [rotation, setRotation] = useState(0);
+  const {
+    zoom,
+    isZoomLocked,
+    position,
+    isDragging,
+    rotation,
+    zoomIn,
+    zoomOut,
+    fitToScreen,
+    handleWheel,
+    toggleZoomLock,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseUp,
+    rotateClockwise,
+    rotateCounterClockwise,
+  } = useBlueprintView({ activeFileId: activeFile?.id });
 
-  // Reset all when activeFile changes
-  useEffect(() => {
-    setZoom(1);
-    setPosition({ x: 0, y: 0 });
-    setRotation(0);
-    setIsDragging(false);
-  }, [activeFile?.id]);
-
-  // Zoom functions
-  const zoomIn = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(prev => Math.min(prev * 1.2, 5));
-    }
-  }, [isZoomLocked]);
-
-  const zoomOut = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(prev => Math.max(prev / 1.2, 0.1));
-    }
-  }, [isZoomLocked]);
-
-  const fitToScreen = useCallback(() => {
-    if (!isZoomLocked) {
-      setZoom(1);
-      setPosition({ x: 0, y: 0 });
-    }
-  }, [isZoomLocked]);
-
-  const handleWheel = useCallback((e: React.WheelEvent) => {
-    if (!isZoomLocked) {
-      e.preventDefault();
-      const delta = e.deltaY > 0 ? 0.9 : 1.1;
-      setZoom(prev => Math.max(0.1, Math.min(5, prev * delta)));
-    }
-  }, [isZoomLocked]);
-
-  const toggleZoomLock = useCallback(() => {
-    setIsZoomLocked(prev => !prev);
-  }, []);
-
-  // Drag functions
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    setIsDragging(true);
-    setDragStart({
-      x: e.clientX - position.x,
-      y: e.clientY - position.y
-    });
-  }, [position]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({
-      x: e.clientX - dragStart.x,
-      y: e.clientY - dragStart.y
-    });
-  }, [isDragging, dragStart]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
-  }, []);
-
-  // Rotation functions
-  const rotateClockwise = useCallback(() => {
-    if (!isZoomLocked) {
-      setRotation(prev => (prev + 90) % 360);
-    }
-  }, [isZoomLocked]);
-
-  const rotateCounterClockwise = useCallback(() => {
-    if (!isZoomLocked) {
-      setRotation(prev => prev - 90);
-    }
-  }, [isZoomLocked]);
-
-  // File operations
-  const downloadFile = useCallback((imageUrl: string, fileName: string) => {
-    try {
-      const link = document.createElement('a');
-      link.href = imageUrl;
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error('Download failed:', error);
-    }
-  }, []);
-
-  const printFile = useCallback((imageUrl: string, fileName: string) => {
-    try {
-      const printWindow = window.open('', '_blank');
-      if (printWindow) {
-        printWindow.document.write(`
-          <html>
-            <head>
-              <title>印刷: ${fileName}</title>
-              <style>
-                body {
-                  margin: 0;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  min-height: 100vh;
-                }
-                img {
-                  max-width: 100%;
-                  max-height: 100%;
-                }
-              </style>
-            </head>
-            <body>
-              <img src="${imageUrl}" alt="${fileName}" />
-            </body>
-          </html>
-        `);
-        printWindow.document.close();
-        printWindow.print();
-      }
-    } catch (error) {
-      console.error('Print failed:', error);
-    }
-  }, []);
 
   if (!activeFile) {
     return (
@@ -197,34 +82,6 @@ export function BlueprintViewer({ activeFile }: BlueprintViewerProps) {
         />
       </div>
 
-      <div className="absolute top-6 right-6 space-y-2">
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => downloadFile(activeFile.imageUrl, activeFile.name)}
-            title="ダウンロード"
-          >
-            <Download className="h-5 w-5" />
-            <span className="text-sm">ダウンロード</span>
-          </Button>
-          
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => printFile(activeFile.imageUrl, activeFile.name)}
-            title="印刷"
-          >
-            <Printer className="h-5 w-5" />
-            <span className="text-sm">印刷</span>
-          </Button>
-          
-          <Button size="lg">
-            <Pencil className="h-5 w-5" />
-            <span className="text-sm">書き込み</span>
-          </Button>
-        </div>
-      </div>
 
       <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 space-y-2">
         <div className="flex flex-col items-center gap-2">

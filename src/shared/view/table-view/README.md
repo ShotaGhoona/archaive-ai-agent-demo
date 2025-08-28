@@ -96,7 +96,7 @@ export const createMyTableConfig = (): TableViewConfig<MyData> => ({
 ### 3. コンポーネントでの使用
 
 ```typescript
-import { ConfigBasedTableView } from '@/shared/view/table-view';
+import { TableView } from '@/shared/view/table-view';
 import { createMyTableConfig } from '../lib/myTableConfig';
 
 function MyTableView({ data }: { data: MyData[] }) {
@@ -107,7 +107,7 @@ function MyTableView({ data }: { data: MyData[] }) {
   };
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={data}
       config={config}
       onItemUpdate={handleUpdate}
@@ -277,7 +277,7 @@ export function BlueprintTableView({ blueprints, onBlueprintUpdate }) {
   const config = createBlueprintTableConfig();
   
   return (
-    <ConfigBasedTableView
+    <TableView
       data={blueprints}
       config={config}
       onItemUpdate={onBlueprintUpdate}
@@ -350,7 +350,7 @@ export function ProjectTableView({ projects, onProjectUpdate }) {
   const config = createProjectTableConfig();
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={projects}
       config={config}
       onItemUpdate={onProjectUpdate}
@@ -373,28 +373,20 @@ export function ProjectTableView({ projects, onProjectUpdate }) {
 
 ## 利用可能なコンポーネント
 
-### ConfigBasedTableView（推奨）
-```typescript
-import { ConfigBasedTableView } from '@/shared/view/table-view';
-```
-- 設定オブジェクトベースの新しいアプローチ
-- 自動ページネーション管理
-- usePaginatedTableフック内蔵
-
-### TableView（レガシー）
+### TableView（推奨）
 ```typescript
 import { TableView } from '@/shared/view/table-view';
 ```
-- 従来の手動ページネーション方式
-- 既存コンポーネントとの互換性維持
+- 設定オブジェクトベースのアプローチ
+- 自動ページネーション管理
+- usePaginatedTableフック内蔵
 
 ## ディレクトリ構造
 
 ```
 src/shared/view/table-view/
 ├── ui/                            # UIコンポーネント
-│   ├── TableView.tsx             # レガシーメインコンポーネント
-│   ├── ConfigBasedTableView.tsx  # Config-basedメインコンポーネント
+│   ├── TableView.tsx             # メインコンポーネント
 │   ├── TableHeaderCell.tsx       # ヘッダーセル
 │   ├── TableDataCell.tsx         # データセル
 │   └── TablePagination.tsx       # ページネーション
@@ -414,7 +406,7 @@ src/shared/view/table-view/
 ### 既存コンポーネントの移行手順
 
 1. **カラム定義をTableConfig形式に変更**
-2. **ConfigBasedTableViewの使用**
+2. **TableViewの使用**
 3. **手動ページネーション状態の削除**
 4. **Containerコンポーネントの簡素化**
 

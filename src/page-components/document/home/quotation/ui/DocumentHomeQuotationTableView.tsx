@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createQuotationTableConfig } from "../lib";
 import { Quotation } from "../model";
 import {
@@ -50,7 +50,7 @@ export function DocumentHomeQuotationTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={quotations}
         config={tableConfig}
         getRowId={(quotation) => quotation.id.toString()}

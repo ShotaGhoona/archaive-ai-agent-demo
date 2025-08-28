@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createInvoiceTableConfig } from "../lib";
 import { Invoice } from "../model";
 import {
@@ -50,7 +50,7 @@ export function DocumentHomeInvoiceTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={invoices}
         config={tableConfig}
         getRowId={(invoice) => invoice.id.toString()}
