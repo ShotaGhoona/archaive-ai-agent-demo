@@ -16,7 +16,7 @@ import {
 } from '@/shared';
 import { format } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { FilterControlProps, DateRangeFilter } from '../model';
+import { FilterControlProps, DateRangeFilter } from '../../model';
 
 /**
  * 個別のフィルターコントロールを表示するコンポーネント

@@ -1,3 +1,4 @@
 export { AdvancedFilterSidebar } from './AdvancedFilterSidebar';
-export { FilterControl } from './FilterControls';
-export { FilterToggleButton } from './FilterToggleButton';
+export { AdvancedFilterContent } from './AdvancedFilterContent';
+export { SimpleFilterContent } from './SimpleFilterContent';
+export * from './componetns';

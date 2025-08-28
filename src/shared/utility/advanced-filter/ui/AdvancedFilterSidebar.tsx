@@ -1,11 +1,12 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import {
   Button,
-  Separator,
+  TabNavigation,
 } from '@/shared';
-import { ChevronLeft, RotateCcw } from 'lucide-react';
+import { ChevronLeft, RotateCcw, Search, Settings } from 'lucide-react';
 import { AdvancedFilterProps } from '../model';
-import { FilterControl } from '../ui';
+import { SimpleFilterContent, AdvancedFilterContent } from '../ui';
 
 /**
  * 高度なフィルター機能を提供するサイドバーコンポーネント
@@ -17,15 +18,29 @@ export function AdvancedFilterSidebar<T>({
   onFiltersChange,
   onClearFilters,
   config,
-  title = '詳細フィルター',
   className = '',
 }: AdvancedFilterProps<T>) {
+  const [activeTab, setActiveTab] = useState('simple');
+  
   const updateFilter = (key: string, value: unknown) => {
     onFiltersChange({
       ...filters,
       [key]: value,
     });
   };
+
+  const tabItems = [
+    {
+      key: 'simple',
+      label: 'シンプル検索',
+      icon: Search,
+    },
+    {
+      key: 'advanced',
+      label: '高度な検索',
+      icon: Settings,
+    },
+  ];
 
   return (
     <>
@@ -46,8 +61,8 @@ export function AdvancedFilterSidebar<T>({
         `}
       >
         {/* ヘッダー */}
-        <div className="flex items-center justify-between p-4 border-b bg-gray-50">
-          <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        <div className="flex items-center justify-between p-4 bg-gray-100">
+          <h2 className="text-lg font-semibold text-gray-900">詳細フィルター</h2>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
@@ -68,25 +83,28 @@ export function AdvancedFilterSidebar<T>({
             </Button>
           </div>
         </div>
+        {/* 切り替えタブ */}
+        <TabNavigation
+          items={tabItems}
+          selectedKey={activeTab}
+          onTabChange={setActiveTab}
+        />
 
         {/* フィルター内容 */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {config.map((filterConfig, index) => (
-            <React.Fragment key={filterConfig.key as string}>
-              <FilterControl
-                config={filterConfig}
-                value={filters[filterConfig.key as string]}
-                onChange={(value) => updateFilter(filterConfig.key as string, value)}
-              />
-              
-              {/* セパレーターを適切な位置に挿入 */}
-              {index < config.length - 1 && 
-               index % 3 === 2 && (
-                <Separator />
-              )}
-            </React.Fragment>
-          ))}
-        </div>
+        {activeTab === 'simple' && (
+          <SimpleFilterContent
+            config={config}
+            filters={filters}
+            updateFilter={updateFilter}
+          />
+        )}
+        {activeTab === 'advanced' && (
+          <AdvancedFilterContent
+            config={config}
+            filters={filters}
+            updateFilter={updateFilter}
+          />
+        )}
       </div>
     </>
   );

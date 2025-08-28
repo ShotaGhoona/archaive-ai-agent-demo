@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/shared';
 import { SlidersHorizontal } from 'lucide-react';
-import { FilterToggleButtonProps } from '../model';
+import { FilterToggleButtonProps } from '../../model';
 
 /**
  * フィルターサイドバーの開閉を切り替えるボタンコンポーネント
