@@ -2,13 +2,13 @@
 import { useState } from "react";
 import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery, BlueprintViewContainer, BlueprintView } from "@/widgets";
-import { QuotationBlueprint, EstimateData } from "../model";
+import { QuotationCreateBlueprint, EstimateData } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 
 interface BlueprintEstimateDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  blueprint: QuotationBlueprint | null;
+  blueprint: QuotationCreateBlueprint | null;
   onSave: (blueprintId: string, estimateData: EstimateData) => void;
 }
 

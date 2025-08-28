@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { quotationResizableLayoutConfig } from "../lib";
+import { quotationCreateResizableLayoutConfig } from "../lib";
 import { FormData } from "../model";
-import { QuotationPreview, QuotationForm } from "../ui";
+import { QuotationCreatePreview, QuotationCreateForm } from "../ui";
 
-export function QuotationContainer() {
+export function QuotationCreateContainer() {
   const [formData, setFormData] = useState<FormData>({
     clientName: "",
     honorific: "御中",
@@ -30,10 +30,10 @@ export function QuotationContainer() {
   });
 
   return (
-    <ResizableLayout config={quotationResizableLayoutConfig} className="h-full">
+    <ResizableLayout config={quotationCreateResizableLayoutConfig} className="h-full">
       <ResizablePanel index={0}>
         <div className="h-full overflow-hidden">
-          <QuotationForm formData={formData} setFormData={setFormData} />
+          <QuotationCreateForm formData={formData} setFormData={setFormData} />
         </div>
       </ResizablePanel>
       
@@ -41,7 +41,7 @@ export function QuotationContainer() {
       
       <ResizablePanel index={1}>
         <div className="h-full overflow-hidden">
-          <QuotationPreview formData={formData} />
+          <QuotationCreatePreview formData={formData} />
         </div>
       </ResizablePanel>
     </ResizableLayout>

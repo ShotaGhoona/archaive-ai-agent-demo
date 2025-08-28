@@ -30,7 +30,7 @@ export interface FormData {
     stamp?: string;
   };
 }
-export interface QuotationBlueprint {
+export interface QuotationCreateBlueprint {
   id: string;
   name: string;
   description: string;
@@ -84,7 +84,7 @@ export interface QuotationBlueprint {
     imageUrl: string;
     similarity: number;
     createdAt: string;
-    basicInformation: QuotationBlueprint['basicInformation'];
-    estimateInformation: QuotationBlueprint['estimateInformation'];
+    basicInformation: QuotationCreateBlueprint['basicInformation'];
+    estimateInformation: QuotationCreateBlueprint['estimateInformation'];
   }>;
 }

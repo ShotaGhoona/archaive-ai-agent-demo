@@ -2,10 +2,10 @@ import React from 'react';
 import { GalleryViewConfig } from '@/shared/view/gallery-view';
 import { Button } from '@/shared';
 import { PlusIcon } from 'lucide-react';
-import { QuotationBlueprint } from '../model';
+import { QuotationCreateBlueprint } from '../model';
 
 // 見積もりステータスの判定
-const getEstimateStatus = (blueprint: QuotationBlueprint) => {
+const getEstimateStatus = (blueprint: QuotationCreateBlueprint) => {
   // totalCostが0または空文字列でない場合は見積もり完了とみなす
   if (blueprint.estimateInformation.totalCost && blueprint.estimateInformation.totalCost !== "0") {
     return { status: "完了", color: "text-green-600 bg-green-50" };
@@ -14,9 +14,9 @@ const getEstimateStatus = (blueprint: QuotationBlueprint) => {
 };
 
 // 見積書作成用図面ギャラリー設定
-export const createQuotationBlueprintGalleryConfig = (
-  onEstimate: (blueprint: QuotationBlueprint) => void
-): GalleryViewConfig<QuotationBlueprint> => ({
+export const createQuotationCreateBlueprintGalleryConfig = (
+  onEstimate: (blueprint: QuotationCreateBlueprint) => void
+): GalleryViewConfig<QuotationCreateBlueprint> => ({
   layoutConfig: {
     grid: { xs: 1, sm: 2, md: 2, lg: 3 },
     aspectRatio: 'video' // 16:9 アスペクト比

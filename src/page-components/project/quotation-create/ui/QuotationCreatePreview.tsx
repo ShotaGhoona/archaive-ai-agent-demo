@@ -29,11 +29,11 @@ interface FormData {
   };
 }
 
-interface QuotationPreviewProps {
+interface QuotationCreatePreviewProps {
   formData: FormData;
 }
 
-export function QuotationPreview({ formData }: QuotationPreviewProps) {
+export function QuotationCreatePreview({ formData }: QuotationCreatePreviewProps) {
   const {
     clientName,
     honorific,
