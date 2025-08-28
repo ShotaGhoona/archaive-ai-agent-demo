@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
-import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
+import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, SelectOption } from '@/shared';
 import { Delivery, DeliveryColumnCallbacks } from '../model';
 
 export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {}): TableViewConfig<Delivery> => ({
@@ -32,11 +32,6 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="font-medium text-gray-900">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'project_name',
@@ -46,11 +41,6 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'delivery_destination',
@@ -60,11 +50,6 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'delivery_date',
@@ -74,11 +59,7 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
+      inputType: 'date',
     },
     {
       key: 'inspection_scheduled_date',
@@ -88,11 +69,7 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
+      inputType: 'date',
     },
     {
       key: 'inspection_status',
@@ -102,22 +79,12 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (delivery: Delivery, value: unknown) => {
-        const status = String(value);
-        const getStatusColor = (status: string) => {
-          switch (status) {
-            case '検収完了': return 'bg-green-100 text-green-800';
-            case '検収待ち': return 'bg-yellow-100 text-yellow-800';
-            case '未納品': return 'bg-gray-100 text-gray-800';
-            default: return 'bg-gray-100 text-gray-800';
-          }
-        };
-        return (
-          <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(status)}`}>
-            {status}
-          </span>
-        );
-      },
+      inputType: 'select',
+      selectOptions: [
+        { label: '検収完了', color: 'green' },
+        { label: '検収待ち', color: 'yellow' },
+        { label: '未納品', color: 'gray' }
+      ] as SelectOption[],
     },
     {
       key: 'updated_at',
@@ -127,11 +94,6 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (delivery: Delivery, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
     },
     {
       key: 'actions',
@@ -141,6 +103,7 @@ export const createDeliveryTableConfig = (callbacks: DeliveryColumnCallbacks = {
       sortable: false,
       editable: false,
       locked: false,
+      stickyRight: 0,
       render: (delivery: Delivery) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

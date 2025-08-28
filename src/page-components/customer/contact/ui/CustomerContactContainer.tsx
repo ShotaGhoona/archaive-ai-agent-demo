@@ -46,6 +46,15 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
     setContacts(prev => prev.filter(c => c.id !== contact.id));
   };
 
+  // 担当者更新ハンドラー
+  const handleContactUpdate = (rowId: string, field: string, value: unknown) => {
+    setContacts(prev => prev.map(contact => 
+      contact.id.toString() === rowId 
+        ? { ...contact, [field]: value }
+        : contact
+    ));
+  };
+
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
       {/* フィルターサイドバー */}
@@ -79,6 +88,7 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
           <CustomerContactTableView 
             contacts={filteredContacts}
             onContactDelete={handleContactDelete}
+            onContactUpdate={handleContactUpdate}
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { EditingCell, EditableFields, DataTableColumn, CellContentData } from '../model';
+import { EditingCell, DataTableColumn, CellContentData } from '../model';
 
 interface UseCellEditProps<T> {
   columns: DataTableColumn<T>[];
@@ -13,36 +13,29 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
   const [editValue, setEditValue] = useState<unknown>('');
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  // columns から編集可能フィールドとロックフィールドを動的に生成
-  const editableFields = columns.reduce((acc, col) => {
-    if (col.editable) {
-      acc[col.key as string] = { 
-        type: col.inputType || 'text', 
-        label: col.label,
-        options: col.selectOptions
-      };
-    }
-    return acc;
-  }, {} as EditableFields);
-
-  const lockedFields = columns
-    .filter(col => col.locked)
-    .map(col => col.key as string);
-
   // 編集開始
   const startEditing = useCallback((rowId: string, field: string, currentValue: unknown) => {
-    if (lockedFields.includes(field)) return;
+    const column = columns.find(col => col.key === field);
+    
+    // ロックされた列または編集不可の列はスキップ
+    if (!column || column.locked || !column.editable) {
+      return;
+    }
     
     setEditingCell({ rowId, field, value: currentValue });
     setEditValue(currentValue);
-  }, [lockedFields]);
+  }, [columns]);
 
   // 編集保存
   const saveEdit = useCallback(() => {
-    if (!editingCell) return;
+    if (!editingCell || !onUpdate) {
+      setEditingCell(null);
+      setEditValue('');
+      return;
+    }
     
     const { rowId, field } = editingCell;
-    onUpdate?.(rowId, field, editValue);
+    onUpdate(rowId, field, editValue);
     setEditingCell(null);
     setEditValue('');
   }, [editingCell, editValue, onUpdate]);
@@ -53,7 +46,7 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
     setEditValue('');
   }, []);
 
-  // 編集中のinput要素にフォーカス
+  // 編集中の要素にフォーカス
   useEffect(() => {
     if (editingCell && inputRef.current) {
       inputRef.current.focus();
@@ -61,17 +54,18 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
     }
   }, [editingCell]);
 
-  // セルがクリックされた時の処理
+  // セルクリック処理
   const handleCellClick = useCallback((item: T, field: string) => {
     const rowId = getRowId(item);
     const value = (item as Record<string, unknown>)[field];
     startEditing(rowId, field, value);
   }, [startEditing, getRowId]);
 
-  // セルの表示内容を取得
+  // セルの内容データを取得
   const getCellContent = useCallback((item: T, field: string): CellContentData => {
     const rowId = getRowId(item);
     const isEditing = editingCell?.rowId === rowId && editingCell?.field === field;
+    const column = columns.find(col => col.key === field);
     
     if (isEditing) {
       return {
@@ -81,8 +75,8 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
         onChange: setEditValue,
         onSave: saveEdit,
         onCancel: cancelEdit,
-        inputType: editableFields[field]?.type || 'text',
-        selectOptions: editableFields[field]?.options
+        inputType: column?.inputType || 'text',
+        selectOptions: column?.selectOptions
       };
     }
 
@@ -93,35 +87,38 @@ export function useCellEdit<T>({ columns, getRowId, onUpdate }: UseCellEditProps
       onChange: null,
       onSave: null,
       onCancel: null,
-      inputType: 'text',
-      selectOptions: undefined
+      inputType: column?.inputType || 'text',
+      selectOptions: column?.selectOptions
     };
-  }, [editingCell, editValue, saveEdit, cancelEdit, editableFields, getRowId]);
+  }, [editingCell, editValue, saveEdit, cancelEdit, columns, getRowId]);
 
-  // セルのスタイルを取得
+  // セルのCSSクラスを取得
   const getCellClassName = useCallback((field: string, isEditing: boolean) => {
+    const column = columns.find(col => col.key === field);
     let baseClass = "group relative";
     
-    if (lockedFields.includes(field)) {
+    if (column?.locked) {
       baseClass += " cursor-not-allowed bg-gray-50 text-gray-500";
     } else if (isEditing) {
       baseClass += " bg-blue-50 border border-blue-200";
-    } else {
+    } else if (column?.editable) {
       baseClass += " cursor-pointer hover:bg-blue-50 transition-colors";
     }
     
     return baseClass;
-  }, [lockedFields]);
+  }, [columns]);
 
-  // フィールドが編集可能かどうか
+  // フィールドが編集可能かチェック
   const isEditable = useCallback((field: string) => {
-    return !lockedFields.includes(field) && field in editableFields;
-  }, [lockedFields, editableFields]);
+    const column = columns.find(col => col.key === field);
+    return column ? column.editable && !column.locked : false;
+  }, [columns]);
 
-  // フィールドがロックされているかどうか
+  // フィールドがロックされているかチェック
   const isLocked = useCallback((field: string) => {
-    return lockedFields.includes(field);
-  }, [lockedFields]);
+    const column = columns.find(col => col.key === field);
+    return column ? column.locked : false;
+  }, [columns]);
 
   return {
     editingCell,

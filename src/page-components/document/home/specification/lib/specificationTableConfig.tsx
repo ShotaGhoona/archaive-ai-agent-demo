@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
-import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
+import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, SelectOption } from '@/shared';
 import { Specification, SpecificationColumnCallbacks } from '../model';
 
 export const createSpecificationTableConfig = (
@@ -34,11 +34,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (specification: Specification, value: unknown) => (
-        <div className="font-medium text-gray-900">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'project_name', 
@@ -48,11 +43,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (specification: Specification, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'blueprint_name',
@@ -62,11 +52,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (specification: Specification, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'version',
@@ -76,11 +61,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (specification: Specification, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'approval_status',
@@ -90,20 +70,12 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (specification: Specification, value: unknown) => {
-        const status = String(value);
-        const statusColor = status === '承認済み' 
-          ? 'bg-green-100 text-green-800' 
-          : status === '差し戻し'
-          ? 'bg-red-100 text-red-800'
-          : 'bg-yellow-100 text-yellow-800';
-          
-        return (
-          <span className={`px-2 py-1 text-xs rounded-full ${statusColor}`}>
-            {status}
-          </span>
-        );
-      }
+      inputType: 'select',
+      selectOptions: [
+        { label: '承認済み', color: 'green' },
+        { label: '差し戻し', color: 'red' },
+        { label: '承認待ち', color: 'yellow' }
+      ] as SelectOption[],
     },
     {
       key: 'created_at',
@@ -113,11 +85,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (specification: Specification, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      )
     },
     {
       key: 'updated_at',
@@ -127,11 +94,6 @@ export const createSpecificationTableConfig = (
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (specification: Specification, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      )
     },
     {
       key: 'actions',
@@ -141,6 +103,7 @@ export const createSpecificationTableConfig = (
       sortable: false,
       editable: false,
       locked: false,
+      stickyRight: 0,
       render: (specification: Specification) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

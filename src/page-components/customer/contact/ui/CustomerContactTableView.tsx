@@ -16,11 +16,13 @@ import {
 interface CustomerContactTableViewProps {
   contacts: Contact[];
   onContactDelete?: (contact: Contact) => void;
+  onContactUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function CustomerContactTableView({ 
   contacts, 
-  onContactDelete
+  onContactDelete,
+  onContactUpdate
 }: CustomerContactTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [contactToDelete, setContactToDelete] = useState<Contact | null>(null);
@@ -53,6 +55,7 @@ export function CustomerContactTableView({
         data={contacts}
         config={tableConfig}
         getRowId={(contact) => String(contact.id)}
+        onItemUpdate={onContactUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

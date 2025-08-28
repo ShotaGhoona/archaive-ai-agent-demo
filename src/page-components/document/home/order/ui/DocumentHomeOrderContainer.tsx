@@ -32,6 +32,15 @@ export function DocumentHomeOrderContainer() {
     setOrders(prev => prev.filter(o => o.id !== order.id));
   };
 
+  // 発注書更新ハンドラー
+  const handleOrderUpdate = (rowId: string, field: string, value: unknown) => {
+    setOrders(prev => prev.map(order => 
+      order.id.toString() === rowId 
+        ? { ...order, [field]: value }
+        : order
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="order">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeOrderContainer() {
             <DocumentHomeOrderTableView 
               orders={filteredOrders}
               onOrderDelete={handleOrderDelete}
+              onOrderUpdate={handleOrderUpdate}
             />
           </div>
         </div>

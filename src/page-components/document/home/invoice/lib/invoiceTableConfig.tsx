@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
-import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
+import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, SelectOption } from '@/shared';
 import { Invoice, InvoiceColumnCallbacks } from '../model';
 
 export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {}): TableViewConfig<Invoice> => ({
@@ -32,11 +32,6 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="font-medium text-gray-900">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'project_name',
@@ -46,11 +41,6 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'billing_destination',
@@ -60,11 +50,6 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-800">
-          {String(value)}
-        </div>
-      ),
     },
     {
       key: 'billing_amount',
@@ -74,11 +59,7 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'number',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-900 font-medium">
-          ¥{Number(value).toLocaleString()}
-        </div>
-      ),
+      inputType: 'number',
     },
     {
       key: 'billing_date',
@@ -88,11 +69,7 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
+      inputType: 'date',
     },
     {
       key: 'payment_due_date',
@@ -102,11 +79,7 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
+      inputType: 'date',
     },
     {
       key: 'payment_status',
@@ -116,21 +89,12 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'string',
-      render: (invoice: Invoice, value: unknown) => {
-        const status = String(value);
-        const getStatusColor = (status: string) => {
-          switch (status) {
-            case '支払済み': return 'bg-green-100 text-green-800';
-            case '未払い': return 'bg-red-100 text-red-800';
-            default: return 'bg-gray-100 text-gray-800';
-          }
-        };
-        return (
-          <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(status)}`}>
-            {status}
-          </span>
-        );
-      },
+      inputType: 'select',
+      selectOptions: [
+        { label: '支払済み', color: 'green' },
+        { label: '未払い', color: 'red' },
+        { label: '部分支払', color: 'yellow' }
+      ] as SelectOption[],
     },
     {
       key: 'updated_at',
@@ -140,11 +104,6 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (invoice: Invoice, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      ),
     },
     {
       key: 'actions',
@@ -154,6 +113,7 @@ export const createInvoiceTableConfig = (callbacks: InvoiceColumnCallbacks = {})
       sortable: false,
       editable: false,
       locked: false,
+      stickyRight: 0,
       render: (invoice: Invoice) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

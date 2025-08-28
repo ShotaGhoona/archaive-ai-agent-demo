@@ -17,11 +17,13 @@ import {
 interface InvoiceTableViewProps {
   invoices: Invoice[];
   onInvoiceDelete?: (invoice: Invoice) => void;
+  onInvoiceUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeInvoiceTableView({ 
   invoices,
-  onInvoiceDelete
+  onInvoiceDelete,
+  onInvoiceUpdate
 }: InvoiceTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [invoiceToDelete, setInvoiceToDelete] = useState<Invoice | null>(null);
@@ -54,6 +56,7 @@ export function DocumentHomeInvoiceTableView({
         data={invoices}
         config={tableConfig}
         getRowId={(invoice) => invoice.id.toString()}
+        onItemUpdate={onInvoiceUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

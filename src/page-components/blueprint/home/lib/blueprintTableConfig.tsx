@@ -57,11 +57,6 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (blueprint: Blueprint,value: unknown) => (
-        <span className="font-mono text-sm font-medium">
-          {String(value)}
-        </span>
-      ),
     },
     {
       key: 'orderSource',
@@ -90,11 +85,6 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (blueprint: Blueprint, value: unknown) => (
-        <span className="font-mono text-sm font-medium">
-          {String(value)}
-        </span>
-      ),
     },
     {
       key: 'customerNumber',
@@ -105,11 +95,6 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (blueprint: Blueprint, value: unknown) => (
-        <span className="font-mono text-sm font-medium">
-          {String(value)}
-        </span>
-      ),
     },
     {
       key: 'orderQuantity',

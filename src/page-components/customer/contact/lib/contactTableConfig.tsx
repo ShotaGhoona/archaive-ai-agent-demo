@@ -30,12 +30,6 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (contact, value: unknown) => (
-        <div className="flex items-center">
-          <User className="w-4 h-4 mr-2"/>
-          <span className="font-medium">{String(value)}</span>
-        </div>
-      )
     },
     {
       key: 'phone_number',
@@ -45,12 +39,6 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       editable: true,
       locked: false,
       inputType: 'text',
-      render: (contact, value: unknown) => (
-        <div className="flex items-center">
-          <Phone className="w-4 h-4 mr-2" />
-          <span className="font-mono text-sm">{String(value)}</span>
-        </div>
-      )
     },
     {
       key: 'email',
@@ -59,14 +47,8 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       sortable: true,
       editable: true,
       locked: false,
-      inputType: 'email',
+      inputType: 'text',
       sortType: 'string',
-      render: (contact, value: unknown) => (
-        <div className="flex items-center">
-          <Mail className="w-4 h-4 mr-2" />
-          <span className="text-sm">{String(value)}</span>
-        </div>
-      )
     },
     {
       key: 'updated_at',
@@ -76,11 +58,6 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       editable: false,
       locked: false,
       sortType: 'date',
-      render: (contact, value: unknown) => (
-        <div className="text-sm text-gray-600">
-          {value ? new Date(String(value)).toLocaleDateString('ja-JP') : '-'}
-        </div>
-      )
     },
     {
       key: 'actions',
@@ -90,6 +67,7 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       sortable: false,
       editable: false,
       locked: false,
+      stickyRight: 0,
       render: (contact: Contact) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

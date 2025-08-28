@@ -8,14 +8,6 @@ export interface CustomerColumnCallbacks {
   onDelete?: (customer: Customer) => void;
 }
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'アクティブ': return 'bg-green-100 text-green-800';
-    case '非アクティブ': return 'bg-gray-100 text-gray-800';
-    case '休止中': return 'bg-yellow-100 text-yellow-800';
-    default: return 'bg-gray-100 text-gray-800';
-  }
-};
 
 export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {}): TableViewConfig<Customer> => ({
   columns: [
@@ -46,11 +38,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (customer: Customer, value: unknown) => (
-        <span className="font-mono text-sm font-medium">
-          {String(value)}
-        </span>
-      ),
     },
     {
       key: 'account_name',
@@ -72,22 +59,17 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       inputType: 'select',
       sortType: 'string',
       selectOptions: [
-        '製造業',
-        '建設業',
-        '電子部品製造業',
-        '食品製造業',
-        '医療機器製造業',
-        '航空宇宙産業',
-        '商社',
-        '自動車部品製造業',
-        '精密機械製造業',
-        '電子機器製造業',
+        { label: '製造業', color: 'blue' },
+        { label: '建設業', color: 'green' },
+        { label: '電子部品製造業', color: 'purple' },
+        { label: '食品製造業', color: 'orange' },
+        { label: '医療機器製造業', color: 'red' },
+        { label: '航空宇宙産業', color: 'indigo' },
+        { label: '商社', color: 'yellow' },
+        { label: '自動車部品製造業', color: 'emerald' },
+        { label: '精密機械製造業', color: 'sky' },
+        { label: '電子機器製造業', color: 'pink' },
       ],
-      render: (customer: Customer, value: unknown) => (
-        <Badge className="bg-blue-100 text-blue-800">
-          {String(value)}
-        </Badge>
-      ),
     },
     {
       key: 'status',
@@ -98,12 +80,11 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['アクティブ', '非アクティブ', '休止中'],
-      render: (customer: Customer, value: unknown) => (
-        <Badge className={getStatusColor(String(value))}>
-          {String(value)}
-        </Badge>
-      ),
+      selectOptions: [
+        { label: 'アクティブ', color: 'green' },
+        { label: '非アクティブ', color: 'gray' },
+        { label: '休止中', color: 'yellow' },
+      ],
     },
     {
       key: 'annual_revenue',
@@ -114,11 +95,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       locked: false,
       inputType: 'number',
       sortType: 'number',
-      render: (customer: Customer, value: unknown) => (
-        <span className={`text-sm font-mono ${value ? 'text-gray-900' : 'text-gray-400'}`}>
-          {value ? `¥${Number(value).toLocaleString()}` : '未入力'}
-        </span>
-      ),
     },
     {
       key: 'employee_count',
@@ -129,11 +105,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       locked: false,
       inputType: 'number',
       sortType: 'number',
-      render: (customer: Customer, value: unknown) => (
-        <span className={`text-sm ${value ? 'text-gray-900' : 'text-gray-400'}`}>
-          {value ? `${Number(value)}名` : '未入力'}
-        </span>
-      ),
     },
     {
       key: 'account_name_kana',
@@ -144,11 +115,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       locked: false,
       inputType: 'text',
       sortType: 'string',
-      render: (customer: Customer, value: unknown) => (
-        <span className={`text-sm ${value ? 'text-gray-600' : 'text-gray-400'}`}>
-          {value || '未入力'}
-        </span>
-      ),
     },
     {
       key: 'website',
@@ -180,12 +146,7 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       sortable: false,
       editable: true,
       locked: false,
-      inputType: 'textarea',
-      render: (customer: Customer, value: unknown) => (
-        <span className={`text-sm max-w-[200px] truncate ${value ? 'text-gray-700' : 'text-gray-400'}`} title={String(value || '')}>
-          {value || '未入力'}
-        </span>
-      ),
+      inputType: 'text',
     },
     {
       key: 'created_at',
@@ -195,17 +156,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       editable: false,
       locked: true,
       sortType: 'date',
-      render: (customer: Customer, value: unknown) => (
-        <span className="text-gray-600">
-          {new Date(String(value)).toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </span>
-      ),
     },
     {
       key: 'updated_at',
@@ -215,17 +165,6 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       editable: false,
       locked: true,
       sortType: 'date',
-      render: (customer: Customer, value: unknown) => (
-        <span className="text-gray-600">
-          {new Date(String(value)).toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </span>
-      ),
     },
     {
       key: 'actions',
@@ -235,6 +174,7 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       sortable: false,
       editable: false,
       locked: false,
+      stickyRight: 0,
       render: (customer: Customer) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
