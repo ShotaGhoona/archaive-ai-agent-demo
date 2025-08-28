@@ -11,3 +11,6 @@ export type {
   BasicInformation,
   EstimateInformation
 } from './sameProjectBlueprintTypes';
+export type { 
+  BlueprintView 
+} from './blueprint-view-types';

@@ -5,9 +5,9 @@ import { Layers3, History, Download, Printer, Pencil } from "lucide-react";
 import { ResizableLayout, ResizablePanel, ResizableHandle, BlueprintTabNavigation, Button } from "@/shared";
 import { blueprintDetailResizableLayoutConfig } from "../lib";
 import { RevisionBlueprint, RevisionBlueprintsData, SameProjectBlueprintsData } from "../model";
-import { BlueprintView } from "../../blueprint-view/model";
+import { BlueprintView } from "../model";
 import { BlueprintDetailSidebar, RevisionBlueprintCompareModal, RevisionBlueprintBar, SameProjectBlueprintBar } from "../ui";
-import { BlueprintViewContainer } from "../../blueprint-view";
+import { PicturePreviewContainer } from "@/shared/components/picture-preview";
 import blueprintData from "../data/blueprints.json";
 import blueprintDetailData from "../data/blueprints.json";
 
@@ -19,7 +19,7 @@ export function BlueprintDetailLayout({
   children
 }: BlueprintDetailLayoutProps) {
   const pathname = usePathname();
-  const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews);
+  const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews as BlueprintView[]);
   const [activeView, setActiveView] = useState<BlueprintView | null>(null);
   const [showSameProjectBlueprints, setShowSameProjectBlueprints] = useState(false);
   const [showRevisionBlueprints, setShowRevisionBlueprints] = useState(false);
@@ -219,7 +219,7 @@ export function BlueprintDetailLayout({
                 onViewRemove={handleViewRemove}
                 onViewAdd={handleViewAdd}
               />
-              <BlueprintViewContainer activeFile={activeView} />
+              <PicturePreviewContainer activeFile={activeView} />
               
               {/* Action buttons overlay */}
               {activeView && (

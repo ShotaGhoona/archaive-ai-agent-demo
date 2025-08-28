@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery, BlueprintViewContainer, BlueprintView } from "@/widgets";
+import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
+import { PicturePreviewContainer } from "@/shared/components/picture-preview";
 import { QuotationCreateBlueprint, EstimateData } from "../model";
 import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
 
@@ -29,16 +30,6 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
     onSave(blueprint.id, estimateData);
   };
 
-  // BlueprintViewerで使用する擬似的なactiveFileを作成
-  const mockActiveFile: BlueprintView = {
-    id: blueprint.id,
-    name: blueprint.basicInformation.productName || blueprint.name,
-    description: blueprint.description,
-    viewType: "blueprint",
-    imageUrl: blueprint.imageUrl,
-    isActive: true,
-    createdAt: blueprint.createdAt
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -60,7 +51,7 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
               <div className="flex-1 min-h-0">
                 <Tabs value={activeTab} className="h-full">
                   <TabsContent value="blueprint" className="h-full m-0 p-0">
-                    <BlueprintViewContainer activeFile={mockActiveFile} />
+                    <PicturePreviewContainer activeFile={{ imageUrl: blueprint.imageUrl }} />
                   </TabsContent>
                   
                   <TabsContent value="basic-info" className="h-full m-0 p-0">
