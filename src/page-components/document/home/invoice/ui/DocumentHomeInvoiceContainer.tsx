@@ -32,6 +32,15 @@ export function DocumentHomeInvoiceContainer() {
     setInvoices(prev => prev.filter(i => i.id !== invoice.id));
   };
 
+  // 請求書更新ハンドラー
+  const handleInvoiceUpdate = (rowId: string, field: string, value: unknown) => {
+    setInvoices(prev => prev.map(invoice => 
+      invoice.id.toString() === rowId 
+        ? { ...invoice, [field]: value }
+        : invoice
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="invoice">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeInvoiceContainer() {
             <DocumentHomeInvoiceTableView 
               invoices={filteredInvoices}
               onInvoiceDelete={handleInvoiceDelete}
+              onInvoiceUpdate={handleInvoiceUpdate}
             />
           </div>
         </div>

@@ -32,6 +32,15 @@ export function DocumentHomeSpecificationContainer() {
     setSpecifications(prev => prev.filter(s => s.id !== specification.id));
   };
 
+  // 仕様書更新ハンドラー
+  const handleSpecificationUpdate = (rowId: string, field: string, value: unknown) => {
+    setSpecifications(prev => prev.map(specification => 
+      specification.id.toString() === rowId 
+        ? { ...specification, [field]: value }
+        : specification
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="specification">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeSpecificationContainer() {
             <DocumentHomeSpecificationTableView 
               specifications={filteredSpecifications}
               onSpecificationDelete={handleSpecificationDelete}
+              onSpecificationUpdate={handleSpecificationUpdate}
             />
           </div>
         </div>

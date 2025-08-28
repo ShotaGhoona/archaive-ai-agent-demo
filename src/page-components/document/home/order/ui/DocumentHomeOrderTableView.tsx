@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createOrderTableConfig } from "../lib";
 import { Order } from "../model";
 import {
@@ -17,11 +17,13 @@ import {
 interface OrderTableViewProps {
   orders: Order[];
   onOrderDelete?: (order: Order) => void;
+  onOrderUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeOrderTableView({ 
   orders,
-  onOrderDelete
+  onOrderDelete,
+  onOrderUpdate
 }: OrderTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
@@ -50,10 +52,11 @@ export function DocumentHomeOrderTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={orders}
         config={tableConfig}
         getRowId={(order) => order.id.toString()}
+        onItemUpdate={onOrderUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

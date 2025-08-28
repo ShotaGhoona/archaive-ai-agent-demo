@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createDeliveryTableConfig } from "../lib";
 import { Delivery } from "../model";
 import {
@@ -17,11 +17,13 @@ import {
 interface DeliveryTableViewProps {
   deliveries: Delivery[];
   onDeliveryDelete?: (delivery: Delivery) => void;
+  onDeliveryUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeDeliveryTableView({ 
   deliveries,
-  onDeliveryDelete
+  onDeliveryDelete,
+  onDeliveryUpdate
 }: DeliveryTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deliveryToDelete, setDeliveryToDelete] = useState<Delivery | null>(null);
@@ -50,10 +52,11 @@ export function DocumentHomeDeliveryTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={deliveries}
         config={tableConfig}
         getRowId={(delivery) => delivery.id.toString()}
+        onItemUpdate={onDeliveryUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

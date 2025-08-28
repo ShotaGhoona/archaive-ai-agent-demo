@@ -34,7 +34,7 @@ export function CustomerPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="顧客名で検索"
+          placeholder="取引先ID・取引先名で検索"
         />
       </div>
       <div className="flex items-center gap-3">

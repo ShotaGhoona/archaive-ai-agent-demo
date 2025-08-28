@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { BlueprintFile, EstimateInformation, BlueprintDetailLayout, EstimateCalculation } from "@/widgets";
+import { EstimateInformation, BlueprintDetailLayout, EstimateCalculation } from "@/widgets";
+import { BlueprintFile } from "@/widgets/blueprint/blueprint-view/model";
 
 interface BlueprintEstimateContainerProps {
   activeFile: BlueprintFile | null;

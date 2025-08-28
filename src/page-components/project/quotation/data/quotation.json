@@ -1,0 +1,44 @@
+[
+  {
+    "project_id": "PRJ001",
+    "quote_id": "Q001",
+    "quote_number": "Q-2025-001",
+    "customer_id": "CUST001",
+    "quote_details": "[{\"id\":\"1\",\"product_name\":\"製品A\",\"unit_price\":75000,\"quantity\":2,\"unit\":\"個\",\"tax_rate\":10,\"subtotal\":150000}]",
+    "total_amount": 165000,
+    "image_url": "https://www.yayoi-kk.co.jp/seikyusho/template/quotation/common/img/acq/simple-tekikaku.png",
+    "created_date": "2025-08-28T10:00:00Z",
+    "created_user_id": "user001",
+    "modified_date": "2025-08-28T15:30:00Z",
+    "modified_user_id": "user002",
+    "remarks": "初回見積もりです。納期は2週間程度を予定しています。"
+  },
+  {
+    "project_id": "PRJ001",
+    "quote_id": "Q002",
+    "quote_number": "Q-2025-001",
+    "customer_id": "CUST001",
+    "quote_details": "[{\"id\":\"1\",\"product_name\":\"製品A\",\"unit_price\":73000,\"quantity\":2,\"unit\":\"個\",\"tax_rate\":10,\"subtotal\":146000},{\"id\":\"2\",\"product_name\":\"オプション部品\",\"unit_price\":12000,\"quantity\":1,\"unit\":\"セット\",\"tax_rate\":10,\"subtotal\":12000}]",
+    "total_amount": 173800,
+    "image_url": "https://www.yayoi-kk.co.jp/seikyusho/template/quotation/common/img/acq/simple-tekikaku.png",
+    "created_date": "2025-08-29T09:15:00Z",
+    "created_user_id": "user001",
+    "modified_date": "2025-08-29T14:45:00Z",
+    "modified_user_id": "user001",
+    "remarks": "価格調整とオプション部品を追加しました。v1.1版です。"
+  },
+  {
+    "project_id": "PRJ002",
+    "quote_id": "Q003",
+    "quote_number": "Q-2025-002",
+    "customer_id": "CUST002",
+    "quote_details": "[{\"id\":\"1\",\"product_name\":\"カスタム部品\",\"unit_price\":95000,\"quantity\":1,\"unit\":\"個\",\"tax_rate\":10,\"subtotal\":95000}]",
+    "total_amount": 104500,
+    "image_url": "https://www.yayoi-kk.co.jp/seikyusho/template/quotation/common/img/acq/simple-tekikaku.png",
+    "created_date": "2025-08-30T11:20:00Z",
+    "created_user_id": "user003",
+    "modified_date": "2025-08-30T11:20:00Z",
+    "modified_user_id": "user003",
+    "remarks": "特注品のため、詳細仕様確認後に最終価格を決定します。"
+  }
+]

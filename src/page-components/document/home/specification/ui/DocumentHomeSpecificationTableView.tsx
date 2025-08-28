@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createSpecificationTableConfig } from "../lib";
 import { Specification } from "../model";
 import {
@@ -17,11 +17,13 @@ import {
 interface SpecificationTableViewProps {
   specifications: Specification[];
   onSpecificationDelete?: (specification: Specification) => void;
+  onSpecificationUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeSpecificationTableView({ 
   specifications,
-  onSpecificationDelete
+  onSpecificationDelete,
+  onSpecificationUpdate
 }: SpecificationTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [specificationToDelete, setSpecificationToDelete] = useState<Specification | null>(null);
@@ -50,10 +52,11 @@ export function DocumentHomeSpecificationTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={specifications}
         config={tableConfig}
         getRowId={(specification) => specification.id.toString()}
+        onItemUpdate={onSpecificationUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

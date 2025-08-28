@@ -7,6 +7,8 @@ import {
   ChevronRightIcon,
 } from "lucide-react"
 import { DayButton, DayPicker, getDefaultClassNames } from "react-day-picker"
+import { format } from "date-fns"
+import { ja, type Locale } from "date-fns/locale"
 
 import { cn } from "../lib"
 import { Button, buttonVariants } from "@/shared"
@@ -25,8 +27,20 @@ function Calendar({
 }) {
   const defaultClassNames = getDefaultClassNames()
 
+  // Japanese locale formatters
+  const formatCaption = (date: Date, options?: { locale?: Locale }) => {
+    const y = format(date, "yyyy");
+    const m = format(date, "MM", { locale: options?.locale });
+    return `${y}年${m}月`;
+  };
+
+  const formatWeekdayName = (date: Date, options?: { locale?: Locale }) => {
+    return format(date, "EEEEE", { locale: options?.locale });
+  };
+
   return (
     <DayPicker
+      locale={ja}
       showOutsideDays={showOutsideDays}
       className={cn(
         "bg-background group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
@@ -36,8 +50,10 @@ function Calendar({
       )}
       captionLayout={captionLayout}
       formatters={{
+        formatCaption: formatCaption,
+        formatWeekdayName: formatWeekdayName,
         formatMonthDropdown: (date) =>
-          date.toLocaleString("default", { month: "short" }),
+          date.toLocaleString("ja", { month: "short" }),
         ...formatters,
       }}
       classNames={{

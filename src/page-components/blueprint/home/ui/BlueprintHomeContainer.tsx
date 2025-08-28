@@ -7,6 +7,7 @@ import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG, Blueprint } from "
 
 export function BlueprintHomeContainer() {
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
+  const [blueprints, setBlueprints] = useState<Blueprint[]>(blueprintData as Blueprint[]);
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -15,7 +16,7 @@ export function BlueprintHomeContainer() {
     selectedFilter,
     setSelectedFilter,
     filteredData: searchFiltered,
-  } = useSearchbar(blueprintData as Blueprint[], BLUEPRINT_SEARCHBAR_CONFIG);
+  } = useSearchbar(blueprints, BLUEPRINT_SEARCHBAR_CONFIG);
 
   const {
     filteredData: filteredBlueprints,
@@ -25,6 +26,15 @@ export function BlueprintHomeContainer() {
     setFilters,
     clearFilters,
   } = useAdvancedFilter(searchFiltered, BLUEPRINT_FILTER_CONFIG);
+
+  // 図面更新ハンドラー
+  const handleBlueprintUpdate = (internalNumber: string, field: string, value: unknown) => {
+    setBlueprints(prev => prev.map(blueprint => 
+      blueprint.internalNumber === internalNumber 
+        ? { ...blueprint, [field]: value }
+        : blueprint
+    ));
+  };
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
@@ -61,6 +71,7 @@ export function BlueprintHomeContainer() {
           {viewMode === "table" && (
             <BlueprintTableView 
               blueprints={filteredBlueprints}
+              onBlueprintUpdate={handleBlueprintUpdate}
             />
           )}
           {viewMode === "gallery" && (

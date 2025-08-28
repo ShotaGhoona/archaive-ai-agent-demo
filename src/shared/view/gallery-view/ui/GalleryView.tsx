@@ -59,7 +59,7 @@ export function GalleryView<T>({
       
       {/* ページネーション */}
       {paginationConfig.enabled && (
-        <div className="flex-shrink-0 px-4 py-2 bg-white border-t">
+        <div className="flex-shrink-0 px-4 py-2 border-t">
           <GalleryPagination
             currentPage={currentPage}
             totalPages={totalPages}

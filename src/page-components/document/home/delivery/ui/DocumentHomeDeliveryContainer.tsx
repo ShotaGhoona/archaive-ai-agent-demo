@@ -32,6 +32,15 @@ export function DocumentHomeDeliveryContainer() {
     setDeliveries(prev => prev.filter(d => d.id !== delivery.id));
   };
 
+  // 納品書更新ハンドラー
+  const handleDeliveryUpdate = (rowId: string, field: string, value: unknown) => {
+    setDeliveries(prev => prev.map(delivery => 
+      delivery.id.toString() === rowId 
+        ? { ...delivery, [field]: value }
+        : delivery
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="delivery">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeDeliveryContainer() {
             <DocumentHomeDeliveryTableView 
               deliveries={filteredDeliveries}
               onDeliveryDelete={handleDeliveryDelete}
+              onDeliveryUpdate={handleDeliveryUpdate}
             />
           </div>
         </div>

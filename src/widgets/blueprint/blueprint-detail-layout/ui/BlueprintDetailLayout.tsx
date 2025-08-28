@@ -1,11 +1,13 @@
 'use client';
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Layers3, History } from "lucide-react";
+import { Layers3, History, Download, Printer, Pencil } from "lucide-react";
 import { ResizableLayout, ResizablePanel, ResizableHandle, BlueprintTabNavigation, Button } from "@/shared";
 import { blueprintDetailResizableLayoutConfig } from "../lib";
-import { BlueprintView, RevisionBlueprint, RevisionBlueprintsData, SameProjectBlueprintsData } from "../model";
-import { BlueprintViewer, BlueprintDetailSidebar, RevisionBlueprintCompareModal, RevisionBlueprintBar, SameProjectBlueprintBar } from "../ui";
+import { RevisionBlueprint, RevisionBlueprintsData, SameProjectBlueprintsData } from "../model";
+import { BlueprintView } from "../model";
+import { BlueprintDetailSidebar, RevisionBlueprintCompareModal, RevisionBlueprintBar, SameProjectBlueprintBar } from "../ui";
+import { PicturePreviewContainer } from "@/shared/components/picture-preview";
 import blueprintData from "../data/blueprints.json";
 import blueprintDetailData from "../data/blueprints.json";
 
@@ -17,7 +19,7 @@ export function BlueprintDetailLayout({
   children
 }: BlueprintDetailLayoutProps) {
   const pathname = usePathname();
-  const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews);
+  const [blueprintViews, setBlueprintViews] = useState<BlueprintView[]>(blueprintData.blueprintViews as BlueprintView[]);
   const [activeView, setActiveView] = useState<BlueprintView | null>(null);
   const [showSameProjectBlueprints, setShowSameProjectBlueprints] = useState(false);
   const [showRevisionBlueprints, setShowRevisionBlueprints] = useState(false);
@@ -96,6 +98,55 @@ export function BlueprintDetailLayout({
     setCompareRevision(null);
   };
 
+  // File operations
+  const downloadFile = (imageUrl: string, fileName: string) => {
+    try {
+      const link = document.createElement('a');
+      link.href = imageUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Download failed:', error);
+    }
+  };
+
+  const printFile = (imageUrl: string, fileName: string) => {
+    try {
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(`
+          <html>
+            <head>
+              <title>印刷: ${fileName}</title>
+              <style>
+                body {
+                  margin: 0;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  min-height: 100vh;
+                }
+                img {
+                  max-width: 100%;
+                  max-height: 100%;
+                }
+              </style>
+            </head>
+            <body>
+              <img src="${imageUrl}" alt="${fileName}" />
+            </body>
+          </html>
+        `);
+        printWindow.document.close();
+        printWindow.print();
+      }
+    } catch (error) {
+      console.error('Print failed:', error);
+    }
+  };
+
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col">
       {/* 全体上部: タブナビゲーション */}
@@ -168,7 +219,39 @@ export function BlueprintDetailLayout({
                 onViewRemove={handleViewRemove}
                 onViewAdd={handleViewAdd}
               />
-              <BlueprintViewer activeFile={activeView} />
+              <PicturePreviewContainer activeFile={activeView} />
+              
+              {/* Action buttons overlay */}
+              {activeView && (
+                <div className="absolute top-6 right-6 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => downloadFile(activeView.imageUrl, activeView.name)}
+                      title="ダウンロード"
+                    >
+                      <Download className="h-5 w-5" />
+                      <span className="text-sm">ダウンロード</span>
+                    </Button>
+                    
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      onClick={() => printFile(activeView.imageUrl, activeView.name)}
+                      title="印刷"
+                    >
+                      <Printer className="h-5 w-5" />
+                      <span className="text-sm">印刷</span>
+                    </Button>
+                    
+                    <Button size="lg">
+                      <Pencil className="h-5 w-5" />
+                      <span className="text-sm">書き込み</span>
+                    </Button>
+                  </div>
+                </div>
+              )}
             </ResizablePanel>
 
             <ResizableHandle />

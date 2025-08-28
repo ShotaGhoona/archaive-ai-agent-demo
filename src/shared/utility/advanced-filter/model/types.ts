@@ -24,8 +24,6 @@ export interface AdvancedFilterProps<T = Record<string, unknown>> {
   onFiltersChange: (filters: FilterState<T>) => void;
   onClearFilters: () => void;
   config: FilterConfig<T>[];
-  title?: string;
-  className?: string;
 }
 
 export interface FilterControlProps<T = Record<string, unknown>> {
@@ -37,6 +35,4 @@ export interface FilterControlProps<T = Record<string, unknown>> {
 export interface FilterToggleButtonProps {
   isOpen: boolean;
   onToggle: () => void;
-  className?: string;
-  children?: React.ReactNode;
 }

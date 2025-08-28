@@ -65,7 +65,11 @@ export const createMyTableConfig = (): TableViewConfig<MyData> => ({
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['active', 'inactive', 'pending'],
+      selectOptions: [
+        { label: 'active', color: 'green' },
+        { label: 'inactive', color: 'red' },
+        { label: 'pending', color: 'yellow' }
+      ],
       render: (item, value) => (
         <Badge className={getStatusColor(String(value))}>
           {String(value)}
@@ -96,7 +100,7 @@ export const createMyTableConfig = (): TableViewConfig<MyData> => ({
 ### 3. コンポーネントでの使用
 
 ```typescript
-import { ConfigBasedTableView } from '@/shared/view/table-view';
+import { TableView } from '@/shared/view/table-view';
 import { createMyTableConfig } from '../lib/myTableConfig';
 
 function MyTableView({ data }: { data: MyData[] }) {
@@ -107,7 +111,7 @@ function MyTableView({ data }: { data: MyData[] }) {
   };
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={data}
       config={config}
       onItemUpdate={handleUpdate}
@@ -135,13 +139,57 @@ function MyTableView({ data }: { data: MyData[] }) {
 | プロパティ | 型 | 説明 |
 |------------|----|----|
 | `minWidth` | `number` | 最小幅（px） |
-| `inputType` | `'text' \| 'number' \| 'date' \| 'email' \| 'tel' \| 'select'` | 編集時の入力タイプ |
+| `inputType` | `'text' \| 'number' \| 'date' \| 'select' \| 'user' \| 'boolean'` | 編集時の入力タイプ |
 | `sortType` | `'string' \| 'number' \| 'date'` | ソートの種類 |
-| `selectOptions` | `string[]` | select時の選択肢 |
+| `selectOptions` | `SelectOption[]` | select時の選択肢 ({ label: string, color: TableColor }[]) |
 | `render` | `(item: T, value: unknown) => React.ReactNode` | カスタムレンダリング関数 |
 | `headerRender` | `(column: DataTableColumn<T>) => React.ReactNode` | ヘッダーのカスタムレンダリング |
 | `stickyLeft` | `number` | 左側固定時の位置（px） |
 | `stickyRight` | `number` | 右側固定時の位置（px） |
+
+### inputType の種類
+
+| タイプ | 説明 | 用途例 |
+|--------|------|---------|
+| `text` | テキスト型：文字や文章を入力 | 製品名、部品名、コメントなど |
+| `number` | 数値型：数字を入力 | 受注個数、寸法、重量、価格など |
+| `date` | 日付型：日付を入力 | 受注日、納期、検査日など |
+| `select` | 選択肢型：予め決められた選択肢から選択 | 進捗状況、品質ランク、優先度など |
+| `user` | 従業員型：社内の担当者を選択 | 営業担当、設計担当、検査担当など |
+| `boolean` | ON/OFF型：はい/いいえを選択 | 検査合格、緊急案件、完了フラグなど |
+
+### 利用可能な色（TableColor）
+
+```typescript
+'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'indigo' | 
+'purple' | 'pink' | 'gray' | 'slate' | 'emerald' | 'sky'
+```
+
+#### select型の使用例
+
+```typescript
+{
+  key: 'account_type',
+  label: '取引先種別',
+  width: 150,
+  sortable: true,
+  editable: true,
+  locked: false,
+  inputType: 'select',
+  sortType: 'string',
+  selectOptions: [
+    { label: '製造業', color: 'blue' },
+    { label: '建設業', color: 'green' },
+    { label: '電子部品製造業', color: 'purple' },
+    { label: '商社', color: 'orange' }
+  ],
+  render: (customer, value) => (
+    <Badge className="bg-blue-100 text-blue-800">
+      {String(value)}
+    </Badge>
+  ),
+}
+```
 
 ## 固定列（Sticky Columns）
 
@@ -277,7 +325,7 @@ export function BlueprintTableView({ blueprints, onBlueprintUpdate }) {
   const config = createBlueprintTableConfig();
   
   return (
-    <ConfigBasedTableView
+    <TableView
       data={blueprints}
       config={config}
       onItemUpdate={onBlueprintUpdate}
@@ -327,7 +375,11 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['問い合わせ', '見積もり中', '納品'],
+      selectOptions: [
+        { label: '問い合わせ', color: 'blue' },
+        { label: '見積もり中', color: 'yellow' },
+        { label: '納品', color: 'green' }
+      ],
       render: (project, value) => (
         <Badge className={getStatusColor(String(value), 'project')}>
           {String(value)} 
@@ -350,7 +402,7 @@ export function ProjectTableView({ projects, onProjectUpdate }) {
   const config = createProjectTableConfig();
 
   return (
-    <ConfigBasedTableView
+    <TableView
       data={projects}
       config={config}
       onItemUpdate={onProjectUpdate}
@@ -373,28 +425,20 @@ export function ProjectTableView({ projects, onProjectUpdate }) {
 
 ## 利用可能なコンポーネント
 
-### ConfigBasedTableView（推奨）
-```typescript
-import { ConfigBasedTableView } from '@/shared/view/table-view';
-```
-- 設定オブジェクトベースの新しいアプローチ
-- 自動ページネーション管理
-- usePaginatedTableフック内蔵
-
-### TableView（レガシー）
+### TableView（推奨）
 ```typescript
 import { TableView } from '@/shared/view/table-view';
 ```
-- 従来の手動ページネーション方式
-- 既存コンポーネントとの互換性維持
+- 設定オブジェクトベースのアプローチ
+- 自動ページネーション管理
+- usePaginatedTableフック内蔵
 
 ## ディレクトリ構造
 
 ```
 src/shared/view/table-view/
 ├── ui/                            # UIコンポーネント
-│   ├── TableView.tsx             # レガシーメインコンポーネント
-│   ├── ConfigBasedTableView.tsx  # Config-basedメインコンポーネント
+│   ├── TableView.tsx             # メインコンポーネント
 │   ├── TableHeaderCell.tsx       # ヘッダーセル
 │   ├── TableDataCell.tsx         # データセル
 │   └── TablePagination.tsx       # ページネーション
@@ -414,7 +458,7 @@ src/shared/view/table-view/
 ### 既存コンポーネントの移行手順
 
 1. **カラム定義をTableConfig形式に変更**
-2. **ConfigBasedTableViewの使用**
+2. **TableViewの使用**
 3. **手動ページネーション状態の削除**
 4. **Containerコンポーネントの簡素化**
 

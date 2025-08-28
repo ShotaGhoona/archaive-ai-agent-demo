@@ -1,5 +1,6 @@
 import React from 'react';
-import { Badge, GalleryViewConfig } from '@/shared';
+import { GalleryViewConfig } from '@/shared';
+import { Calendar, Building2 } from 'lucide-react';
 import { Blueprint } from '../lib';
 
 export const createBlueprintGalleryConfig = (): GalleryViewConfig<Blueprint> => ({
@@ -12,30 +13,19 @@ export const createBlueprintGalleryConfig = (): GalleryViewConfig<Blueprint> => 
     showThumbnail: true,
     getThumbnailUrl: (blueprint) => blueprint.image,
     contentRender: (blueprint) => (
-      <>
-        <div className="flex items-center justify-between mb-2">
-          <p className="text-sm text-gray-600">
-            {blueprint.orderSource}
-          </p>
-          <Badge variant="outline" className="text-xs">
-            {blueprint.companyField}
-          </Badge>
-        </div>
-        <h3 className="font-medium text-gray-900 mb-1">
+      <div className="space-y-1">
+        <h3 className="text-lg font-semibold text-gray-900">
           {blueprint.productName}
         </h3>
-        <div className="flex items-center justify-between">
-          <Badge variant="outline" className="font-mono text-xs">
-            {blueprint.customerNumber}
-          </Badge>
-          <span className="text-xs text-gray-500">
-            {blueprint.orderQuantity}個
-          </span>
-        </div>
-        <div className="mt-2 text-xs text-gray-500">
-          {blueprint.orderDate} 〜 {blueprint.deliveryDate}
-        </div>
-      </>
+        <p className="text-sm text-gray-600 flex items-center gap-1">
+          <Calendar size={14} />
+          {blueprint.orderDate}
+        </p>
+        <p className="text-sm text-gray-600 flex items-center gap-1">
+          <Building2 size={14} />
+          {blueprint.orderSource}
+        </p>
+      </div>
     )
   },
   

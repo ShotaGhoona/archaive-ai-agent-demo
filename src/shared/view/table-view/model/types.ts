@@ -1,5 +1,28 @@
 // 汎用的なデータテーブルの型定義
 
+// 利用可能な色定数（12種類）
+export const TABLE_COLORS = {
+  red: 'red',
+  orange: 'orange', 
+  yellow: 'yellow',
+  green: 'green',
+  blue: 'blue',
+  indigo: 'indigo',
+  purple: 'purple',
+  pink: 'pink',
+  gray: 'gray',
+  slate: 'slate',
+  emerald: 'emerald',
+  sky: 'sky',
+} as const;
+
+export type TableColor = keyof typeof TABLE_COLORS;
+
+export interface SelectOption {
+  label: string;
+  color: TableColor;
+}
+
 export interface DataTableColumn<T = unknown> {
   key: keyof T | string;
   label: string;
@@ -8,9 +31,9 @@ export interface DataTableColumn<T = unknown> {
   sortable: boolean;
   editable: boolean;
   locked: boolean;
-  inputType?: 'text' | 'number' | 'date' | 'email' | 'tel' | 'select';
+  inputType?: 'text' | 'number' | 'date' | 'select' | 'user' | 'boolean';
   sortType?: 'string' | 'number' | 'date';
-  selectOptions?: string[];
+  selectOptions?: SelectOption[];
   render?: (item: T, value: unknown) => React.ReactNode;
   headerRender?: (column: DataTableColumn<T>) => React.ReactNode;
   stickyLeft?: number;
@@ -41,9 +64,9 @@ export interface ResizeState {
 
 export interface EditableFields {
   [key: string]: {
-    type: 'text' | 'number' | 'date' | 'email' | 'tel' | 'select';
+    type: 'text' | 'number' | 'date' | 'select' | 'user' | 'boolean';
     label: string;
-    options?: string[];
+    options?: SelectOption[];
   };
 }
 
@@ -54,8 +77,8 @@ export interface SortableFields {
   };
 }
 
-// Config-based TableView props
-export interface ConfigBasedTableViewProps<T = unknown> {
+// TableView props
+export interface TableViewProps<T = unknown> {
   data: T[];
   config: TableViewConfig<T>;
   onItemUpdate?: (rowId: string, field: string, value: unknown) => void;
@@ -71,7 +94,7 @@ export interface CellContentData {
   onSave: (() => void) | null;
   onCancel: (() => void) | null;
   inputType: string;
-  selectOptions?: string[];
+  selectOptions?: SelectOption[];
 }
 
 // Sort icon の戻り値型
@@ -91,13 +114,17 @@ export interface PaginationConfig {
 }
 
 // Config-based Table設定
-export interface TablePaginationConfig {
-  enabled: boolean;
-  defaultItemsPerPage: number;
-  allowedItemsPerPage: number[];
-  showItemsPerPageSelector: boolean;
-  maxVisiblePages: number;
-}
+export type TablePaginationConfig = 
+  | {
+      enabled: false;
+    }
+  | {
+      enabled: true;
+      defaultItemsPerPage: number;
+      allowedItemsPerPage: number[];
+      showItemsPerPageSelector: boolean;
+      maxVisiblePages: number;
+    };
 
 export interface TableViewConfig<T = unknown> {
   columns: DataTableColumn<T>[];

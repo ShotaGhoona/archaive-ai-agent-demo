@@ -32,6 +32,15 @@ export function DocumentHomeInspectionContainer() {
     setInspections(prev => prev.filter(i => i.id !== inspection.id));
   };
 
+  // 検査表更新ハンドラー
+  const handleInspectionUpdate = (rowId: string, field: string, value: unknown) => {
+    setInspections(prev => prev.map(inspection => 
+      inspection.id.toString() === rowId 
+        ? { ...inspection, [field]: value }
+        : inspection
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="inspection">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeInspectionContainer() {
             <DocumentHomeInspectionTableView 
               inspections={filteredInspections}
               onInspectionDelete={handleInspectionDelete}
+              onInspectionUpdate={handleInspectionUpdate}
             />
           </div>
         </div>

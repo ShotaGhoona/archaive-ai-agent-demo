@@ -8,13 +8,14 @@ import { Project, PROJECT_SEARCHBAR_CONFIG, PROJECT_FILTER_CONFIG } from "../lib
 
 export function ProjectDataViewContainer() {
   const [viewMode, setViewMode] = useState<"table" | "kanban">("table");
+  const [projects, setProjects] = useState<Project[]>(projectData as Project[]);
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
     searchTerm,
     setSearchTerm,
     filteredData: searchFiltered,
-  } = useSearchbar(projectData as Project[], PROJECT_SEARCHBAR_CONFIG);
+  } = useSearchbar(projects, PROJECT_SEARCHBAR_CONFIG);
 
   const {
     filteredData: filteredProjects,
@@ -24,6 +25,15 @@ export function ProjectDataViewContainer() {
     setFilters,
     clearFilters,
   } = useAdvancedFilter(searchFiltered, PROJECT_FILTER_CONFIG);
+
+  // プロジェクト更新ハンドラー
+  const handleProjectUpdate = (projectId: string, field: string, value: unknown) => {
+    setProjects(prev => prev.map(project => 
+      project.projectId === projectId 
+        ? { ...project, [field]: value }
+        : project
+    ));
+  };
 
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
@@ -58,6 +68,7 @@ export function ProjectDataViewContainer() {
           {viewMode === "table" && (
             <ProjectTableView 
               projects={filteredProjects}
+              onProjectUpdate={handleProjectUpdate}
             />
           )}
           {viewMode === "kanban" && (

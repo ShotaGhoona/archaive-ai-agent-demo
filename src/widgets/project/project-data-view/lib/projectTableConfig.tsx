@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Badge, Button } from '@/shared';
+import { Button } from '@/shared';
 import { ExternalLink } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
@@ -19,34 +19,6 @@ export interface Project {
   lastUpdatedAt: string;
 }
 
-const getStatusColor = (status: string, type: 'project' | 'quotation' | 'delivery') => {
-  if (type === 'project') {
-    switch (status) {
-      case '問い合わせ': return 'bg-blue-100 text-blue-800';
-      case '見積もり中': return 'bg-yellow-100 text-yellow-800';
-      case '納品': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  }
-  if (type === 'quotation') {
-    switch (status) {
-      case '未提出': return 'bg-red-100 text-red-800';
-      case '作成中': return 'bg-yellow-100 text-yellow-800';
-      case '提出済': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  }
-  if (type === 'delivery') {
-    switch (status) {
-      case '未対応': return 'bg-gray-100 text-gray-800';
-      case '配送準備中': return 'bg-blue-100 text-blue-800';
-      case '配送中': return 'bg-yellow-100 text-yellow-800';
-      case '配送完了': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  }
-  return 'bg-gray-100 text-gray-800';
-};
 
 export const createProjectTableConfig = (): TableViewConfig<Project> => ({
   columns: [
@@ -121,11 +93,6 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'date',
       sortType: 'date',
-      render: (project: Project, value: unknown) => (
-        <span className={value ? '' : 'text-gray-400'}>
-          {String(value) || '未完了'}
-        </span>
-      ),
     },
     {
       key: 'deliveryDeadline',
@@ -146,11 +113,6 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'date',
       sortType: 'date',
-      render: (project: Project, value: unknown) => (
-        <span className={value ? '' : 'text-gray-400'}>
-          {String(value) || '未入荷'}
-        </span>
-      ),
     },
     {
       key: 'projectStatus',
@@ -161,12 +123,11 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['問い合わせ', '見積もり中', '納品'],
-      render: (project: Project, value: unknown) => (
-        <Badge className={`${getStatusColor(String(value), 'project')}`}>
-          {String(value)} 
-        </Badge>
-      ),
+      selectOptions: [
+        { label: '問い合わせ', color: 'blue' },
+        { label: '見積もり中', color: 'yellow' },
+        { label: '納品', color: 'green' }
+      ],
     },
     {
       key: 'quotationStatus',
@@ -177,12 +138,11 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['未提出', '作成中', '提出済'],
-      render: (project: Project, value: unknown) => (
-        <Badge className={`${getStatusColor(String(value), 'quotation')}`}>
-          {String(value)}
-        </Badge>
-      ),
+      selectOptions: [
+        { label: '未提出', color: 'red' },
+        { label: '作成中', color: 'yellow' },
+        { label: '提出済', color: 'green' }
+      ],
     },
     {
       key: 'deliveryStatus',
@@ -193,12 +153,12 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['未対応', '配送準備中', '配送中', '配送完了'],
-      render: (project: Project, value: unknown) => (
-        <Badge className={`${getStatusColor(String(value), 'delivery')}`}>
-          {String(value)}
-        </Badge>
-      ),
+      selectOptions: [
+        { label: '未対応', color: 'gray' },
+        { label: '配送準備中', color: 'blue' },
+        { label: '配送中', color: 'yellow' },
+        { label: '配送完了', color: 'green' }
+      ],
     },
     {
       key: 'lastUpdatedBy',
@@ -217,17 +177,6 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       editable: false,
       locked: true,
       sortType: 'date',
-      render: (project: Project, value: unknown) => (
-        <span className="text-gray-600">
-          {new Date(String(value)).toLocaleString('ja-JP', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-          })}
-        </span>
-      ),
     },
   ],
   pagination: {

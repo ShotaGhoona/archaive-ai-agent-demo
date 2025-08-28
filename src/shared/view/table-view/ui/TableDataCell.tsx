@@ -1,8 +1,16 @@
 import React from 'react';
-import { TableCell, Input, Tooltip, TooltipTrigger, TooltipContent, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared';
+import { TableCell, Tooltip, TooltipTrigger, TooltipContent } from '@/shared';
 import { Lock } from 'lucide-react';
 import { DataTableColumn, CellContentData } from '../model';
 import { useStickyColumns } from '../lib';
+import {
+  TextTypeCell,
+  NumberTypeCell,
+  DateTypeCell,
+  SelectTypeCell,
+  UserTypeCell,
+  BooleanTypeCell,
+} from './table-cell-components';
 
 interface TableDataCellProps<T> {
   item: T;
@@ -21,88 +29,72 @@ export function TableDataCell<T>({
   cellContent,
   onCellClick,
   getColumnWidth,
-  getCellClassName
+  getCellClassName,
 }: TableDataCellProps<T>) {
   const { getStickyStyle } = useStickyColumns();
-  // カスタムレンダー関数がある場合
-  if (column.render && !isEditing) {
+
+  // ロックされたセルでカスタムrenderがない場合のみロック表示
+  if (column.locked && !column.render) {
     return (
       <TableCell 
         className={getCellClassName(column.key as string, isEditing)}
         style={getStickyStyle(column, getColumnWidth)}
-        onClick={column.editable ? () => onCellClick(item, column.key as string) : undefined}
       >
-        {column.render(item, cellContent.value)}
+        <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger>
+              <Lock className="h-3 w-3 text-gray-400" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>この項目はロックされています</p>
+            </TooltipContent>
+          </Tooltip>
+          <span className="text-gray-500">{String(cellContent.value)}</span>
+        </div>
       </TableCell>
     );
   }
 
-  // ロックされたフィールドの場合
-  if (column.locked) {
-    return (
-      <TableCell 
-        className={getCellClassName(column.key as string, false)}
-        style={getStickyStyle(column, getColumnWidth)}
-      >
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="flex items-center gap-2">
-              <Lock className="h-3 w-3 text-gray-400" />
-              <span>{String(cellContent.value)}</span>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            このフィールドは編集できません
-          </TooltipContent>
-        </Tooltip>
-      </TableCell>
-    );
-  }
+  // inputType別のコンポーネントをレンダリング
+  const renderTypedCell = () => {
+    // カスタムrenderがある場合は優先（非編集時のみ）
+    if (!cellContent.isEditing && column.render) {
+      return column.render(item, cellContent.value);
+    }
+
+    // inputType別のコンポーネントを使用
+    const commonProps = {
+      item,
+      column,
+      cellContent,
+      onCellClick,
+    };
+
+    switch (column.inputType) {
+      case 'text':
+        return <TextTypeCell {...commonProps} />;
+      case 'number':
+        return <NumberTypeCell {...commonProps} />;
+      case 'date':
+        return <DateTypeCell {...commonProps} />;
+      case 'select':
+        return <SelectTypeCell {...commonProps} />;
+      case 'user':
+        return <UserTypeCell {...commonProps} />;
+      case 'boolean':
+        return <BooleanTypeCell {...commonProps} />;
+      default:
+        return <TextTypeCell {...commonProps} />;
+    }
+  };
 
   // 編集可能セル
   return (
     <TableCell 
       className={getCellClassName(column.key as string, isEditing)}
       style={getStickyStyle(column, getColumnWidth)}
-      onClick={column.editable ? () => onCellClick(item, column.key as string) : undefined}
     >
-      {isEditing ? (
-        cellContent.inputType === 'select' && cellContent.selectOptions ? (
-          <Select
-            value={String(cellContent.value)}
-            onValueChange={cellContent.onChange!}
-            onOpenChange={(open) => {
-              if (!open) cellContent.onSave!();
-            }}
-          >
-            <SelectTrigger className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-primary">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {cellContent.selectOptions.map((option) => (
-                <SelectItem key={option} value={option}>
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : (
-          <Input
-            ref={cellContent.inputRef}
-            value={String(cellContent.value)}
-            onChange={(e) => cellContent.onChange!(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') cellContent.onSave!();
-              if (e.key === 'Escape') cellContent.onCancel!();
-            }}
-            onBlur={cellContent.onSave!}
-            className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-primary"
-            type={cellContent.inputType}
-          />
-        )
-      ) : (
-        <span>{String(cellContent.value)}</span>
-      )}
+      {renderTypedCell()}
     </TableCell>
   );
 }

@@ -17,7 +17,7 @@ export function BasicInformationForm({ initialData, onSave, className = "" }: Ba
       <div className="flex-1 overflow-y-auto p-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {basicInputFields.map((field) => (
-            <div key={field.key} className="space-y-2">
+            <div key={field.key as string} className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
                 {field.label}
               </label>

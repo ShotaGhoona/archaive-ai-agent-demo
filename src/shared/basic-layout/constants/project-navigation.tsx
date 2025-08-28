@@ -4,7 +4,6 @@ import {
   ShoppingCart, 
   Truck, 
   Send, 
-  FolderOpen,
   PenTool
 } from "lucide-react";
 
@@ -30,14 +29,7 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     href: (id) => `/project/${id}/blueprint-register`,
     icon: <PenTool className="h-4 w-4" />, 
     description: "図面の新規登録・アップロード" 
-  },
-  // { 
-  //   id: "blueprint", 
-  //   label: "図面別見積もり", 
-  //   href: (id) => `/project/${id}/blueprint`,
-  //   icon: <FileText className="h-4 w-4" />, 
-  //   description: "設計図面・CADデータ" 
-  // },
+  },  
   { 
     id: "quotation", 
     label: "見積書", 
@@ -60,17 +52,17 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     description: "納品完了書類" 
   },
   { 
+    id: "invoice", 
+    label: "請求書", 
+    href: (id) => `/project/${id}/invoice`,
+    icon: <Receipt className="h-4 w-4" />, 
+    description: "請求書類" 
+  },
+  { 
     id: "shipping", 
     label: "送り状", 
     href: (id) => `/project/${id}/shipping`,
     icon: <Send className="h-4 w-4" />, 
     description: "配送伝票" 
-  },
-  { 
-    id: "others", 
-    label: "その他", 
-    href: (id) => `/project/${id}/others`,
-    icon: <FolderOpen className="h-4 w-4" />, 
-    description: "その他の関連書類" 
   }
 ];

@@ -1,98 +1,79 @@
 "use client";
-import { useState } from "react";
-import { StepIndicator, Button, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
+
+import { useState, useEffect } from "react";
+import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { quotationResizableLayoutConfig } from "../lib";
-import { FormData } from "../model";
-import { QuotationPreview, QuotationProjectInfoStep, QuotationBlueprintInfoStep, QuotationCompanyInfoStep } from "../ui";
-
+import { QuotationData } from "../model";
+import { quotationData as initialQuotationData } from "../data";
+import { QuotationList, QuotationPreview, QuotationInfoPanel } from "../ui";
 export function QuotationContainer() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [quotations] = useState<QuotationData[]>(initialQuotationData as QuotationData[]);
+  const [selectedQuotation, setSelectedQuotation] = useState<QuotationData | null>(null);
 
-  const nextStep = () => {
-    if (currentStep < steps.length) {
-      setCurrentStep(currentStep + 1);
+  // 初期データとして最初の見積書を選択
+  useEffect(() => {
+    if (quotations.length > 0 && !selectedQuotation) {
+      setSelectedQuotation(quotations[0]);
     }
+  }, [quotations, selectedQuotation]);
+
+  const handleSelectQuotation = (quotation: QuotationData) => {
+    setSelectedQuotation(quotation);
   };
 
-  const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
+  const handleUpdateQuotation = (data: Partial<QuotationData>) => {
+    if (!selectedQuotation) return;
+    
+    const updatedQuotation = { ...selectedQuotation, ...data };
+    setSelectedQuotation(updatedQuotation);
+    
+    // 実際のアプリでは、ここでAPIを呼び出してデータを保存する
+    console.log("見積書データを更新:", updatedQuotation);
   };
-  
-  const steps = [
-    { id: 1, title: "案件情報入力" },
-    { id: 2, title: "図面別見積もり" },
-    { id: 3, title: "自社情報確認" }
-  ];
 
-  const [formData, setFormData] = useState<FormData>({
-    clientName: "",
-    honorific: "御中",
-    quotationNumber: "",
-    issueDate: "",
-    validUntil: "",
-    tableRows: [{
-      id: "1",
-      productName: "",
-      unitPrice: "",
-      quantity: "",
-      unit: "",
-      taxRate: "",
-      detail: "",
-    }],
-    remarks: "",
-    companyInfo: {
-      name: "株式会社STAR UP",
-      phone: "080-4760-5129",
-      address: "〒602-8061 京都府京都市上京区甲斐守町97西陣産業創造會館109"
-    }
-  });
+  if (!selectedQuotation) {
+    return (
+      <div className="h-full flex items-center justify-center">
+        <div className="text-center text-gray-500">
+          <div className="text-4xl mb-4">📄</div>
+          <p>見積書を読み込み中...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <ResizableLayout config={quotationResizableLayoutConfig} className="h-full">
-      <ResizablePanel index={0}>
-        <div className="h-full overflow-hidden flex flex-col">
-          <div className="p-4">
-            <StepIndicator 
-              steps={steps} 
-              currentStep={currentStep}
-            />
-          </div>
-          <div className="flex-1 overflow-hidden flex flex-col">
-            <div className="flex-1 overflow-auto">
-              {currentStep === 1 && <QuotationProjectInfoStep formData={formData} setFormData={setFormData} />}
-              {currentStep === 2 && <QuotationBlueprintInfoStep formData={formData} setFormData={setFormData} />}
-              {currentStep === 3 && <QuotationCompanyInfoStep formData={formData} setFormData={setFormData} />}
+    <div className="h-full flex">
+      {/* 左側: 見積書リスト（固定幅） */}
+      <div className="w-60 flex-shrink-0">
+        <QuotationList 
+          quotations={quotations}
+          selectedId={selectedQuotation.quote_id}
+          onSelectQuotation={handleSelectQuotation} 
+        />
+      </div>
+
+      {/* 中央・右側: リサイズ可能レイアウト */}
+      <div className="flex-1">
+        <ResizableLayout config={quotationResizableLayoutConfig} className="h-full">
+          <ResizablePanel index={0}>
+            <div className="h-full overflow-hidden">
+              <QuotationPreview imageUrl={selectedQuotation.image_url} />
             </div>
-            <div className="p-4">
-              <div className="flex justify-between">
-                <Button
-                  onClick={prevStep}
-                  disabled={currentStep === 1}
-                  variant="outline"
-                >
-                  前へ
-                </Button>
-                <Button
-                  onClick={nextStep}
-                  disabled={currentStep === steps.length}
-                >
-                  {currentStep === steps.length ? '完了' : '次へ'}
-                </Button>
-              </div>
+          </ResizablePanel>
+          
+          <ResizableHandle />
+          
+          <ResizablePanel index={1}>
+            <div className="h-full overflow-hidden">
+              <QuotationInfoPanel 
+                quotationData={selectedQuotation}
+                onUpdate={handleUpdateQuotation}
+              />
             </div>
-          </div>
-        </div>
-      </ResizablePanel>
-      
-      <ResizableHandle />
-      
-      <ResizablePanel index={1}>
-        <div className="h-full overflow-hidden">
-          <QuotationPreview formData={formData} />
-        </div>
-      </ResizablePanel>
-    </ResizableLayout>
+          </ResizablePanel>
+        </ResizableLayout>
+      </div>
+    </div>
   );
 }

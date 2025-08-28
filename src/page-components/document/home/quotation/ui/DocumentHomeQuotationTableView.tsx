@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ConfigBasedTableView } from "@/shared";
+import { TableView } from "@/shared";
 import { createQuotationTableConfig } from "../lib";
 import { Quotation } from "../model";
 import {
@@ -17,11 +17,13 @@ import {
 interface QuotationTableViewProps {
   quotations: Quotation[];
   onQuotationDelete?: (quotation: Quotation) => void;
+  onQuotationUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeQuotationTableView({ 
   quotations,
-  onQuotationDelete
+  onQuotationDelete,
+  onQuotationUpdate
 }: QuotationTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [quotationToDelete, setQuotationToDelete] = useState<Quotation | null>(null);
@@ -50,10 +52,11 @@ export function DocumentHomeQuotationTableView({
 
   return (
     <>
-      <ConfigBasedTableView
+      <TableView
         data={quotations}
         config={tableConfig}
         getRowId={(quotation) => quotation.id.toString()}
+        onItemUpdate={onQuotationUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

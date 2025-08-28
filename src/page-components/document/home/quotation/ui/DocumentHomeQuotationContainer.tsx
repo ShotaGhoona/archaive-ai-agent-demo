@@ -32,6 +32,15 @@ export function DocumentHomeQuotationContainer() {
     setQuotations(prev => prev.filter(q => q.id !== quotation.id));
   };
 
+  // 見積書更新ハンドラー
+  const handleQuotationUpdate = (rowId: string, field: string, value: unknown) => {
+    setQuotations(prev => prev.map(quotation => 
+      quotation.id.toString() === rowId 
+        ? { ...quotation, [field]: value }
+        : quotation
+    ));
+  };
+
   return (
     <DocumentLayoutContainer activeType="quotation">
       <div className="h-full flex overflow-hidden">
@@ -64,6 +73,7 @@ export function DocumentHomeQuotationContainer() {
             <DocumentHomeQuotationTableView 
               quotations={filteredQuotations}
               onQuotationDelete={handleQuotationDelete}
+              onQuotationUpdate={handleQuotationUpdate}
             />
           </div>
         </div>
