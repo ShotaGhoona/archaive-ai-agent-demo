@@ -59,9 +59,9 @@ export function CustomerTableView({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>顧客を削除しますか？</AlertDialogTitle>
+            <AlertDialogTitle>取引先を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{customerToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{customerToDelete?.account_name}」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
