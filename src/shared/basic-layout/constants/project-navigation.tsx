@@ -4,7 +4,6 @@ import {
   ShoppingCart, 
   Truck, 
   Send, 
-  FolderOpen,
   PenTool
 } from "lucide-react";
 
@@ -31,13 +30,6 @@ export const blueprintDetailTabs: BlueprintDetailTab[] = [
     icon: <PenTool className="h-4 w-4" />, 
     description: "図面の新規登録・アップロード" 
   },  
-  { 
-    id: "quotation-create", 
-    label: "見積書作成", 
-    href: (id) => `/project/${id}/quotation-create`,
-    icon: <Receipt className="h-4 w-4" />, 
-    description: "価格見積もり書類作成" 
-  },
   { 
     id: "quotation", 
     label: "見積書", 

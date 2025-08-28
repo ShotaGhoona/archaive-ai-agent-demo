@@ -15,6 +15,7 @@ import {
   Separator
 } from '@/shared';
 import { Filter, Calendar, RotateCcw } from 'lucide-react';
+import { DateRangeFilter } from '@/shared/utility/advanced-filter';
 import { ColumnConfig } from '../model';
 import React, { useState } from 'react';
 
@@ -24,11 +25,6 @@ interface PreviewFilterProps {
 
 interface FilterState {
   [key: string]: unknown;
-}
-
-interface DateRangeFilter {
-  from?: string;
-  to?: string;
 }
 
 export function PreviewFilter({ columns }: PreviewFilterProps) {

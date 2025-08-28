@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
-import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Badge } from '@/shared';
+import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
 import { Customer } from '../model/type';
 
 export interface CustomerColumnCallbacks {

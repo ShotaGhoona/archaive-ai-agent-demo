@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
-import { Phone, User, Mail, MoreHorizontal, Trash2 } from 'lucide-react';
+import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
 
 export interface Contact {
