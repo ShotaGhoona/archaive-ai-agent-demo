@@ -5,7 +5,6 @@ import { DocumentHomeInvoicePageHeader, DocumentHomeInvoiceTableView } from "../
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { INVOICE_FILTER_CONFIG, INVOICE_SEARCHBAR_CONFIG } from "../lib";
 import { Invoice } from "../model";
-import { DocumentLayoutContainer } from "@/widgets";
 
 export function DocumentHomeInvoiceContainer() {
   const [invoices, setInvoices] = useState<Invoice[]>(invoiceData as Invoice[]);
@@ -42,42 +41,40 @@ export function DocumentHomeInvoiceContainer() {
   };
 
   return (
-    <DocumentLayoutContainer activeType="invoice">
-      <div className="h-full flex overflow-hidden">
-        {/* フィルターサイドバー */}
-        <AdvancedFilterSidebar
-          isOpen={isFilterSidebarOpen}
-          onToggle={toggleSidebar}
-          filters={filters}
-          onFiltersChange={setFilters}
-          onClearFilters={clearFilters}
-          config={INVOICE_FILTER_CONFIG}
-        />
-        
-        {/* メインコンテンツ */}
-        <div 
-          className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
-            isFilterSidebarOpen ? 'ml-80' : 'ml-0'
-          }`}
-        >
-          <div className="flex-shrink-0 p-4">
-            <DocumentHomeInvoicePageHeader
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              onToggleFilterSidebar={toggleSidebar}
-              isFilterSidebarOpen={isFilterSidebarOpen}
-              invoices={filteredInvoices}
-            />
-          </div>
-          <div className="flex-1 flex flex-col min-h-0 px-4">
-            <DocumentHomeInvoiceTableView 
-              invoices={filteredInvoices}
-              onInvoiceDelete={handleInvoiceDelete}
-              onInvoiceUpdate={handleInvoiceUpdate}
-            />
-          </div>
+    <div className="h-full flex overflow-hidden">
+      {/* フィルターサイドバー */}
+      <AdvancedFilterSidebar
+        isOpen={isFilterSidebarOpen}
+        onToggle={toggleSidebar}
+        filters={filters}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        config={INVOICE_FILTER_CONFIG}
+      />
+      
+      {/* メインコンテンツ */}
+      <div 
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+          isFilterSidebarOpen ? 'ml-80' : 'ml-0'
+        }`}
+      >
+        <div className="flex-shrink-0 p-4">
+          <DocumentHomeInvoicePageHeader
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onToggleFilterSidebar={toggleSidebar}
+            isFilterSidebarOpen={isFilterSidebarOpen}
+            invoices={filteredInvoices}
+          />
+        </div>
+        <div className="flex-1 flex flex-col min-h-0 px-4">
+          <DocumentHomeInvoiceTableView 
+            invoices={filteredInvoices}
+            onInvoiceDelete={handleInvoiceDelete}
+            onInvoiceUpdate={handleInvoiceUpdate}
+          />
         </div>
       </div>
-    </DocumentLayoutContainer>
+    </div>
   );
 }

@@ -5,7 +5,6 @@ import { DocumentHomeDeliveryPageHeader, DocumentHomeDeliveryTableView } from ".
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { DELIVERY_FILTER_CONFIG, DELIVERY_SEARCHBAR_CONFIG } from "../lib";
 import { Delivery } from "../model";
-import { DocumentLayoutContainer } from "@/widgets";
 
 export function DocumentHomeDeliveryContainer() {
   const [deliveries, setDeliveries] = useState<Delivery[]>(deliveryData as Delivery[]);
@@ -42,42 +41,40 @@ export function DocumentHomeDeliveryContainer() {
   };
 
   return (
-    <DocumentLayoutContainer activeType="delivery">
-      <div className="h-full flex overflow-hidden">
-        {/* フィルターサイドバー */}
-        <AdvancedFilterSidebar
-          isOpen={isFilterSidebarOpen}
-          onToggle={toggleSidebar}
-          filters={filters}
-          onFiltersChange={setFilters}
-          onClearFilters={clearFilters}
-          config={DELIVERY_FILTER_CONFIG}
-        />
-        
-        {/* メインコンテンツ */}
-        <div 
-          className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
-            isFilterSidebarOpen ? 'ml-80' : 'ml-0'
-          }`}
-        >
-          <div className="flex-shrink-0 p-4">
-            <DocumentHomeDeliveryPageHeader
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              onToggleFilterSidebar={toggleSidebar}
-              isFilterSidebarOpen={isFilterSidebarOpen}
-              deliveries={filteredDeliveries}
-            />
-          </div>
-          <div className="flex-1 flex flex-col min-h-0 px-4">
-            <DocumentHomeDeliveryTableView 
-              deliveries={filteredDeliveries}
-              onDeliveryDelete={handleDeliveryDelete}
-              onDeliveryUpdate={handleDeliveryUpdate}
-            />
-          </div>
+    <div className="h-full flex overflow-hidden">
+      {/* フィルターサイドバー */}
+      <AdvancedFilterSidebar
+        isOpen={isFilterSidebarOpen}
+        onToggle={toggleSidebar}
+        filters={filters}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        config={DELIVERY_FILTER_CONFIG}
+      />
+      
+      {/* メインコンテンツ */}
+      <div 
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+          isFilterSidebarOpen ? 'ml-80' : 'ml-0'
+        }`}
+      >
+        <div className="flex-shrink-0 p-4">
+          <DocumentHomeDeliveryPageHeader
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onToggleFilterSidebar={toggleSidebar}
+            isFilterSidebarOpen={isFilterSidebarOpen}
+            deliveries={filteredDeliveries}
+          />
+        </div>
+        <div className="flex-1 flex flex-col min-h-0 px-4">
+          <DocumentHomeDeliveryTableView 
+            deliveries={filteredDeliveries}
+            onDeliveryDelete={handleDeliveryDelete}
+            onDeliveryUpdate={handleDeliveryUpdate}
+          />
         </div>
       </div>
-    </DocumentLayoutContainer>
+    </div>
   );
 }
