@@ -2,176 +2,151 @@
   {
     "id": 1,
     "company_id": 1,
-    "name": "株式会社田中製作所",
+    "account_id": "ACC001",
+    "account_name": "株式会社田中製作所",
+    "account_name_kana": "カブシキガイシャタナカセイサクショ",
+    "account_type": "製造業",
+    "status": "アクティブ",
+    "annual_revenue": 500000000,
+    "employee_count": 50,
+    "website": "https://tanaka-seisaku.co.jp",
+    "description": "精密部品製造を主力事業とする老舗企業",
     "created_at": "2024-01-15T09:00:00Z",
     "updated_at": "2024-08-20T14:30:00Z"
   },
   {
     "id": 2,
     "company_id": 1,
-    "name": "佐藤工業株式会社",
+    "account_id": "ACC002",
+    "account_name": "佐藤工業株式会社",
+    "account_name_kana": "サトウコウギョウカブシキガイシャ",
+    "account_type": "建設業",
+    "status": "アクティブ",
+    "annual_revenue": 1200000000,
+    "employee_count": 120,
+    "website": "https://sato-kogyo.co.jp",
+    "description": "インフラ建設・土木工事を中心とした総合建設会社",
     "created_at": "2024-02-01T10:15:00Z",
     "updated_at": "2024-08-15T16:45:00Z"
   },
   {
     "id": 3,
     "company_id": 1,
-    "name": "鈴木電子株式会社",
+    "account_id": "ACC003",
+    "account_name": "鈴木電子株式会社",
+    "account_name_kana": "スズキデンシカブシキガイシャ",
+    "account_type": "電子部品製造業",
+    "status": "アクティブ",
+    "annual_revenue": 800000000,
+    "employee_count": 85,
+    "website": "https://suzuki-denshi.co.jp",
+    "description": "電子部品・半導体関連製品の開発・製造",
     "created_at": "2024-02-10T11:30:00Z",
     "updated_at": "2024-08-10T13:20:00Z"
   },
   {
     "id": 4,
     "company_id": 1,
-    "name": "高橋食品工業",
+    "account_id": "ACC004",
+    "account_name": "高橋食品工業",
+    "account_name_kana": "タカハシショクヒンコウギョウ",
+    "account_type": "食品製造業",
+    "status": "アクティブ",
+    "annual_revenue": 300000000,
+    "employee_count": 35,
+    "website": "https://takahashi-food.co.jp",
+    "description": "冷凍食品・加工食品の製造・販売",
     "created_at": "2024-02-20T14:45:00Z",
     "updated_at": "2024-08-05T09:10:00Z"
   },
   {
     "id": 5,
     "company_id": 1,
-    "name": "株式会社渡辺メディカル",
+    "account_id": "ACC005",
+    "account_name": "株式会社渡辺メディカル",
+    "account_name_kana": "カブシキガイシャワタナベメディカル",
+    "account_type": "医療機器製造業",
+    "status": "アクティブ",
+    "annual_revenue": 650000000,
+    "employee_count": 75,
+    "website": "https://watanabe-medical.co.jp",
+    "description": "医療機器・診断装置の開発・製造",
     "created_at": "2024-03-01T08:00:00Z",
     "updated_at": "2024-08-22T17:30:00Z"
   },
   {
     "id": 6,
     "company_id": 1,
-    "name": "伊藤航空技術",
+    "account_id": "ACC006",
+    "account_name": "伊藤航空技術",
+    "account_name_kana": "イトウコウクウギジュツ",
+    "account_type": "航空宇宙産業",
+    "status": "アクティブ",
+    "annual_revenue": 950000000,
+    "employee_count": 110,
+    "website": "https://ito-aero.co.jp",
+    "description": "航空機部品・宇宙機器の設計・製造",
     "created_at": "2024-03-10T12:15:00Z",
     "updated_at": "2024-07-30T11:45:00Z"
   },
   {
     "id": 7,
     "company_id": 1,
-    "name": "中村商事株式会社",
+    "account_id": "ACC007",
+    "account_name": "中村商事株式会社",
+    "account_name_kana": "ナカムラショウジカブシキガイシャ",
+    "account_type": "商社",
+    "status": "アクティブ",
+    "annual_revenue": 2500000000,
+    "employee_count": 200,
+    "website": "https://nakamura-shoji.co.jp",
+    "description": "機械・化学製品の専門商社",
     "created_at": "2024-03-15T15:20:00Z",
     "updated_at": "2024-08-12T10:15:00Z"
   },
   {
     "id": 8,
     "company_id": 1,
-    "name": "小林自動車部品",
+    "account_id": "ACC008",
+    "account_name": "小林自動車部品",
+    "account_name_kana": "コバヤシジドウシャブヒン",
+    "account_type": "自動車部品製造業",
+    "status": "アクティブ",
+    "annual_revenue": 720000000,
+    "employee_count": 90,
+    "website": "https://kobayashi-auto.co.jp",
+    "description": "自動車用エンジン部品・電装品の製造",
     "created_at": "2024-03-22T09:30:00Z",
     "updated_at": "2024-08-18T14:20:00Z"
   },
   {
     "id": 9,
     "company_id": 1,
-    "name": "加藤精密工業",
+    "account_id": "ACC009",
+    "account_name": "加藤精密工業",
+    "account_name_kana": "カトウセイミツコウギョウ",
+    "account_type": "精密機械製造業",
+    "status": "アクティブ",
+    "annual_revenue": 450000000,
+    "employee_count": 65,
+    "website": "https://kato-precision.co.jp",
+    "description": "精密加工・測定器具の製造・販売",
     "created_at": "2024-04-01T13:45:00Z",
     "updated_at": "2024-08-25T08:30:00Z"
   },
   {
     "id": 10,
     "company_id": 1,
-    "name": "株式会社吉田エレクトロニクス",
+    "account_id": "ACC010",
+    "account_name": "株式会社吉田エレクトロニクス",
+    "account_name_kana": "カブシキガイシャヨシダエレクトロニクス",
+    "account_type": "電子機器製造業",
+    "status": "アクティブ",
+    "annual_revenue": 1100000000,
+    "employee_count": 150,
+    "website": "https://yoshida-electronics.co.jp",
+    "description": "産業用電子機器・制御システムの開発・製造",
     "created_at": "2024-04-08T16:10:00Z",
     "updated_at": "2024-08-07T12:50:00Z"
-  },
-  {
-    "id": 11,
-    "company_id": 1,
-    "name": "松本食品機械",
-    "created_at": "2024-04-15T10:25:00Z",
-    "updated_at": "2024-07-28T15:40:00Z"
-  },
-  {
-    "id": 12,
-    "company_id": 1,
-    "name": "井上医療システム",
-    "created_at": "2024-04-20T14:35:00Z",
-    "updated_at": "2024-08-14T09:25:00Z"
-  },
-  {
-    "id": 13,
-    "company_id": 1,
-    "name": "木村航空機器",
-    "created_at": "2024-05-01T11:50:00Z",
-    "updated_at": "2024-08-23T16:10:00Z"
-  },
-  {
-    "id": 14,
-    "company_id": 1,
-    "name": "林総合商社",
-    "created_at": "2024-05-10T08:15:00Z",
-    "updated_at": "2024-07-25T13:55:00Z"
-  },
-  {
-    "id": 15,
-    "company_id": 1,
-    "name": "斎藤モーター",
-    "created_at": "2024-05-18T12:40:00Z",
-    "updated_at": "2024-08-16T10:35:00Z"
-  },
-  {
-    "id": 16,
-    "company_id": 1,
-    "name": "清水機械工業",
-    "created_at": "2024-05-25T15:05:00Z",
-    "updated_at": "2024-08-21T14:15:00Z"
-  },
-  {
-    "id": 17,
-    "company_id": 1,
-    "name": "阿部電子技術",
-    "created_at": "2024-06-01T09:20:00Z",
-    "updated_at": "2024-08-09T11:40:00Z"
-  },
-  {
-    "id": 18,
-    "company_id": 1,
-    "name": "長谷川フーズ",
-    "created_at": "2024-06-08T13:30:00Z",
-    "updated_at": "2024-07-27T08:20:00Z"
-  },
-  {
-    "id": 19,
-    "company_id": 1,
-    "name": "近藤メディカルテック",
-    "created_at": "2024-06-15T16:45:00Z",
-    "updated_at": "2024-08-24T17:50:00Z"
-  },
-  {
-    "id": 20,
-    "company_id": 1,
-    "name": "後藤エアロスペース",
-    "created_at": "2024-06-22T10:10:00Z",
-    "updated_at": "2024-08-11T15:25:00Z"
-  },
-  {
-    "id": 21,
-    "company_id": 1,
-    "name": "藤田商事",
-    "created_at": "2024-07-01T14:25:00Z",
-    "updated_at": "2024-08-17T12:35:00Z"
-  },
-  {
-    "id": 22,
-    "company_id": 1,
-    "name": "岡田オートパーツ",
-    "created_at": "2024-07-08T11:35:00Z",
-    "updated_at": "2024-08-19T09:45:00Z"
-  },
-  {
-    "id": 23,
-    "company_id": 1,
-    "name": "前田重工業",
-    "created_at": "2024-07-15T08:50:00Z",
-    "updated_at": "2024-08-13T16:15:00Z"
-  },
-  {
-    "id": 24,
-    "company_id": 1,
-    "name": "増田エレクトロ",
-    "created_at": "2024-07-20T17:05:00Z",
-    "updated_at": "2024-08-06T13:30:00Z"
-  },
-  {
-    "id": 25,
-    "company_id": 1,
-    "name": "村上食品装置",
-    "created_at": "2024-07-25T12:20:00Z",
-    "updated_at": "2024-08-08T10:55:00Z"
   }
 ]

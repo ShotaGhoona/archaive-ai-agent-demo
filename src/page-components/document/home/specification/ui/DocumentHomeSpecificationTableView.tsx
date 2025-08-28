@@ -17,11 +17,13 @@ import {
 interface SpecificationTableViewProps {
   specifications: Specification[];
   onSpecificationDelete?: (specification: Specification) => void;
+  onSpecificationUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeSpecificationTableView({ 
   specifications,
-  onSpecificationDelete
+  onSpecificationDelete,
+  onSpecificationUpdate
 }: SpecificationTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [specificationToDelete, setSpecificationToDelete] = useState<Specification | null>(null);
@@ -54,6 +56,7 @@ export function DocumentHomeSpecificationTableView({
         data={specifications}
         config={tableConfig}
         getRowId={(specification) => specification.id.toString()}
+        onItemUpdate={onSpecificationUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

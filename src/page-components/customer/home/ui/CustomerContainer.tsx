@@ -44,6 +44,15 @@ export function CustomerContainer() {
     setCustomers(prev => prev.filter(c => c.id !== customer.id));
   };
 
+  // 顧客更新ハンドラー
+  const handleCustomerUpdate = (rowId: string, field: string, value: unknown) => {
+    setCustomers(prev => prev.map(customer => 
+      customer.id.toString() === rowId 
+        ? { ...customer, [field]: value, updated_at: new Date().toISOString() }
+        : customer
+    ));
+  };
+
   return (
     <div className="h-[calc(100vh-45px)] flex overflow-hidden">
       {/* フィルターサイドバー */}
@@ -76,6 +85,7 @@ export function CustomerContainer() {
           <CustomerTableView 
             customers={filteredCustomers}
             onCustomerDelete={handleCustomerDelete}
+            onCustomerUpdate={handleCustomerUpdate}
           />
         </div>
       </div>

@@ -17,11 +17,13 @@ import {
 interface CustomerTableViewProps {
   customers: Customer[];
   onCustomerDelete?: (customer: Customer) => void;
+  onCustomerUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function CustomerTableView({ 
   customers,
-  onCustomerDelete
+  onCustomerDelete,
+  onCustomerUpdate
 }: CustomerTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
@@ -54,14 +56,15 @@ export function CustomerTableView({
         data={customers}
         config={tableConfig}
         getRowId={(customer) => customer.id.toString()}
+        onItemUpdate={onCustomerUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>顧客を削除しますか？</AlertDialogTitle>
+            <AlertDialogTitle>取引先を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{customerToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{customerToDelete?.account_name}」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

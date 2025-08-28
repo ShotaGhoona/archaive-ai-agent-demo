@@ -15,6 +15,7 @@ import {
   Button,
 } from '@/shared';
 import { format } from 'date-fns';
+import { ja } from 'date-fns/locale';
 import { CalendarIcon } from 'lucide-react';
 import { FilterControlProps, DateRangeFilter } from '../../model';
 
@@ -94,7 +95,7 @@ export function FilterControl<T>({
                 className="mt-2 w-full justify-start text-left font-normal"
               >
                 <CalendarIcon className="mr-2 h-4 w-4" />
-                {selectedDate ? format(selectedDate, 'yyyy/MM/dd') : '日付を選択'}
+                {selectedDate ? format(selectedDate, 'yyyy/MM/dd', { locale: ja }) : '日付を選択'}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0" align="start">
@@ -109,6 +110,7 @@ export function FilterControl<T>({
                   }
                   setIsDateOpen(false);
                 }}
+                locale={ja}
                 initialFocus
               />
             </PopoverContent>
@@ -129,7 +131,7 @@ export function FilterControl<T>({
                   className="flex-1 justify-start text-left font-normal text-sm"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {fromDate ? format(fromDate, 'yyyy/MM/dd') : '開始日'}
+                  {fromDate ? format(fromDate, 'yyyy/MM/dd', { locale: ja }) : '開始日'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -144,6 +146,7 @@ export function FilterControl<T>({
                     }
                     setIsFromOpen(false);
                   }}
+                  locale={ja}
                   initialFocus
                 />
               </PopoverContent>
@@ -156,7 +159,7 @@ export function FilterControl<T>({
                   className="flex-1 justify-start text-left font-normal text-sm"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {toDate ? format(toDate, 'yyyy/MM/dd') : '終了日'}
+                  {toDate ? format(toDate, 'yyyy/MM/dd', { locale: ja }) : '終了日'}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -171,6 +174,7 @@ export function FilterControl<T>({
                     }
                     setIsToOpen(false);
                   }}
+                  locale={ja}
                   initialFocus
                 />
               </PopoverContent>

@@ -1,4 +1,5 @@
-import { CONTACT_CSV_COLUMNS, Contact } from "../lib";
+import { CONTACT_CSV_COLUMNS } from "../lib";
+import { Contact } from "../model";
 import { CreateContactDialog } from "../ui";
 import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
 
@@ -9,7 +10,7 @@ interface CustomerContactPageHeaderProps {
   isFilterSidebarOpen: boolean;
   contacts?: unknown[];
   customerId: string;
-  onContactCreate?: (contact: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => void;
+  onContactCreate?: (contact: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => void;
 }
 
 export function CustomerContactPageHeader({
@@ -21,7 +22,7 @@ export function CustomerContactPageHeader({
   customerId,
   onContactCreate,
 }: CustomerContactPageHeaderProps) {
-  const handleContactCreate = (contact: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => {
+  const handleContactCreate = (contact: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
     onContactCreate?.(contact);
   };
 
@@ -35,7 +36,7 @@ export function CustomerContactPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="担当者名、メールアドレスで検索"
+          placeholder="姓、名、メールアドレス、役職、部署で検索"
         />
       </div>
       <div className="flex items-center gap-3">

@@ -17,11 +17,13 @@ import {
 interface InspectionTableViewProps {
   inspections: Inspection[];
   onInspectionDelete?: (inspection: Inspection) => void;
+  onInspectionUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeInspectionTableView({ 
   inspections,
-  onInspectionDelete
+  onInspectionDelete,
+  onInspectionUpdate
 }: InspectionTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [inspectionToDelete, setInspectionToDelete] = useState<Inspection | null>(null);
@@ -54,6 +56,7 @@ export function DocumentHomeInspectionTableView({
         data={inspections}
         config={tableConfig}
         getRowId={(inspection) => inspection.id.toString()}
+        onItemUpdate={onInspectionUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

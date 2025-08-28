@@ -28,6 +28,17 @@ export function MaterialMasterContainer() {
     setData([...data, newMaterial]);
   };
 
+  // 材料更新ハンドラー
+  const handleMaterialMasterUpdate = (id: string, field: string, value: unknown) => {
+    setData(prevData => 
+      prevData.map(item => 
+        item.id === id 
+          ? { ...item, [field]: value, updatedAt: new Date().toISOString() }
+          : item
+      )
+    );
+  };
+
   return (
     <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
       <div className="flex-shrink-0 p-4">
@@ -41,6 +52,7 @@ export function MaterialMasterContainer() {
       <div className="flex-1 flex flex-col min-h-0 px-4">
         <MaterialMasterTableView 
           materialMasters={filteredMaterialMasters}
+          onMaterialMasterUpdate={handleMaterialMasterUpdate}
         />
       </div>
     </div>

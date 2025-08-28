@@ -17,11 +17,13 @@ import {
 interface DeliveryTableViewProps {
   deliveries: Delivery[];
   onDeliveryDelete?: (delivery: Delivery) => void;
+  onDeliveryUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeDeliveryTableView({ 
   deliveries,
-  onDeliveryDelete
+  onDeliveryDelete,
+  onDeliveryUpdate
 }: DeliveryTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deliveryToDelete, setDeliveryToDelete] = useState<Delivery | null>(null);
@@ -54,6 +56,7 @@ export function DocumentHomeDeliveryTableView({
         data={deliveries}
         config={tableConfig}
         getRowId={(delivery) => delivery.id.toString()}
+        onItemUpdate={onDeliveryUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>

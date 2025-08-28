@@ -17,11 +17,13 @@ import {
 interface OrderTableViewProps {
   orders: Order[];
   onOrderDelete?: (order: Order) => void;
+  onOrderUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
 export function DocumentHomeOrderTableView({ 
   orders,
-  onOrderDelete
+  onOrderDelete,
+  onOrderUpdate
 }: OrderTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
@@ -54,6 +56,7 @@ export function DocumentHomeOrderTableView({
         data={orders}
         config={tableConfig}
         getRowId={(order) => order.id.toString()}
+        onItemUpdate={onOrderUpdate}
       />
       
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
