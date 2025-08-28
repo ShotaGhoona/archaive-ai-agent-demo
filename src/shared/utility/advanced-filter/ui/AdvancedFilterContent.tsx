@@ -25,8 +25,10 @@ interface AdvancedFilterContentProps<T> {
 
 export function AdvancedFilterContent<T>({
   config,
-  filters,
-  updateFilter,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  filters: _filters,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  updateFilter: _updateFilter,
 }: AdvancedFilterContentProps<T>) {
   const [cards, setCards] = useState<FilterCardData[]>([
     {
@@ -66,7 +68,7 @@ export function AdvancedFilterContent<T>({
   };
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="h-full overflow-y-auto p-4 space-y-4">
       <div>
         <div className="space-y-2">
           {cards.map((card, index) => (

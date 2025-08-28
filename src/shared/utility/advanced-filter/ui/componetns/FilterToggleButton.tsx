@@ -8,19 +8,16 @@ import { FilterToggleButtonProps } from '../../model';
  */
 export function FilterToggleButton({ 
   isOpen, 
-  onToggle, 
-  className = '',
-  children
+  onToggle
 }: FilterToggleButtonProps) {
   return (
     <Button
       variant={isOpen ? "default" : "outline"}
       size="lg"
       onClick={onToggle}
-      className={className}
     >
       <SlidersHorizontal className="h-5 w-5 mr-2" />
-      {children || '詳細フィルター'}
+      {isOpen ? '閉じる' : '詳細フィルター'}
     </Button>
   );
 }
