@@ -2,16 +2,7 @@ import React from 'react';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
-
-export interface Contact {
-  id: number;
-  customer_id: number;
-  name: string;
-  phone_number: string;
-  email: string;
-  created_at: string;
-  updated_at: string;
-}
+import { Contact } from '../model';
 
 
 export interface ContactColumnCallbacks {
@@ -22,9 +13,19 @@ export interface ContactColumnCallbacks {
 export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {}): TableViewConfig<Contact> => ({
   columns: [
     {
-      key: 'name',
-      label: '担当者名',
-      width: 150,
+      key: 'contact_id',
+      label: '連絡先ID',
+      width: 120,
+      sortable: true,
+      editable: false,
+      locked: true,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'last_name',
+      label: '姓',
+      width: 100,
       sortable: true,
       editable: true,
       locked: false,
@@ -32,8 +33,78 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       sortType: 'string',
     },
     {
-      key: 'phone_number',
-      label: '電話番号',
+      key: 'first_name',
+      label: '名',
+      width: 100,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'last_name_kana',
+      label: '姓（カナ）',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'first_name_kana',
+      label: '名（カナ）',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'title',
+      label: '役職',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'department',
+      label: '部署名',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'email_primary',
+      label: '主要メールアドレス',
+      width: 220,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'email_secondary',
+      label: '副メールアドレス',
+      width: 220,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+      sortType: 'string',
+    },
+    {
+      key: 'phone_office',
+      label: '会社電話番号',
       width: 140,
       sortable: false,
       editable: true,
@@ -41,22 +112,81 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       inputType: 'text',
     },
     {
-      key: 'email',
-      label: 'メールアドレス',
-      width: 250,
-      sortable: true,
+      key: 'phone_mobile',
+      label: '携帯電話番号',
+      width: 140,
+      sortable: false,
       editable: true,
       locked: false,
       inputType: 'text',
+    },
+    {
+      key: 'fax',
+      label: 'FAX番号',
+      width: 120,
+      sortable: false,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+    },
+    {
+      key: 'status',
+      label: 'ステータス',
+      width: 100,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'select',
+      sortType: 'string',
+      selectOptions: [
+        { label: '有効', color: 'green' },
+        { label: '無効', color: 'gray' },
+      ],
+      render: (contact: Contact) => (
+        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+          contact.status 
+            ? 'bg-green-100 text-green-800' 
+            : 'bg-gray-100 text-gray-800'
+        }`}>
+          {contact.status ? '有効' : '無効'}
+        </span>
+      ),
+    },
+    {
+      key: 'description',
+      label: '連絡先概要',
+      width: 200,
+      sortable: false,
+      editable: true,
+      locked: false,
+      inputType: 'text',
+    },
+    {
+      key: 'owner_user_id',
+      label: '担当営業',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'user',
       sortType: 'string',
     },
     {
-      key: 'updated_at',
-      label: '最終更新日',
-      width: 130,
+      key: 'created_date',
+      label: '作成日時',
+      width: 160,
       sortable: true,
       editable: false,
-      locked: false,
+      locked: true,
+      sortType: 'date',
+    },
+    {
+      key: 'modified_date',
+      label: '最終更新日時',
+      width: 160,
+      sortable: true,
+      editable: false,
+      locked: true,
       sortType: 'date',
     },
     {

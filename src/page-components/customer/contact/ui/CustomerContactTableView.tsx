@@ -1,7 +1,8 @@
 'use client';
 import React, { useState } from "react";
 import { TableView } from "@/shared/view/table-view";
-import { Contact, createContactTableConfig } from "../lib";
+import { createContactTableConfig } from "../lib";
+import { Contact } from "../model";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,7 +55,7 @@ export function CustomerContactTableView({
       <TableView
         data={contacts}
         config={tableConfig}
-        getRowId={(contact) => String(contact.id)}
+        getRowId={(contact) => contact.contact_id}
         onItemUpdate={onContactUpdate}
       />
       
@@ -63,7 +64,7 @@ export function CustomerContactTableView({
           <AlertDialogHeader>
             <AlertDialogTitle>担当者を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{contactToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{contactToDelete?.last_name} {contactToDelete?.first_name}」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

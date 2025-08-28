@@ -3,7 +3,8 @@ import { useState } from "react";
 import contactsData from "../data/contact.json";
 import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
-import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG, Contact } from "../lib";
+import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG } from "../lib";
+import { Contact } from "../model";
 
 interface CustomerContactContainerProps {
   customerId: string;
@@ -30,27 +31,34 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
 
 
   // 新規担当者作成ハンドラー
-  const handleContactCreate = (contactData: Omit<Contact, 'id' | 'customer_id' | 'created_at' | 'updated_at'>) => {
+  const handleContactCreate = (contactData: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
     const now = new Date().toISOString();
     const newContact: Contact = {
-      id: contacts.length + 1,
+      contact_id: `CONTACT-${String(contacts.length + 1).padStart(3, '0')}`,
       customer_id: Number(customerId),
-      created_at: now,
-      updated_at: now,
+      created_date: now,
+      modified_date: now,
+      created_by: '田中 太郎', // TODO: 実際のユーザー名を取得
+      modified_by: '田中 太郎', // TODO: 実際のユーザー名を取得
       ...contactData,
     };
     setContacts(prev => [...prev, newContact]);
   };
 
   const handleContactDelete = (contact: Contact) => {
-    setContacts(prev => prev.filter(c => c.id !== contact.id));
+    setContacts(prev => prev.filter(c => c.contact_id !== contact.contact_id));
   };
 
   // 担当者更新ハンドラー
   const handleContactUpdate = (rowId: string, field: string, value: unknown) => {
     setContacts(prev => prev.map(contact => 
-      contact.id.toString() === rowId 
-        ? { ...contact, [field]: value }
+      contact.contact_id === rowId 
+        ? { 
+            ...contact, 
+            [field]: value,
+            modified_date: new Date().toISOString(),
+            modified_by: '田中 太郎' // TODO: 実際のユーザー名を取得
+          }
         : contact
     ));
   };
