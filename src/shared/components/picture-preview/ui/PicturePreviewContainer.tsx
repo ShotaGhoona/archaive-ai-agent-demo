@@ -64,7 +64,7 @@ export function PicturePreviewContainer({ activeFile }: PicturePreviewContainerP
       <div 
         className="absolute inset-0 flex items-center justify-center"
         style={{
-          transform: `translate(${position.x + 96}px, ${position.y}px)`
+          transform: `translate(${position.x}px, ${position.y}px)`
         }}
       >
         <img
