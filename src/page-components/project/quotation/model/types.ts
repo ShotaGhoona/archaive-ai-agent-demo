@@ -1,90 +1,18 @@
-export interface TableRow {
-  id: string;
-  productName: string;
-  unitPrice: string;
-  quantity: string;
-  unit: string;
-  taxRate: string;
-  detail: string;
-}
-
-export interface EstimateData {
-  materialCost: string;
-  processingCost: string;
-  totalCost: string;
-}
-
-export interface FormData {
-  clientName: string;
-  honorific: string;
-  quotationNumber: string;
-  issueDate: string;
-  validUntil: string;
-  tableRows: TableRow[];
-  remarks: string;
-  companyInfo: {
-    name: string;
-    phone: string;
-    address: string;
-    logo?: string;
-    stamp?: string;
-  };
-}
-export interface QuotationBlueprint {
-  id: string;
-  name: string;
-  description: string;
-  size: number;
-  type: string;
-  imageUrl: string;
-  createdAt: string;
-  isActive: boolean;
-  basicInformation: {
-    fileName: string;
-    pageNumber: string;
-    customerName: string;
-    productName: string;
-    internalProductNumber: string;
-    customerProductNumber: string;
-    cadName: string;
-    camName: string;
-    orderQuantity: string;
-    orderDate: string;
-    deliveryDate: string;
-    maxLength: string;
-    maxWidth: string;
-    maxHeight: string;
-    test: string;
-    companyItem: string;
-    itemG: string;
-    itemI: string;
-    remarks: string;
-  };
-  estimateInformation: {
-    materialCost: string;
-    processingCost: string;
-    laborCost: string;
-    equipmentCost: string;
-    overheadCost: string;
-    profitMargin: string;
-    totalCost: string;
-    unitPrice: string;
-    totalPrice: string;
-    deliveryDays: string;
-    setupCost: string;
-    transportCost: string;
-    packagingCost: string;
-    qualityAssuranceCost: string;
-    remarks: string;
-  };
-  similarBlueprints: Array<{
-    id: string;
-    name: string;
-    description: string;
-    imageUrl: string;
-    similarity: number;
-    createdAt: string;
-    basicInformation: QuotationBlueprint['basicInformation'];
-    estimateInformation: QuotationBlueprint['estimateInformation'];
-  }>;
+// 見積書データの型定義
+export interface QuotationData {
+  // 基本情報
+  project_id: string;           // 案件ID
+  quote_id: string;             // 見積書ID（主キー）
+  quote_number: string;         // 見積番号（自動採番）
+  customer_id: string;          // 顧客ID
+  quote_details: string;        // 品目・数量・単価（JSON文字列）
+  total_amount: number;         // 金額
+  image_url: string;            // 見積書画像URL
+  
+  // システム情報
+  created_date: string;         // 作成日時（ISO 8601形式）
+  created_user_id: string;      // 作成者
+  modified_date: string;        // 更新日時（ISO 8601形式）
+  modified_user_id: string;     // 更新者
+  remarks: string;              // 備考
 }

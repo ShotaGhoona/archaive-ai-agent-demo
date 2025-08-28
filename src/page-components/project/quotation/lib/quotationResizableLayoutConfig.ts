@@ -1,10 +1,10 @@
 import { ResizableLayoutConfig } from "@/shared";
 
-// 見積作成ページ用設定（左: フォーム, 右: プレビュー）
+// 見積書ページ用設定（中央: プレビュー, 右: 情報パネル）
 export const quotationResizableLayoutConfig: ResizableLayoutConfig = {
   direction: 'horizontal',
   panels: [
-    { initialWidth: 50, minWidth: 20, maxWidth: 80 },
-    { initialWidth: 50, minWidth: 20, maxWidth: 80 }
+    { initialWidth: 70, minWidth: 40, maxWidth: 85 }, // 中央プレビュー
+    { initialWidth: 30, minWidth: 15, maxWidth: 60 }  // 右情報パネル
   ]
 } as const;

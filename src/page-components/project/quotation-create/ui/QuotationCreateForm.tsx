@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { FormData, QuotationBlueprint, EstimateData } from "../model";
+import { FormData, QuotationCreateBlueprint, EstimateData } from "../model";
 import { GalleryView } from "@/shared";
-import { createQuotationBlueprintGalleryConfig } from "../lib";
+import { createQuotationCreateBlueprintGalleryConfig } from "../lib";
 import { BlueprintEstimateDialog } from "./BlueprintEstimateDialog";
 import blueprintsData from "../data/blueprints.json";
 import {
@@ -17,22 +17,22 @@ import {
   Textarea,
 } from "@/shared";
 
-interface QuotationFormProps {
+interface QuotationCreateFormProps {
   formData: FormData;
   setFormData: (data: FormData) => void;
 }
 
-export function QuotationForm({ formData, setFormData }: QuotationFormProps) {
-  const [blueprints, setBlueprints] = useState<QuotationBlueprint[]>(blueprintsData as QuotationBlueprint[]);
+export function QuotationCreateForm({ formData, setFormData }: QuotationCreateFormProps) {
+  const [blueprints, setBlueprints] = useState<QuotationCreateBlueprint[]>(blueprintsData as QuotationCreateBlueprint[]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedBlueprint, setSelectedBlueprint] = useState<QuotationBlueprint | null>(null);
+  const [selectedBlueprint, setSelectedBlueprint] = useState<QuotationCreateBlueprint | null>(null);
   
   const updateFormField = (field: keyof FormData, value: unknown) => {
     setFormData({ ...formData, [field]: value });
   };
 
   // 見積もりボタンクリック時の処理
-  const handleEstimate = (blueprint: QuotationBlueprint) => {
+  const handleEstimate = (blueprint: QuotationCreateBlueprint) => {
     setSelectedBlueprint(blueprint);
     setIsModalOpen(true);
   };
@@ -58,7 +58,7 @@ export function QuotationForm({ formData, setFormData }: QuotationFormProps) {
   };
   
   // GalleryView設定を生成
-  const galleryConfig = createQuotationBlueprintGalleryConfig(handleEstimate);
+  const galleryConfig = createQuotationCreateBlueprintGalleryConfig(handleEstimate);
 
   return (
     <div className="h-full overflow-y-auto p-6 space-y-8">
