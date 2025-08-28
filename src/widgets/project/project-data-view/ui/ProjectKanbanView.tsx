@@ -102,47 +102,20 @@ export function ProjectKanbanView({ projects }: ProjectKanbanViewProps) {
                   onClick={() => router.push(`/project/${project.projectId}`)}
                 >
                   <CardContent className="p-3 space-y-2">
-                    {/* タイトル行 */}
-                    <div>
-                      <h4 className="font-medium text-sm text-gray-900">
-                        {project.projectId}
-                      </h4>
-                      <p className="text-xs text-gray-600 font-medium truncate">
-                        {project.customerName}
-                      </p>
-                    </div>
-
-                    {/* 担当者と重要期日 */}
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3 text-gray-400" />
-                        <span className="text-gray-600">{project.assignee}</span>
-                      </div>
-                      {project.responseDeadline && (
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3 text-orange-400" />
-                          <span className="text-gray-600">
-                            {formatDate(project.responseDeadline)}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* ステータス行 */}
-                    <div className="flex justify-between items-center">
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs px-1.5 py-0.5 ${getStatusBadgeColor(project.quotationStatus)}`}
-                      >
-                        {project.quotationStatus}
-                      </Badge>
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs px-1.5 py-0.5 ${getStatusBadgeColor(project.deliveryStatus)}`}
-                      >
-                        {project.deliveryStatus}
-                      </Badge>
-                    </div>
+                    {/* 案件名 */}
+                    <h4 className="font-semibold text-sm text-gray-900">
+                      {project.projectId}
+                    </h4>
+                    
+                    {/* 取引先名 */}
+                    <p className="text-xs text-gray-600">
+                      {project.customerName}
+                    </p>
+                    
+                    {/* 納品期日 */}
+                    <p className="text-xs text-gray-600">
+                      {project.responseDeadline ? formatDate(project.responseDeadline) : '未設定'}
+                    </p>
                   </CardContent>
                 </Card>
               ))}
