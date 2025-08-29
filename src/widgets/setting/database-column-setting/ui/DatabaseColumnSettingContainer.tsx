@@ -65,8 +65,7 @@ export default function DatabaseColumnSettingContainer({
       {/* ページヘッダー */}
       <div className="flex-shrink-0 p-4">
         <PageHeader 
-          onSave={handleSave} 
-          columns={columns}
+          onSave={handleSave}
         />
       </div>
       
