@@ -1,75 +1,85 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/shared';
-import { Save } from 'lucide-react';
+import { Button, Input } from '@/shared';
+import { Save, FileImage } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { BLUEPRINT_COLUMN_SETTING_CONFIGS } from '../lib';
+import { DEFAULT_BLUEPRINT_TABLES, BlueprintDatabaseService, BlueprintTable, BlueprintDatabaseState } from '../lib';
 
 export function BlueprintDatabaseSettingContainer() {
-  const [columns, setColumns] = useState<DatabaseColumnSettingConfig[]>(BLUEPRINT_COLUMN_SETTING_CONFIGS);
+  // データベース状態の管理
+  const [state, setState] = useState<BlueprintDatabaseState>(() => {
+    const allColumns: Record<string, DatabaseColumnSettingConfig[]> = {};
+    
+    DEFAULT_BLUEPRINT_TABLES.forEach(table => {
+      allColumns[table.id] = table.defaultColumns;
+    });
+
+    return {
+      blueprintTables: DEFAULT_BLUEPRINT_TABLES,
+      blueprintColumns: allColumns,
+    };
+  });
 
   // 列設定の更新
-  const handleUpdateColumn = (id: string, updates: Partial<DatabaseColumnSettingConfig>) => {
-    setColumns(prev => prev.map(col => 
-      col.id === id ? { ...col, ...updates } : col
-    ));
+  const handleUpdateColumn = (tableId: string, columnId: string, updates: Partial<DatabaseColumnSettingConfig>) => {
+    setState(prev => BlueprintDatabaseService.updateColumn(prev, tableId, columnId, updates));
   };
 
   // 列の削除
-  const handleDeleteColumn = (id: string) => {
-    setColumns(prev => prev.filter(col => col.id !== id));
+  const handleDeleteColumn = (tableId: string, columnId: string) => {
+    setState(prev => BlueprintDatabaseService.deleteColumn(prev, tableId, columnId));
   };
 
   // 新規列の追加
-  const handleAddColumn = () => {
-    const newColumn: DatabaseColumnSettingConfig = {
-      id: `custom-${Date.now()}`,
-      name: '',
-      description: '',
-      dataType: 'text',
-    };
-    
-    setColumns(prev => [...prev, newColumn]);
+  const handleAddColumn = (tableId: string) => {
+    setState(prev => BlueprintDatabaseService.addColumn(prev, tableId));
   };
 
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
-    console.log('blueprintデータベース設定を保存:', columns);
+    console.log('図面データベース設定を保存:', state);
     alert('図面データベース設定を保存しました');
   };
 
   return (
-    <div>
+    <div className="flex flex-col">
       {/* ページヘッダー */}
       <div className="p-4">
         <div className="flex items-center justify-between space-x-4">
-          <div className="flex items-center space-x-2 text-2xl font-bold">
-            製品関連データベース設定
+          <div className="flex items-center gap-4">
           </div>
           
           <div className="flex items-center space-x-2">
             <Button onClick={handleSave} size="lg" className="flex items-center gap-2">
               <Save className="h-4 w-4" />
-              設定を保存
+              図面設定を保存
             </Button>
           </div>
         </div>
       </div>
-      
-      {/* メインコンテンツエリア */}
-      <div className="px-4 pb-4">
-        {/* 項目設定エリア */}
-        <div>
-          <DatabaseColumnSetting
-            columns={columns}
-            onUpdateColumn={handleUpdateColumn}
-            onDeleteColumn={handleDeleteColumn}
-            onAddColumn={handleAddColumn}
-          />
-        </div>
+
+      {/* テーブル設定エリア */}
+      <div className="px-4 pb-4 space-y-8">
+        {state.blueprintTables.map(table => (
+          <div key={table.id} className="space-y-4">
+            {/* テーブルヘッダー */}
+            <div className="flex items-center gap-3">
+              <FileImage className="h-6 w-6 text-primary" />
+              <h2 className="text-xl font-semibold text-primary">{table.name}</h2>
+            </div>
+            
+            {/* 各テーブルの項目設定 */}
+            <DatabaseColumnSetting
+              columns={state.blueprintColumns[table.id] || []}
+              onUpdateColumn={(columnId, updates) => handleUpdateColumn(table.id, columnId, updates)}
+              onDeleteColumn={(columnId) => handleDeleteColumn(table.id, columnId)}
+              onAddColumn={() => handleAddColumn(table.id)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
