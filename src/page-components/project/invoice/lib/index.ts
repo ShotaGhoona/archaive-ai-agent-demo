@@ -1,0 +1,1 @@
+export { createInvoiceDetailConfig } from './invoiceDetailConfig';
