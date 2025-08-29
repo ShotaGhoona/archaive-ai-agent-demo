@@ -19,6 +19,9 @@ export function createNewDocument(categoryId: string): {
         description: '案件を一意に識別',
         dataType: 'text',
         editable: false,
+        isRequired: true,
+        showInBasicInfo: true,
+        showInTable: true,
       }
     : {
         id: 'product_id',
@@ -26,6 +29,9 @@ export function createNewDocument(categoryId: string): {
         description: '製品を一意に識別',
         dataType: 'text',
         editable: false,
+        isRequired: true,
+        showInBasicInfo: true,
+        showInTable: true,
       };
 
   // 新しい帳票タイプのIDカラム
@@ -35,6 +41,9 @@ export function createNewDocument(categoryId: string): {
     description: 'この帳票の一意識別子',
     dataType: 'text',
     editable: false,
+    isRequired: true,
+    showInBasicInfo: true,
+    showInTable: true,
   };
 
   // デフォルトカラム = 帳票ID + カテゴリID + 共通項目

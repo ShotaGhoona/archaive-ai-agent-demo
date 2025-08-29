@@ -2,9 +2,10 @@ import {
   Building2,
   FileText,
   Lock,
-  Database,
   PenTool,
-  ScrollText
+  ScrollText,
+  Briefcase,
+  Users
 } from "lucide-react";
 
 export interface SettingItem {
@@ -84,14 +85,14 @@ export const settingSections: SettingSection[] = [
       {
         id: "project-database",
         label: "案件データベース設定",
-        icon: <Database className="w-4 h-4" />,
+        icon: <Briefcase className="w-4 h-4" />,
         href: "/setting/project-database",
         description: "案件テーブルの自由項目設定"
       },
       {
         id: "customer-database",
         label: "顧客データベース設定",
-        icon: <Database className="w-4 h-4" />,
+        icon: <Users className="w-4 h-4" />,
         href: "/setting/customer-database",
         description: "顧客テーブルの自由項目設定"
       },

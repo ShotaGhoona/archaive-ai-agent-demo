@@ -19,7 +19,8 @@ import {
   AlertDialogTrigger,
   Tooltip,
   TooltipContent,
-  TooltipTrigger
+  TooltipTrigger,
+  Switch
 } from '@/shared';
 import { DatabaseColumnSettingConfig, SelectOption } from '../model';
 import { SelectOptionsManager } from '../ui';
@@ -29,6 +30,9 @@ interface DatabaseColumnSettingProps {
   onUpdateColumn: (id: string, updates: Partial<DatabaseColumnSettingConfig>) => void;
   onDeleteColumn: (id: string) => void;
   onAddColumn: () => void;
+  onToggleRequired: (id: string) => void; // TODO: 必須フラグ切り替え処理
+  onToggleBasicInfo: (id: string) => void; // TODO: 基本情報表示切り替え処理
+  onToggleTableDisplay: (id: string) => void; // TODO: テーブル表示切り替え処理
 }
 
 export function DatabaseColumnSetting({ 
@@ -36,6 +40,9 @@ export function DatabaseColumnSetting({
   onUpdateColumn, 
   onDeleteColumn, 
   onAddColumn,
+  onToggleRequired,
+  onToggleBasicInfo,
+  onToggleTableDisplay,
 }: DatabaseColumnSettingProps) {
   const handleUpdate = (id: string, updates: Partial<DatabaseColumnSettingConfig>) => {
     onUpdateColumn(id, updates);
@@ -99,6 +106,9 @@ export function DatabaseColumnSetting({
         {/* ヘッダー */}
         <div className="flex items-center justify-between px-4 py-3 bg-gray-100 border-b border-gray-200">
           <div className="flex items-center gap-4">
+            <div className="w-12 flex items-center gap-2">
+              <span className="text-sm font-bold text-gray-900">必須</span>
+            </div>
             <div className="w-48">
               <span className="text-sm font-bold text-gray-900">項目名</span>
             </div>
@@ -110,6 +120,12 @@ export function DatabaseColumnSetting({
             </div>
           </div>
           <div className="flex-shrink-0 flex items-center gap-5">
+            <div className="w-32 flex items-center gap-2">
+              <span className="text-sm font-bold text-gray-900">基本情報に表示</span>
+            </div>
+            <div className="w-32 flex items-center gap-2">
+              <span className="text-sm font-bold text-gray-900">テーブルに表示</span>
+            </div>
             <div className="w-12 flex items-center gap-2">
               <span className="text-sm font-bold text-gray-900">削除</span>
             </div>
@@ -123,6 +139,13 @@ export function DatabaseColumnSetting({
             >
               {/* 左側グループ */}
               <div className="flex items-center gap-4">
+                {/* 必須スイッチ */}
+                <div className="w-12 flex items-center justify-start">
+                  <Switch
+                    checked={column.isRequired}
+                    onCheckedChange={() => onToggleRequired?.(column.id)}
+                  />
+                </div>
                 {/* 項目名 */}
                 <div className="w-48">
                   <Input
@@ -199,8 +222,22 @@ export function DatabaseColumnSetting({
                 )}
               </div>
 
-              {/* 右側: 削除ボタン */}
+              {/* 右側: 表示設定と削除ボタン */}
               <div className="flex-shrink-0 flex items-center gap-5">
+                {/* 基本情報に表示スイッチ */}
+                <div className="w-32 flex items-center justify-start">
+                  <Switch
+                    checked={column.showInBasicInfo}
+                    onCheckedChange={() => onToggleBasicInfo?.(column.id)}
+                  />
+                </div>
+                {/* テーブルに表示スイッチ */}
+                <div className="w-32 flex items-center justify-start">
+                  <Switch
+                    checked={column.showInTable}
+                    onCheckedChange={() => onToggleTableDisplay?.(column.id)}
+                  />
+                </div>
                 <div className="w-12 flex items-center justify-center">
                   {column.editable !== false ? (
                     <AlertDialog>

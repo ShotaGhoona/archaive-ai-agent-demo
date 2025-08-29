@@ -58,6 +58,9 @@ export class DocumentDatabaseService {
       name: '',
       description: '',
       dataType: 'text',
+      isRequired: false,
+      showInBasicInfo: true,
+      showInTable: true,
     };
 
     return {
@@ -65,6 +68,72 @@ export class DocumentDatabaseService {
       documentColumns: {
         ...state.documentColumns,
         [typeId]: [...(state.documentColumns[typeId] || []), newColumn]
+      }
+    };
+  }
+
+  /**
+   * 必須フラグを切り替え
+   */
+  static toggleRequired(
+    state: DocumentDatabaseState,
+    typeId: string,
+    columnId: string
+  ): DocumentDatabaseState {
+    // TODO: バックエンド処理（バリデーション、DB更新等）を実装
+    console.log('TODO: 必須フラグのバックエンド処理', { typeId, columnId });
+    
+    return {
+      ...state,
+      documentColumns: {
+        ...state.documentColumns,
+        [typeId]: state.documentColumns[typeId].map(col => 
+          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col
+        )
+      }
+    };
+  }
+
+  /**
+   * 基本情報表示フラグを切り替え
+   */
+  static toggleBasicInfo(
+    state: DocumentDatabaseState,
+    typeId: string,
+    columnId: string
+  ): DocumentDatabaseState {
+    // TODO: バックエンド処理（表示設定保存等）を実装
+    console.log('TODO: 基本情報表示のバックエンド処理', { typeId, columnId });
+    
+    return {
+      ...state,
+      documentColumns: {
+        ...state.documentColumns,
+        [typeId]: state.documentColumns[typeId].map(col => 
+          col.id === columnId ? { ...col, showInBasicInfo: !col.showInBasicInfo } : col
+        )
+      }
+    };
+  }
+
+  /**
+   * テーブル表示フラグを切り替え
+   */
+  static toggleTableDisplay(
+    state: DocumentDatabaseState,
+    typeId: string,
+    columnId: string
+  ): DocumentDatabaseState {
+    // TODO: バックエンド処理（テーブル設定保存等）を実装
+    console.log('TODO: テーブル表示のバックエンド処理', { typeId, columnId });
+    
+    return {
+      ...state,
+      documentColumns: {
+        ...state.documentColumns,
+        [typeId]: state.documentColumns[typeId].map(col => 
+          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col
+        )
       }
     };
   }

@@ -57,6 +57,21 @@ export function DocumentDatabaseSettingContainer() {
     setState(prev => DocumentDatabaseService.addDocumentType(prev, selectedCategoryId));
   };
 
+  // TODO: 必須フラグ切り替え
+  const handleToggleRequired = (typeId: string, columnId: string) => {
+    setState(prev => DocumentDatabaseService.toggleRequired(prev, typeId, columnId));
+  };
+
+  // TODO: 基本情報表示切り替え
+  const handleToggleBasicInfo = (typeId: string, columnId: string) => {
+    setState(prev => DocumentDatabaseService.toggleBasicInfo(prev, typeId, columnId));
+  };
+
+  // TODO: テーブル表示切り替え
+  const handleToggleTableDisplay = (typeId: string, columnId: string) => {
+    setState(prev => DocumentDatabaseService.toggleTableDisplay(prev, typeId, columnId));
+  };
+
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
@@ -123,6 +138,9 @@ export function DocumentDatabaseSettingContainer() {
                   onUpdateColumn={(columnId, updates) => handleUpdateColumn(type.id, columnId, updates)}
                   onDeleteColumn={(columnId) => handleDeleteColumn(type.id, columnId)}
                   onAddColumn={() => handleAddColumn(type.id)}
+                  onToggleRequired={(columnId) => handleToggleRequired(type.id, columnId)}
+                  onToggleBasicInfo={(columnId) => handleToggleBasicInfo(type.id, columnId)}
+                  onToggleTableDisplay={(columnId) => handleToggleTableDisplay(type.id, columnId)}
                 />
               </div>
             ))}

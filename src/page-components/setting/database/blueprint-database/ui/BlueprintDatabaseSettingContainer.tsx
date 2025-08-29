@@ -37,6 +37,21 @@ export function BlueprintDatabaseSettingContainer() {
     setState(prev => BlueprintDatabaseService.addColumn(prev, tableId));
   };
 
+  // TODO: 必須フラグ切り替え
+  const handleToggleRequired = (tableId: string, columnId: string) => {
+    setState(prev => BlueprintDatabaseService.toggleRequired(prev, tableId, columnId));
+  };
+
+  // TODO: 基本情報表示切り替え
+  const handleToggleBasicInfo = (tableId: string, columnId: string) => {
+    setState(prev => BlueprintDatabaseService.toggleBasicInfo(prev, tableId, columnId));
+  };
+
+  // TODO: テーブル表示切り替え
+  const handleToggleTableDisplay = (tableId: string, columnId: string) => {
+    setState(prev => BlueprintDatabaseService.toggleTableDisplay(prev, tableId, columnId));
+  };
+
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
@@ -77,6 +92,9 @@ export function BlueprintDatabaseSettingContainer() {
               onUpdateColumn={(columnId, updates) => handleUpdateColumn(table.id, columnId, updates)}
               onDeleteColumn={(columnId) => handleDeleteColumn(table.id, columnId)}
               onAddColumn={() => handleAddColumn(table.id)}
+              onToggleRequired={(columnId) => handleToggleRequired(table.id, columnId)}
+              onToggleBasicInfo={(columnId) => handleToggleBasicInfo(table.id, columnId)}
+              onToggleTableDisplay={(columnId) => handleToggleTableDisplay(table.id, columnId)}
             />
           </div>
         ))}

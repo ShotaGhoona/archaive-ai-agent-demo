@@ -37,6 +37,21 @@ export function ProjectDatabaseSettingContainer() {
     setState(prev => ProjectDatabaseService.addColumn(prev, tableId));
   };
 
+  // TODO: 必須フラグ切り替え
+  const handleToggleRequired = (tableId: string, columnId: string) => {
+    setState(prev => ProjectDatabaseService.toggleRequired(prev, tableId, columnId));
+  };
+
+  // TODO: 基本情報表示切り替え
+  const handleToggleBasicInfo = (tableId: string, columnId: string) => {
+    setState(prev => ProjectDatabaseService.toggleBasicInfo(prev, tableId, columnId));
+  };
+
+  // TODO: テーブル表示切り替え
+  const handleToggleTableDisplay = (tableId: string, columnId: string) => {
+    setState(prev => ProjectDatabaseService.toggleTableDisplay(prev, tableId, columnId));
+  };
+
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
@@ -77,6 +92,9 @@ export function ProjectDatabaseSettingContainer() {
               onUpdateColumn={(columnId, updates) => handleUpdateColumn(table.id, columnId, updates)}
               onDeleteColumn={(columnId) => handleDeleteColumn(table.id, columnId)}
               onAddColumn={() => handleAddColumn(table.id)}
+              onToggleRequired={(columnId) => handleToggleRequired(table.id, columnId)}
+              onToggleBasicInfo={(columnId) => handleToggleBasicInfo(table.id, columnId)}
+              onToggleTableDisplay={(columnId) => handleToggleTableDisplay(table.id, columnId)}
             />
           </div>
         ))}
