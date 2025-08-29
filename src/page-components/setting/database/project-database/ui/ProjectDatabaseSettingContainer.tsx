@@ -1,43 +1,46 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/shared';
+import { Button, Input } from '@/shared';
 import { Briefcase, Save } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { PROJECT_COLUMN_SETTING_CONFIGS } from '../lib';
+import { DEFAULT_PROJECT_TABLES, ProjectDatabaseService, ProjectTable, ProjectDatabaseState } from '../lib';
 
 export function ProjectDatabaseSettingContainer() {
-  const [columns, setColumns] = useState<DatabaseColumnSettingConfig[]>(PROJECT_COLUMN_SETTING_CONFIGS);
+  // データベース状態の管理
+  const [state, setState] = useState<ProjectDatabaseState>(() => {
+    const allColumns: Record<string, DatabaseColumnSettingConfig[]> = {};
+    
+    DEFAULT_PROJECT_TABLES.forEach(table => {
+      allColumns[table.id] = table.defaultColumns;
+    });
+
+    return {
+      projectTables: DEFAULT_PROJECT_TABLES,
+      projectColumns: allColumns,
+    };
+  });
 
   // 列設定の更新
-  const handleUpdateColumn = (id: string, updates: Partial<DatabaseColumnSettingConfig>) => {
-    setColumns(prev => prev.map(col => 
-      col.id === id ? { ...col, ...updates } : col
-    ));
+  const handleUpdateColumn = (tableId: string, columnId: string, updates: Partial<DatabaseColumnSettingConfig>) => {
+    setState(prev => ProjectDatabaseService.updateColumn(prev, tableId, columnId, updates));
   };
 
   // 列の削除
-  const handleDeleteColumn = (id: string) => {
-    setColumns(prev => prev.filter(col => col.id !== id));
+  const handleDeleteColumn = (tableId: string, columnId: string) => {
+    setState(prev => ProjectDatabaseService.deleteColumn(prev, tableId, columnId));
   };
 
   // 新規列の追加
-  const handleAddColumn = () => {
-    const newColumn: DatabaseColumnSettingConfig = {
-      id: `custom-${Date.now()}`,
-      name: '',
-      description: '',
-      dataType: 'text',
-    };
-    
-    setColumns(prev => [...prev, newColumn]);
+  const handleAddColumn = (tableId: string) => {
+    setState(prev => ProjectDatabaseService.addColumn(prev, tableId));
   };
 
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
-    console.log('projectデータベース設定を保存:', columns);
+    console.log('案件データベース設定を保存:', state);
     alert('案件データベース設定を保存しました');
   };
 
@@ -47,29 +50,36 @@ export function ProjectDatabaseSettingContainer() {
       <div className="p-4">
         <div className="flex items-center justify-between space-x-4">
           <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">案件データベース設定</h1>
           </div>
           
           <div className="flex items-center space-x-2">
             <Button onClick={handleSave} size="lg" className="flex items-center gap-2">
               <Save className="h-4 w-4" />
-              設定を保存
+              案件設定を保存
             </Button>
           </div>
         </div>
       </div>
-      
-      {/* メインコンテンツエリア */}
-      <div className="px-4 pb-4">
-        {/* 項目設定エリア */}
-        <div>
-          <DatabaseColumnSetting
-            columns={columns}
-            onUpdateColumn={handleUpdateColumn}
-            onDeleteColumn={handleDeleteColumn}
-            onAddColumn={handleAddColumn}
-          />
-        </div>
+
+      {/* テーブル設定エリア */}
+      <div className="px-4 pb-4 space-y-8">
+        {state.projectTables.map(table => (
+          <div key={table.id} className="space-y-4">
+            {/* テーブルヘッダー */}
+            <div className="flex items-center gap-3">
+              <Briefcase className="h-6 w-6 text-primary" />
+              <h2 className="text-xl font-semibold text-primary">{table.name}</h2>
+            </div>
+            
+            {/* 各テーブルの項目設定 */}
+            <DatabaseColumnSetting
+              columns={state.projectColumns[table.id] || []}
+              onUpdateColumn={(columnId, updates) => handleUpdateColumn(table.id, columnId, updates)}
+              onDeleteColumn={(columnId) => handleDeleteColumn(table.id, columnId)}
+              onAddColumn={() => handleAddColumn(table.id)}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
