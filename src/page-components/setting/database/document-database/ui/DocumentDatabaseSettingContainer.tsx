@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import { Button, Input } from '@/shared';
-import { Save, FileText } from 'lucide-react';
+import { Save, FileText, Plus } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { ColumnConfig } from '@/widgets';
 import { DEFAULT_DOCUMENT_TYPES, DocumentType } from '../lib';
 
 export function DocumentDatabaseSettingContainer() {
+  // アクティブな帳票タイプの管理
+  const [activeDocumentTypes, setActiveDocumentTypes] = useState<DocumentType[]>(DEFAULT_DOCUMENT_TYPES);
+
   // 各帳票タイプのカラム設定を管理
   const [documentColumns, setDocumentColumns] = useState<Record<string, ColumnConfig[]>>(
     DEFAULT_DOCUMENT_TYPES.reduce((acc, type) => ({
@@ -89,10 +92,30 @@ export function DocumentDatabaseSettingContainer() {
     }));
   };
 
+  // 新しい帳票タイプを追加
+  const handleAddDocumentType = () => {
+    const newTypeId = `custom-${Date.now()}`;
+    const newType: DocumentType = {
+      id: newTypeId,
+      name: '新しい帳票',
+      defaultColumns: [],
+    };
+
+    setActiveDocumentTypes(prev => [...prev, newType]);
+    setDocumentColumns(prev => ({
+      ...prev,
+      [newTypeId]: [],
+    }));
+    setDocumentTypeNames(prev => ({
+      ...prev,
+      [newTypeId]: '新しい帳票',
+    }));
+  };
+
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
-    console.log('帳票データベース設定を保存:', { documentTypeNames, documentColumns });
+    console.log('帳票データベース設定を保存:', { activeDocumentTypes, documentTypeNames, documentColumns });
     alert('帳票データベース設定を保存しました');
   };
 
@@ -116,7 +139,7 @@ export function DocumentDatabaseSettingContainer() {
 
       {/* 各帳票タイプの設定エリア */}
       <div className="px-4 pb-4 space-y-8">
-        {DEFAULT_DOCUMENT_TYPES.map(type => (
+        {activeDocumentTypes.map(type => (
           <div key={type.id} className="space-y-4">
             {/* 帳票タイプヘッダー */}
             <div className="flex items-center gap-3">
@@ -139,6 +162,19 @@ export function DocumentDatabaseSettingContainer() {
             />
           </div>
         ))}
+
+        {/* 新しい帳票タイプ追加ボタン */}
+        <div className="flex justify-center pt-4">
+          <Button
+            onClick={handleAddDocumentType}
+            variant="outline"
+            size="lg"
+            className="flex items-center gap-2 border-2 border-dashed border-gray-300 text-gray-600 hover:border-gray-400 hover:text-gray-700 hover:bg-gray-50 py-6 px-8"
+          >
+            <Plus className="h-5 w-5" />
+            帳票タイプを追加
+          </Button>
+        </div>
       </div>
     </div>
   );
