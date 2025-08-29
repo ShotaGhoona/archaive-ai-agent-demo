@@ -4,18 +4,15 @@ export interface SelectOption {
   color: string;
 }
 
-export interface ColumnConfig {
+export interface DatabaseColumnSettingConfig {
   id: string;
   name: string;
   description?: string;
-  displayEnabled: boolean;
-  filterEnabled: boolean;
   dataType: 'text' | 'number' | 'date' | 'select' | 'user' | 'boolean';
-  order: number;
   options?: SelectOption[]; // select用の選択肢（色付き）
 }
 
 export interface DatabaseConfig {
-  columns: ColumnConfig[];
+  columns: DatabaseColumnSettingConfig[];
   lastUpdated: string;
 }

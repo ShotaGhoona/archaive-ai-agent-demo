@@ -4,14 +4,14 @@ import { useState } from 'react';
 import { Button } from '@/shared';
 import { Save } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
-import { ColumnConfig } from '@/widgets';
+import { DatabaseColumnSettingConfig } from '@/widgets';
 import { CUSTOMER_COLUMN_SETTING_CONFIGS } from '../lib';
 
 export function CustomerDatabaseSettingContainer() {
-  const [columns, setColumns] = useState<ColumnConfig[]>(CUSTOMER_COLUMN_SETTING_CONFIGS);
+  const [columns, setColumns] = useState<DatabaseColumnSettingConfig[]>(CUSTOMER_COLUMN_SETTING_CONFIGS);
 
   // 列設定の更新
-  const handleUpdateColumn = (id: string, updates: Partial<ColumnConfig>) => {
+  const handleUpdateColumn = (id: string, updates: Partial<DatabaseColumnSettingConfig>) => {
     setColumns(prev => prev.map(col => 
       col.id === id ? { ...col, ...updates } : col
     ));
@@ -24,33 +24,14 @@ export function CustomerDatabaseSettingContainer() {
 
   // 新規列の追加
   const handleAddColumn = () => {
-    const maxOrder = Math.max(...columns.map(col => col.order), 0);
-    const newColumn: ColumnConfig = {
+    const newColumn: DatabaseColumnSettingConfig = {
       id: `custom-${Date.now()}`,
       name: '',
       description: '',
-      displayEnabled: true,
-      filterEnabled: false,
       dataType: 'text',
-      order: maxOrder + 1,
     };
     
     setColumns(prev => [...prev, newColumn]);
-  };
-
-  // 列の順序変更
-  const handleReorderColumns = (startIndex: number, endIndex: number) => {
-    const sortedColumns = [...columns].sort((a, b) => a.order - b.order);
-    const [removed] = sortedColumns.splice(startIndex, 1);
-    sortedColumns.splice(endIndex, 0, removed);
-    
-    // order値を再計算
-    const reorderedColumns = sortedColumns.map((col, index) => ({
-      ...col,
-      order: index + 1,
-    }));
-    
-    setColumns(reorderedColumns);
   };
 
   // 設定の保存
@@ -86,7 +67,6 @@ export function CustomerDatabaseSettingContainer() {
             onUpdateColumn={handleUpdateColumn}
             onDeleteColumn={handleDeleteColumn}
             onAddColumn={handleAddColumn}
-            onReorderColumns={handleReorderColumns}
           />
         </div>
       </div>

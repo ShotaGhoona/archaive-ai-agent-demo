@@ -1,326 +1,255 @@
-import { ColumnConfig } from '@/widgets';
+import { DatabaseColumnSettingConfig } from '@/widgets';
+import { Briefcase, FileText, File } from 'lucide-react';
+import { DocumentCategory } from '../model/types';
 
-// 帳票タイプの定義
-export interface DocumentType {
-  id: string;
-  name: string;
-  defaultColumns: ColumnConfig[];
-}
+// 仕様書のカラム設定（製品関連）
+const SPECIFICATION_COLUMNS: DatabaseColumnSettingConfig[] = [];
 
-// 検査帳票のカラム設定
-const INSPECTION_COLUMNS: ColumnConfig[] = [
+// 工程図面のカラム設定（製品関連）
+const PROCESS_DRAWING_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
+// 治具・ツールのカラム設定（製品関連）
+const JIG_TOOL_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
+// 外注見積書のカラム設定（製品関連）
+const OUTSOURCE_QUOTE_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
-    id: 'name',
-    name: '帳票名',
-    description: '検査帳票の名前',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 1,
-  },
-  {
-    id: 'project_name',
-    name: 'プロジェクト名',
-    description: '紐付く案件名',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 2,
-  },
-  {
-    id: 'inspection_items_count',
-    name: '検査項目数',
-    description: '検査項目の総数',
-    displayEnabled: true,
-    filterEnabled: false,
+    id: 'quantity',
+    name: '数量',
+    description: '見積対象数量',
     dataType: 'number',
-    order: 3,
   },
   {
-    id: 'inspection_date',
-    name: '検査日',
-    description: '検査を実施した日付',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'date',
-    order: 4,
+    id: 'unit_price',
+    name: '単価',
+    description: '見積単価',
+    dataType: 'number',
   },
   {
-    id: 'inspection_result',
-    name: '検査結果',
-    description: '検査の合否結果',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'select',
-    order: 5,
-    options: [
-      { id: 'pass', label: '合格', color: '#10B981' },
-      { id: 're-inspect', label: '要再検査', color: '#EF4444' },
-      { id: 'inspecting', label: '検査中', color: '#3B82F6' },
-      { id: 'waiting', label: '検査待ち', color: '#F59E0B' }
-    ],
-  },
-  {
-    id: 'approval_status',
-    name: '承認状況',
-    description: '検査結果の承認状況',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'select',
-    order: 6,
-    options: [
-      { id: 'approved', label: '承認済み', color: '#10B981' },
-      { id: 'pending', label: '未承認', color: '#F59E0B' },
-      { id: 'rejected', label: '差し戻し', color: '#EF4444' }
-    ],
-  },
-  {
-    id: 'updated_at',
-    name: '最終更新日',
-    description: '帳票の最終更新日時',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'date',
-    order: 7,
+    id: 'quote_amount',
+    name: '見積金額',
+    description: '見積金額（数量×単価）',
+    dataType: 'number',
   },
 ];
 
+// 外注納品書のカラム設定（製品関連）
+const OUTSOURCE_DELIVERY_COLUMNS: DatabaseColumnSettingConfig[] = [
+  {
+    id: 'order_number',
+    name: '発注書番号',
+    description: '紐づく発注書番号',
+    dataType: 'text',
+  },
+  {
+    id: 'delivery_quantity',
+    name: '納品数量',
+    description: '実際に納品された数量',
+    dataType: 'number',
+  },
+  {
+    id: 'delivery_date',
+    name: '納品日',
+    description: '納品日',
+    dataType: 'date',
+  },
+];
+
+// 検査表のカラム設定（製品関連）
+const INSPECTION_SHEET_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
+// 工程表のカラム設定（製品関連）
+const PROCESS_SHEET_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
+// 生産計画表のカラム設定（製品関連）
+const PRODUCTION_PLAN_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
+// 検査成績書のカラム設定（製品関連）
+const INSPECTION_REPORT_COLUMNS: DatabaseColumnSettingConfig[] = [
+  {
+    id: 'inspection_datetime',
+    name: '検査日時',
+    description: '検査を行った日時',
+    dataType: 'date',
+  },
+  {
+    id: 'inspector_user_name',
+    name: '検査担当者',
+    description: '社内検査担当者',
+    dataType: 'user',
+  },
+];
+
+// 3DCADのカラム設定（製品関連）
+const CAD_3D_COLUMNS: DatabaseColumnSettingConfig[] = [];
+
 // 納品書のカラム設定
-const DELIVERY_COLUMNS: ColumnConfig[] = [
+const DELIVERY_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
-    id: 'name',
-    name: '帳票名',
-    description: '納品書の名前',
-    displayEnabled: true,
-    filterEnabled: true,
+    id: 'delivery_number',
+    name: '納品書番号',
+    description: '納品を識別する番号',
     dataType: 'text',
-    order: 1,
-  },
-  {
-    id: 'project_name',
-    name: 'プロジェクト名',
-    description: '紐付く案件名',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 2,
-  },
-  {
-    id: 'delivery_destination',
-    name: '納品先',
-    description: '製品の納品先',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 3,
   },
   {
     id: 'delivery_date',
     name: '納品日',
     description: '製品を納品した日付',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'date',
-    order: 4,
   },
   {
-    id: 'inspection_scheduled_date',
-    name: '検収予定日',
-    description: '顧客による検収の予定日',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'date',
-    order: 5,
-  },
-  {
-    id: 'inspection_status',
-    name: '検収状況',
-    description: '顧客による検収の状況',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'select',
-    order: 6,
-    options: [
-      { id: 'completed', label: '検収完了', color: '#10B981' },
-      { id: 'waiting', label: '検収待ち', color: '#F59E0B' },
-      { id: 'not-delivered', label: '未納品', color: '#6B7280' }
-    ],
-  },
-  {
-    id: 'updated_at',
-    name: '最終更新日',
-    description: '帳票の最終更新日時',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'date',
-    order: 7,
+    id: 'delivery_details',
+    name: '品目・数量',
+    description: '納品内容',
+    dataType: 'text',
   },
 ];
 
 // 見積書のカラム設定（仕様書から）
-const QUOTE_COLUMNS: ColumnConfig[] = [
-  {
-    id: 'quote_number',
-    name: '見積番号',
-    description: '見積書の管理番号',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 1,
-  },
-  {
-    id: 'customer_name',
-    name: '顧客名',
-    description: '見積先の顧客',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 2,
-  },
-  {
-    id: 'quote_details',
-    name: '品目・数量・単価',
-    description: '見積明細',
-    displayEnabled: true,
-    filterEnabled: false,
-    dataType: 'text',
-    order: 3,
-  },
+const QUOTE_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'total_amount',
     name: '金額',
     description: '見積総額',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'number',
-    order: 4,
   },
 ];
 
 // 受注書のカラム設定（仕様書から）
-const ORDER_COLUMNS: ColumnConfig[] = [
+const ORDER_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'order_number',
     name: '受注番号',
     description: '顧客からの注文番号',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'text',
-    order: 1,
   },
   {
     id: 'order_date',
     name: '受注日',
     description: '受注した日付',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'date',
-    order: 2,
-  },
-  {
-    id: 'customer_name',
-    name: '顧客名',
-    description: '受注元の顧客',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 3,
   },
 ];
 
 // 請求書のカラム設定（仕様書から）
-const INVOICE_COLUMNS: ColumnConfig[] = [
-  {
-    id: 'invoice_number',
-    name: '請求番号',
-    description: '請求書の管理番号',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 1,
-  },
+const INVOICE_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'invoice_date',
     name: '請求日',
     description: '請求書発行日',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'date',
-    order: 2,
-  },
-  {
-    id: 'total_amount',
-    name: '請求金額',
-    description: '請求総額',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'number',
-    order: 3,
   },
 ];
 
 // 送り状のカラム設定（仕様書から）
-const SHIPPING_COLUMNS: ColumnConfig[] = [
-  {
-    id: 'shipping_number',
-    name: '送り状番号',
-    description: '送り状の管理番号',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 1,
-  },
+const SHIPPING_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'shipping_date',
     name: '出荷日',
     description: '製品を出荷した日付',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'date',
-    order: 2,
-  },
-  {
-    id: 'shipping_destination',
-    name: '出荷先',
-    description: '製品の出荷先',
-    displayEnabled: true,
-    filterEnabled: true,
-    dataType: 'text',
-    order: 3,
   },
 ];
 
-// デフォルトの帳票タイプ
-export const DEFAULT_DOCUMENT_TYPES: DocumentType[] = [
+// デフォルトの帳票カテゴリ
+export const DEFAULT_DOCUMENT_CATEGORIES: DocumentCategory[] = [
   {
-    id: 'inspection',
-    name: '検査帳票',
-    defaultColumns: INSPECTION_COLUMNS,
+    id: 'project-related',
+    name: '案件に紐づく帳票',
+    description: '案件IDによる紐付けで管理される帳票群',
+    icon: Briefcase,
+    documentTypes: [
+      {
+        id: 'quote',
+        name: '見積書',
+        defaultColumns: QUOTE_COLUMNS,
+      },
+      {
+        id: 'order',
+        name: '受注書',
+        defaultColumns: ORDER_COLUMNS,
+      },
+      {
+        id: 'delivery',
+        name: '納品書',
+        defaultColumns: DELIVERY_COLUMNS,
+      },
+      {
+        id: 'invoice',
+        name: '請求書',
+        defaultColumns: INVOICE_COLUMNS,
+      },
+      {
+        id: 'shipping',
+        name: '送り状',
+        defaultColumns: SHIPPING_COLUMNS,
+      },
+    ],
   },
   {
-    id: 'delivery',
-    name: '納品書',
-    defaultColumns: DELIVERY_COLUMNS,
+    id: 'product-related',
+    name: '製品に紐づく帳票',
+    description: '製品IDによる紐付けで管理される帳票群',
+    icon: FileText,
+    documentTypes: [
+      {
+        id: 'specification',
+        name: '仕様書',
+        defaultColumns: SPECIFICATION_COLUMNS,
+      },
+      {
+        id: 'process_drawing',
+        name: '工程図面',
+        defaultColumns: PROCESS_DRAWING_COLUMNS,
+      },
+      {
+        id: 'jig_tool',
+        name: '治具・ツール',
+        defaultColumns: JIG_TOOL_COLUMNS,
+      },
+      {
+        id: 'outsource_quote',
+        name: '外注見積書',
+        defaultColumns: OUTSOURCE_QUOTE_COLUMNS,
+      },
+      {
+        id: 'outsource_delivery',
+        name: '外注納品書',
+        defaultColumns: OUTSOURCE_DELIVERY_COLUMNS,
+      },
+      {
+        id: 'inspection_sheet',
+        name: '検査表',
+        defaultColumns: INSPECTION_SHEET_COLUMNS,
+      },
+      {
+        id: 'process_sheet',
+        name: '工程表',
+        defaultColumns: PROCESS_SHEET_COLUMNS,
+      },
+      {
+        id: 'production_plan',
+        name: '生産計画表',
+        defaultColumns: PRODUCTION_PLAN_COLUMNS,
+      },
+      {
+        id: 'inspection_report',
+        name: '検査成績書',
+        defaultColumns: INSPECTION_REPORT_COLUMNS,
+      },
+      {
+        id: 'cad_3d',
+        name: '3DCAD',
+        defaultColumns: CAD_3D_COLUMNS,
+      },
+    ],
   },
   {
-    id: 'quote',
-    name: '見積書',
-    defaultColumns: QUOTE_COLUMNS,
-  },
-  {
-    id: 'order',
-    name: '受注書',
-    defaultColumns: ORDER_COLUMNS,
-  },
-  {
-    id: 'invoice',
-    name: '請求書',
-    defaultColumns: INVOICE_COLUMNS,
-  },
-  {
-    id: 'shipping',
-    name: '送り状',
-    defaultColumns: SHIPPING_COLUMNS,
+    id: 'general',
+    name: '一般帳票',
+    description: '独立して管理される帳票群',
+    icon: File,
+    documentTypes: [],
   },
 ];
 

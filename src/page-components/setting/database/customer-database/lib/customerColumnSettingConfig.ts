@@ -1,78 +1,51 @@
-import { ColumnConfig } from '@/widgets';
+import { DatabaseColumnSettingConfig } from '@/widgets';
 
 // Customerに特化したカラム定義（customerColumns.tsxベース）
-export const CUSTOMER_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [
+export const CUSTOMER_COLUMN_SETTING_CONFIGS: DatabaseColumnSettingConfig[] = [
   {
     id: 'customerCode',
     name: '取引先コード',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'text',
-    order: 1,
   },
   {
     id: 'customerName',
     name: '取引先名',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'text',
-    order: 2,
   },
   {
     id: 'contactPerson',
     name: '取引先担当者',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'text',
-    order: 3,
   },
   {
     id: 'salesRepresentative',
     name: '営業担当者',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'user',
-    order: 4,
   },
   {
     id: 'phoneNumber',
     name: '電話番号',
-    displayEnabled: true,
-    filterEnabled: false,
     dataType: 'text',
-    order: 5,
   },
   {
     id: 'faxNumber',
     name: 'FAX',
-    displayEnabled: true,
-    filterEnabled: false,
     dataType: 'text',
-    order: 6,
   },
   {
     id: 'email',
     name: 'メールアドレス',
-    displayEnabled: false,
-    filterEnabled: true,
     dataType: 'text',
-    order: 7,
   },
   {
     id: 'address',
     name: '住所',
-    displayEnabled: false,
-    filterEnabled: false,
     dataType: 'text',
-    order: 8,
   },
   {
     id: 'rank',
     name: 'ランク',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'select',
-    order: 9,
     options: [
       { id: 'rank-s', label: 'S', color: '#3b82f6' },
       { id: 'rank-a', label: 'A', color: '#6b7280' },
@@ -83,10 +56,7 @@ export const CUSTOMER_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [
   {
     id: 'industry',
     name: '業界',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'select',
-    order: 10,
     options: [
       { id: 'automotive', label: '自動車部品', color: '#10b981' },
       { id: 'industrial', label: '産業機械', color: '#3b82f6' },
@@ -100,26 +70,17 @@ export const CUSTOMER_COLUMN_SETTING_CONFIGS: ColumnConfig[] = [
   {
     id: 'contractDate',
     name: '契約開始日',
-    displayEnabled: false,
-    filterEnabled: true,
     dataType: 'date',
-    order: 11,
   },
   {
     id: 'lastContactDate',
     name: '最終連絡日',
-    displayEnabled: false,
-    filterEnabled: true,
     dataType: 'date',
-    order: 12,
   },
   {
     id: 'isActive',
     name: 'アクティブ',
-    displayEnabled: true,
-    filterEnabled: true,
     dataType: 'boolean',
-    order: 13,
   },
 ];
 
