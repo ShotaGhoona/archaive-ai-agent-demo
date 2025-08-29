@@ -1,5 +1,5 @@
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { Briefcase, FileText, File } from 'lucide-react';
+import { Briefcase, PenTool, File } from 'lucide-react';
 import { DocumentCategory } from '../model/types';
 
 // 全てのテーブルに共通の項目
@@ -453,7 +453,7 @@ export const DEFAULT_DOCUMENT_CATEGORIES: DocumentCategory[] = [
     id: 'product-related',
     name: '製品に紐づく帳票',
     description: '製品IDによる紐付けで管理される帳票群',
-    icon: FileText,
+    icon: PenTool,
     documentTypes: [
       {
         id: 'specification',

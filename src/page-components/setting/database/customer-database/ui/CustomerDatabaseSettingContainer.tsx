@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button, Input } from '@/shared';
-import { Save, Users, User } from 'lucide-react';
+import { Save, Users, Phone } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
 import { DEFAULT_CUSTOMER_TABLES, CustomerDatabaseService, CustomerTable, CustomerDatabaseState } from '../lib';
@@ -70,7 +70,7 @@ export function CustomerDatabaseSettingContainer() {
               {table.id === 'account' ? (
                 <Users className="h-6 w-6 text-primary" />
               ) : (
-                <User className="h-6 w-6 text-primary" />
+                <Phone className="h-6 w-6 text-primary" />
               )}
               <h2 className="text-xl font-semibold text-primary">{table.name}</h2>
             </div>

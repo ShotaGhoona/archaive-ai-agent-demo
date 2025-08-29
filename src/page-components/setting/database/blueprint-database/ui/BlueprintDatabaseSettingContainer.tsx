@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button, Input } from '@/shared';
-import { Save, FileImage } from 'lucide-react';
+import { Save, PenTool } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
 import { DEFAULT_BLUEPRINT_TABLES, BlueprintDatabaseService, BlueprintTable, BlueprintDatabaseState } from '../lib';
@@ -67,7 +67,7 @@ export function BlueprintDatabaseSettingContainer() {
           <div key={table.id} className="space-y-4">
             {/* テーブルヘッダー */}
             <div className="flex items-center gap-3">
-              <FileImage className="h-6 w-6 text-primary" />
+              <PenTool className="h-6 w-6 text-primary" />
               <h2 className="text-xl font-semibold text-primary">{table.name}</h2>
             </div>
             

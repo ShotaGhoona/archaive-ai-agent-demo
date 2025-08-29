@@ -1,11 +1,7 @@
 import { 
-  Info, 
   Building2,
-  Users,
   FileText,
   Lock,
-  Package,
-  GitBranch,
   Database,
   PenTool,
   ScrollText
@@ -31,25 +27,11 @@ export const settingSections: SettingSection[] = [
     title: "基本設定",
     items: [
       {
-        id: "profile",
-        label: "プロフィール",
-        icon: <Info className="w-4 h-4" />,
-        href: "/setting/profile",
-        description: "ユーザーのプロフィール情報を管理"
-      },
-      {
         id: "company-info",
         label: "自社情報設定",
         icon: <Building2 className="w-4 h-4" />,
         href: "/setting/company-info",
         description: "会社情報、住所、連絡先、ロゴやフォントを設定"
-      },
-      {
-        id: "customer-list",
-        label: "顧客リスト",
-        icon: <Users className="w-4 h-4" />,
-        href: "/setting/customer-list",
-        description: "顧客情報の閲覧・管理"
       },
       {
         id: "reports",
@@ -67,26 +49,27 @@ export const settingSections: SettingSection[] = [
       }
     ]
   },
-  {
-    id: "master",
-    title: "マスター設定",
-    items: [
-      {
-        id: "material-master",
-        label: "(材料マスター設定)",
-        icon: <Package className="w-4 h-4" />,
-        href: "/setting/material-master",
-        description: "建材や部品のマスターデータを管理"
-      },
-      {
-        id: "process-master",
-        label: "(工程マスター設定)",
-        icon: <GitBranch className="w-4 h-4" />,
-        href: "/setting/process-master",
-        description: "工事・製造工程のマスターデータを管理"
-      }
-    ]
-  },
+  // ver2.1 ではスコープ外
+  // {
+  //   id: "master",
+  //   title: "マスター設定",
+  //   items: [
+  //     {
+  //       id: "material-master",
+  //       label: "(材料マスター設定)",
+  //       icon: <Package className="w-4 h-4" />,
+  //       href: "/setting/material-master",
+  //       description: "建材や部品のマスターデータを管理"
+  //     },
+  //     {
+  //       id: "process-master",
+  //       label: "(工程マスター設定)",
+  //       icon: <GitBranch className="w-4 h-4" />,
+  //       href: "/setting/process-master",
+  //       description: "工事・製造工程のマスターデータを管理"
+  //     }
+  //   ]
+  // },
   {
     id: "database",
     title: "データベース設定",
@@ -135,8 +118,3 @@ export const settingSections: SettingSection[] = [
     ]
   }
 ];
-
-export const appInfo = {
-  version: "1.0.0",
-  copyright: "© 2024 ARCHAIVE"
-};
