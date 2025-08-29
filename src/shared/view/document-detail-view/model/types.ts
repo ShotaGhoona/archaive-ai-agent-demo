@@ -1,7 +1,6 @@
 export interface DocumentData {
   [key: string]: any;
   image_url: string;
-  project_id: string;
   modified_date: string;
 }
 
