@@ -76,7 +76,8 @@ export default function Layout({ children }: LayoutProps) {
         
         {showRevisionBlueprints && (
           <RevisionBlueprintBar
-            revisionBlueprints={revisionBlueprintsData.revisionBlueprints}
+            blueprints={revisionBlueprintsData.revisionBlueprints}
+            currentPath="basic-information"
             onCompare={handleRevisionCompare}
           />
         )}

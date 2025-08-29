@@ -1,13 +1,7 @@
 'use client';
 import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger, Button } from "@/shared/shadcnui";
-import { RevisionBlueprint } from "../model/revisionBlueprintTypes";
+import { RevisionBlueprint, RevisionBlueprintBarProps } from "../model/types";
 import { FileText, GitCompareArrows, ExternalLink, Briefcase } from "lucide-react";
-
-interface RevisionBlueprintBarProps {
-  blueprints: RevisionBlueprint[];
-  currentPath: string; // 'basic-information', 'estimate', 'similar' など
-  onCompare?: (blueprint: RevisionBlueprint) => void;
-}
 
 export function RevisionBlueprintBar({ 
   blueprints, 
@@ -35,7 +29,7 @@ export function RevisionBlueprintBar({
   return (
     <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-white via-white/50 to-transparent backdrop-blur-sm border-b">
       <div className="flex items-center gap-3 h-full overflow-x-auto p-4">
-        {blueprints.map((blueprint) => (
+        {blueprints?.map((blueprint) => (
           <Tooltip key={blueprint.id} delayDuration={300}>
             <TooltipTrigger asChild>
               <div className="flex-shrink-0">
@@ -157,7 +151,7 @@ export function RevisionBlueprintBar({
           </Tooltip>
         ))}
         
-        {blueprints.length === 0 && (
+        {(!blueprints || blueprints.length === 0) && (
           <div className="text-sm text-gray-500">
             リビジョン図面はありません
           </div>

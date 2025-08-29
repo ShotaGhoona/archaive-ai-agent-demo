@@ -36,7 +36,8 @@ export interface SameProjectBlueprint {
 
 // Props interfaces
 export interface RevisionBlueprintBarProps {
-  revisionBlueprints: RevisionBlueprint[];
+  blueprints: RevisionBlueprint[];
+  currentPath: string;
   onCompare?: (blueprint: RevisionBlueprint) => void;
 }
 
@@ -49,7 +50,7 @@ export interface RevisionBlueprintCompareModalProps {
   isOpen: boolean;
   onClose: () => void;
   currentBlueprint?: any; // BlueprintView型 - オプショナル
-  revisionBlueprint?: RevisionBlueprint; // オプショナル
+  revisionBlueprint?: RevisionBlueprint | null; // null も許可
 }
 
 export interface QuickAccessControlsProps {
