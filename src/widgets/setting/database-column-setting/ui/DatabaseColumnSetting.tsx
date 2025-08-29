@@ -26,7 +26,7 @@ import { ColumnConfig, SelectOption } from '../model';
 import { SelectOptionsManager } from '../ui';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 
-interface ColumnDefineAreaProps {
+interface DatabaseColumnSettingProps {
   columns: ColumnConfig[];
   onUpdateColumn: (id: string, updates: Partial<ColumnConfig>) => void;
   onDeleteColumn: (id: string) => void;
@@ -34,13 +34,13 @@ interface ColumnDefineAreaProps {
   onReorderColumns: (startIndex: number, endIndex: number) => void;
 }
 
-export function ColumnDefineArea({ 
+export function DatabaseColumnSetting({ 
   columns, 
   onUpdateColumn, 
   onDeleteColumn, 
   onAddColumn,
   onReorderColumns,
-}: ColumnDefineAreaProps) {
+}: DatabaseColumnSettingProps) {
   const handleUpdate = (id: string, updates: Partial<ColumnConfig>) => {
     onUpdateColumn(id, updates);
   };

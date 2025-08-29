@@ -19,11 +19,3 @@ export interface DatabaseConfig {
   columns: ColumnConfig[];
   lastUpdated: string;
 }
-
-
-// Widget用のプロパティ型
-export interface DatabaseColumnSettingProps {
-  defaultColumns: ColumnConfig[];
-  databaseType: string;
-  pageTitle: string;
-}
