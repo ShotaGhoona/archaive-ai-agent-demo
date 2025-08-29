@@ -3,20 +3,20 @@
 import { useState } from "react";
 import { Card, CardContent, Button } from "@/shared";
 import { FileText } from "lucide-react";
-import { QuotationData } from "../model";
-import { QuotationRegistrationDialog } from "./QuotationRegistrationDialog";
+import { OrderData } from "../model";
+import { OrderRegistrationDialog } from "./OrderRegistrationDialog";
 
-interface QuotationListProps {
-  quotations: QuotationData[];
+interface OrderListProps {
+  orders: OrderData[];
   selectedId: string;
-  onSelectQuotation: (quotation: QuotationData) => void;
+  onSelectOrder: (order: OrderData) => void;
 }
 
-export function QuotationList({ quotations, selectedId, onSelectQuotation }: QuotationListProps) {
+export function OrderList({ orders, selectedId, onSelectOrder }: OrderListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSelectQuotation = (quotation: QuotationData) => {
-    onSelectQuotation(quotation);
+  const handleSelectOrder = (order: OrderData) => {
+    onSelectOrder(order);
   };
 
   const handleOpenDialog = () => {
@@ -29,7 +29,6 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
 
   return (
     <div className="h-full bg-white border-r flex flex-col">
-      {/* 見積書リスト */}
       <div className="flex-1 p-4 pt-0 space-y-4 mt-4">
         <Button 
           size="lg" 
@@ -38,17 +37,17 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
           onClick={handleOpenDialog}
         >
           <FileText className="h-4 w-4 mr-2" />
-          見積書を登録or作成
+          受注書を登録or作成
         </Button>
-        {quotations
+        {orders
           .sort((a, b) => new Date(b.modified_date).getTime() - new Date(a.modified_date).getTime())
-          .map((quotation) => (
+          .map((order) => (
           <Card 
-            key={quotation.quote_id}
-            onClick={() => handleSelectQuotation(quotation)}
+            key={order.order_id}
+            onClick={() => handleSelectOrder(order)}
             className={`
               cursor-pointer transition-all duration-200 group relative py-1
-              ${selectedId === quotation.quote_id 
+              ${selectedId === order.order_id 
                 ? 'ring-2 ring-primary' 
                 : 'hover:shadow-md hover:bg-gray-50'
               }
@@ -57,10 +56,10 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
             <CardContent className="p-2">
               <div className="space-y-2">
                 <div className="aspect-video w-full bg-gray-100 rounded overflow-hidden">
-                  {quotation.image_url ? (
+                  {order.image_url ? (
                     <img 
-                      src={quotation.image_url} 
-                      alt={quotation.quote_number}
+                      src={order.image_url} 
+                      alt={order.order_number}
                       className="w-full h-full object-cover"
                       loading="lazy"
                     />
@@ -72,10 +71,10 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
                 </div>
                 <div className="px-1">
                   <h4 className="text-xs font-medium text-gray-900 truncate">
-                    {quotation.quote_number}
+                    {order.order_number}
                   </h4>
                   <p className="text-xs text-gray-500 mt-1">
-                    {new Date(quotation.created_date).toLocaleDateString('ja-JP')}
+                    {new Date(order.created_date).toLocaleDateString('ja-JP')}
                   </p>
                 </div>
               </div>
@@ -84,7 +83,7 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
         ))}
       </div>
 
-      <QuotationRegistrationDialog
+      <OrderRegistrationDialog
         isOpen={isDialogOpen}
         onClose={handleCloseDialog}
       />
