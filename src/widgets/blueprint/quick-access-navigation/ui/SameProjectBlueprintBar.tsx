@@ -1,18 +1,14 @@
 'use client';
 import { Card, CardContent, Tooltip, TooltipContent, TooltipTrigger, Button } from "@/shared/shadcnui";
-import { SameProjectBlueprint } from "../model/sameProjectBlueprintTypes";
+import { SameProjectBlueprint, SameProjectBlueprintBarProps } from "../model";
 import { FileText, ExternalLink, Briefcase } from "lucide-react";
 
-interface SameProjectBlueprintBarProps {
-  blueprints: SameProjectBlueprint[];
-  projectId: string;
-  currentPath: string; // 'basic-information', 'estimate', 'similar' など
-}
-
 export function SameProjectBlueprintBar({ 
-  blueprints, 
-  currentPath 
+  sameProjectBlueprints, 
+  projectId 
 }: SameProjectBlueprintBarProps) {
+  // デフォルトの現在のパス（実際の実装では usePathname() などで取得）
+  const currentPath = 'basic-information';
   const getStatusIndicator = (status: SameProjectBlueprint['status']) => {
     switch (status) {
       case 'completed':
@@ -43,7 +39,7 @@ export function SameProjectBlueprintBar({
   return (
     <div className="absolute top-0 left-0 right-0 z-20 bg-gradient-to-b from-white via-white/50 to-transparent backdrop-blur-sm border-b">
       <div className="flex items-center gap-3 h-full overflow-x-auto p-4">
-        {blueprints.map((blueprint) => (
+        {sameProjectBlueprints.map((blueprint) => (
           <Tooltip key={blueprint.id} delayDuration={300}>
             <TooltipTrigger asChild>
               <div className="flex-shrink-0">
@@ -129,7 +125,7 @@ export function SameProjectBlueprintBar({
           </Tooltip>
         ))}
         
-        {blueprints.length === 0 && (
+        {sameProjectBlueprints.length === 0 && (
           <div className="text-sm text-gray-500">
             同一案件の図面はありません
           </div>
