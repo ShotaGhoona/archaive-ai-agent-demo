@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input } from '@/shared';
+import { Button } from '@/shared';
 import { Save, Users, Phone } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DEFAULT_CUSTOMER_TABLES, CustomerDatabaseService, CustomerTable, CustomerDatabaseState } from '../lib';
+import { DEFAULT_CUSTOMER_TABLES, CustomerDatabaseService, CustomerDatabaseState } from '../lib';
 
 export function CustomerDatabaseSettingContainer() {
   // データベース状態の管理

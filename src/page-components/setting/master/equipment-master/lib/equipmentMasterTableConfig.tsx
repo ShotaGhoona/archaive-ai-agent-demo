@@ -51,7 +51,14 @@ export const createEquipmentMasterTableConfig = (): TableViewConfig<EquipmentMas
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['加工機械', '溶接機械', '測定機器', '搬送機械', '熱処理', 'その他'],
+      selectOptions: [
+        { label: '加工機械', color: 'blue' },
+        { label: '溶接機械', color: 'orange' },
+        { label: '測定機器', color: 'green' },
+        { label: '搬送機械', color: 'purple' },
+        { label: '熱処理', color: 'red' },
+        { label: 'その他', color: 'gray' }
+      ],
       render: (_, value: unknown) => (
         <Badge className={`${getCategoryColor(String(value))}`}>
           {String(value)}

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { BasicInformationForm } from "@/widgets";
-import { blueprintData } from "@/page-components/blueprint/home/data";
+import { blueprintData } from "@/data";
 import { BlueprintViewContainer } from "@/widgets/blueprint/blueprint-view/ui/BlueprintViewContainer";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { blueprintBasicInformationResizableLayoutConfig } from "../lib";
@@ -22,7 +22,7 @@ export function BlueprintBasicInformationContainer() {
       <ResizablePanel index={1}>
         <div className="h-full overflow-auto">
           <BasicInformationForm 
-            initialData={blueprintData.basicInformation || {}}
+            initialData={blueprintData || {}}
           />
         </div>
       </ResizablePanel>

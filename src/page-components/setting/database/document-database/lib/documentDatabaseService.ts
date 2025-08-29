@@ -1,5 +1,5 @@
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DocumentCategory, DocumentType } from '../model/types';
+import { DocumentCategory } from '../model/types';
 import { createNewDocument } from './documentTypeFactory';
 
 export interface DocumentDatabaseState {

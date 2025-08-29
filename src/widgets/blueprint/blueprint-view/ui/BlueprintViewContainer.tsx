@@ -33,10 +33,7 @@ export function BlueprintViewContainer({
   onAddView,
   onDownload,
   onPrint,
-  onEdit,
-  onRevisionComparison,
-  onSameBlueprints,
-  onFileDrop
+  onEdit
 }: BlueprintViewContainerProps) {
   const [views, setViews] = useState<BlueprintViewContainerData[]>(
     blueprintViews || (blueprintViewsData.blueprintViews as BlueprintViewContainerData[])
@@ -86,7 +83,7 @@ export function BlueprintViewContainer({
     onDownload?.();
   }, [onDownload]);
 
-  const printFile = useCallback((url?: string, name?: string) => {
+  const printFile = useCallback((url?: string) => {
     if (!url) return;
     const printWindow = window.open(url, '_blank');
     printWindow?.print();
@@ -127,7 +124,7 @@ export function BlueprintViewContainer({
             <Button
               variant="outline"
               size="lg"
-              onClick={() => printFile(activeViewData.imageUrl, activeViewData.name)}
+              onClick={() => printFile(activeViewData.imageUrl)}
               title="印刷"
             >
               <Printer className="h-5 w-5" />

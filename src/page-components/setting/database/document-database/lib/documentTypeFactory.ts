@@ -1,6 +1,6 @@
 import { DatabaseColumnSettingConfig } from '@/widgets';
 import { DocumentType } from '../model/types';
-import { COMMON_COLUMNS } from './documentColumnSettingConfig';
+import { DOCUMENT_COMMON_COLUMNS } from './documentColumnSettingConfig';
 
 /**
  * 新しい帳票タイプを生成するためのファクトリー関数
@@ -47,7 +47,7 @@ export function createNewDocument(categoryId: string): {
   };
 
   // デフォルトカラム = 帳票ID + カテゴリID + 共通項目
-  const defaultColumns = [typeIdColumn, categoryIdColumn, ...COMMON_COLUMNS];
+  const defaultColumns = [typeIdColumn, categoryIdColumn, ...DOCUMENT_COMMON_COLUMNS];
 
   const newType: DocumentType = {
     id: newTypeId,

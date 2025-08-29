@@ -3,7 +3,7 @@ import { Briefcase, PenTool, File } from 'lucide-react';
 import { DocumentCategory } from '../model/types';
 
 // 全てのテーブルに共通の項目
-export const COMMON_COLUMNS: DatabaseColumnSettingConfig[] = [
+export const DOCUMENT_COMMON_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'created_date',
     name: '作成日時',
@@ -77,7 +77,7 @@ const SPECIFICATION_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 工程図面のカラム設定（製品関連）
@@ -102,7 +102,7 @@ const PROCESS_DRAWING_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 治具・ツールのカラム設定（製品関連）
@@ -127,7 +127,7 @@ const JIG_TOOL_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 外注見積書のカラム設定（製品関連）
@@ -189,7 +189,7 @@ const OUTSOURCE_QUOTE_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 外注納品書のカラム設定（製品関連）
@@ -251,7 +251,7 @@ const OUTSOURCE_DELIVERY_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 検査表のカラム設定（製品関連）
@@ -276,7 +276,7 @@ const INSPECTION_SHEET_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 工程表のカラム設定（製品関連）
@@ -301,7 +301,7 @@ const PROCESS_SHEET_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 生産計画表のカラム設定（製品関連）
@@ -326,7 +326,7 @@ const PRODUCTION_PLAN_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 検査成績書のカラム設定（製品関連）
@@ -369,7 +369,7 @@ const INSPECTION_REPORT_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 3DCADのカラム設定（製品関連）
@@ -393,7 +393,7 @@ const CAD_3D_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 納品書のカラム設定
@@ -455,7 +455,7 @@ const DELIVERY_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: false,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 
@@ -509,7 +509,7 @@ const ORDER_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 請求書のカラム設定（仕様書から）
@@ -534,7 +534,7 @@ const INVOICE_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 // 送り状のカラム設定（仕様書から）
@@ -568,7 +568,7 @@ const SHIPPING_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...DOCUMENT_COMMON_COLUMNS,
 ];
 
 

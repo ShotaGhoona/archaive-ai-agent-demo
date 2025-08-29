@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input } from '@/shared';
+import { Button } from '@/shared';
 import { Save, PenTool } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DEFAULT_BLUEPRINT_TABLES, BlueprintDatabaseService, BlueprintTable, BlueprintDatabaseState } from '../lib';
+import { DEFAULT_BLUEPRINT_TABLES, BlueprintDatabaseService, BlueprintDatabaseState } from '../lib';
 
 export function BlueprintDatabaseSettingContainer() {
   // データベース状態の管理

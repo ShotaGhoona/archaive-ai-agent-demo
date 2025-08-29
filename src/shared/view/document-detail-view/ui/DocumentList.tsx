@@ -86,7 +86,7 @@ export function DocumentList<T extends DocumentData>({
                       {config.dataConfig.getItemTitle(item)}
                     </h4>
                     <p className="text-xs text-gray-500 mt-1">
-                      {new Date(item.created_date).toLocaleDateString('ja-JP')}
+                      {new Date(item.modified_date).toLocaleDateString('ja-JP')}
                     </p>
                   </div>
                 </div>

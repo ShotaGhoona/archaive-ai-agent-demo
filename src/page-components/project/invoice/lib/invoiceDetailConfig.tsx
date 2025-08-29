@@ -1,4 +1,3 @@
-import React from 'react';
 import { DocumentDetailViewConfig } from '@/shared/view/document-detail-view';
 import { InvoiceData } from '../model';
 
@@ -18,11 +17,6 @@ export const createInvoiceDetailConfig = (): DocumentDetailViewConfig<InvoiceDat
     showDeleteButton: true,
     showDownloadButton: true,
     showPrintButton: true,
-    customButtonsRender: (item, onUpdate) => (
-      <>
-        {/* Invoice用は基本ボタン + カスタムボタンなし */}
-      </>
-    ),
   },
   
   createConfig: {

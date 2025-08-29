@@ -1,11 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Button, Input } from '@/shared';
+import { Button } from '@/shared';
 import { Briefcase, Save } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DEFAULT_PROJECT_TABLES, ProjectDatabaseService, ProjectTable, ProjectDatabaseState } from '../lib';
+import { DEFAULT_PROJECT_TABLES, ProjectDatabaseService, ProjectDatabaseState } from '../lib';
 
 export function ProjectDatabaseSettingContainer() {
   // データベース状態の管理

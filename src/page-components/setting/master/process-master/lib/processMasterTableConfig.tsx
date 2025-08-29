@@ -62,7 +62,14 @@ export const createProcessMasterTableConfig = (): TableViewConfig<ProcessMaster>
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['加工', '組立', '検査', '塗装', '溶接', 'その他'],
+      selectOptions: [
+        { label: '加工', color: 'blue' },
+        { label: '組立', color: 'green' },
+        { label: '検査', color: 'orange' },
+        { label: '塗装', color: 'purple' },
+        { label: '溶接', color: 'red' },
+        { label: 'その他', color: 'gray' }
+      ],
       render: (_, value: unknown) => (
         <Badge className={`${getCategoryColor(String(value))}`}>
           {String(value)}

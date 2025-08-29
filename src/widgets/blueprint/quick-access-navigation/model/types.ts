@@ -1,5 +1,7 @@
 // Quick Access Navigation関連の型定義
 
+import { BlueprintViewContainerData } from '../../blueprint-view/model/types';
+
 export interface RevisionBlueprint {
   id: string;
   name: string;
@@ -49,8 +51,8 @@ export interface SameProjectBlueprintBarProps {
 export interface RevisionBlueprintCompareModalProps {
   isOpen: boolean;
   onClose: () => void;
-  currentBlueprint?: any; // BlueprintView型 - オプショナル
-  revisionBlueprint?: RevisionBlueprint | null; // null も許可
+  currentBlueprint?: BlueprintViewContainerData;
+  revisionBlueprint?: RevisionBlueprint | null;
 }
 
 export interface QuickAccessControlsProps {

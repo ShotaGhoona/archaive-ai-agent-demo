@@ -1,5 +1,4 @@
 export interface DocumentData {
-  [key: string]: any;
   image_url: string;
   modified_date: string;
 }
@@ -28,7 +27,7 @@ export interface DocumentDetailViewConfig<T extends DocumentData> {
     showDeleteButton: boolean;
     showDownloadButton: boolean;
     showPrintButton: boolean;
-    customButtonsRender: (item: T, onUpdate: (data: Partial<T>) => void) => React.ReactNode;
+    customButtonsRender?: (item: T, onUpdate: (data: Partial<T>) => void) => React.ReactNode;
   };
   
   createConfig: {

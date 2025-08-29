@@ -1,4 +1,3 @@
-import React from 'react';
 import { DocumentDetailViewConfig } from '@/shared/view/document-detail-view';
 import { SpecificationData } from '../model';
 
@@ -18,11 +17,6 @@ export const createSpecificationDetailConfig = (): DocumentDetailViewConfig<Spec
     showDeleteButton: true,
     showDownloadButton: true,
     showPrintButton: true,
-    customButtonsRender: (item, onUpdate) => (
-      <>
-        {/* Specification用は基本ボタン + カスタムボタンなし */}
-      </>
-    ),
   },
   
   createConfig: {

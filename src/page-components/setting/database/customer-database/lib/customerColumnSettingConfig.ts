@@ -1,7 +1,7 @@
 import { DatabaseColumnSettingConfig } from '@/widgets';
 
 // 全てのテーブルに共通の項目
-export const COMMON_COLUMNS: DatabaseColumnSettingConfig[] = [
+export const CUSTOMER_COMMON_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
     id: 'created_date',
     name: '作成日時',
@@ -155,7 +155,7 @@ const ACCOUNT_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...CUSTOMER_COMMON_COLUMNS,
 ];
 
 // 連絡先テーブルのカラム設定
@@ -306,7 +306,7 @@ const CONTACT_COLUMNS: DatabaseColumnSettingConfig[] = [
     showInBasicInfo: true,
     showInTable: true,
   },
-  ...COMMON_COLUMNS,
+  ...CUSTOMER_COMMON_COLUMNS,
 ];
 
 // デフォルトのテーブル定義

@@ -1,4 +1,4 @@
-export { DEFAULT_DOCUMENT_CATEGORIES, COMMON_COLUMNS } from './documentColumnSettingConfig';
+export { DEFAULT_DOCUMENT_CATEGORIES, DOCUMENT_COMMON_COLUMNS } from './documentColumnSettingConfig';
 export { createNewDocument } from './documentTypeFactory';
 export { DocumentDatabaseService } from './documentDatabaseService';
 export type { DocumentType, DocumentCategory } from '../model';

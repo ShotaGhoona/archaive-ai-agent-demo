@@ -1,4 +1,3 @@
-import React from 'react';
 import { DocumentDetailViewConfig } from '@/shared/view/document-detail-view';
 import { ShippingData } from '../model';
 
@@ -18,11 +17,6 @@ export const createShippingDetailConfig = (): DocumentDetailViewConfig<ShippingD
     showDeleteButton: true,
     showDownloadButton: true,
     showPrintButton: true,
-    customButtonsRender: (item, onUpdate) => (
-      <>
-        {/* Shipping用は基本ボタン + カスタムボタンなし */}
-      </>
-    ),
   },
   
   createConfig: {

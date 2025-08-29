@@ -63,7 +63,13 @@ export const createMaterialMasterTableConfig = (): TableViewConfig<MaterialMaste
       locked: false,
       inputType: 'select',
       sortType: 'string',
-      selectOptions: ['鉄鋼', 'アルミニウム', 'ステンレス', '樹脂', 'その他'],
+      selectOptions: [
+        { label: '鉄鋼', color: 'gray' },
+        { label: 'アルミニウム', color: 'blue' },
+        { label: 'ステンレス', color: 'green' },
+        { label: '樹脂', color: 'purple' },
+        { label: 'その他', color: 'orange' }
+      ],
       render: (_, value: unknown) => (
         <Badge className={`${getCategoryColor(String(value))}`}>
           {String(value)}

@@ -10,7 +10,6 @@ interface UserFieldComponentProps<T> {
 }
 
 export function UserFieldComponent<T>({
-  item,
   column,
   value,
   onChange,
