@@ -61,11 +61,12 @@ export function BlueprintDatabaseSettingContainer() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div>
       {/* ページヘッダー */}
       <div className="p-4">
         <div className="flex items-center justify-between space-x-4">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 text-2xl font-bold">
+            製品関連データベース設定
           </div>
           
           <div className="flex items-center space-x-2">

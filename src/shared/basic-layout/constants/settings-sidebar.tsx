@@ -111,6 +111,13 @@ export const settingSections: SettingSection[] = [
         icon: <Database className="w-4 h-4" />,
         href: "/setting/customer-database",
         description: "顧客テーブルの自由項目設定"
+      },
+      {
+        id: "document-database",
+        label: "帳票データベース設定",
+        icon: <FileText className="w-4 h-4" />,
+        href: "/setting/document-database",
+        description: "帳票テーブルの自由項目設定"
       }
     ]
   },
