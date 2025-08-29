@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { EstimateInformation, BlueprintDetailLayout, EstimateCalculation } from "@/widgets";
-import { BlueprintFile } from "@/widgets/blueprint/blueprint-view/model";
+import { EstimateInformation, EstimateCalculation } from "@/widgets";
+import { BlueprintViewContainer } from "@/widgets/blueprint/blueprint-view/ui/BlueprintViewContainer";
+import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
+import { blueprintEstimateResizableLayoutConfig } from "../lib";
 
 interface BlueprintEstimateContainerProps {
-  activeFile: BlueprintFile | null;
   onSave?: (estimateData: Partial<EstimateInformation >) => void;
 }
 
@@ -24,11 +25,23 @@ export function BlueprintEstimateContainer({ onSave }: BlueprintEstimateContaine
   };
 
   return (
-    <BlueprintDetailLayout>
-      <EstimateCalculation
-        dimensions={DIMENSIONS}
-        onSave={handleSave}
-      />
-    </BlueprintDetailLayout>
+    <ResizableLayout config={blueprintEstimateResizableLayoutConfig}>
+      {/* 左側: 図面ビューエリア */}
+      <ResizablePanel index={0}>
+        <BlueprintViewContainer />
+      </ResizablePanel>
+      
+      <ResizableHandle />
+      
+      {/* 右側: 見積計算フォーム */}
+      <ResizablePanel index={1}>
+        <div className="h-full overflow-auto">
+          <EstimateCalculation
+            dimensions={DIMENSIONS}
+            onSave={handleSave}
+          />
+        </div>
+      </ResizablePanel>
+    </ResizableLayout>
   );
 }
