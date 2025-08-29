@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { blueprintData, BasicInformationForm } from "@/widgets";
+import { BasicInformationForm } from "@/widgets";
+import { blueprintData } from "@/page-components/blueprint/home/data";
 import { BlueprintViewContainer } from "@/widgets/blueprint/blueprint-view/ui/BlueprintViewContainer";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { blueprintBasicInformationResizableLayoutConfig } from "../lib";

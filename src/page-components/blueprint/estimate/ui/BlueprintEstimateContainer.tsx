@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { EstimateInformation, EstimateCalculation } from "@/widgets";
+
 import { BlueprintViewContainer } from "@/widgets/blueprint/blueprint-view/ui/BlueprintViewContainer";
 import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
 import { blueprintEstimateResizableLayoutConfig } from "../lib";
