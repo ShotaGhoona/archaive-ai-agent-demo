@@ -7,6 +7,7 @@ export interface SelectOption {
 export interface ColumnConfig {
   id: string;
   name: string;
+  description?: string;
   displayEnabled: boolean;
   filterEnabled: boolean;
   dataType: 'text' | 'number' | 'date' | 'select' | 'user' | 'boolean';

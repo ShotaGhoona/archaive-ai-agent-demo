@@ -28,7 +28,8 @@ export default function DatabaseColumnSettingContainer({
     const maxOrder = Math.max(...columns.map(col => col.order), 0);
     const newColumn: ColumnConfig = {
       id: `custom-${Date.now()}`,
-      name: '新しい項目',
+      name: '',
+      description: '',
       displayEnabled: true,
       filterEnabled: false,
       dataType: 'text',
@@ -61,18 +62,18 @@ export default function DatabaseColumnSettingContainer({
   };
 
   return (
-    <div className="h-[calc(100vh-45px)] flex flex-col overflow-hidden">
+    <div className="flex flex-col">
       {/* ページヘッダー */}
-      <div className="flex-shrink-0 p-4">
+      <div className="p-4">
         <PageHeader 
           onSave={handleSave}
         />
       </div>
       
       {/* メインコンテンツエリア */}
-      <div className="flex-1 flex flex-col min-h-0 px-4 pb-4">
+      <div className="px-4 pb-4">
         {/* 項目設定エリア */}
-        <div className="flex-1 min-h-0">
+        <div>
           <ColumnDefineArea
             columns={columns}
             onUpdateColumn={handleUpdateColumn}

@@ -111,17 +111,42 @@ export function ColumnDefineArea({
   ];
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col">
       {/* 項目リスト */}
-      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden flex-1 flex flex-col min-h-0">
-        <div className="flex-1 overflow-y-auto min-h-0">
+      <div className="bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col">
+        {/* ヘッダー */}
+        <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+          <div className="flex items-center gap-4">
+            <div className="w-6"></div> {/* ドラッグハンドル用スペース */}
+            <div className="w-48">
+              <span className="text-sm font-medium text-gray-700">項目名</span>
+            </div>
+            <div className="w-64">
+              <span className="text-sm font-medium text-gray-700">説明文</span>
+            </div>
+            <div className="w-40 flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">型設定</span>
+            </div>
+          </div>
+          <div className="flex-shrink-0 flex items-center gap-5">
+            <div className="w-32 flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">製品ページに表示</span>
+            </div>
+            <div className="w-32 flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">図面テーブルに表示</span>
+            </div>
+            <div className="w-12 flex items-center gap-2">
+              <span className="text-sm font-medium text-gray-700">削除</span>
+            </div>
+          </div>
+        </div>
+        <div>
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="columns">
               {(provided) => (
                 <div
                   {...provided.droppableProps}
                   ref={provided.innerRef}
-                  className="min-h-full"
                 >
                   {sortedColumns.map((column, index) => (
                     <Draggable key={column.id} draggableId={column.id} index={index}>
@@ -148,16 +173,23 @@ export function ColumnDefineArea({
                               <Input
                                 value={column.name}
                                 onChange={(e) => handleUpdate(column.id, { name: e.target.value })}
-                                className={`border-0 shadow-none focus:ring-1 focus:ring-blue-500 ${
-                                  column.name === '新しい項目' ? 'text-primary font-medium' : ''
-                                }`}
+                                className="border-0 shadow-none focus:ring-1 focus:ring-blue-500"
                                 placeholder="項目名を入力"
                               />
                             </div>
 
+                            {/* 説明文 */}
+                            <div className="w-64">
+                              <Input
+                                value={column.description || ''}
+                                onChange={(e) => handleUpdate(column.id, { description: e.target.value })}
+                                className="border-0 shadow-none focus:ring-1 focus:ring-blue-500"
+                                placeholder="説明文を入力"
+                              />
+                            </div>
+
                             {/* 型設定 */}
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">型設定</span>
+                            <div className="w-40 flex items-center gap-2">
                               <Select
                                 value={column.dataType}
                                 onValueChange={(value: ColumnConfig['dataType']) => {
@@ -213,32 +245,29 @@ export function ColumnDefineArea({
                           {/* 右側: 削除ボタン */}
                           <div className="flex-shrink-0 flex items-center gap-5">
                             {/* 表示設定 */}
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">テーブルに表示</span>
+                            <div className="w-32 flex items-center justify-start">
                               <Switch
                                 checked={column.displayEnabled}
-                                onCheckedChange={(checked) => handleUpdate(column.id, { displayEnabled: checked })}
                               />
                             </div>
 
                             {/* フィルター設定 */}
-                            <div className="flex items-center gap-2">
-                              <span className="text-sm text-gray-600">フィルターに表示</span>
+                            <div className="w-32 flex items-center justify-start">
                               <Switch
                                 checked={column.filterEnabled}
-                                onCheckedChange={(checked) => handleUpdate(column.id, { filterEnabled: checked })}
                               />
                             </div>
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="text-red-500 hover:text-red-600 hover:bg-red-50"
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </AlertDialogTrigger>
+                            <div className="w-12 flex items-center justify-center">
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
                               <AlertDialogContent>
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>項目を削除しますか？</AlertDialogTitle>
@@ -256,7 +285,8 @@ export function ColumnDefineArea({
                                   </AlertDialogAction>
                                 </AlertDialogFooter>
                               </AlertDialogContent>
-                            </AlertDialog>
+                              </AlertDialog>
+                            </div>
                           </div>
                         </div>
                       )}
@@ -268,18 +298,18 @@ export function ColumnDefineArea({
             </Droppable>
           </DragDropContext>
         </div>
-      </div>
-
-      {/* 新規項目追加ボタン */}
-      <div className="flex-shrink-0 mt-4">
-        <Button
-          onClick={onAddColumn}
-          variant="outline"
-          className="w-full py-6 border-2 border-dashed border-gray-300 text-gray-600 hover:border-gray-400 hover:text-gray-700 hover:bg-gray-50"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          新規項目を追加
-        </Button>
+        
+        {/* 新規項目追加ボタン */}
+        <div className="p-4 border-t border-gray-200">
+          <Button
+            onClick={onAddColumn}
+            variant="outline"
+            className="w-full py-6 border-2 border-dashed border-gray-300 text-gray-600 hover:border-gray-400 hover:text-gray-700 hover:bg-gray-50"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            新規項目を追加
+          </Button>
+        </div>
       </div>
     </div>
   );
