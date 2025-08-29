@@ -1,0 +1,43 @@
+{
+  "revisionBlueprints": [
+    {
+      "id": "rev-001",
+      "name": "エンジンブラケット Rev.1",
+      "filename": "BP001_エンジンブラケット_Rev1.dwg",
+      "imageUrl": "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=2070&auto=format&fit=crop",
+      "deliveryDate": "2024-01-10",
+      "customerName": "株式会社田中製作所",
+      "projectNumber": "TN-001",
+      "projectId": "proj-001",
+      "similarity": 92,
+      "description": "初期版のエンジンブラケット設計",
+      "isActive": false
+    },
+    {
+      "id": "rev-002",
+      "name": "エンジンブラケット Rev.2",
+      "filename": "BP001_エンジンブラケット_Rev2.dwg",
+      "imageUrl": "https://images.unsplash.com/photo-1620121684840-17a4bed717b8?q=80&w=2069&auto=format&fit=crop",
+      "deliveryDate": "2024-01-20",
+      "customerName": "株式会社田中製作所",
+      "projectNumber": "TN-001",
+      "projectId": "proj-001",
+      "similarity": 87,
+      "description": "材料変更後のリビジョン",
+      "isActive": false
+    },
+    {
+      "id": "rev-003",
+      "name": "エンジンブラケット Rev.3",
+      "filename": "BP001_エンジンブラケット_Rev3.dwg",
+      "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=2070&auto=format&fit=crop",
+      "deliveryDate": "2024-01-25",
+      "customerName": "株式会社田中製作所",
+      "projectNumber": "TN-001",
+      "projectId": "proj-001",
+      "similarity": 95,
+      "description": "最終調整版",
+      "isActive": false
+    }
+  ]
+}

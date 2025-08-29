@@ -133,7 +133,7 @@ export function ResizableLayout({ config, children, className = '' }: ResizableL
     containerRef
   };
 
-  const layoutClass = config.direction === 'horizontal' ? 'flex' : 'flex flex-col';
+  const layoutClass = config.direction === 'horizontal' ? 'flex h-full' : 'flex flex-col h-full';
 
   return (
     <ResizableContext.Provider value={contextValue}>

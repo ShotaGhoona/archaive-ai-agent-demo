@@ -1,0 +1,1 @@
+export { createSpecificationDetailConfig } from './specificationDetailConfig';

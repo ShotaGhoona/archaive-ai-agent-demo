@@ -1,0 +1,1 @@
+export { createDeliveryDetailConfig } from './deliveryDetailConfig';

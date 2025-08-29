@@ -5,7 +5,6 @@ import { DocumentHomeInspectionPageHeader, DocumentHomeInspectionTableView } fro
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { INSPECTION_FILTER_CONFIG, INSPECTION_SEARCHBAR_CONFIG } from "../lib";
 import { Inspection } from "../model";
-import { DocumentLayoutContainer } from "@/widgets";
 
 export function DocumentHomeInspectionContainer() {
   const [inspections, setInspections] = useState<Inspection[]>(inspectionData as Inspection[]);
@@ -42,42 +41,40 @@ export function DocumentHomeInspectionContainer() {
   };
 
   return (
-    <DocumentLayoutContainer activeType="inspection">
-      <div className="h-full flex overflow-hidden">
-        {/* フィルターサイドバー */}
-        <AdvancedFilterSidebar
-          isOpen={isFilterSidebarOpen}
-          onToggle={toggleSidebar}
-          filters={filters}
-          onFiltersChange={setFilters}
-          onClearFilters={clearFilters}
-          config={INSPECTION_FILTER_CONFIG}
-        />
-        
-        {/* メインコンテンツ */}
-        <div 
-          className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
-            isFilterSidebarOpen ? 'ml-80' : 'ml-0'
-          }`}
-        >
-          <div className="flex-shrink-0 p-4">
-            <DocumentHomeInspectionPageHeader
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
-              onToggleFilterSidebar={toggleSidebar}
-              isFilterSidebarOpen={isFilterSidebarOpen}
-              inspections={filteredInspections}
-            />
-          </div>
-          <div className="flex-1 flex flex-col min-h-0 px-4">
-            <DocumentHomeInspectionTableView 
-              inspections={filteredInspections}
-              onInspectionDelete={handleInspectionDelete}
-              onInspectionUpdate={handleInspectionUpdate}
-            />
-          </div>
+    <div className="h-full flex overflow-hidden">
+      {/* フィルターサイドバー */}
+      <AdvancedFilterSidebar
+        isOpen={isFilterSidebarOpen}
+        onToggle={toggleSidebar}
+        filters={filters}
+        onFiltersChange={setFilters}
+        onClearFilters={clearFilters}
+        config={INSPECTION_FILTER_CONFIG}
+      />
+      
+      {/* メインコンテンツ */}
+      <div 
+        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+          isFilterSidebarOpen ? 'ml-80' : 'ml-0'
+        }`}
+      >
+        <div className="flex-shrink-0 p-4">
+          <DocumentHomeInspectionPageHeader
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            onToggleFilterSidebar={toggleSidebar}
+            isFilterSidebarOpen={isFilterSidebarOpen}
+            inspections={filteredInspections}
+          />
+        </div>
+        <div className="flex-1 flex flex-col min-h-0 px-4">
+          <DocumentHomeInspectionTableView 
+            inspections={filteredInspections}
+            onInspectionDelete={handleInspectionDelete}
+            onInspectionUpdate={handleInspectionUpdate}
+          />
         </div>
       </div>
-    </DocumentLayoutContainer>
+    </div>
   );
 }

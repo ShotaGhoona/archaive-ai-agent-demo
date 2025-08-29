@@ -1,0 +1,1 @@
+export { createOrderDetailConfig } from './orderDetailConfig';

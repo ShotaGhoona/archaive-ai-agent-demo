@@ -45,7 +45,7 @@ export function BlueprintTabNavigation() {
       {blueprintTabs.map((tab) => {
         const isActive = activeTab === tab.id;
         
-        return (
+        return tab.description ? (
           <Tooltip key={tab.id} delayDuration={500}>
             <TooltipTrigger asChild>
               <Link href={tab.href(projectId)}>
@@ -69,6 +69,23 @@ export function BlueprintTabNavigation() {
               <p>{tab.description}</p>
             </TooltipContent>
           </Tooltip>
+        ) : (
+          <Link key={tab.id} href={tab.href(projectId)}>
+            <Button
+              variant={isActive ? "default" : "ghost"}
+              size="lg"
+              className={`
+                flex-shrink-0 h-12 px-4 gap-2 text-sm font-medium transition-all
+                ${isActive 
+                  ? "bg-primary text-primary-foreground shadow-sm" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                }
+              `}
+            >
+              {tab.icon}
+              {tab.label}
+            </Button>
+          </Link>
         );
       })}
     </div>

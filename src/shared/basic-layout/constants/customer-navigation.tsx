@@ -1,8 +1,7 @@
 import { 
   Info, 
   Phone, 
-  Briefcase, 
-  MessageSquare
+  Briefcase,
 } from "lucide-react";
 
 export interface CustomerMenuItem {
@@ -34,17 +33,5 @@ export const customerMenuItems: CustomerMenuItem[] = [
     href: "/customer/[id]/project",
     icon: <Briefcase className="w-4 h-4" />,
     description: "過去の案件と進行中のプロジェクト"
-  },
-  {
-    id: "notes",
-    label: "メモ・備考",
-    href: "/customer/[id]/notes",
-    icon: <MessageSquare className="w-4 h-4" />,
-    description: "顧客に関するメモや重要な備考"
   }
 ];
-
-export const customerInfo = {
-  title: "顧客詳細",
-  version: "1.0.0"
-};

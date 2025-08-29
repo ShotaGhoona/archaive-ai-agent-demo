@@ -1,1 +1,0 @@
-export { CustomerNotesContainer } from './CustomerNotesContainer';

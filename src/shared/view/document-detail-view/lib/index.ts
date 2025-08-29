@@ -1,0 +1,1 @@
+export { documentDetailResizableLayoutConfig } from './documentDetailResizableConfig';

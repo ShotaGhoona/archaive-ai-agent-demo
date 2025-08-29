@@ -1,0 +1,1 @@
+export { createShippingDetailConfig } from './shippingDetailConfig';

@@ -40,7 +40,9 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
           <FileText className="h-4 w-4 mr-2" />
           見積書を登録or作成
         </Button>
-        {quotations.map((quotation) => (
+        {quotations
+          .sort((a, b) => new Date(b.modified_date).getTime() - new Date(a.modified_date).getTime())
+          .map((quotation) => (
           <Card 
             key={quotation.quote_id}
             onClick={() => handleSelectQuotation(quotation)}
