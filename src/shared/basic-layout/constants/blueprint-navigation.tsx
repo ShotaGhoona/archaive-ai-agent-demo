@@ -11,7 +11,7 @@ export interface BlueprintTab {
   label: string;
   href: (blueprintId: string) => string;
   icon: React.ReactElement;
-  description: string;
+  description?: string;
 }
 
 export const blueprintTabs: BlueprintTab[] = [
@@ -41,13 +41,11 @@ export const blueprintTabs: BlueprintTab[] = [
     label: "仕様書", 
     href: (blueprintId) => `/blueprint/${blueprintId}/specification`,
     icon: <BookOpen className="h-4 w-4" />, 
-    description: "技術仕様書と製品要件" 
   },
   { 
     id: "3d-model", 
     label: "3Dモデル", 
     href: (blueprintId) => `/blueprint/${blueprintId}/3d-model`,
     icon: <Box className="h-4 w-4" />, 
-    description: "3次元モデルデータとビューア" 
   }
 ];
