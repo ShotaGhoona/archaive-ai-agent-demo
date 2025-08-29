@@ -1,5 +1,5 @@
 "use client";
-import { Plus, Trash2, Type, Hash, Calendar, List, User, ToggleLeft } from 'lucide-react';
+import { Plus, Trash2, Type, Hash, Calendar, List, User, ToggleLeft, Lock } from 'lucide-react';
 import { 
   Button, 
   Select, 
@@ -128,8 +128,9 @@ export function DatabaseColumnSetting({
                   <Input
                     value={column.name}
                     onChange={(e) => handleUpdate(column.id, { name: e.target.value })}
-                    className="border-0 shadow-none focus:ring-1 focus:ring-blue-500"
+                    className={`border-0 shadow-none focus:ring-1 focus:ring-blue-500 ${column.editable === false ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : ''}`}
                     placeholder="項目名を入力"
+                    disabled={column.editable === false}
                   />
                 </div>
 
@@ -138,8 +139,9 @@ export function DatabaseColumnSetting({
                   <Input
                     value={column.description || ''}
                     onChange={(e) => handleUpdate(column.id, { description: e.target.value })}
-                    className="border-0 shadow-none focus:ring-1 focus:ring-blue-500"
+                    className={`border-0 shadow-none focus:ring-1 focus:ring-blue-500 ${column.editable === false ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : ''}`}
                     placeholder="説明文を入力"
+                    disabled={column.editable === false}
                   />
                 </div>
 
@@ -154,8 +156,9 @@ export function DatabaseColumnSetting({
                         ...(value !== 'select' && { options: undefined })
                       });
                     }}
+                    disabled={column.editable === false}
                   >
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className={`w-40 ${column.editable === false ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : ''}`}>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -191,6 +194,7 @@ export function DatabaseColumnSetting({
                     onOptionsChange={(options: SelectOption[]) => {
                       handleUpdate(column.id, { options });
                     }}
+                    disabled={column.editable === false}
                   />
                 )}
               </div>
@@ -198,34 +202,45 @@ export function DatabaseColumnSetting({
               {/* 右側: 削除ボタン */}
               <div className="flex-shrink-0 flex items-center gap-5">
                 <div className="w-12 flex items-center justify-center">
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-red-500 hover:text-red-600 hover:bg-red-50"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>項目を削除しますか？</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          「{column.name}」を削除します。この操作は取り消すことができません。
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>キャンセル</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => handleDelete(column.id)}
-                          className="bg-red-600 hover:bg-red-700"
+                  {column.editable !== false ? (
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-red-500 hover:text-red-600 hover:bg-red-50"
                         >
-                          削除
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>項目を削除しますか？</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            「{column.name}」を削除します。この操作は取り消すことができません。
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDelete(column.id)}
+                            className="bg-red-600 hover:bg-red-700"
+                          >
+                            削除
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="text-gray-400 cursor-not-allowed"
+                      disabled
+                    >
+                      <Lock className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

@@ -10,6 +10,7 @@ export interface DatabaseColumnSettingConfig {
   description?: string;
   dataType: 'text' | 'number' | 'date' | 'select' | 'user' | 'boolean';
   options?: SelectOption[]; // select用の選択肢（色付き）
+  editable?: boolean; // 編集可能かどうか（デフォルト: true）
 }
 
 export interface DatabaseConfig {

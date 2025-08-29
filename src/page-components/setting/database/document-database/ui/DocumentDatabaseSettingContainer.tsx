@@ -5,118 +5,74 @@ import { Button, Input } from '@/shared';
 import { Save, FileText, Plus } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DEFAULT_DOCUMENT_CATEGORIES, DocumentType, DocumentCategory } from '../lib';
+import { DEFAULT_DOCUMENT_CATEGORIES, DocumentDatabaseService, DocumentType, DocumentCategory, DocumentDatabaseState } from '../lib';
 import { TabNavigation } from '@/shared/components/tab-navigation/ui/TabNavigation';
 import { TabItem } from '@/shared/components/tab-navigation/model/types';
 
 export function DocumentDatabaseSettingContainer() {
   // カテゴリ管理
-  const [documentCategories, setDocumentCategories] = useState<DocumentCategory[]>(DEFAULT_DOCUMENT_CATEGORIES);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>('project-related');
 
-  // 各帳票タイプのカラム設定を管理
-  const [documentColumns, setDocumentColumns] = useState<Record<string, DatabaseColumnSettingConfig[]>>(() => {
+  // データベース状態の管理
+  const [state, setState] = useState<DocumentDatabaseState>(() => {
     const allColumns: Record<string, DatabaseColumnSettingConfig[]> = {};
+    const allNames: Record<string, string> = {};
+    
     DEFAULT_DOCUMENT_CATEGORIES.forEach(category => {
       category.documentTypes.forEach(type => {
         allColumns[type.id] = type.defaultColumns;
-      });
-    });
-    return allColumns;
-  });
-
-  // 帳票タイプ名の管理
-  const [documentTypeNames, setDocumentTypeNames] = useState<Record<string, string>>(() => {
-    const allNames: Record<string, string> = {};
-    DEFAULT_DOCUMENT_CATEGORIES.forEach(category => {
-      category.documentTypes.forEach(type => {
         allNames[type.id] = type.name;
       });
     });
-    return allNames;
+
+    return {
+      documentCategories: DEFAULT_DOCUMENT_CATEGORIES,
+      documentColumns: allColumns,
+      documentTypeNames: allNames,
+    };
   });
 
   // 列設定の更新
   const handleUpdateColumn = (typeId: string, columnId: string, updates: Partial<DatabaseColumnSettingConfig>) => {
-    setDocumentColumns(prev => ({
-      ...prev,
-      [typeId]: prev[typeId].map(col => 
-        col.id === columnId ? { ...col, ...updates } : col
-      )
-    }));
+    setState(prev => DocumentDatabaseService.updateColumn(prev, typeId, columnId, updates));
   };
 
   // 列の削除
   const handleDeleteColumn = (typeId: string, columnId: string) => {
-    setDocumentColumns(prev => ({
-      ...prev,
-      [typeId]: prev[typeId].filter(col => col.id !== columnId)
-    }));
+    setState(prev => DocumentDatabaseService.deleteColumn(prev, typeId, columnId));
   };
 
   // 新規列の追加
   const handleAddColumn = (typeId: string) => {
-    const newColumn: DatabaseColumnSettingConfig = {
-      id: `custom-${Date.now()}`,
-      name: '',
-      description: '',
-      dataType: 'text',
-    };
-    
-    setDocumentColumns(prev => ({
-      ...prev,
-      [typeId]: [...(prev[typeId] || []), newColumn]
-    }));
+    setState(prev => DocumentDatabaseService.addColumn(prev, typeId));
   };
 
   // 帳票タイプ名の更新
   const handleUpdateTypeName = (typeId: string, newName: string) => {
-    setDocumentTypeNames(prev => ({
-      ...prev,
-      [typeId]: newName
-    }));
+    setState(prev => DocumentDatabaseService.updateTypeName(prev, typeId, newName));
   };
 
   // 新しい帳票タイプを追加
   const handleAddDocumentType = () => {
-    const newTypeId = `custom-${Date.now()}`;
-    const newType: DocumentType = {
-      id: newTypeId,
-      name: '新しい帳票',
-      defaultColumns: [],
-    };
-
-    setDocumentCategories(prev => prev.map(category => 
-      category.id === selectedCategoryId 
-        ? { ...category, documentTypes: [...category.documentTypes, newType] }
-        : category
-    ));
-    setDocumentColumns(prev => ({
-      ...prev,
-      [newTypeId]: [],
-    }));
-    setDocumentTypeNames(prev => ({
-      ...prev,
-      [newTypeId]: '新しい帳票',
-    }));
+    setState(prev => DocumentDatabaseService.addDocumentType(prev, selectedCategoryId));
   };
 
   // 設定の保存
   const handleSave = () => {
     // TODO: 実際の保存処理（localStorage / API等）
-    console.log('帳票データベース設定を保存:', { documentCategories, documentTypeNames, documentColumns });
+    console.log('帳票データベース設定を保存:', state);
     alert('帳票データベース設定を保存しました');
   };
 
   // タブアイテムをカテゴリデータから生成
-  const tabItems: TabItem[] = documentCategories.map(category => ({
+  const tabItems: TabItem[] = state.documentCategories.map(category => ({
     key: category.id,
     label: category.name,
     icon: category.icon
   }));
 
   // 現在選択されているカテゴリを取得
-  const selectedCategory = documentCategories.find(category => category.id === selectedCategoryId);
+  const selectedCategory = state.documentCategories.find(category => category.id === selectedCategoryId);
   const currentDocumentTypes = selectedCategory?.documentTypes || [];
 
   return (
@@ -154,7 +110,7 @@ export function DocumentDatabaseSettingContainer() {
                 <div className="flex items-center gap-3">
                   <FileText className="h-6 w-6 text-primary" />
                   <input
-                    value={documentTypeNames[type.id] || type.name}
+                    value={state.documentTypeNames[type.id] || type.name}
                     onChange={(e) => handleUpdateTypeName(type.id, e.target.value)}
                     className="text-xl font-semibold border-0 shadow-none focus:ring-1 focus:ring-blue-500 p-0 h-auto bg-transparent text-primary"
                     placeholder="帳票タイプ名を入力"
@@ -163,7 +119,7 @@ export function DocumentDatabaseSettingContainer() {
                 
                 {/* 各帳票タイプの項目設定 */}
                 <DatabaseColumnSetting
-                  columns={documentColumns[type.id] || []}
+                  columns={state.documentColumns[type.id] || []}
                   onUpdateColumn={(columnId, updates) => handleUpdateColumn(type.id, columnId, updates)}
                   onDeleteColumn={(columnId) => handleDeleteColumn(type.id, columnId)}
                   onAddColumn={() => handleAddColumn(type.id)}

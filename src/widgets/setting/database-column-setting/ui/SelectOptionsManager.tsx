@@ -23,6 +23,7 @@ import { SelectOption } from '../model';
 interface SelectOptionsManagerProps {
   options: SelectOption[];
   onOptionsChange: (options: SelectOption[]) => void;
+  disabled?: boolean;
 }
 
 // プリセット色パレット
@@ -41,7 +42,7 @@ const PRESET_COLORS = [
   '#DC2626', // dark red
 ];
 
-export function SelectOptionsManager({ options = [], onOptionsChange }: SelectOptionsManagerProps) {
+export function SelectOptionsManager({ options = [], onOptionsChange, disabled = false }: SelectOptionsManagerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [editingOptions, setEditingOptions] = useState<SelectOption[]>(options);
   const [showUnsavedDialog, setShowUnsavedDialog] = useState(false);
@@ -127,7 +128,8 @@ export function SelectOptionsManager({ options = [], onOptionsChange }: SelectOp
           <Button
             variant="outline"
             size="lg"
-            className="flex items-center gap-1 text-xs"
+            className={`flex items-center gap-1 text-xs ${disabled ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : ''}`}
+            disabled={disabled}
           >
             <Settings className="h-3 w-3" />
             {options.length > 0 ? `${options.length}個の選択肢` : '選択肢なし'}
