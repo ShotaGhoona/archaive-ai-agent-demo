@@ -1,6 +1,6 @@
 "use client";
 
-import { DocumentData, DocumentDetailViewConfig } from "../model";
+import { DocumentData, DocumentDetailViewConfig, DocumentPanelColumn } from "../model";
 import {
   TextFieldComponent,
   NumberFieldComponent,
@@ -31,13 +31,14 @@ export function DocumentInfoPanel<T extends DocumentData>({
     );
   }
 
-  const handleFieldChange = (field: string, value: any) => {
+  const handleFieldChange = (field: string, value: unknown) => {
     onUpdate({ [field]: value } as Partial<T>);
   };
 
-  const renderField = (column: any) => {
+  const renderField = (column: DocumentPanelColumn<T>) => {
     const value = item[column.key as keyof T];
-    const onChange = (newValue: any) => handleFieldChange(column.key, newValue);
+    const fieldKey = String(column.key);
+    const onChange = (newValue: unknown) => handleFieldChange(fieldKey, newValue);
 
     const commonProps = {
       item,
@@ -48,19 +49,19 @@ export function DocumentInfoPanel<T extends DocumentData>({
 
     switch (column.inputType) {
       case 'text':
-        return <TextFieldComponent key={column.key} {...commonProps} />;
+        return <TextFieldComponent key={fieldKey} {...commonProps} />;
       case 'number':
-        return <NumberFieldComponent key={column.key} {...commonProps} />;
+        return <NumberFieldComponent key={fieldKey} {...commonProps} />;
       case 'date':
-        return <DateFieldComponent key={column.key} {...commonProps} />;
+        return <DateFieldComponent key={fieldKey} {...commonProps} />;
       case 'select':
-        return <SelectFieldComponent key={column.key} {...commonProps} />;
+        return <SelectFieldComponent key={fieldKey} {...commonProps} />;
       case 'boolean':
-        return <BooleanFieldComponent key={column.key} {...commonProps} />;
+        return <BooleanFieldComponent key={fieldKey} {...commonProps} />;
       case 'user':
-        return <UserFieldComponent key={column.key} {...commonProps} />;
+        return <UserFieldComponent key={fieldKey} {...commonProps} />;
       default:
-        return <TextFieldComponent key={column.key} {...commonProps} />;
+        return <TextFieldComponent key={fieldKey} {...commonProps} />;
     }
   };
 

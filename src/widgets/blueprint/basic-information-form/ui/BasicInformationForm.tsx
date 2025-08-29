@@ -22,7 +22,7 @@ export function BasicInformationForm({ initialData, onSave, className = "" }: Ba
                 {field.label}
               </label>
               <Input
-                value={formData[field.key] || ''}
+                value={String(formData[field.key] || '')}
                 onChange={(e) => handleInputChange(field.key, e.target.value)}
                 readOnly={field.readOnly}
               />

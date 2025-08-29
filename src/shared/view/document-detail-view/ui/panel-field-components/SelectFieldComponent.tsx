@@ -10,7 +10,6 @@ interface SelectFieldComponentProps<T> {
 }
 
 export function SelectFieldComponent<T>({
-  item,
   column,
   value,
   onChange,

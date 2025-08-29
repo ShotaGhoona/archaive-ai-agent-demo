@@ -37,6 +37,7 @@ const formSchema = z.object({
   fax: z.string().optional(),
   owner_user_id: z.string().min(1, "担当営業IDは必須です"),
   description: z.string().optional(),
+  status: z.boolean(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -46,12 +47,15 @@ interface CreateContactDialogProps {
   onSubmit: (data: FormData) => void;
 }
 
-export function CreateContactDialog({ customerId, onSubmit }: CreateContactDialogProps) {
+export function CreateContactDialog({ onSubmit }: CreateContactDialogProps) {
   const [open, setOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      status: true,
+    },
   });
 
   const handleSubmit = async (data: FormData) => {

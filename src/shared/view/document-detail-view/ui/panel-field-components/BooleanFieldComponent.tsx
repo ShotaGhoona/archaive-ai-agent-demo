@@ -10,7 +10,6 @@ interface BooleanFieldComponentProps<T> {
 }
 
 export function BooleanFieldComponent<T>({
-  item,
   column,
   value,
   onChange,

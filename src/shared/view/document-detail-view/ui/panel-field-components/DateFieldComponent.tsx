@@ -10,7 +10,6 @@ interface DateFieldComponentProps<T> {
 }
 
 export function DateFieldComponent<T>({
-  item,
   column,
   value,
   onChange,

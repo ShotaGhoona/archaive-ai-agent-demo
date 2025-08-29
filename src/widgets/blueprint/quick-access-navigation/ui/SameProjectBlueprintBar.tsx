@@ -4,8 +4,7 @@ import { SameProjectBlueprint, SameProjectBlueprintBarProps } from "../model";
 import { FileText, ExternalLink, Briefcase } from "lucide-react";
 
 export function SameProjectBlueprintBar({ 
-  sameProjectBlueprints, 
-  projectId 
+  sameProjectBlueprints
 }: SameProjectBlueprintBarProps) {
   // デフォルトの現在のパス（実際の実装では usePathname() などで取得）
   const currentPath = 'basic-information';

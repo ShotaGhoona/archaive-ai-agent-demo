@@ -10,7 +10,6 @@ interface TextFieldComponentProps<T> {
 }
 
 export function TextFieldComponent<T>({
-  item,
   column,
   value,
   onChange,

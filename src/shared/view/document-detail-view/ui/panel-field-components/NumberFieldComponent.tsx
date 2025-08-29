@@ -10,7 +10,6 @@ interface NumberFieldComponentProps<T> {
 }
 
 export function NumberFieldComponent<T>({
-  item,
   column,
   value,
   onChange,

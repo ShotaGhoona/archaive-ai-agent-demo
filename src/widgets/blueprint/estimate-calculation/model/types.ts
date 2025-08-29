@@ -73,7 +73,9 @@ export interface EstimateData {
 }
 
 // 見積情報型（EstimateDataのエイリアス）これマジで技術負債です
-export interface EstimateInformation extends EstimateData {}
+export interface EstimateInformation extends EstimateData {
+  version?: string;
+}
 
 // フック戻り値型
 export interface UseEstimateCalculationResult {

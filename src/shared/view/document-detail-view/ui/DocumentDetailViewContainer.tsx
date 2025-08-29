@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ResizableLayout, ResizablePanel, ResizableHandle, LoadingScreen } from "@/shared";
-import { DocumentData, DocumentDetailViewConfig, DocumentDetailViewContainerProps } from "../model";
+import { DocumentData, DocumentDetailViewContainerProps } from "../model";
 import { documentDetailResizableLayoutConfig } from "../lib";
 import { DocumentList } from "./DocumentList";
 import { DocumentPreview } from "./DocumentPreview";

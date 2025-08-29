@@ -110,7 +110,7 @@ export function DocumentPreview<T extends DocumentData>({
           </Button>
         )}
         
-        {config.previewActionButtonsConfig.customButtonsRender(item, onUpdate)}
+        {config.previewActionButtonsConfig.customButtonsRender?.(item, onUpdate)}
       </div>
     </div>
   );

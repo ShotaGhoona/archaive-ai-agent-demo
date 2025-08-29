@@ -1,5 +1,4 @@
-import React from 'react';
-import { DocumentDetailViewConfig, DocumentPanelColumn } from '@/shared/view/document-detail-view';
+import { DocumentDetailViewConfig } from '@/shared/view/document-detail-view';
 import { OrderData } from '../model';
 
 export const createOrderDetailConfig = (): DocumentDetailViewConfig<OrderData> => ({
@@ -18,11 +17,6 @@ export const createOrderDetailConfig = (): DocumentDetailViewConfig<OrderData> =
     showDeleteButton: true,
     showDownloadButton: true,
     showPrintButton: true,
-    customButtonsRender: (item, onUpdate) => (
-      <>
-        {/* Order用は基本ボタン + カスタムボタンなし */}
-      </>
-    ),
   },
   
   createConfig: {

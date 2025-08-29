@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { Card, CardContent, Badge } from "@/shared";
-import { User, Clock } from "lucide-react";
+import { } from "lucide-react";
 import { Project } from "../lib";
 import { useRouter } from "next/navigation";
 
@@ -65,18 +65,6 @@ export function ProjectKanbanView({ projects }: ProjectKanbanViewProps) {
     }
   };
 
-  const getStatusBadgeColor = (status: string) => {
-    switch (status) {
-      case "提出済": return "bg-green-100 text-green-800";
-      case "作成中": return "bg-yellow-100 text-yellow-800";
-      case "未提出": return "bg-gray-100 text-gray-800";
-      case "配送完了": return "bg-green-100 text-green-800";
-      case "配送中": return "bg-blue-100 text-blue-800";
-      case "配送準備中": return "bg-yellow-100 text-yellow-800";
-      case "未対応": return "bg-gray-100 text-gray-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
-  };
 
   return (
     <div className="flex-1 overflow-hidden">
