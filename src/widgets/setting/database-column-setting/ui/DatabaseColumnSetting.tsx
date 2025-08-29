@@ -115,28 +115,28 @@ export function DatabaseColumnSetting({
       {/* 項目リスト */}
       <div className="bg-white border border-gray-200 rounded-lg overflow-hidden flex flex-col">
         {/* ヘッダー */}
-        <div className="flex items-center justify-between px-4 py-3 bg-gray-50 border-b border-gray-200">
+        <div className="flex items-center justify-between px-4 py-3 bg-gray-100 border-b border-gray-200">
           <div className="flex items-center gap-4">
             <div className="w-6"></div> {/* ドラッグハンドル用スペース */}
             <div className="w-48">
-              <span className="text-sm font-medium text-gray-700">項目名</span>
+              <span className="text-sm font-bold text-gray-900">項目名</span>
             </div>
             <div className="w-64">
-              <span className="text-sm font-medium text-gray-700">説明文</span>
+              <span className="text-sm font-bold text-gray-900">説明文</span>
             </div>
             <div className="w-40 flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">型設定</span>
+              <span className="text-sm font-bold text-gray-900">型設定</span>
             </div>
           </div>
           <div className="flex-shrink-0 flex items-center gap-5">
             <div className="w-32 flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">製品ページに表示</span>
+              <span className="text-sm font-bold text-gray-900">製品ページに表示</span>
             </div>
             <div className="w-32 flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">図面テーブルに表示</span>
+              <span className="text-sm font-bold text-gray-900">図面テーブルに表示</span>
             </div>
             <div className="w-12 flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">削除</span>
+              <span className="text-sm font-bold text-gray-900">削除</span>
             </div>
           </div>
         </div>
