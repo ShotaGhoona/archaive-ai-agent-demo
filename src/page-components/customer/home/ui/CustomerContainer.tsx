@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import customersData from "../data/customer.json";
 import { CustomerPageHeader, CustomerTableView } from "../ui";
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG } from "../lib";
-import { Customer } from "../model";
+import { CustomerHomeDataInterface , customerHomeData } from "@/dummy-data/customer";
+import { CustomerColumnCallbacks } from "../model";
 
 export function CustomerContainer() {
-  const [customers, setCustomers] = useState<Customer[]>(customersData as Customer[]);
+  const [customers, setCustomers] = useState<CustomerHomeDataInterface[]>(customerHomeData as CustomerHomeDataInterface[]);
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -27,9 +27,9 @@ export function CustomerContainer() {
 
 
   // 新規顧客作成ハンドラー
-  const handleCustomerCreate = (customerData: Omit<Customer, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => {
+  const handleCustomerCreate = (customerData: Omit<CustomerHomeDataInterface, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => {
     const newId = Math.max(...customers.map(c => c.id), 0) + 1;
-    const newCustomer: Customer = {
+    const newCustomer: CustomerHomeDataInterface = {
       id: newId,
       company_id: 1,
       created_at: new Date().toISOString(),
@@ -40,7 +40,7 @@ export function CustomerContainer() {
   };
 
   // 顧客削除ハンドラー
-  const handleCustomerDelete = (customer: Customer) => {
+  const handleCustomerDelete = (customer: CustomerHomeDataInterface) => {
     setCustomers(prev => prev.filter(c => c.id !== customer.id));
   };
 

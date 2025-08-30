@@ -1,1 +1,0 @@
-export { default as customerData } from './customer.json';
