@@ -15,3 +15,14 @@ export interface BlueprintHomeDataInterface {
   companyField: string;
   image: string;
 }
+
+export interface BlueprintSpecificationDataInterface {
+  specification_id: string;
+  product_id: string;
+  image_url: string;
+  created_date: string;
+  created_user_id: string;
+  modified_date: string;
+  modified_user_id: string;
+  remarks: string;
+}
