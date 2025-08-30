@@ -3,32 +3,10 @@ import Link from 'next/link';
 import { Button } from '@/shared';
 import { ExternalLink } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
-
-export interface Blueprint {
-  filename: string;
-  orderSource: string;
-  productName: string;
-  internalNumber: string;
-  customerNumber: string;
-  cadName: string;
-  camName: string;
-  orderQuantity: number;
-  orderDate: string;
-  deliveryDate: string;
-  maxDimensionL: number;
-  maxDimensionD: number;
-  maxDimensionH: number;
-  companyField: string;
-  image: string;
-}
-
-// プレビュー用のコールバック型
-export interface BlueprintColumnCallbacks {
-  onPreview?: (blueprint: Blueprint) => void;
-}
+import type { BlueprintHomeDataInterface } from '@/dummy-data/blueprint';
 
 
-export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
+export const createBlueprintTableConfig = (): TableViewConfig<BlueprintHomeDataInterface> => ({
   columns: [
     {
       key: 'detail',
@@ -39,7 +17,7 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
       editable: false,
       locked: true,
       stickyLeft: 0,
-      render: (blueprint: Blueprint) => (
+      render: (blueprint: BlueprintHomeDataInterface) => (
         <Link href={`/blueprint/${blueprint.internalNumber}/basic-information`}>
           <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
             <ExternalLink className="h-3 w-3" />

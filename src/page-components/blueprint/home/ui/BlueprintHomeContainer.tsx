@@ -1,13 +1,13 @@
 "use client";
 import { useState } from "react";
-import { blueprintData } from "../data";
 import { BlueprintPageHeader, BlueprintTableView, BlueprintGalleryView } from "../ui";
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
-import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG, Blueprint } from "../lib";
+import { BlueprintHomeDataInterface, blueprintHomeData } from "@/dummy-data/blueprint";
+import { BLUEPRINT_FILTER_CONFIG, BLUEPRINT_SEARCHBAR_CONFIG } from "../lib";
 
 export function BlueprintHomeContainer() {
   const [viewMode, setViewMode] = useState<"table" | "gallery">("table");
-  const [blueprints, setBlueprints] = useState<Blueprint[]>(blueprintData as Blueprint[]);
+  const [blueprints, setBlueprints] = useState<BlueprintHomeDataInterface[]>(blueprintHomeData as BlueprintHomeDataInterface[]);
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {

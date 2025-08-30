@@ -1,7 +1,7 @@
 import { DocumentDetailViewConfig } from '@/shared/view/document-detail-view';
-import { SpecificationData } from '../model';
+import { BlueprintSpecificationDataInterface } from '@/dummy-data/blueprint';
 
-export const createSpecificationDetailConfig = (): DocumentDetailViewConfig<SpecificationData> => ({
+export const createSpecificationDetailConfig = (): DocumentDetailViewConfig<BlueprintSpecificationDataInterface> => ({
   documentType: "仕様書",
   
   // データアクセス設定

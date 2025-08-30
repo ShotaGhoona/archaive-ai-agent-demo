@@ -1,17 +1,17 @@
 "use client";
 import { useState } from "react";
-import contactsData from "../data/contact.json";
 import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
 import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
 import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG } from "../lib";
-import { Contact } from "../model";
+import { CustomerContactDataInterface, customerContactData } from "@/dummy-data/customer";
+import { ContactColumnCallbacks } from "../model";
 
 interface CustomerContactContainerProps {
   customerId: string;
 }
 
 export function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
-  const [contacts, setContacts] = useState<Contact[]>(contactsData as Contact[]);
+  const [contacts, setContacts] = useState<CustomerContactDataInterface[]>(customerContactData as CustomerContactDataInterface[]);
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -31,9 +31,9 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
 
 
   // 新規担当者作成ハンドラー
-  const handleContactCreate = (contactData: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
+  const handleContactCreate = (contactData: Omit<CustomerContactDataInterface, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
     const now = new Date().toISOString();
-    const newContact: Contact = {
+    const newContact: CustomerContactDataInterface = {
       contact_id: `CONTACT-${String(contacts.length + 1).padStart(3, '0')}`,
       customer_id: Number(customerId),
       created_date: now,
@@ -45,7 +45,7 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
     setContacts(prev => [...prev, newContact]);
   };
 
-  const handleContactDelete = (contact: Contact) => {
+  const handleContactDelete = (contact: CustomerContactDataInterface) => {
     setContacts(prev => prev.filter(c => c.contact_id !== contact.contact_id));
   };
 

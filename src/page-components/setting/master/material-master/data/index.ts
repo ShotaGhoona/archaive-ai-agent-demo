@@ -1,1 +1,0 @@
-export { default as materialMasterData } from '@/shared/data/master/materialMaster.json';

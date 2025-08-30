@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { DocumentDetailViewContainer } from "@/shared/view/document-detail-view";
-import { SpecificationData } from "../model";
-import { specificationData as initialSpecificationData } from "../data";
+import { BlueprintSpecificationDataInterface, blueprintSpecificationData } from "@/dummy-data/blueprint";
 import { createSpecificationDetailConfig } from "../lib";
 
 export function SpecificationContainer() {
-  const [specifications] = useState<SpecificationData[]>(initialSpecificationData as SpecificationData[]);
+  const [specifications] = useState<BlueprintSpecificationDataInterface[]>(blueprintSpecificationData as BlueprintSpecificationDataInterface[]);
   const config = createSpecificationDetailConfig();
 
   return (
