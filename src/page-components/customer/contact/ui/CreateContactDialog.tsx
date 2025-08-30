@@ -23,6 +23,7 @@ import {
 } from "@/shared";
 import { Plus } from "lucide-react";
 
+// 後々entityに移動すると思う　山下0830
 const formSchema = z.object({
   last_name: z.string().min(1, "姓は必須です"),
   first_name: z.string().min(1, "名は必須です"),
