@@ -2,15 +2,15 @@ import React from 'react';
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { TableViewConfig } from '@/shared/view/table-view';
-import { Contact } from '../model';
+import { CustomerContactDataInterface } from '@/dummy-data/customer';
 
 
 export interface ContactColumnCallbacks {
-  onDelete?: (contact: Contact) => void;
+  onDelete?: (contact: CustomerContactDataInterface) => void;
 }
 
 
-export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {}): TableViewConfig<Contact> => ({
+export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {}): TableViewConfig<CustomerContactDataInterface> => ({
   columns: [
     {
       key: 'contact_id',
@@ -142,7 +142,7 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
         { label: '有効', color: 'green' },
         { label: '無効', color: 'gray' },
       ],
-      render: (contact: Contact) => (
+      render: (contact: CustomerContactDataInterface) => (
         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
           contact.status 
             ? 'bg-green-100 text-green-800' 
@@ -198,7 +198,7 @@ export const createContactTableConfig = (callbacks: ContactColumnCallbacks = {})
       editable: false,
       locked: false,
       stickyRight: 0,
-      render: (contact: Contact) => (
+      render: (contact: CustomerContactDataInterface) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm">
