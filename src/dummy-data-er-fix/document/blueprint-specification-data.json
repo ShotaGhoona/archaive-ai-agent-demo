@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T5K2M8QXP3WF7N2J9R4E5Y",
+    "leaf_product_name": "ギアボックスGB-X1",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書種別": {
+        "value": "機械仕様書",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "承認ステータス": {
+        "value": "承認済み",
+        "color": "green", 
+        "type": "SELECT"
+      },
+      "技術レベル": {
+        "value": "高精度加工対応",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 機械仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specifications/spec001_v1.pdf",
+    "remarks": "改訂版2.1対応、高精度要求仕様追加",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子", 
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T5K2N9RYQ4XG8O3K0S5F6Z",
+    "leaf_product_name": "ギアボックスGB-X1",
+    "customer_name": "田中精密工業株式会社",
+    "version": 2,
+    "leaf_product_document_custom_items": {
+      "仕様書種別": {
+        "value": "電気仕様書",
+        "color": "yellow",
+        "type": "SELECT"
+      },
+      "承認ステータス": {
+        "value": "審査中",
+        "color": "orange", 
+        "type": "SELECT"
+      },
+      "技術レベル": {
+        "value": "標準品対応可能",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 電気仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specifications/spec002_v2.pdf",
+    "remarks": "電圧仕様変更に伴う改訂",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎", 
+    "created_at": "2024-08-20T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T5K2P0SZR5YH9P4L1T6G7A",
+    "leaf_product_name": "ギアボックスGB-X1",
+    "customer_name": "田中精密工業株式会社",
+    "version": 3,
+    "leaf_product_document_custom_items": {
+      "仕様書種別": {
+        "value": "安全仕様書",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "承認ステータス": {
+        "value": "下書き",
+        "color": "gray", 
+        "type": "SELECT"
+      },
+      "技術レベル": {
+        "value": "安全規格ISO準拠必須",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 安全仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specifications/spec003_v1.pdf",
+    "remarks": "安全規格適合性検証完了",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎", 
+    "created_at": "2024-08-22T13:20:00.000Z",
+    "updated_at": "2024-08-27T11:20:00.000Z"
+  }
+]

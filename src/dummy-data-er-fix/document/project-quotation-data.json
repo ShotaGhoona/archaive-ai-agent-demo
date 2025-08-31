@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "company_name": "アルカイブ株式会社",
+    "quotation_number": "Q-2024-001",
+    "expiration_date": "2024-09-25",
+    "version": 1,
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/quotation/quotation001_v1.pdf",
+    "remarks": "初回見積、ギアボックスGB-X1 50台分",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "company_name": "アルカイブ株式会社",
+    "quotation_number": "Q-2024-001-R1",
+    "expiration_date": "2024-09-15",
+    "version": 2,
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/quotation/quotation002_v2.pdf",
+    "remarks": "改訂見積、仕様変更対応版",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "company_name": "アルカイブ株式会社",
+    "quotation_number": "Q-2024-002",
+    "expiration_date": "2024-09-03",
+    "version": 1,
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/quotation/quotation003_v1.pdf",
+    "remarks": "緊急対応見積、修理部品2台分",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  }
+]

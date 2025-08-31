@@ -16,16 +16,16 @@ export class DocumentDatabaseService {
     state: DocumentDatabaseState,
     typeId: string,
     columnId: string,
-    updates: Partial<DatabaseColumnSettingConfig>
+    updates: Partial<DatabaseColumnSettingConfig>,
   ): DocumentDatabaseState {
     return {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: state.documentColumns[typeId].map(col => 
-          col.id === columnId ? { ...col, ...updates } : col
-        )
-      }
+        [typeId]: state.documentColumns[typeId].map((col) =>
+          col.id === columnId ? { ...col, ...updates } : col,
+        ),
+      },
     };
   }
 
@@ -35,14 +35,16 @@ export class DocumentDatabaseService {
   static deleteColumn(
     state: DocumentDatabaseState,
     typeId: string,
-    columnId: string
+    columnId: string,
   ): DocumentDatabaseState {
     return {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: state.documentColumns[typeId].filter(col => col.id !== columnId)
-      }
+        [typeId]: state.documentColumns[typeId].filter(
+          (col) => col.id !== columnId,
+        ),
+      },
     };
   }
 
@@ -51,7 +53,7 @@ export class DocumentDatabaseService {
    */
   static addColumn(
     state: DocumentDatabaseState,
-    typeId: string
+    typeId: string,
   ): DocumentDatabaseState {
     const newColumn: DatabaseColumnSettingConfig = {
       id: `custom-${Date.now()}`,
@@ -67,8 +69,8 @@ export class DocumentDatabaseService {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: [...(state.documentColumns[typeId] || []), newColumn]
-      }
+        [typeId]: [...(state.documentColumns[typeId] || []), newColumn],
+      },
     };
   }
 
@@ -78,19 +80,19 @@ export class DocumentDatabaseService {
   static toggleRequired(
     state: DocumentDatabaseState,
     typeId: string,
-    columnId: string
+    columnId: string,
   ): DocumentDatabaseState {
     // TODO: バックエンド処理（バリデーション、DB更新等）を実装
     console.log('TODO: 必須フラグのバックエンド処理', { typeId, columnId });
-    
+
     return {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: state.documentColumns[typeId].map(col => 
-          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col
-        )
-      }
+        [typeId]: state.documentColumns[typeId].map((col) =>
+          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col,
+        ),
+      },
     };
   }
 
@@ -100,19 +102,21 @@ export class DocumentDatabaseService {
   static toggleBasicInfo(
     state: DocumentDatabaseState,
     typeId: string,
-    columnId: string
+    columnId: string,
   ): DocumentDatabaseState {
     // TODO: バックエンド処理（表示設定保存等）を実装
     console.log('TODO: 基本情報表示のバックエンド処理', { typeId, columnId });
-    
+
     return {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: state.documentColumns[typeId].map(col => 
-          col.id === columnId ? { ...col, showInBasicInfo: !col.showInBasicInfo } : col
-        )
-      }
+        [typeId]: state.documentColumns[typeId].map((col) =>
+          col.id === columnId
+            ? { ...col, showInBasicInfo: !col.showInBasicInfo }
+            : col,
+        ),
+      },
     };
   }
 
@@ -122,19 +126,19 @@ export class DocumentDatabaseService {
   static toggleTableDisplay(
     state: DocumentDatabaseState,
     typeId: string,
-    columnId: string
+    columnId: string,
   ): DocumentDatabaseState {
     // TODO: バックエンド処理（テーブル設定保存等）を実装
     console.log('TODO: テーブル表示のバックエンド処理', { typeId, columnId });
-    
+
     return {
       ...state,
       documentColumns: {
         ...state.documentColumns,
-        [typeId]: state.documentColumns[typeId].map(col => 
-          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col
-        )
-      }
+        [typeId]: state.documentColumns[typeId].map((col) =>
+          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col,
+        ),
+      },
     };
   }
 
@@ -144,14 +148,14 @@ export class DocumentDatabaseService {
   static updateTypeName(
     state: DocumentDatabaseState,
     typeId: string,
-    newName: string
+    newName: string,
   ): DocumentDatabaseState {
     return {
       ...state,
       documentTypeNames: {
         ...state.documentTypeNames,
-        [typeId]: newName
-      }
+        [typeId]: newName,
+      },
     };
   }
 
@@ -160,15 +164,16 @@ export class DocumentDatabaseService {
    */
   static addDocumentType(
     state: DocumentDatabaseState,
-    selectedCategoryId: string
+    selectedCategoryId: string,
   ): DocumentDatabaseState {
-    const { type: newType, defaultColumns } = createNewDocument(selectedCategoryId);
+    const { type: newType, defaultColumns } =
+      createNewDocument(selectedCategoryId);
 
     return {
-      documentCategories: state.documentCategories.map(category => 
-        category.id === selectedCategoryId 
+      documentCategories: state.documentCategories.map((category) =>
+        category.id === selectedCategoryId
           ? { ...category, documentTypes: [...category.documentTypes, newType] }
-          : category
+          : category,
       ),
       documentColumns: {
         ...state.documentColumns,
@@ -177,7 +182,7 @@ export class DocumentDatabaseService {
       documentTypeNames: {
         ...state.documentTypeNames,
         [newType.id]: '新しい帳票',
-      }
+      },
     };
   }
 }

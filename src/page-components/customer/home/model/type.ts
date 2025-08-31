@@ -1,4 +1,4 @@
-import { CustomerHomeDataInterface } from "@/dummy-data/customer";
+import { CustomerHomeDataInterface } from '@/dummy-data-er-fix/customer';
 
 export interface CustomerColumnCallbacks {
   onEdit?: (customer: CustomerHomeDataInterface) => void;

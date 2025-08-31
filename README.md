@@ -18,6 +18,7 @@ ARCHAIVE Demoは、製造業の設計・製造プロセスをデジタル化し�
 ## 技術スタック
 
 ### フロントエンド
+
 - **React 19** - UIライブラリ
 - **Next.js 15** - フルスタックフレームワーク（App Router）
 - **TypeScript** - 型安全性
@@ -26,11 +27,13 @@ ARCHAIVE Demoは、製造業の設計・製造プロセスをデジタル化し�
 - **React Hook Form + Zod** - フォーム管理・バリデーション
 
 ### AIエージェント
+
 - **OpenAI API** - GPT-4o-mini
 - **react-markdown** - マークダウンレンダリング
 - **remark-gfm** - GitHub Flavored Markdown
 
 ### UI/UX
+
 - **Lucide React** - アイコン
 - **Recharts** - チャート・グラフ
 - **react-resizable-panels** - リサイズ可能パネル
@@ -55,6 +58,7 @@ src/
 ### 各層の詳細
 
 #### 📦 Shared層（共有基盤）
+
 よく使うUIコンポーネントと基盤機能
 
 - **shadcnui/**: Button、Card、Dialog等の基本UIコンポーネント
@@ -65,6 +69,7 @@ src/
 - **lib/**: `utils.ts`等のユーティリティ関数
 
 #### 🔧 Features層（機能モジュール）
+
 使いまわせる機能をまとめた場所
 
 - **csv-export/**: CSV出力機能
@@ -74,6 +79,7 @@ src/
 - **ai-agent/**: マルチエージェントAIチャット（3レイアウト対応）
 
 #### 🧩 Widgets層（複合コンポーネント）
+
 大きめのUIコンポーネント
 
 - **blueprint-detail-layout/**: 図面詳細ページレイアウト
@@ -82,6 +88,7 @@ src/
 - **v2-sidebar/**: フレキシブルフォルダシステム（macOS Finderライク）
 
 #### 📄 Page-components層（ページ固有）
+
 各ページの独自コンポーネント（app直下で使用）
 
 - **blueprint/**: 図面管理（home, basic-information, estimate, similar等）
@@ -125,16 +132,19 @@ feature-name/
 ### 🤖 AIエージェント
 
 #### マルチエージェントシステム
+
 - **なんでもAI**: 一般的な設計・製造相談（設計基本、材料選択、公差設定等）
 - **見積もりAI**: 図面から概算・詳細見積もり生成（ファイルアップロード対応）
 - **トラブルAI**: 製造トラブルの原因分析・対策提案
 
 #### アダプティブUIレイアウト
+
 - **フローティング**: ドラッグ可能なウィンドウ（位置・サイズ永続化）
 - **サイドバー**: 固定サイドバー（レスポンシブ対応）
 - **フルページ**: モーダル形式（チャット履歴サイドバー付き）
 
 #### 技術的特徴
+
 - OpenAI API統合（GPT-4o-mini）
 - マークダウンレンダリング対応
 - 設定駆動アーキテクチャ（`agentConfigs.ts`）
@@ -145,6 +155,7 @@ feature-name/
 `shared/basic-data-table`による汎用データテーブル
 
 #### 主要機能
+
 - **ソート**: 文字列・数値・日付対応
 - **インライン編集**: セル単位編集（text, number, select等）
 - **固定列**: 左右の列固定表示（Sticky Columns）
@@ -155,6 +166,7 @@ feature-name/
 ## セットアップ
 
 ### 前提条件
+
 - Node.js 18以上
 - npm/yarn/pnpm
 

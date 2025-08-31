@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6B2C4D5E6F7G8H9I0J1K2",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-001",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-08-31",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "2,580,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 請求書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice001_v1.pdf",
+    "remarks": "初回納品分、¥2,580,000",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6B3D5E6F7G8H9I0J1K2L3",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-002",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-08-31",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "480,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 追加作業請求書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice002_v2.pdf",
+    "remarks": "追加作業分、¥480,000",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6B4E6F7G8H9I0J1K2L3M4",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-003",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-08-27",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "即時支払い",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "120,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 緊急対応請求書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice003_v3.pdf",
+    "remarks": "緊急対応費用、¥120,000",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  }
+]

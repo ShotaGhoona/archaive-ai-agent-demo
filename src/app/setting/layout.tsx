@@ -1,4 +1,4 @@
-import { SettingSidebar } from "@/shared/basic-layout/ui/SettingSidebar";
+import { SettingSidebar } from '@/shared/basic-layout/ui/SettingSidebar';
 
 export default function SettingLayout({
   children,
@@ -6,11 +6,9 @@ export default function SettingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-[calc(100vh-45px)] bg-background">
+    <div className='bg-background flex h-[calc(100vh-45px)]'>
       <SettingSidebar />
-      <main className="flex-1 overflow-y-auto">
-        {children}
-      </main>
+      <main className='flex-1 overflow-y-auto'>{children}</main>
     </div>
   );
 }

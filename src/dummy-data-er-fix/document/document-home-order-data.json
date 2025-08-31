@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6C1A2B3C4D5E6F7G8H9I0",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-001",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "新規発注",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "指定日厳守",
+        "color": "red",
+        "type": "SELECT"
+      }
+    },
+    "name": "ギアボックスGB-X1 受注書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order001_v1.pdf",
+    "remarks": "初回発注、数量50台",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6C2B3C4D5E6F7G8H9I0J1",
+    "directory_name": "山田製作所_モーター開発",
+    "customer_name": "山田製作所株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-002",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-20",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "開発案件",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "プロトタイプ優先",
+        "color": "orange",
+        "type": "SELECT"
+      }
+    },
+    "name": "サーボモーターSV-200 開発受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order002_v1.pdf",
+    "remarks": "高精度モーター開発、20台",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6C3C4D5E6F7G8H9I0J1K2",
+    "directory_name": "鈴木工業_センサー量産",
+    "customer_name": "鈴木工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-003",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-15",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "量産発注",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "分割納期可",
+        "color": "blue",
+        "type": "SELECT"
+      }
+    },
+    "name": "圧力センサーPS-100 量産受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order003_v1.pdf",
+    "remarks": "量産初回分100個、継続予定",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "ulid": "01H9T6C4D5E6F7G8H9I0J1K2L3",
+    "directory_name": "高橋電機_制御装置開発",
+    "customer_name": "高橋電機株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-004",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-10",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "研究開発",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "段階納期",
+        "color": "yellow",
+        "type": "SELECT"
+      }
+    },
+    "name": "制御基板CB-500 研究開発受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order004_v2.pdf",
+    "remarks": "プロトタイプ5台、評価用",
+    "created_by_name": "高橋一郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-28T14:30:00.000Z",
+    "updated_at": "2024-08-30T09:15:00.000Z"
+  },
+  {
+    "id": 5,
+    "ulid": "01H9T6C5E6F7G8H9I0J1K2L3M4",
+    "directory_name": "伊藤機械_ポンプシステム",
+    "customer_name": "伊藤機械工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-005",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-05",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "システム発注",
+        "color": "sky",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "設置工事込み",
+        "color": "red",
+        "type": "SELECT"
+      }
+    },
+    "name": "油圧ポンプHP-300 システム受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order005_v1.pdf",
+    "remarks": "大型システム3台、設置込み",
+    "created_by_name": "伊藤三郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-29T11:45:00.000Z",
+    "updated_at": "2024-08-30T15:20:00.000Z"
+  },
+  {
+    "id": 6,
+    "ulid": "01H9T6C6F7G8H9I0J1K2L3M4N5",
+    "directory_name": "渡辺精工_バルブ製造",
+    "customer_name": "渡辺精工株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-006",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-12",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "特注発注",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "検査証明付き",
+        "color": "green",
+        "type": "SELECT"
+      }
+    },
+    "name": "電磁バルブEV-150 特注受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order006_v1.pdf",
+    "remarks": "ステンレス製30個、耐圧試験込み",
+    "created_by_name": "渡辺四郎",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-30T08:30:00.000Z",
+    "updated_at": "2024-08-30T17:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "ulid": "01H9T6C7G8H9I0J1K2L3M4N5O6",
+    "directory_name": "中村システム_自動化装置",
+    "customer_name": "中村システム株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-007",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-07-20",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "大型システム",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "段階検収",
+        "color": "purple",
+        "type": "SELECT"
+      }
+    },
+    "name": "自動制御装置AC-1000 大型システム受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order007_v3.pdf",
+    "remarks": "大型システム1式、保守契約込み",
+    "created_by_name": "中村五郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-31T10:00:00.000Z",
+    "updated_at": "2024-08-31T16:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "ulid": "01H9T6C8H9I0J1K2L3M4N5O6P7",
+    "directory_name": "小林製造_コンベア部品",
+    "customer_name": "小林製造株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-008",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-18",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "設備発注",
+        "color": "slate",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "分割納入可",
+        "color": "blue",
+        "type": "SELECT"
+      }
+    },
+    "name": "ベルトコンベアBC-2000 設備受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order008_v1.pdf",
+    "remarks": "長尺コンベア2台、分割納入",
+    "created_by_name": "小林六郎",
+    "updated_by_name": "高橋一郎",
+    "created_at": "2024-09-01T07:45:00.000Z",
+    "updated_at": "2024-09-01T12:20:00.000Z"
+  },
+  {
+    "id": 9,
+    "ulid": "01H9T6C9I0J1K2L3M4N5O6P7Q8",
+    "directory_name": "加藤工業_測定機器",
+    "customer_name": "加藤工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-009",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-07-30",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "精密機器",
+        "color": "emerald",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "校正証明必須",
+        "color": "red",
+        "type": "SELECT"
+      }
+    },
+    "name": "三次元測定器3D-500 精密機器受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order009_v2.pdf",
+    "remarks": "高精度測定器、校正証明書付き",
+    "created_by_name": "加藤七郎",
+    "updated_by_name": "伊藤三郎",
+    "created_at": "2024-09-02T09:30:00.000Z",
+    "updated_at": "2024-09-02T14:45:00.000Z"
+  },
+  {
+    "id": 10,
+    "ulid": "01H9T6CAJ1K2L3M4N5O6P7Q8R9",
+    "directory_name": "斎藤電子_回路設計",
+    "customer_name": "斎藤電子株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-010",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-22",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "カスタム発注",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "動作確認済み",
+        "color": "green",
+        "type": "SELECT"
+      }
+    },
+    "name": "制御回路基板CC-800 カスタム受注書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order010_v1.pdf",
+    "remarks": "カスタム回路15枚、動作確認済み",
+    "created_by_name": "斎藤八郎",
+    "updated_by_name": "渡辺四郎",
+    "created_at": "2024-09-03T13:15:00.000Z",
+    "updated_at": "2024-09-03T18:50:00.000Z"
+  }
+]

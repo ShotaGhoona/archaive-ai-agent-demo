@@ -1,14 +1,14 @@
-import { UploadedFile, FileStack } from "../model";
+import { UploadedFile, FileStack } from '../model';
 
 /**
  * スタック操作のビジネスロジック
- * 
+ *
  * 含まれる機能:
  * - スタック作成 (createStackFromSelection) - 複数ファイルを1つのスタックに統合
  * - スタック解除 (unstackFiles) - スタックを解除して個別ファイルに戻す
  * - スタック削除 (removeStack) - スタック内全ファイルをゴミ箱へ移動
  * - スタック選択切り替え (toggleStackSelection)
- * 
+ *
  * 全てピュアな関数として実装、副作用なし
  */
 export class StackOperations {
@@ -17,7 +17,7 @@ export class StackOperations {
     uploadedFiles: UploadedFile[],
     fileStacks: FileStack[],
     selectedFiles: string[],
-    selectedStacks: string[]
+    selectedStacks: string[],
   ): {
     updatedFiles: UploadedFile[];
     updatedStacks: FileStack[];
@@ -28,27 +28,35 @@ export class StackOperations {
       return {
         updatedFiles: uploadedFiles,
         updatedStacks: fileStacks,
-        newStackId: ""
+        newStackId: '',
       };
     }
 
-    const selectedIndividualFiles = uploadedFiles.filter(f => selectedFiles.includes(f.id));
+    const selectedIndividualFiles = uploadedFiles.filter((f) =>
+      selectedFiles.includes(f.id),
+    );
     const selectedStackFiles = fileStacks
-      .filter(s => selectedStacks.includes(s.id))
-      .flatMap(s => s.files);
+      .filter((s) => selectedStacks.includes(s.id))
+      .flatMap((s) => s.files);
     const allFilesToStack = [...selectedIndividualFiles, ...selectedStackFiles];
 
-    const newStackId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+    const newStackId =
+      Date.now().toString() + Math.random().toString(36).substr(2, 9);
     const newStack: FileStack = {
       id: newStackId,
-      files: allFilesToStack.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime()),
-      createdAt: new Date()
+      files: allFilesToStack.sort(
+        (a, b) => a.createdAt.getTime() - b.createdAt.getTime(),
+      ),
+      createdAt: new Date(),
     };
 
     return {
-      updatedFiles: uploadedFiles.filter(f => !selectedFiles.includes(f.id)),
-      updatedStacks: [...fileStacks.filter(s => !selectedStacks.includes(s.id)), newStack],
-      newStackId
+      updatedFiles: uploadedFiles.filter((f) => !selectedFiles.includes(f.id)),
+      updatedStacks: [
+        ...fileStacks.filter((s) => !selectedStacks.includes(s.id)),
+        newStack,
+      ],
+      newStackId,
     };
   }
 
@@ -57,25 +65,25 @@ export class StackOperations {
     uploadedFiles: UploadedFile[],
     fileStacks: FileStack[],
     selectedStacks: string[],
-    stackId: string
+    stackId: string,
   ): {
     updatedFiles: UploadedFile[];
     updatedStacks: FileStack[];
     updatedSelectedStacks: string[];
   } {
-    const stackToUnstack = fileStacks.find(s => s.id === stackId);
+    const stackToUnstack = fileStacks.find((s) => s.id === stackId);
     if (!stackToUnstack) {
       return {
         updatedFiles: uploadedFiles,
         updatedStacks: fileStacks,
-        updatedSelectedStacks: selectedStacks
+        updatedSelectedStacks: selectedStacks,
       };
     }
 
     return {
       updatedFiles: [...uploadedFiles, ...stackToUnstack.files],
-      updatedStacks: fileStacks.filter(s => s.id !== stackId),
-      updatedSelectedStacks: selectedStacks.filter(sId => sId !== stackId)
+      updatedStacks: fileStacks.filter((s) => s.id !== stackId),
+      updatedSelectedStacks: selectedStacks.filter((sId) => sId !== stackId),
     };
   }
 
@@ -84,35 +92,35 @@ export class StackOperations {
     fileStacks: FileStack[],
     trashedFiles: UploadedFile[],
     selectedStacks: string[],
-    stackId: string
+    stackId: string,
   ): {
     updatedStacks: FileStack[];
     updatedTrashed: UploadedFile[];
     updatedSelectedStacks: string[];
   } {
-    const stackToRemove = fileStacks.find(s => s.id === stackId);
+    const stackToRemove = fileStacks.find((s) => s.id === stackId);
     if (!stackToRemove) {
       return {
         updatedStacks: fileStacks,
         updatedTrashed: trashedFiles,
-        updatedSelectedStacks: selectedStacks
+        updatedSelectedStacks: selectedStacks,
       };
     }
 
     return {
-      updatedStacks: fileStacks.filter(s => s.id !== stackId),
+      updatedStacks: fileStacks.filter((s) => s.id !== stackId),
       updatedTrashed: [...trashedFiles, ...stackToRemove.files],
-      updatedSelectedStacks: selectedStacks.filter(sId => sId !== stackId)
+      updatedSelectedStacks: selectedStacks.filter((sId) => sId !== stackId),
     };
   }
 
   // スタック選択切り替え
   static toggleStackSelection(
     currentSelected: string[],
-    stackId: string
+    stackId: string,
   ): string[] {
     return currentSelected.includes(stackId)
-      ? currentSelected.filter(sId => sId !== stackId)
+      ? currentSelected.filter((sId) => sId !== stackId)
       : [...currentSelected, stackId];
   }
 }

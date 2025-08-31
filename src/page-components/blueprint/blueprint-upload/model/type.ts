@@ -48,7 +48,7 @@ export interface DragItem {
   files: UploadedFile[]; // fileの場合は単一要素、stackの場合は複数要素
 }
 
-export type ViewMode = "uploaded" | "trash";
+export type ViewMode = 'uploaded' | 'trash';
 
 export type FileUploadData = Omit<UploadedFile, 'id' | 'createdAt'>;
 
@@ -107,5 +107,10 @@ export interface ProjectBoxListProps {
   dragOverTarget?: string | null;
   onDragOver?: (e: React.DragEvent, targetId?: string) => void;
   onDragLeave?: (e: React.DragEvent) => void;
-  onDrop?: (e: React.DragEvent, onDropToNewProject?: (item: DragItem) => void, onDropToProject?: (item: DragItem, projectId: string) => void, targetProjectId?: string) => void;
+  onDrop?: (
+    e: React.DragEvent,
+    onDropToNewProject?: (item: DragItem) => void,
+    onDropToProject?: (item: DragItem, projectId: string) => void,
+    targetProjectId?: string,
+  ) => void;
 }

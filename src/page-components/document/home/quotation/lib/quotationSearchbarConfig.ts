@@ -1,6 +1,12 @@
-import type { SearchConfig } from "@/shared";
-import type { Quotation } from "../model";
+import type { SearchConfig } from '@/shared';
+import { DocumentQuotationDataInterface } from '@/dummy-data-er-fix/document';
 
-export const QUOTATION_SEARCHBAR_CONFIG: SearchConfig<Quotation> = {
-  searchableFields: ['name', 'project_name', 'customer_name'],
+export const QUOTATION_SEARCHBAR_CONFIG: SearchConfig<DocumentQuotationDataInterface> = {
+  searchableFields: [
+    'quotation_number',
+    'directory_name',
+    'customer_name',
+    'company_name',
+    'remarks',
+  ],
 };

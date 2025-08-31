@@ -15,9 +15,9 @@ export function BooleanFieldComponent<T>({
   onChange,
 }: BooleanFieldComponentProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
-      <div className="flex items-center space-x-2">
+      <div className='flex items-center space-x-2'>
         <Switch
           checked={Boolean(value)}
           onCheckedChange={onChange}

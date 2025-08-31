@@ -1,35 +1,53 @@
 import { FilterConfig } from '@/shared';
-import { Quotation } from '../model';
+import { DocumentQuotationDataInterface } from '@/dummy-data-er-fix/document';
 
-export const QUOTATION_FILTER_CONFIG: FilterConfig<Quotation>[] = [
+export const QUOTATION_FILTER_CONFIG: FilterConfig<DocumentQuotationDataInterface>[] = [
+  {
+    key: 'quotation_number',
+    label: '見積書番号',
+    type: 'text',
+    placeholder: '見積書番号で検索',
+  },
+  {
+    key: 'directory_name',
+    label: 'プロジェクト名',
+    type: 'text',
+    placeholder: 'プロジェクト名で検索',
+  },
   {
     key: 'customer_name',
     label: '顧客名',
     type: 'text',
-    placeholder: '顧客名で検索'
+    placeholder: '顧客名で検索',
   },
   {
-    key: 'project_name',
-    label: '案件名',
+    key: 'company_name',
+    label: '会社名',
     type: 'text',
-    placeholder: '案件名で検索'
+    placeholder: '会社名で検索',
   },
   {
-    key: 'approval_status',
-    label: '承認状況',
-    type: 'select',
-    options: ['未承認', '承認済み', '却下']
-  },
-  {
-    key: 'quotation_date',
-    label: '見積日',
+    key: 'expiration_date',
+    label: '有効期限',
     type: 'date',
-    placeholder: '見積日で絞り込み'
+    placeholder: '有効期限で絞り込み',
   },
   {
-    key: 'amount',
-    label: '見積金額',
+    key: 'version',
+    label: 'バージョン',
     type: 'number',
-    placeholder: '金額で絞り込み'
-  }
+    placeholder: 'バージョンで絞り込み',
+  },
+  {
+    key: 'created_at',
+    label: '作成日時',
+    type: 'date',
+    placeholder: '作成日時で絞り込み',
+  },
+  {
+    key: 'updated_at',
+    label: '最終更新日時',
+    type: 'date',
+    placeholder: '最終更新日時で絞り込み',
+  },
 ];

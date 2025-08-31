@@ -1,1 +1,1 @@
-export * from './BasicInformationForm';
+export * from './BasicInformationContainer';

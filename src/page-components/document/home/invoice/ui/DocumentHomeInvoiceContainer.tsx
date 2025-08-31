@@ -1,13 +1,25 @@
-"use client";
-import { useState } from "react";
-import { invoiceData } from "../data";
-import { DocumentHomeInvoicePageHeader, DocumentHomeInvoiceTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
-import { INVOICE_FILTER_CONFIG, INVOICE_SEARCHBAR_CONFIG } from "../lib";
-import { Invoice } from "../model";
+'use client';
+import { useState } from 'react';
+import {
+  documentHomeInvoiceData,
+  DocumentInvoiceDataInterface,
+} from '@/dummy-data-er-fix/document';
+import {
+  DocumentHomeInvoicePageHeader,
+  DocumentHomeInvoiceTableView,
+} from '../ui';
+import {
+  AdvancedFilterSidebar,
+  useAdvancedFilter,
+  useSearchbar,
+  setValue,
+} from '@/shared';
+import { INVOICE_FILTER_CONFIG, INVOICE_SEARCHBAR_CONFIG } from '../lib';
 
 export function DocumentHomeInvoiceContainer() {
-  const [invoices, setInvoices] = useState<Invoice[]>(invoiceData as Invoice[]);
+  const [invoices, setInvoices] = useState<DocumentInvoiceDataInterface[]>(
+    documentHomeInvoiceData as DocumentInvoiceDataInterface[],
+  );
 
   // 検索機能
   const {
@@ -27,21 +39,33 @@ export function DocumentHomeInvoiceContainer() {
   } = useAdvancedFilter(searchFiltered, INVOICE_FILTER_CONFIG);
 
   // 請求書削除ハンドラー
-  const handleInvoiceDelete = (invoice: Invoice) => {
-    setInvoices(prev => prev.filter(i => i.id !== invoice.id));
+  const handleInvoiceDelete = (invoice: DocumentInvoiceDataInterface) => {
+    setInvoices((prev) =>
+      prev.filter((i) => i.id !== invoice.id),
+    );
   };
 
   // 請求書更新ハンドラー
-  const handleInvoiceUpdate = (rowId: string, field: string, value: unknown) => {
-    setInvoices(prev => prev.map(invoice => 
-      invoice.id.toString() === rowId 
-        ? { ...invoice, [field]: value }
-        : invoice
-    ));
+  const handleInvoiceUpdate = (
+    rowId: string,
+    field: string,
+    value: unknown,
+  ) => {
+    setInvoices((prev) =>
+      prev.map((invoice) => {
+        if (invoice.id.toString() === rowId) {
+          const updatedInvoice = { ...invoice };
+          setValue(updatedInvoice, field, value);
+          updatedInvoice.updated_at = new Date().toISOString();
+          return updatedInvoice;
+        }
+        return invoice;
+      }),
+    );
   };
 
   return (
-    <div className="h-full flex overflow-hidden">
+    <div className='flex h-full overflow-hidden'>
       {/* フィルターサイドバー */}
       <AdvancedFilterSidebar
         isOpen={isFilterSidebarOpen}
@@ -51,14 +75,14 @@ export function DocumentHomeInvoiceContainer() {
         onClearFilters={clearFilters}
         config={INVOICE_FILTER_CONFIG}
       />
-      
+
       {/* メインコンテンツ */}
-      <div 
-        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+      <div
+        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${
           isFilterSidebarOpen ? 'ml-80' : 'ml-0'
         }`}
       >
-        <div className="flex-shrink-0 p-4">
+        <div className='flex-shrink-0 p-4'>
           <DocumentHomeInvoicePageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -67,8 +91,8 @@ export function DocumentHomeInvoiceContainer() {
             invoices={filteredInvoices}
           />
         </div>
-        <div className="flex-1 flex flex-col min-h-0 px-4">
-          <DocumentHomeInvoiceTableView 
+        <div className='flex min-h-0 flex-1 flex-col px-4'>
+          <DocumentHomeInvoiceTableView
             invoices={filteredInvoices}
             onInvoiceDelete={handleInvoiceDelete}
             onInvoiceUpdate={handleInvoiceUpdate}

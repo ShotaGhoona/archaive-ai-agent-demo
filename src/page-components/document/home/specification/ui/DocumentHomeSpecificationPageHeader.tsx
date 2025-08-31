@@ -1,15 +1,15 @@
-"use client";
-import React from "react";
-import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
-import { Specification } from "../model";
-import { SPECIFICATION_CSV_COLUMNS } from "../lib";
+'use client';
+import React from 'react';
+import { SearchInput, CsvExportDialog, FilterToggleButton } from '@/shared';
+import { DocumentSpecificationDataInterface } from '@/dummy-data-er-fix/document';
+import { SPECIFICATION_CSV_COLUMNS } from '../lib';
 
 interface DocumentHomeSpecificationPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
-  specifications?: Specification[];
+  specifications?: DocumentSpecificationDataInterface[];
 }
 
 export function DocumentHomeSpecificationPageHeader({
@@ -17,11 +17,11 @@ export function DocumentHomeSpecificationPageHeader({
   setSearchTerm,
   onToggleFilterSidebar,
   isFilterSidebarOpen,
-  specifications = []
+  specifications = [],
 }: DocumentHomeSpecificationPageHeaderProps) {
   return (
-    <div className="flex items-center justify-between gap-4">
-      <div className="flex items-center gap-4">
+    <div className='flex items-center justify-between gap-4'>
+      <div className='flex items-center gap-4'>
         <FilterToggleButton
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
@@ -29,14 +29,14 @@ export function DocumentHomeSpecificationPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="仕様書名・プロジェクト名・図面名で検索"
+          placeholder='仕様書名・プロジェクト名・図面名で検索'
         />
       </div>
-      <div className="flex items-center gap-2">
+      <div className='flex items-center gap-2'>
         <CsvExportDialog
           data={specifications}
           initialColumns={SPECIFICATION_CSV_COLUMNS}
-          defaultFilename="specifications"
+          defaultFilename='specifications'
         />
       </div>
     </div>

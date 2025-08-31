@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6B1A2B3C4D5E6F7G8H9I0",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-001",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-08-31",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "2,580,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 請求書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice001_v1.pdf",
+    "remarks": "初回納品分、¥2,580,000",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6B2B3C4D5E6F7G8H9I0J1",
+    "directory_name": "山田製作所_モーター開発",
+    "customer_name": "山田製作所株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-002",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-30",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "翌月15日払い",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "1,450,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "サーボモーターSV-200 請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice002_v1.pdf",
+    "remarks": "高精度モーター開発費",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6B3C4D5E6F7G8H9I0J1K2",
+    "directory_name": "鈴木工業_センサー量産",
+    "customer_name": "鈴木工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-003",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-30",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "850,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "圧力センサーPS-100 量産請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice003_v2.pdf",
+    "remarks": "量産初回分100個",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-09-15T18:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "ulid": "01H9T6B4D5E6F7G8H9I0J1K2L3",
+    "directory_name": "高橋電機_制御装置開発",
+    "customer_name": "高橋電機株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-004",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-15",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "検収後30日以内",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "3,200,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御基板CB-500 開発請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice004_v1.pdf",
+    "remarks": "プロトタイプ開発費込み",
+    "created_by_name": "高橋一郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-28T14:30:00.000Z",
+    "updated_at": "2024-08-30T09:15:00.000Z"
+  },
+  {
+    "id": 5,
+    "ulid": "01H9T6B5E6F7G8H9I0J1K2L3M4",
+    "directory_name": "伊藤機械_ポンプシステム",
+    "customer_name": "伊藤機械工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-005",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-30",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "4,800,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "油圧ポンプHP-300 システム請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice005_v1.pdf",
+    "remarks": "大型システム、設置費込み",
+    "created_by_name": "伊藤三郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-29T11:45:00.000Z",
+    "updated_at": "2024-08-30T15:20:00.000Z"
+  },
+  {
+    "id": 6,
+    "ulid": "01H9T6B6F7G8H9I0J1K2L3M4N5",
+    "directory_name": "渡辺精工_バルブ製造",
+    "customer_name": "渡辺精工株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-006",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-15",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "翌月15日払い",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "720,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "電磁バルブEV-150 製造請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice006_v1.pdf",
+    "remarks": "ステンレス製特注品",
+    "created_by_name": "渡辺四郎",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-30T08:30:00.000Z",
+    "updated_at": "2024-08-30T17:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "ulid": "01H9T6B7G8H9I0J1K2L3M4N5O6",
+    "directory_name": "中村システム_自動化装置",
+    "customer_name": "中村システム株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-007",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-10-31",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "検収後45日以内",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "12,500,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "自動制御装置AC-1000 システム請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice007_v1.pdf",
+    "remarks": "大型システム、保守契約込み",
+    "created_by_name": "中村五郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-31T10:00:00.000Z",
+    "updated_at": "2024-08-31T16:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "ulid": "01H9T6B8H9I0J1K2L3M4N5O6P7",
+    "directory_name": "小林製造_コンベア部品",
+    "customer_name": "小林製造株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-008",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-30",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "月末締め翌月末払い",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "1,680,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "ベルトコンベアBC-2000 請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice008_v1.pdf",
+    "remarks": "長尺コンベア2台分",
+    "created_by_name": "小林六郎",
+    "updated_by_name": "高橋一郎",
+    "created_at": "2024-09-01T07:45:00.000Z",
+    "updated_at": "2024-09-01T12:20:00.000Z"
+  },
+  {
+    "id": 9,
+    "ulid": "01H9T6B9I0J1K2L3M4N5O6P7Q8",
+    "directory_name": "加藤工業_測定機器",
+    "customer_name": "加藤工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-009",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-10-15",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "検収後30日以内",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "8,900,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "三次元測定器3D-500 請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice009_v1.pdf",
+    "remarks": "高精度測定器、校正費込み",
+    "created_by_name": "加藤七郎",
+    "updated_by_name": "伊藤三郎",
+    "created_at": "2024-09-02T09:30:00.000Z",
+    "updated_at": "2024-09-02T14:45:00.000Z"
+  },
+  {
+    "id": 10,
+    "ulid": "01H9T6BAJ1K2L3M4N5O6P7Q8R9",
+    "directory_name": "斎藤電子_回路設計",
+    "customer_name": "斎藤電子株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "請求書番号": {
+        "value": "INV-2024-010",
+        "type": "TEXT"
+      },
+      "請求日": {
+        "value": "2024-09-30",
+        "type": "DATE"
+      },
+      "支払条件": {
+        "value": "翌月15日払い",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "請求金額": {
+        "value": "960,000円",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御回路基板CC-800 請求書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/invoice/invoice010_v1.pdf",
+    "remarks": "カスタム回路15枚分",
+    "created_by_name": "斎藤八郎",
+    "updated_by_name": "渡辺四郎",
+    "created_at": "2024-09-03T13:15:00.000Z",
+    "updated_at": "2024-09-03T18:50:00.000Z"
+  }
+]

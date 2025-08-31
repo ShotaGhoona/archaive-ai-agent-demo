@@ -3,15 +3,14 @@ import { GalleryViewProps } from '../model';
 import { useGalleryLayout, usePaginatedGallery } from '../lib';
 import { GalleryItem, GalleryPagination } from '../ui';
 
-export function GalleryView<T>({ 
-  data, 
-  config
-}: GalleryViewProps<T>) {
-  const { gridClasses, aspectRatioClass } = useGalleryLayout(config.layoutConfig);
-  
+export function GalleryView<T>({ data, config }: GalleryViewProps<T>) {
+  const { gridClasses, aspectRatioClass } = useGalleryLayout(
+    config.layoutConfig,
+  );
+
   // ページネーション設定
   const paginationConfig = config.pagination || { enabled: false };
-  
+
   // ページネーション機能
   const {
     currentData,
@@ -23,7 +22,9 @@ export function GalleryView<T>({
     setItemsPerPage,
   } = usePaginatedGallery({
     data,
-    initialItemsPerPage: paginationConfig.enabled ? (paginationConfig.defaultItemsPerPage || 20) : data.length,
+    initialItemsPerPage: paginationConfig.enabled
+      ? paginationConfig.defaultItemsPerPage || 20
+      : data.length,
     initialPage: 1,
   });
 
@@ -32,16 +33,16 @@ export function GalleryView<T>({
   // 空の状態
   if (data.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+      <div className='flex flex-1 items-center justify-center text-sm text-gray-500'>
         データがありません
       </div>
     );
   }
 
   return (
-    <div className={`h-full flex flex-col ${config.className || ''}`}>
+    <div className={`flex h-full flex-col ${config.className || ''}`}>
       {/* ギャラリーアイテム */}
-      <div className="flex-1 overflow-auto min-h-0">
+      <div className='min-h-0 flex-1 overflow-auto'>
         <div className={`${gridClasses} gap-6 p-1`}>
           {displayData.map((item) => {
             const rowId = config.getRowId?.(item) || String(Math.random());
@@ -56,10 +57,10 @@ export function GalleryView<T>({
           })}
         </div>
       </div>
-      
+
       {/* ページネーション */}
       {paginationConfig.enabled && (
-        <div className="flex-shrink-0 px-4 py-2 border-t">
+        <div className='flex-shrink-0 border-t px-4 py-2'>
           <GalleryPagination
             currentPage={currentPage}
             totalPages={totalPages}

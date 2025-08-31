@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createQuotationTableConfig } from "../lib";
-import { Quotation } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createQuotationTableConfig } from '../lib';
+import { DocumentQuotationDataInterface } from '@/dummy-data-er-fix/document';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,25 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface QuotationTableViewProps {
-  quotations: Quotation[];
-  onQuotationDelete?: (quotation: Quotation) => void;
+  quotations: DocumentQuotationDataInterface[];
+  onQuotationDelete?: (quotation: DocumentQuotationDataInterface) => void;
   onQuotationUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function DocumentHomeQuotationTableView({ 
+export function DocumentHomeQuotationTableView({
   quotations,
   onQuotationDelete,
-  onQuotationUpdate
+  onQuotationUpdate,
 }: QuotationTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [quotationToDelete, setQuotationToDelete] = useState<Quotation | null>(null);
+  const [quotationToDelete, setQuotationToDelete] =
+    useState<DocumentQuotationDataInterface | null>(null);
 
-  const handleDeleteClick = (quotation: Quotation) => {
+  const handleDeleteClick = (quotation: DocumentQuotationDataInterface) => {
     setQuotationToDelete(quotation);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +59,23 @@ export function DocumentHomeQuotationTableView({
         getRowId={(quotation) => quotation.id.toString()}
         onItemUpdate={onQuotationUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>見積書を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{quotationToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{quotationToDelete?.quotation_number || 'N/A'}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

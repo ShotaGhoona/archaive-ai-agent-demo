@@ -1,4 +1,4 @@
-import { BlueprintEstimateContainer } from "@/page-components";
+import { BlueprintEstimateContainer } from '@/page-components';
 
 export default function BlueprintEstimatePage() {
   return <BlueprintEstimateContainer />;

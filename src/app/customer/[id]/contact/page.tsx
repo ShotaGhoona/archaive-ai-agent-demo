@@ -1,4 +1,4 @@
-import { CustomerContactContainer } from "@/page-components";
+import { CustomerContactContainer } from '@/page-components';
 
 interface CustomerContactPageProps {
   params: Promise<{
@@ -6,7 +6,9 @@ interface CustomerContactPageProps {
   }>;
 }
 
-export default async function CustomerContactPage({ params }: CustomerContactPageProps) {
+export default async function CustomerContactPage({
+  params,
+}: CustomerContactPageProps) {
   const { id } = await params;
   return <CustomerContactContainer customerId={id} />;
 }

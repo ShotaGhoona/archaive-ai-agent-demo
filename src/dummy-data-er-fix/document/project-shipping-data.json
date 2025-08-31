@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6E5I0J1K2L3M4N5O6P7Q8",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "送り状番号": {
+        "value": "SHP-2024-001",
+        "type": "TEXT"
+      },
+      "出荷日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "配送業者": {
+        "value": "ヤマト運輸",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "追跡番号": {
+        "value": "1234-5678-9012",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 出荷指示書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/shipping/shipping001_v1.pdf",
+    "remarks": "初回出荷、50台一括出荷",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6E6J1K2L3M4N5O6P7Q8R9",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "送り状番号": {
+        "value": "SHP-2024-002",
+        "type": "TEXT"
+      },
+      "出荷日": {
+        "value": "2024-08-26",
+        "type": "DATE"
+      },
+      "配送業者": {
+        "value": "佐川急便",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "追跡番号": {
+        "value": "5678-9012-3456",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 追加分出荷書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/shipping/shipping002_v2.pdf",
+    "remarks": "追加出荷、10台分割出荷",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6E7K2L3M4N5O6P7Q8R9S0",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "送り状番号": {
+        "value": "SHP-2024-003",
+        "type": "TEXT"
+      },
+      "出荷日": {
+        "value": "2024-08-27",
+        "type": "DATE"
+      },
+      "配送業者": {
+        "value": "緊急便",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "追跡番号": {
+        "value": "9012-3456-7890",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 緊急出荷書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/shipping/shipping003_v3.pdf",
+    "remarks": "緊急出荷、2台当日配送完了",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  }
+]

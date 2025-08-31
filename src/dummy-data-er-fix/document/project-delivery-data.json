@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6A1B2C3D4E5F6G7H8I9J0",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-001",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "本社工場",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "ギアボックスGB-X1 × 50台",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 配送指示書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery001_v1.pdf",
+    "remarks": "納期厳守、梱包注意",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6A1C3D4E5F6G7H8I9J0K1",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-002",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-26",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "第二工場",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "ギアボックスGB-X1 × 10台（追加分）",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 追加部品配送書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery002_v2.pdf",
+    "remarks": "追加注文分、標準配送",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6A1D4E5F6G7H8I9J0K1L2",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-003",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-27",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "緊急対応窓口",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "ギアボックスGB-X1 × 2台（緊急修理用）",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 緊急修理部品配送書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery003_v3.pdf",
+    "remarks": "緊急対応、当日配送完了済み",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  }
+]

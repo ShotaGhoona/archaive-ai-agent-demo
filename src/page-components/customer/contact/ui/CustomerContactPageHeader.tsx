@@ -1,7 +1,7 @@
-import { CONTACT_CSV_COLUMNS } from "../lib";
-import { Contact } from "../model";
-import { CreateContactDialog } from "../ui";
-import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
+import { CONTACT_CSV_COLUMNS } from '../lib';
+import { CustomerContactDataInterface } from '@/dummy-data-er-fix/customer';
+import { CreateContactDialog } from '../ui';
+import { SearchInput, CsvExportDialog, FilterToggleButton } from '@/shared';
 
 interface CustomerContactPageHeaderProps {
   searchTerm: string;
@@ -10,7 +10,15 @@ interface CustomerContactPageHeaderProps {
   isFilterSidebarOpen: boolean;
   contacts?: unknown[];
   customerId: string;
-  onContactCreate?: (contact: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => void;
+  onContactCreate?: (
+    contact: Omit<
+      CustomerContactDataInterface,
+      | 'id'
+      | 'customer_id'
+      | 'created_at'
+      | 'updated_at'
+    >,
+  ) => void;
 }
 
 export function CustomerContactPageHeader({
@@ -22,13 +30,21 @@ export function CustomerContactPageHeader({
   customerId,
   onContactCreate,
 }: CustomerContactPageHeaderProps) {
-  const handleContactCreate = (contact: Omit<Contact, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
+  const handleContactCreate = (
+    contact: Omit<
+      CustomerContactDataInterface,
+      | 'id'
+      | 'customer_id'
+      | 'created_at'
+      | 'updated_at'
+    >,
+  ) => {
     onContactCreate?.(contact);
   };
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-4'>
         <FilterToggleButton
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
@@ -36,15 +52,15 @@ export function CustomerContactPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="姓、名、メールアドレス、役職、部署で検索"
+          placeholder='姓、名、メールアドレス、役職、部署で検索'
         />
       </div>
-      <div className="flex items-center gap-3">
+      <div className='flex items-center gap-3'>
         {/* CSV出力ボタン */}
         <CsvExportDialog
-          data={contacts as Contact[]}
+          data={contacts as CustomerContactDataInterface[]}
           initialColumns={CONTACT_CSV_COLUMNS}
-          defaultFilename="contacts"
+          defaultFilename='contacts'
         />
         {/* 新規担当者登録ボタン */}
         <CreateContactDialog

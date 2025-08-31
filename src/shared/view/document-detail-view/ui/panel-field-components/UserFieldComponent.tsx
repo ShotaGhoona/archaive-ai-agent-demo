@@ -15,15 +15,15 @@ export function UserFieldComponent<T>({
   onChange,
 }: UserFieldComponentProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
       <Input
         value={String(value || '')}
         onChange={(e) => onChange(e.target.value)}
         disabled={!column.editable}
-        placeholder={column.placeholder || "従業員を選択"}
-        className={!column.editable ? "bg-gray-50" : ""}
-        type="text"
+        placeholder={column.placeholder || '従業員を選択'}
+        className={!column.editable ? 'bg-gray-50' : ''}
+        type='text'
       />
     </div>
   );

@@ -8,36 +8,35 @@ interface GalleryItemProps<T> {
   aspectRatioClass: AspectRatioClass;
 }
 
-export function GalleryItem<T>({ 
-  item, 
-  config, 
-  aspectRatioClass 
+export function GalleryItem<T>({
+  item,
+  config,
+  aspectRatioClass,
 }: GalleryItemProps<T>) {
   const { itemConfig, behaviorConfig } = config;
   const isLinkEnabled = behaviorConfig?.linkConfig?.enabled;
-  
+
   const content = (
-    <div className="relative bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group">
+    <div className='group relative overflow-hidden rounded-lg border border-gray-200 bg-white transition-shadow hover:shadow-md'>
       {/* サムネイル部分 */}
       {itemConfig.showThumbnail && itemConfig.getThumbnailUrl && (
-        <div className={`overflow-hidden bg-gray-50 relative ${aspectRatioClass}`}>
+        <div
+          className={`relative overflow-hidden bg-gray-50 ${aspectRatioClass}`}
+        >
           <img
             src={itemConfig.getThumbnailUrl(item)}
-            alt=""
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            alt=''
+            className='h-full w-full object-cover transition-transform duration-200 group-hover:scale-105'
           />
-          
+
           {/* サムネイルオーバーレイ */}
-          {itemConfig.thumbnailOverlayRender && (
-            itemConfig.thumbnailOverlayRender(item)
-          )}
+          {itemConfig.thumbnailOverlayRender &&
+            itemConfig.thumbnailOverlayRender(item)}
         </div>
       )}
-      
+
       {/* カスタムコンテンツ */}
-      <div className="p-3">
-        {itemConfig.contentRender(item)}
-      </div>
+      <div className='p-3'>{itemConfig.contentRender(item)}</div>
     </div>
   );
 

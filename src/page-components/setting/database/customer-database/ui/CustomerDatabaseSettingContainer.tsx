@@ -5,14 +5,18 @@ import { Button } from '@/shared';
 import { Save, Users, Phone } from 'lucide-react';
 import { DatabaseColumnSetting } from '@/widgets';
 import { DatabaseColumnSettingConfig } from '@/widgets';
-import { DEFAULT_CUSTOMER_TABLES, CustomerDatabaseService, CustomerDatabaseState } from '../lib';
+import {
+  DEFAULT_CUSTOMER_TABLES,
+  CustomerDatabaseService,
+  CustomerDatabaseState,
+} from '../lib';
 
 export function CustomerDatabaseSettingContainer() {
   // データベース状態の管理
   const [state, setState] = useState<CustomerDatabaseState>(() => {
     const allColumns: Record<string, DatabaseColumnSettingConfig[]> = {};
-    
-    DEFAULT_CUSTOMER_TABLES.forEach(table => {
+
+    DEFAULT_CUSTOMER_TABLES.forEach((table) => {
       allColumns[table.id] = table.defaultColumns;
     });
 
@@ -23,33 +27,47 @@ export function CustomerDatabaseSettingContainer() {
   });
 
   // 列設定の更新
-  const handleUpdateColumn = (tableId: string, columnId: string, updates: Partial<DatabaseColumnSettingConfig>) => {
-    setState(prev => CustomerDatabaseService.updateColumn(prev, tableId, columnId, updates));
+  const handleUpdateColumn = (
+    tableId: string,
+    columnId: string,
+    updates: Partial<DatabaseColumnSettingConfig>,
+  ) => {
+    setState((prev) =>
+      CustomerDatabaseService.updateColumn(prev, tableId, columnId, updates),
+    );
   };
 
   // 列の削除
   const handleDeleteColumn = (tableId: string, columnId: string) => {
-    setState(prev => CustomerDatabaseService.deleteColumn(prev, tableId, columnId));
+    setState((prev) =>
+      CustomerDatabaseService.deleteColumn(prev, tableId, columnId),
+    );
   };
 
   // 新規列の追加
   const handleAddColumn = (tableId: string) => {
-    setState(prev => CustomerDatabaseService.addColumn(prev, tableId));
+    setState((prev) => CustomerDatabaseService.addColumn(prev, tableId));
   };
 
   // TODO: 必須フラグ切り替え
   const handleToggleRequired = (tableId: string, columnId: string) => {
-    setState(prev => CustomerDatabaseService.toggleRequired(prev, tableId, columnId));
+    setState((prev) =>
+      CustomerDatabaseService.toggleRequired(prev, tableId, columnId),
+    );
   };
 
   // TODO: 基本情報表示切り替え
   const handleToggleBasicInfo = (tableId: string, columnId: string) => {
-    setState(prev => CustomerDatabaseService.toggleBasicInfo(prev, tableId, columnId));
+    setState((prev) =>
+      CustomerDatabaseService.toggleBasicInfo(prev, tableId, columnId),
+    );
   };
 
   // TODO: テーブル表示切り替え
   const handleToggleTableDisplay = (tableId: string, columnId: string) => {
-    setState(prev => CustomerDatabaseService.toggleTableDisplay(prev, tableId, columnId));
+    setState((prev) =>
+      CustomerDatabaseService.toggleTableDisplay(prev, tableId, columnId),
+    );
   };
 
   // 設定の保存
@@ -60,16 +78,19 @@ export function CustomerDatabaseSettingContainer() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       {/* ページヘッダー */}
-      <div className="p-4">
-        <div className="flex items-center justify-between space-x-4">
-          <div className="flex items-center gap-4">
-          </div>
-          
-          <div className="flex items-center space-x-2">
-            <Button onClick={handleSave} size="lg" className="flex items-center gap-2">
-              <Save className="h-4 w-4" />
+      <div className='p-4'>
+        <div className='flex items-center justify-between space-x-4'>
+          <div className='flex items-center gap-4'></div>
+
+          <div className='flex items-center space-x-2'>
+            <Button
+              onClick={handleSave}
+              size='lg'
+              className='flex items-center gap-2'
+            >
+              <Save className='h-4 w-4' />
               顧客設定を保存
             </Button>
           </div>
@@ -77,28 +98,40 @@ export function CustomerDatabaseSettingContainer() {
       </div>
 
       {/* テーブル設定エリア */}
-      <div className="px-4 pb-4 space-y-8">
-        {state.customerTables.map(table => (
-          <div key={table.id} className="space-y-4">
+      <div className='space-y-8 px-4 pb-4'>
+        {state.customerTables.map((table) => (
+          <div key={table.id} className='space-y-4'>
             {/* テーブルヘッダー */}
-            <div className="flex items-center gap-3">
+            <div className='flex items-center gap-3'>
               {table.id === 'account' ? (
-                <Users className="h-6 w-6 text-primary" />
+                <Users className='text-primary h-6 w-6' />
               ) : (
-                <Phone className="h-6 w-6 text-primary" />
+                <Phone className='text-primary h-6 w-6' />
               )}
-              <h2 className="text-xl font-semibold text-primary">{table.name}</h2>
+              <h2 className='text-primary text-xl font-semibold'>
+                {table.name}
+              </h2>
             </div>
-            
+
             {/* 各テーブルの項目設定 */}
             <DatabaseColumnSetting
               columns={state.customerColumns[table.id] || []}
-              onUpdateColumn={(columnId, updates) => handleUpdateColumn(table.id, columnId, updates)}
-              onDeleteColumn={(columnId) => handleDeleteColumn(table.id, columnId)}
+              onUpdateColumn={(columnId, updates) =>
+                handleUpdateColumn(table.id, columnId, updates)
+              }
+              onDeleteColumn={(columnId) =>
+                handleDeleteColumn(table.id, columnId)
+              }
               onAddColumn={() => handleAddColumn(table.id)}
-              onToggleRequired={(columnId) => handleToggleRequired(table.id, columnId)}
-              onToggleBasicInfo={(columnId) => handleToggleBasicInfo(table.id, columnId)}
-              onToggleTableDisplay={(columnId) => handleToggleTableDisplay(table.id, columnId)}
+              onToggleRequired={(columnId) =>
+                handleToggleRequired(table.id, columnId)
+              }
+              onToggleBasicInfo={(columnId) =>
+                handleToggleBasicInfo(table.id, columnId)
+              }
+              onToggleTableDisplay={(columnId) =>
+                handleToggleTableDisplay(table.id, columnId)
+              }
             />
           </div>
         ))}

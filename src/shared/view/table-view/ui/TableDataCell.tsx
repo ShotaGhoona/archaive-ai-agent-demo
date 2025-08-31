@@ -36,20 +36,20 @@ export function TableDataCell<T>({
   // ロックされたセルでカスタムrenderがない場合のみロック表示
   if (column.locked && !column.render) {
     return (
-      <TableCell 
+      <TableCell
         className={getCellClassName(column.key as string, isEditing)}
         style={getStickyStyle(column, getColumnWidth)}
       >
-        <div className="flex items-center gap-1">
+        <div className='flex items-center gap-1'>
           <Tooltip>
             <TooltipTrigger>
-              <Lock className="h-3 w-3 text-gray-400" />
+              <Lock className='h-3 w-3 text-gray-400' />
             </TooltipTrigger>
             <TooltipContent>
               <p>この項目はロックされています</p>
             </TooltipContent>
           </Tooltip>
-          <span className="text-gray-500">{String(cellContent.value)}</span>
+          <span className='text-gray-500'>{String(cellContent.value)}</span>
         </div>
       </TableCell>
     );
@@ -90,7 +90,7 @@ export function TableDataCell<T>({
 
   // 編集可能セル
   return (
-    <TableCell 
+    <TableCell
       className={getCellClassName(column.key as string, isEditing)}
       style={getStickyStyle(column, getColumnWidth)}
     >

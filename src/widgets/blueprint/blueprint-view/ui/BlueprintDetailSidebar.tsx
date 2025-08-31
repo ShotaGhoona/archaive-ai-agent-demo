@@ -1,8 +1,8 @@
 'use client';
-import { useState, useRef } from "react";
-import { 
-  Button, 
-  Card, 
+import { useState } from 'react';
+import {
+  Button,
+  Card,
   CardContent,
   AlertDialog,
   AlertDialogAction,
@@ -13,239 +13,159 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-  LoadingSpinner
-} from "@/shared";
-import { Plus, X, FileText, Expand } from "lucide-react";
-import { BlueprintViewContainerData } from "../model";
+} from '@/shared';
+import { Plus, X, FileText, Expand } from 'lucide-react';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
 
 interface BlueprintDetailSidebarProps {
-  views: BlueprintViewContainerData[];
-  onViewAdd: (view: BlueprintViewContainerData) => void;
-  onViewSelect: (viewId: string) => void;
-  onViewRemove: (viewId: string) => void;
+  views: BlueprintDetailDataInterface[];
+  activeBlueprintId: number;
+  onViewSelect: (viewId: number) => void;
+  onViewRemove: (viewId: number) => void;
 }
 
-export function BlueprintDetailSidebar({ 
+export function BlueprintDetailSidebar({
   views,
-  onViewAdd, 
-  onViewSelect, 
-  onViewRemove 
+  activeBlueprintId,
+  onViewSelect,
+  onViewRemove,
 }: BlueprintDetailSidebarProps) {
-  const [isUploading, setIsUploading] = useState(false);
-  const [dragActive, setDragActive] = useState(false);
+  
   const [isGalleryMode, setIsGalleryMode] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = async (fileList: FileList) => {
-    const validFiles = Array.from(fileList).filter(file => 
-      file.type.startsWith('image/') || 
-      file.name.endsWith('.dwg') || 
-      file.name.endsWith('.step') || 
-      file.name.endsWith('.igs') ||
-      file.name.endsWith('.pdf')
-    );
-    
-    if (validFiles.length > 0) {
-      setIsUploading(true);
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const newViews = validFiles.map(file => ({
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-          name: file.name.split('.')[0], // ファイル拡張子を除いた名前
-          fileName: file.name,
-          description: `新しくアップロードされた図面ビュー`,
-          viewType: 'custom',
-          imageUrl: URL.createObjectURL(file),
-          fileType: file.name.split('.').pop() || 'unknown',
-          uploadDate: new Date().toISOString(),
-          isActive: false,
-          createdAt: new Date().toISOString()
-        }));
-        
-        newViews.forEach(view => onViewAdd(view));
-      } catch (error) {
-        console.error('アップロードエラー:', error);
-      } finally {
-        setIsUploading(false);
-      }
-    }
-  };
+  // TODO: 図面を追加する機能（ファイルアップロード、ドラッグ&ドロップ）の実装
 
-  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (fileList && fileList.length > 0) {
-      handleFileSelect(fileList);
-    }
-  };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    setDragActive(false);
-    const fileList = e.dataTransfer.files;
-    if (fileList && fileList.length > 0) {
-      handleFileSelect(fileList);
-    }
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    setDragActive(true);
-  };
-
-  const handleDragLeave = () => {
-    setDragActive(false);
-  };
-
-  const handleViewClick = (viewId: string) => {
+  const handleViewClick = (viewId: number) => {
     onViewSelect(viewId);
     if (isGalleryMode) {
       setIsGalleryMode(false);
     }
   };
 
-  const handleRemoveView = (viewId: string) => {
+  const handleRemoveView = (viewId: number) => {
     onViewRemove(viewId);
   };
 
   return (
-    <div className={`h-full flex flex-col z-10 absolute left-0 top-0 transition-all duration-300 ${
-      isGalleryMode ? 'w-full bg-white/10 backdrop-blur-md' : 'w-48 bg-gradient-to-r from-white/80 via-white/60 to-transparent'
-    }`}>
+    <div
+      className={`absolute top-0 left-0 flex h-full flex-col transition-all duration-300 ${
+        isGalleryMode
+          ? 'w-full bg-white/10 backdrop-blur-md z-50'
+          : 'w-48 bg-gradient-to-r from-white/80 via-white/60 to-transparent z-10'
+      }`}
+    >
       {/* 図面ビュー一覧 */}
-      <div className="flex-1 overflow-y-auto scrollbar-hidden p-4">
-        <div className={`${ isGalleryMode ? 'grid grid-cols-4 gap-4' : 'space-y-3'}`}>
-        
-        <div 
-          className={`
-            border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors
-            ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'}
-            ${isUploading ? 'border-blue-300 bg-blue-50' : ''}
-          `}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
-          onClick={() => !isUploading && fileInputRef.current?.click()}
+      <div className='scrollbar-hidden flex-1 overflow-y-auto p-4'>
+        <div
+          className={`${isGalleryMode ? 'grid grid-cols-4 gap-4' : 'space-y-3'}`}
         >
-          <input
-            ref={fileInputRef}
-            type="file"
-            multiple
-            accept=".dwg,.step,.igs,.png,.jpg,.jpeg,.pdf"
-            onChange={handleFileInputChange}
-            className="hidden"
-          />
-          
-          {isUploading ? (
-            <div className="space-y-2">
-              <LoadingSpinner size="sm" className="text-blue-600 mx-auto" />
-              <div className="text-xs text-blue-600 font-medium">
-                アップロード中...
-              </div>
+          <div
+            className={`cursor-pointer rounded-lg border-2 border-dashed p-4 text-center transition-colors border-gray-300 hover:border-gray-400`}
+            onClick={() => {
+              // TODO: 図面追加機能の実装
+              console.log('図面追加機能は未実装です');
+            }}
+          >
+            <div className='flex h-full w-full items-center justify-center gap-2'>
+              <Plus className='h-6 w-6 text-gray-400' />
+              <div className='mr-2 text-sm text-gray-600'>図面を追加</div>
             </div>
-          ) : (
-            <div className="flex items-center justify-center gap-2 w-full h-full">
-                <Plus className="h-6 w-6 text-gray-400" />
-                <div className="text-gray-600 text-sm mr-2">
-                  図面を追加
-                </div>
+          </div>
+
+          {/* 図面ビューリスト */}
+          {views.map((view) => (
+            <div key={view.id} className='w-full'>
+              <Card
+                className={`group relative cursor-pointer py-1 transition-all duration-200 ${
+                  view.id === activeBlueprintId
+                    ? 'ring-primary ring-2'
+                    : 'hover:bg-gray-50 hover:shadow-md'
+                } `}
+                onClick={() => handleViewClick(view.id)}
+              >
+                {/* 展開ボタン (サイドバーモード時のみ) */}
+                {!isGalleryMode && (
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsGalleryMode(true);
+                    }}
+                    className='absolute top-2 left-2 h-6 w-6 p-0 opacity-0 transition-opacity group-hover:opacity-100'
+                  >
+                    <Expand className='h-3 w-3' />
+                  </Button>
+                )}
+
+                {/* 削除ボタン */}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant='destructive'
+                      size='sm'
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                      className='absolute top-2 right-2 h-6 w-6 p-0 opacity-0 transition-opacity group-hover:opacity-100'
+                    >
+                      <X className='h-3 w-3' />
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        図面ビューを削除しますか？
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        「{view.leaf_product_name}」を削除します。この操作は取り消せません。
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>キャンセル</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => handleRemoveView(view.id)}
+                        className='bg-red-500 text-white hover:bg-red-600'
+                      >
+                        削除
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+
+                <CardContent className='p-2'>
+                  <div className='space-y-2'>
+                    <div className='aspect-video w-full overflow-hidden rounded bg-gray-100'>
+                      {view.s3_url ? (
+                        <img
+                          src={view.s3_url}
+                          alt={view.leaf_product_name}
+                          className='h-full w-full object-cover'
+                        />
+                      ) : (
+                        <div className='flex h-full w-full items-center justify-center'>
+                          <FileText className='h-8 w-8 text-gray-400' />
+                        </div>
+                      )}
+                    </div>
+                    <div className='px-1'>
+                      <h4 className='truncate text-xs font-medium text-gray-900'>
+                        {view.leaf_product_name}
+                      </h4>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          ))}
+
+          {views.length === 0 && (
+            <div className='py-8 text-center'>
+              <FileText className='mx-auto mb-3 h-12 w-12 text-gray-300' />
+              <p className='text-sm text-gray-500'>図面ビューがありません</p>
             </div>
           )}
-        </div>
-
-        {/* 図面ビューリスト */}
-        {views.map((view) => (
-          <div key={view.id} className="w-full">
-            <Card 
-              className={`
-                cursor-pointer transition-all duration-200 group relative py-1
-                ${view.isActive 
-                  ? 'ring-2 ring-primary' 
-                  : 'hover:shadow-md hover:bg-gray-50'
-                }
-              `}
-              onClick={() => handleViewClick(view.id)}
-            >
-            {/* 展開ボタン (サイドバーモード時のみ) */}
-            {!isGalleryMode && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsGalleryMode(true);
-                }}
-                className="absolute top-2 left-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <Expand className="h-3 w-3" />
-              </Button>
-            )}
-            
-            {/* 削除ボタン */}
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  variant="destructive"
-                  size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  className="absolute top-2 right-2 h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <X className="h-3 w-3" />
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>図面ビューを削除しますか？</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    「{view.name}」を削除します。この操作は取り消せません。
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>キャンセル</AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={() => handleRemoveView(view.id)}
-                    className="text-white bg-red-500 hover:bg-red-600"
-                  >
-                    削除
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-
-            <CardContent className="p-2">
-              <div className="space-y-2">
-                <div className="aspect-video w-full bg-gray-100 rounded overflow-hidden">
-                  {view.imageUrl ? (
-                    <img 
-                      src={view.imageUrl} 
-                      alt={view.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <FileText className="h-8 w-8 text-gray-400" />
-                    </div>
-                  )}
-                </div>
-                <div className="px-1">
-                  <h4 className="text-xs font-medium text-gray-900 truncate">
-                    {view.name}
-                  </h4>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          </div>
-        ))}
-        
-        {views.length === 0 && (
-          <div className="text-center py-8">
-            <FileText className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">図面ビューがありません</p>
-          </div>
-        )}
         </div>
       </div>
     </div>

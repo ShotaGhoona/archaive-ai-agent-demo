@@ -1,13 +1,22 @@
-"use client";
-import { useState } from "react";
-import { CustomerPageHeader, CustomerTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
-import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG } from "../lib";
-import { CustomerHomeDataInterface , customerHomeData } from "@/dummy-data/customer";
-import { CustomerColumnCallbacks } from "../model";
+'use client';
+import { useState } from 'react';
+import { CustomerPageHeader, CustomerTableView } from '../ui';
+import {
+  AdvancedFilterSidebar,
+  useAdvancedFilter,
+  useSearchbar,
+} from '@/shared';
+import { setValue } from '@/shared';
+import { CUSTOMER_FILTER_CONFIG, CUSTOMER_SEARCHBAR_CONFIG } from '../lib';
+import {
+  CustomerHomeDataInterface,
+  customerHomeData,
+} from '@/dummy-data-er-fix/customer';
 
 export function CustomerContainer() {
-  const [customers, setCustomers] = useState<CustomerHomeDataInterface[]>(customerHomeData as CustomerHomeDataInterface[]);
+  const [customers, setCustomers] = useState<CustomerHomeDataInterface[]>(
+    customerHomeData as CustomerHomeDataInterface[],
+  );
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -25,36 +34,51 @@ export function CustomerContainer() {
     clearFilters,
   } = useAdvancedFilter(searchFiltered, CUSTOMER_FILTER_CONFIG);
 
-
   // 新規顧客作成ハンドラー
-  const handleCustomerCreate = (customerData: Omit<CustomerHomeDataInterface, 'id' | 'company_id' | 'created_at' | 'updated_at'>) => {
-    const newId = Math.max(...customers.map(c => c.id), 0) + 1;
+  const handleCustomerCreate = (
+    customerData: Omit<
+      CustomerHomeDataInterface,
+      'id' | 'company_id' | 'created_at' | 'updated_at' | 'created_by_name'
+    >,
+  ) => {
+    const newId = Math.max(...customers.map((c) => c.id), 0) + 1;
     const newCustomer: CustomerHomeDataInterface = {
       id: newId,
       company_id: 1,
+      created_by_name: '管理者',  // TODO: 実際のユーザー名を取得
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       ...customerData,
     };
-    setCustomers(prev => [...prev, newCustomer]);
+    setCustomers((prev) => [...prev, newCustomer]);
   };
 
   // 顧客削除ハンドラー
   const handleCustomerDelete = (customer: CustomerHomeDataInterface) => {
-    setCustomers(prev => prev.filter(c => c.id !== customer.id));
+    setCustomers((prev) => prev.filter((c) => c.id !== customer.id));
   };
 
   // 顧客更新ハンドラー
-  const handleCustomerUpdate = (rowId: string, field: string, value: unknown) => {
-    setCustomers(prev => prev.map(customer => 
-      customer.id.toString() === rowId 
-        ? { ...customer, [field]: value, updated_at: new Date().toISOString() }
-        : customer
-    ));
+  const handleCustomerUpdate = (
+    rowId: string,
+    field: string,
+    value: unknown,
+  ) => {
+    setCustomers((prev) =>
+      prev.map((customer) => {
+        if (customer.id.toString() === rowId) {
+          const updatedCustomer = { ...customer };
+          setValue(updatedCustomer, field, value);
+          updatedCustomer.updated_at = new Date().toISOString();
+          return updatedCustomer;
+        }
+        return customer;
+      }),
+    );
   };
 
   return (
-    <div className="h-[calc(100vh-45px)] flex overflow-hidden">
+    <div className='flex h-[calc(100vh-45px)] overflow-hidden'>
       {/* フィルターサイドバー */}
       <AdvancedFilterSidebar
         isOpen={isFilterSidebarOpen}
@@ -64,14 +88,14 @@ export function CustomerContainer() {
         onClearFilters={clearFilters}
         config={CUSTOMER_FILTER_CONFIG}
       />
-      
+
       {/* メインコンテンツ */}
-      <div 
-        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+      <div
+        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${
           isFilterSidebarOpen ? 'ml-80' : 'ml-0'
         }`}
       >
-        <div className="flex-shrink-0 p-4">
+        <div className='flex-shrink-0 p-4'>
           <CustomerPageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -81,8 +105,8 @@ export function CustomerContainer() {
             onCustomerCreate={handleCustomerCreate}
           />
         </div>
-        <div className="flex-1 flex flex-col min-h-0 px-4">
-          <CustomerTableView 
+        <div className='flex min-h-0 flex-1 flex-col px-4'>
+          <CustomerTableView
             customers={filteredCustomers}
             onCustomerDelete={handleCustomerDelete}
             onCustomerUpdate={handleCustomerUpdate}

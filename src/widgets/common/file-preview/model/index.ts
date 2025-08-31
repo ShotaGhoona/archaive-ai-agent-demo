@@ -1,2 +1,6 @@
 export * from './types';
-export { detectFileType, isImageFile, isPreviewableFile } from '../lib/fileTypeDetector';
+export {
+  detectFileType,
+  isImageFile,
+  isPreviewableFile,
+} from '../lib/fileTypeDetector';

@@ -15,20 +15,16 @@ export function SimpleFilterContent<T>({
   updateFilter,
 }: SimpleFilterContentProps<T>) {
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4">
+    <div className='h-full space-y-4 overflow-y-auto p-4'>
       {config.map((filterConfig, index) => (
         <React.Fragment key={filterConfig.key as string}>
           <FilterControl
             config={filterConfig}
             value={filters[filterConfig.key as string]}
-            onChange={(value) => updateFilter(filterConfig.key as string, value)}
+            onChange={(value) =>
+              updateFilter(filterConfig.key as string, value)
+            }
           />
-          
-          {/* セパレーターを適切な位置に挿入 */}
-          {index < config.length - 1 && 
-           index % 3 === 2 && (
-            <Separator />
-          )}
         </React.Fragment>
       ))}
     </div>

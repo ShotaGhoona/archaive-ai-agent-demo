@@ -3,7 +3,7 @@
 // 利用可能な色定数（12種類）
 export const TABLE_COLORS = {
   red: 'red',
-  orange: 'orange', 
+  orange: 'orange',
   yellow: 'yellow',
   green: 'green',
   blue: 'blue',
@@ -114,7 +114,7 @@ export interface PaginationConfig {
 }
 
 // Config-based Table設定
-export type TablePaginationConfig = 
+export type TablePaginationConfig =
   | {
       enabled: false;
     }

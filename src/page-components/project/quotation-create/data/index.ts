@@ -1,1 +1,0 @@
-export { default as blueprintsData } from './blueprints.json';

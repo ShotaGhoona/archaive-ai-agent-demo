@@ -1,18 +1,20 @@
 import React, { useMemo } from 'react';
-import {
-  TableBody,
-  TableHeader,
-  TableRow,
-} from '@/shared';
+import { TableBody, TableHeader, TableRow } from '@/shared';
 import { TableViewProps } from '../model';
-import { useColumnResize, useTableSort, useCellEdit, usePaginatedTable } from '../lib';
+import {
+  useColumnResize,
+  useTableSort,
+  useCellEdit,
+  usePaginatedTable,
+} from '../lib';
 import { TableHeaderCell, TableDataCell, TablePagination } from '../ui';
 
 export function TableView<T>({
   data,
   config,
   onItemUpdate,
-  getRowId = (item: T) => String((item as Record<string, unknown>).id || Math.random())
+  getRowId = (item: T) =>
+    String((item as Record<string, unknown>).id || Math.random()),
 }: TableViewProps<T>) {
   const { columns, pagination } = config;
 
@@ -26,28 +28,17 @@ export function TableView<T>({
   };
 
   // Custom hooks
-  const { 
-    handleMouseDown, 
-    getColumnWidth 
-  } = useColumnResize({ columns });
-  
-  const { 
-    handleSort, 
-    getSortedData, 
-    getSortIcon, 
-    getHeaderClassName 
-  } = useTableSort({ columns });
-  
-  const {
-    editingCell,
-    handleCellClick,
-    getCellContent,
-    getCellClassName,
-  } = useCellEdit({ 
-    columns, 
-    getRowId, 
-    onUpdate: onItemUpdate 
-  });
+  const { handleMouseDown, getColumnWidth } = useColumnResize({ columns });
+
+  const { handleSort, getSortedData, getSortIcon, getHeaderClassName } =
+    useTableSort({ columns });
+
+  const { editingCell, handleCellClick, getCellContent, getCellClassName } =
+    useCellEdit({
+      columns,
+      getRowId,
+      onUpdate: onItemUpdate,
+    });
 
   // ソート済みのデータを取得
   const sortedData = getSortedData(data);
@@ -63,7 +54,9 @@ export function TableView<T>({
     setItemsPerPage,
   } = usePaginatedTable({
     data: sortedData,
-    initialItemsPerPage: paginationConfig.enabled ? paginationConfig.defaultItemsPerPage : 10,
+    initialItemsPerPage: paginationConfig.enabled
+      ? paginationConfig.defaultItemsPerPage
+      : 10,
     initialPage: 1,
   });
 
@@ -83,12 +76,18 @@ export function TableView<T>({
       itemsPerPage,
       onPageChange: setCurrentPage,
       onItemsPerPageChange: setItemsPerPage,
-      showItemsPerPageSelector: paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
-      maxVisiblePages: paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
+      showItemsPerPageSelector: paginationConfig.enabled
+        ? paginationConfig.showItemsPerPageSelector
+        : false,
+      maxVisiblePages: paginationConfig.enabled
+        ? paginationConfig.maxVisiblePages
+        : 5,
     };
   }, [
     paginationConfig.enabled,
-    paginationConfig.enabled ? paginationConfig.showItemsPerPageSelector : false,
+    paginationConfig.enabled
+      ? paginationConfig.showItemsPerPageSelector
+      : false,
     paginationConfig.enabled ? paginationConfig.maxVisiblePages : 5,
     currentPage,
     totalPages,
@@ -100,19 +99,19 @@ export function TableView<T>({
 
   if (data.length === 0) {
     return (
-      <div className="flex-1 flex items-center justify-center text-gray-500 text-sm">
+      <div className='flex flex-1 items-center justify-center text-sm text-gray-500'>
         データがありません
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <div className='flex min-h-0 flex-1 flex-col'>
       {/* スクロールコンテナ */}
-      <div className="flex-1 relative overflow-auto">
-        <table className="w-full caption-bottom text-base">
+      <div className='relative flex-1 overflow-auto'>
+        <table className='w-full caption-bottom text-base'>
           {/* 固定ヘッダー */}
-          <TableHeader className="sticky top-0 z-50 shadow-sm border-b backdrop-blur-lg">
+          <TableHeader className='sticky top-0 z-50 border-b shadow-sm backdrop-blur-lg'>
             <TableRow>
               {columns.map((column) => (
                 <TableHeaderCell
@@ -132,11 +131,16 @@ export function TableView<T>({
             {displayData.map((item) => {
               const rowId = getRowId(item);
               return (
-                <TableRow key={rowId} className="hover:bg-gray-50">
+                <TableRow key={rowId} className='hover:bg-gray-50'>
                   {columns.map((column) => {
-                    const isEditing = editingCell?.rowId === rowId && editingCell?.field === column.key;
-                    const cellContent = getCellContent(item, column.key as string);
-                    
+                    const isEditing =
+                      editingCell?.rowId === rowId &&
+                      editingCell?.field === column.key;
+                    const cellContent = getCellContent(
+                      item,
+                      column.key as string,
+                    );
+
                     return (
                       <TableDataCell
                         key={column.key as string}
@@ -156,10 +160,10 @@ export function TableView<T>({
           </TableBody>
         </table>
       </div>
-      
+
       {/* ページネーション */}
       {paginationProps && (
-        <div className="flex-shrink-0 px-4 py-2">
+        <div className='flex-shrink-0 px-4 py-2'>
           <TablePagination {...paginationProps} />
         </div>
       )}

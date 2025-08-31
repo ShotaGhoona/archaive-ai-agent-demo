@@ -1,8 +1,10 @@
-"use client";
+'use client';
 import { createContext, useContext } from 'react';
 import { ResizableContextState } from '../model';
 
-export const ResizableContext = createContext<ResizableContextState | null>(null);
+export const ResizableContext = createContext<ResizableContextState | null>(
+  null,
+);
 
 export function useResizableContext() {
   const context = useContext(ResizableContext);

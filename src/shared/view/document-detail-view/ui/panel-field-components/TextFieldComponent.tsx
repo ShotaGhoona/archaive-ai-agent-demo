@@ -15,15 +15,15 @@ export function TextFieldComponent<T>({
   onChange,
 }: TextFieldComponentProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
       <Input
         value={String(value || '')}
         onChange={(e) => onChange(e.target.value)}
         disabled={!column.editable}
         placeholder={column.placeholder}
-        className={!column.editable ? "bg-gray-50" : ""}
-        type="text"
+        className={!column.editable ? 'bg-gray-50' : ''}
+        type='text'
       />
     </div>
   );

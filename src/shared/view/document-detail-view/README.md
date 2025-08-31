@@ -39,19 +39,19 @@ import { OrderData } from '../model';
 
 export const createOrderDetailConfig = (): DocumentDetailViewConfig<OrderData> => ({
   documentType: "受注書",
-  
+
   // データアクセス設定（3カラムレイアウト用）
   dataConfig: {
     getItemId: (item) => item.order_id,
     getItemTitle: (item) => item.order_number,      // リストのメインタイトル
-    getItemSubtitle: (item) => item.project_id,     // リストのサブタイトル  
+    getItemSubtitle: (item) => item.project_id,     // リストのサブタイトル
     getImageUrl: (item) => item.image_url,          // プレビュー画像
   },
-  
+
   // プレビューアクションボタン設定
   previewActionButtonsConfig: {
     showDeleteButton: true,
-    showDownloadButton: true, 
+    showDownloadButton: true,
     showPrintButton: true,
     customButtonsRender: (item, onUpdate) => (
       <>
@@ -59,11 +59,11 @@ export const createOrderDetailConfig = (): DocumentDetailViewConfig<OrderData> =
       </>
     ),
   },
-  
+
   createConfig: {
     enabled: false,  // 作成機能の有効/無効（ダイアログの右側制御）
   },
-  
+
   // 右側情報パネルのフィールド設定（TableViewのカラム設定と同様）
   panelColumnConfig: [
     {
@@ -119,51 +119,56 @@ export function OrderContainer() {
 ## Config設定の詳細
 
 ### documentType (オプション)
+
 文書種別名。ダイアログや表示で使用される文字列。
 
 ### dataConfig (必須)
+
 3カラムレイアウトの表示に必要なデータアクセス関数群。
 
-| プロパティ | 用途 | 例 |
-|------------|------|-----|
-| `getItemId` | 選択状態管理用の一意キー | `item.order_id` |
-| `getItemTitle` | 左リストのメインタイトル | `item.order_number` |
-| `getItemSubtitle` | 左リストのサブタイトル | `item.project_id` |
-| `getImageUrl` | 中央プレビューの画像URL | `item.image_url` |
+| プロパティ        | 用途                     | 例                  |
+| ----------------- | ------------------------ | ------------------- |
+| `getItemId`       | 選択状態管理用の一意キー | `item.order_id`     |
+| `getItemTitle`    | 左リストのメインタイトル | `item.order_number` |
+| `getItemSubtitle` | 左リストのサブタイトル   | `item.project_id`   |
+| `getImageUrl`     | 中央プレビューの画像URL  | `item.image_url`    |
 
 ### previewActionButtonsConfig (必須)
+
 中央プレビューエリア上部のアクションボタン設定。
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `showDeleteButton` | `boolean` | 削除ボタンの表示/非表示 |
-| `showDownloadButton` | `boolean` | ダウンロードボタンの表示/非表示 |
-| `showPrintButton` | `boolean` | 印刷ボタンの表示/非表示 |
+| プロパティ            | 型         | 説明                             |
+| --------------------- | ---------- | -------------------------------- |
+| `showDeleteButton`    | `boolean`  | 削除ボタンの表示/非表示          |
+| `showDownloadButton`  | `boolean`  | ダウンロードボタンの表示/非表示  |
+| `showPrintButton`     | `boolean`  | 印刷ボタンの表示/非表示          |
 | `customButtonsRender` | `Function` | カスタムボタンのレンダリング関数 |
 
 ### createConfig (必須)
+
 文書作成機能の設定。
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `enabled` | `boolean` | 作成機能の有効/無効（ダイアログ右側の制御） |
-| `createButtonRender` | `Function` | カスタム作成ボタン（オプション） |
+| プロパティ           | 型         | 説明                                        |
+| -------------------- | ---------- | ------------------------------------------- |
+| `enabled`            | `boolean`  | 作成機能の有効/無効（ダイアログ右側の制御） |
+| `createButtonRender` | `Function` | カスタム作成ボタン（オプション）            |
 
 ### panelColumnConfig (必須)
+
 右側情報パネルのフィールド設定。TableViewのカラム設定と同様。
 
 ## フィールドタイプ（inputType）
 
 TableViewと統一された6つのタイプをサポート：
 
-| タイプ | 説明 | 用途例 |
-|--------|------|---------|
-| `text` | テキスト入力 | ID、番号、備考など |
-| `number` | 数値入力 | 金額、個数など |
-| `date` | 日付入力 | 受注日、納期など |
-| `select` | 選択肢 | ステータス、種別など |
-| `user` | 従業員選択 | 担当者など |
-| `boolean` | ON/OFF | フラグなど |
+| タイプ    | 説明         | 用途例               |
+| --------- | ------------ | -------------------- |
+| `text`    | テキスト入力 | ID、番号、備考など   |
+| `number`  | 数値入力     | 金額、個数など       |
+| `date`    | 日付入力     | 受注日、納期など     |
+| `select`  | 選択肢       | ステータス、種別など |
+| `user`    | 従業員選択   | 担当者など           |
+| `boolean` | ON/OFF       | フラグなど           |
 
 ### フィールド設定例
 
@@ -229,7 +234,7 @@ previewActionButtonsConfig: {
    - ファイル: `src/page-components/project/order/`
    - 特徴: 基本ボタンのみ、作成機能無効
 
-2. **Delivery（納品書）**  
+2. **Delivery（納品書）**
    - ファイル: `src/page-components/project/delivery/`
    - 特徴: 基本ボタンのみ、作成機能無効
 
@@ -279,10 +284,10 @@ src/shared/view/document-detail-view/
 
 ## TableView/GalleryViewとの比較
 
-| 機能 | TableView | GalleryView | DocumentDetailView |
-|------|-----------|-------------|-------------------|
-| 用途 | 一覧表示 | ギャラリー表示 | 詳細表示・編集 |
-| レイアウト | テーブル | グリッド | 3カラム固定 |
-| 設定方式 | Config-based | Config-based | Config-based |
-| カラム設定 | columns配列 | なし | panelColumnConfig配列 |
-| カスタマイズ | render関数 | contentRender関数 | customButtonsRender関数 |
+| 機能         | TableView    | GalleryView       | DocumentDetailView      |
+| ------------ | ------------ | ----------------- | ----------------------- |
+| 用途         | 一覧表示     | ギャラリー表示    | 詳細表示・編集          |
+| レイアウト   | テーブル     | グリッド          | 3カラム固定             |
+| 設定方式     | Config-based | Config-based      | Config-based            |
+| カラム設定   | columns配列  | なし              | panelColumnConfig配列   |
+| カスタマイズ | render関数   | contentRender関数 | customButtonsRender関数 |

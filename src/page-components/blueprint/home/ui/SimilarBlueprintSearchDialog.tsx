@@ -1,14 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shared";
-import { Search, Upload } from "lucide-react";
+import { useState, useRef } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@/shared';
+import { Search, Upload } from 'lucide-react';
 
 export function SimilarBlueprintSearchDialog() {
   const router = useRouter();
@@ -17,7 +12,14 @@ export function SimilarBlueprintSearchDialog() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (file: File) => {
-    if (file && (file.type.startsWith('image/') || file.name.endsWith('.dwg') || file.name.endsWith('.step') || file.name.endsWith('.igs') || file.name.endsWith('.pdf'))) {
+    if (
+      file &&
+      (file.type.startsWith('image/') ||
+        file.name.endsWith('.dwg') ||
+        file.name.endsWith('.step') ||
+        file.name.endsWith('.igs') ||
+        file.name.endsWith('.pdf'))
+    ) {
       // アップロード完了後に遷移
       setIsOpen(false);
       router.push('/project/INT-2024-001/blueprint');
@@ -52,21 +54,18 @@ export function SimilarBlueprintSearchDialog() {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button size="lg">
-          <Search className="h-5 w-5 mr-2" />
+        <Button size='lg'>
+          <Search className='mr-2 h-5 w-5' />
           類似図面検索
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-4" align="end">
-        <div className="space-y-3">
-          <h3 className="text-sm font-medium">類似図面検索</h3>
-          
+      <PopoverContent className='w-80 p-4' align='end'>
+        <div className='space-y-3'>
+          <h3 className='text-sm font-medium'>類似図面検索</h3>
+
           {/* ファイルアップロード領域 */}
           <div
-            className={`
-              border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-              ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'}
-            `}
+            className={`cursor-pointer rounded-lg border-2 border-dashed p-6 text-center transition-colors ${dragActive ? 'border-primary bg-primary/5' : 'border-gray-300 hover:border-gray-400'} `}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -74,19 +73,19 @@ export function SimilarBlueprintSearchDialog() {
           >
             <input
               ref={fileInputRef}
-              type="file"
-              accept=".dwg,.step,.igs,.png,.jpg,.jpeg,.pdf"
+              type='file'
+              accept='.dwg,.step,.igs,.png,.jpg,.jpeg,.pdf'
               onChange={handleFileInputChange}
-              className="hidden"
+              className='hidden'
             />
-            
-            <div className="space-y-2">
-              <Upload className="h-8 w-8 text-gray-400 mx-auto" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium text-gray-700">
+
+            <div className='space-y-2'>
+              <Upload className='mx-auto h-8 w-8 text-gray-400' />
+              <div className='space-y-1'>
+                <p className='text-sm font-medium text-gray-700'>
                   図面ファイルをアップロード
                 </p>
-                <p className="text-xs text-gray-500">
+                <p className='text-xs text-gray-500'>
                   ドラッグ&ドロップまたはクリック
                 </p>
               </div>

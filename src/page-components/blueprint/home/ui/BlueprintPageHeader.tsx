@@ -5,22 +5,20 @@ import {
   TooltipContent,
   SearchInput,
   CsvExportDialog,
-  FilterToggleButton
-} from "@/shared";
-import {
-  Grid3X3,
-  List,
-} from "lucide-react";
-import { SimilarBlueprintSearchDialog } from "../ui";
-import { Blueprint, BLUEPRINT_CSV_COLUMNS } from "../lib";
+  FilterToggleButton,
+} from '@/shared';
+import { Grid3X3, List } from 'lucide-react';
+import { SimilarBlueprintSearchDialog } from '../ui';
+import { BLUEPRINT_CSV_COLUMNS } from '../lib';
+import { DrawingPageBaseDataInterface } from '@/dummy-data-er-fix/blueprint';
 
 interface BlueprintPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   selectedFilter: string;
   setSelectedFilter: (value: string) => void;
-  viewMode: "table" | "gallery";
-  setViewMode: (mode: "table" | "gallery") => void;
+  viewMode: 'table' | 'gallery';
+  setViewMode: (mode: 'table' | 'gallery') => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
   blueprints?: unknown[];
@@ -36,38 +34,34 @@ export function BlueprintPageHeader({
   blueprints = [],
 }: BlueprintPageHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1 border border-gray-200 rounded-lg bg-background">
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-4'>
+        <div className='bg-background flex items-center gap-1 rounded-lg border border-gray-200'>
           <Tooltip delayDuration={500}>
             <TooltipTrigger asChild>
               <Button
-                variant={viewMode === "table" ? "default" : "ghost"}
-                size="lg"
-                onClick={() => setViewMode("table")}
-                className="h-10 w-10 p-0"
+                variant={viewMode === 'table' ? 'default' : 'ghost'}
+                size='lg'
+                onClick={() => setViewMode('table')}
+                className='h-10 w-10 p-0'
               >
-                <List className="h-5 w-5" />
+                <List className='h-5 w-5' />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
-              テーブルビュー
-            </TooltipContent>
+            <TooltipContent side='bottom'>テーブルビュー</TooltipContent>
           </Tooltip>
           <Tooltip delayDuration={500}>
             <TooltipTrigger asChild>
               <Button
-                variant={viewMode === "gallery" ? "default" : "ghost"}
-                size="lg"
-                onClick={() => setViewMode("gallery")}
-                className="h-10 w-10 p-0"
+                variant={viewMode === 'gallery' ? 'default' : 'ghost'}
+                size='lg'
+                onClick={() => setViewMode('gallery')}
+                className='h-10 w-10 p-0'
               >
-                <Grid3X3 className="h-5 w-5" />
+                <Grid3X3 className='h-5 w-5' />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
-              ギャラリービュー
-            </TooltipContent>
+            <TooltipContent side='bottom'>ギャラリービュー</TooltipContent>
           </Tooltip>
         </div>
         <FilterToggleButton
@@ -77,15 +71,15 @@ export function BlueprintPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="ファイル名、発注元、製品名、整番で検索"
+          placeholder='ファイル名、顧客名、製品名、図面番号で検索'
         />
       </div>
-      <div className="flex items-center gap-4">
+      <div className='flex items-center gap-4'>
         {/* CSV出力ボタン */}
         <CsvExportDialog
-          data={blueprints as Blueprint[]}
+          data={blueprints as DrawingPageBaseDataInterface[]}
           initialColumns={BLUEPRINT_CSV_COLUMNS}
-          defaultFilename="blueprints"
+          defaultFilename='blueprints'
         />
         {/* 類似図面検索 */}
         <SimilarBlueprintSearchDialog />

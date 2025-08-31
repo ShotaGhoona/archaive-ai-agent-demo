@@ -1,0 +1,134 @@
+[
+  {
+    "id": 201,
+    "ulid": "01LEAF201REV1PRODUCT001",
+    "directory_id": 2001,
+    "directory_name": "TN-001 エンジン部品開発案件",
+    "customer_name": "株式会社田中製作所",
+    "revision_number": 1,
+    "leaf_product_custom_items": {
+      "製品名": {
+        "value": "エンジンブラケット Rev.1",
+        "type": "text"
+      },
+      "社内品番": {
+        "value": "INT-REV-001",
+        "type": "text"
+      },
+      "顧客品番": {
+        "value": "CUST-REV-001",
+        "type": "text"
+      },
+      "優先度": {
+        "value": "高",
+        "color": "red",
+        "type": "select"
+      }
+    },
+    "is_latest": false,
+    "remarks": "初期版のエンジンブラケット設計。基本仕様を満たすシンプルな構造。",
+    "created_by": 1001,
+    "updated_by": 1002,
+    "created_at": "2024-01-15T09:00:00.000Z",
+    "updated_at": "2024-01-16T14:30:00.000Z"
+  },
+  {
+    "id": 202,
+    "ulid": "01LEAF202REV2PRODUCT001",
+    "directory_id": 2001,
+    "directory_name": "TN-001 エンジン部品開発案件",
+    "customer_name": "株式会社田中製作所",
+    "revision_number": 2,
+    "leaf_product_custom_items": {
+      "製品名": {
+        "value": "エンジンブラケット Rev.2",
+        "type": "text"
+      },
+      "社内品番": {
+        "value": "INT-REV-002",
+        "type": "text"
+      },
+      "顧客品番": {
+        "value": "CUST-REV-002",
+        "type": "text"
+      },
+      "優先度": {
+        "value": "中",
+        "color": "orange",
+        "type": "select"
+      }
+    },
+    "is_latest": false,
+    "remarks": "材料変更に伴う設計修正。強度向上を図った改良版。",
+    "created_by": 1001,
+    "updated_by": 1003,
+    "created_at": "2024-01-20T10:30:00.000Z",
+    "updated_at": "2024-01-21T15:45:00.000Z"
+  },
+  {
+    "id": 203,
+    "ulid": "01LEAF203REV3PRODUCT001",
+    "directory_id": 2001,
+    "directory_name": "TN-001 エンジン部品開発案件",
+    "customer_name": "株式会社田中製作所",
+    "revision_number": 3,
+    "leaf_product_custom_items": {
+      "製品名": {
+        "value": "エンジンブラケット Rev.3",
+        "type": "text"
+      },
+      "社内品番": {
+        "value": "INT-REV-003",
+        "type": "text"
+      },
+      "顧客品番": {
+        "value": "CUST-REV-003",
+        "type": "text"
+      },
+      "優先度": {
+        "value": "高",
+        "color": "red",
+        "type": "select"
+      }
+    },
+    "is_latest": false,
+    "remarks": "寸法公差の最適化。製造性向上のための形状変更を実施。",
+    "created_by": 1002,
+    "updated_by": 1004,
+    "created_at": "2024-01-25T14:00:00.000Z",
+    "updated_at": "2024-01-26T11:20:00.000Z"
+  },
+  {
+    "id": 204,
+    "ulid": "01LEAF204REV4PRODUCT001",
+    "directory_id": 2001,
+    "directory_name": "TN-001 エンジン部品開発案件",
+    "customer_name": "株式会社田中製作所",
+    "revision_number": 4,
+    "leaf_product_custom_items": {
+      "製品名": {
+        "value": "エンジンブラケット Rev.4",
+        "type": "text"
+      },
+      "社内品番": {
+        "value": "INT-REV-004",
+        "type": "text"
+      },
+      "顧客品番": {
+        "value": "CUST-REV-004",
+        "type": "text"
+      },
+      "優先度": {
+        "value": "低",
+        "color": "green",
+        "type": "select"
+      }
+    },
+    "is_latest": true,
+    "remarks": "最終調整版。量産対応のための最終設計変更を完了。",
+    "created_by": 1003,
+    "updated_by": 1005,
+    "created_at": "2024-01-30T16:30:00.000Z",
+    "updated_at": "2024-01-31T09:15:00.000Z"
+  }
+]

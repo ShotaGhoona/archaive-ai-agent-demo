@@ -46,12 +46,12 @@ export interface EstimateCosts {
   processUnitCost: number;
   setupUnitCost: number;
   otherCost: number; // 固定費
-  
+
   // 総額
   materialTotalCost: number;
   processTotalCost: number;
   setupTotalCost: number;
-  
+
   // 最終合計
   finalTotal: number;
 }
@@ -88,24 +88,40 @@ export interface UseEstimateCalculationResult {
 export interface EstimateActions {
   // 材料関連
   addMaterial: () => void;
-  updateMaterialField: (id: string, field: 'name' | 'price', value: string | number) => void;
+  updateMaterialField: (
+    id: string,
+    field: 'name' | 'price',
+    value: string | number,
+  ) => void;
   deleteMaterial: (id: string) => void;
-  
+
   // 工程関連
   addProcess: () => void;
-  updateProcessField: (id: string, field: 'name' | 'timeMinutes' | 'chargeRate', value: string | number) => void;
+  updateProcessField: (
+    id: string,
+    field: 'name' | 'timeMinutes' | 'chargeRate',
+    value: string | number,
+  ) => void;
   deleteProcess: (id: string) => void;
-  
+
   // 段取り工程費用関連
   addSetupCost: () => void;
-  updateSetupCostField: (id: string, field: 'name' | 'price', value: string | number) => void;
+  updateSetupCostField: (
+    id: string,
+    field: 'name' | 'price',
+    value: string | number,
+  ) => void;
   deleteSetupCost: (id: string) => void;
-  
+
   // その他費用関連
   addOtherCost: () => void;
-  updateOtherCostField: (id: string, field: 'name' | 'price', value: string | number) => void;
+  updateOtherCostField: (
+    id: string,
+    field: 'name' | 'price',
+    value: string | number,
+  ) => void;
   deleteOtherCost: (id: string) => void;
-  
+
   // 個数関連
   updateMaterialQuantity: (quantity: number) => void;
   updateProcessQuantity: (quantity: number) => void;

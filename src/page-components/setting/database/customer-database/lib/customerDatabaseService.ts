@@ -19,16 +19,16 @@ export class CustomerDatabaseService {
     state: CustomerDatabaseState,
     tableId: string,
     columnId: string,
-    updates: Partial<DatabaseColumnSettingConfig>
+    updates: Partial<DatabaseColumnSettingConfig>,
   ): CustomerDatabaseState {
     return {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: state.customerColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, ...updates } : col
-        )
-      }
+        [tableId]: state.customerColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, ...updates } : col,
+        ),
+      },
     };
   }
 
@@ -38,14 +38,16 @@ export class CustomerDatabaseService {
   static deleteColumn(
     state: CustomerDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): CustomerDatabaseState {
     return {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: state.customerColumns[tableId].filter(col => col.id !== columnId)
-      }
+        [tableId]: state.customerColumns[tableId].filter(
+          (col) => col.id !== columnId,
+        ),
+      },
     };
   }
 
@@ -54,7 +56,7 @@ export class CustomerDatabaseService {
    */
   static addColumn(
     state: CustomerDatabaseState,
-    tableId: string
+    tableId: string,
   ): CustomerDatabaseState {
     const newColumn: DatabaseColumnSettingConfig = {
       id: `custom-${Date.now()}`,
@@ -70,8 +72,8 @@ export class CustomerDatabaseService {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: [...(state.customerColumns[tableId] || []), newColumn]
-      }
+        [tableId]: [...(state.customerColumns[tableId] || []), newColumn],
+      },
     };
   }
 
@@ -81,19 +83,19 @@ export class CustomerDatabaseService {
   static toggleRequired(
     state: CustomerDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): CustomerDatabaseState {
     // TODO: バックエンド処理（バリデーション、DB更新等）を実装
     console.log('TODO: 必須フラグのバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: state.customerColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col
-        )
-      }
+        [tableId]: state.customerColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col,
+        ),
+      },
     };
   }
 
@@ -103,19 +105,21 @@ export class CustomerDatabaseService {
   static toggleBasicInfo(
     state: CustomerDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): CustomerDatabaseState {
     // TODO: バックエンド処理（表示設定保存等）を実装
     console.log('TODO: 基本情報表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: state.customerColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInBasicInfo: !col.showInBasicInfo } : col
-        )
-      }
+        [tableId]: state.customerColumns[tableId].map((col) =>
+          col.id === columnId
+            ? { ...col, showInBasicInfo: !col.showInBasicInfo }
+            : col,
+        ),
+      },
     };
   }
 
@@ -125,19 +129,19 @@ export class CustomerDatabaseService {
   static toggleTableDisplay(
     state: CustomerDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): CustomerDatabaseState {
     // TODO: バックエンド処理（テーブル設定保存等）を実装
     console.log('TODO: テーブル表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       customerColumns: {
         ...state.customerColumns,
-        [tableId]: state.customerColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col
-        )
-      }
+        [tableId]: state.customerColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col,
+        ),
+      },
     };
   }
 }

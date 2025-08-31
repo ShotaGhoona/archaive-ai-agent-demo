@@ -1,3 +1,3 @@
-export * from "./registerBlueprintGalleryConfig";
-export * from "./repeatBlueprintGalleryConfig";
-export * from "./repeatBlueprintTableConfig";
+export * from './registerBlueprintGalleryConfig';
+export * from './repeatBlueprintGalleryConfig';
+export * from './repeatBlueprintTableConfig';

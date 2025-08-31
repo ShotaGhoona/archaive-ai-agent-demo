@@ -1,19 +1,19 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { DocumentDetailViewContainer } from "@/shared/view/document-detail-view";
-import { DeliveryData } from "../model";
-import { deliveryData as initialDeliveryData } from "../data";
-import { createDeliveryDetailConfig } from "../lib/deliveryDetailConfig";
+import { useState } from 'react';
+import { DocumentDetailViewContainer } from '@/shared/view/document-detail-view';
+
+import {
+  DocumentDeliveryDataInterface,
+  projectDeliveryData,
+} from '@/dummy-data-er-fix/document';
+import { createDeliveryDetailConfig } from '../lib';
 
 export function DeliveryContainer() {
-  const [deliveries] = useState<DeliveryData[]>(initialDeliveryData as DeliveryData[]);
+  const [deliveries] = useState<DocumentDeliveryDataInterface[]>(
+    projectDeliveryData as DocumentDeliveryDataInterface[],
+  );
   const config = createDeliveryDetailConfig();
 
-  return (
-    <DocumentDetailViewContainer
-      data={deliveries}
-      config={config}
-    />
-  );
+  return <DocumentDetailViewContainer data={deliveries} config={config} />;
 }

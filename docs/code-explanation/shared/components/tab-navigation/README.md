@@ -16,6 +16,7 @@ tab-navigation/
 ## 概要
 
 2種類のタブナビゲーションを提供：
+
 - **TabNavigation**: コールバック式のタブ切り替え
 - **LinkTabNavigation**: Next.js Link を使ったページ遷移タブ
-EOF < /dev/null
+  EOF < /dev/null

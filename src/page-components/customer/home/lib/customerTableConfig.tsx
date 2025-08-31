@@ -1,15 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, MoreHorizontal, Trash2 } from 'lucide-react';
-import { Button, TableViewConfig, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared';
-import { Customer } from '../model/type';
+import {
+  Button,
+  TableViewConfig,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared';
+import { CustomerHomeDataInterface } from '@/dummy-data-er-fix/customer';
+import { CustomerColumnCallbacks } from '../model/type';
 
-export interface CustomerColumnCallbacks {
-  onDelete?: (customer: Customer) => void;
-}
-
-
-export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {}): TableViewConfig<Customer> => ({
+export const createCustomerTableConfig = (
+  callbacks: CustomerColumnCallbacks = {},
+): TableViewConfig<CustomerHomeDataInterface> => ({
   columns: [
     {
       key: 'detail',
@@ -17,30 +22,34 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       width: 80,
       minWidth: 0,
       sortable: false,
-      editable: false,
+      editable: true,
       locked: true,
       stickyLeft: 0,
-      render: (customer: Customer) => (
+      render: (customer: CustomerHomeDataInterface) => (
         <Link href={`/customer/${customer.id}`}>
-          <Button size="sm" variant="outline" className="h-8 text-primary font-bold hover:text-primary/80">
-            <ExternalLink className="h-3 w-3" />
+          <Button
+            size='sm'
+            variant='outline'
+            className='text-primary hover:text-primary/80 h-8 font-bold'
+          >
+            <ExternalLink className='h-3 w-3' />
             開く
           </Button>
         </Link>
       ),
     },
     {
-      key: 'account_id',
+      key: 'seq_num',
       label: '取引先ID',
       width: 120,
       sortable: true,
       editable: true,
       locked: false,
-      inputType: 'text',
-      sortType: 'string',
+      inputType: 'number',
+      sortType: 'number',
     },
     {
-      key: 'account_name',
+      key: 'name',
       label: '取引先名',
       width: 250,
       sortable: true,
@@ -50,64 +59,7 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       sortType: 'string',
     },
     {
-      key: 'account_type',
-      label: '取引先種別',
-      width: 150,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'select',
-      sortType: 'string',
-      selectOptions: [
-        { label: '製造業', color: 'blue' },
-        { label: '建設業', color: 'green' },
-        { label: '電子部品製造業', color: 'purple' },
-        { label: '食品製造業', color: 'orange' },
-        { label: '医療機器製造業', color: 'red' },
-        { label: '航空宇宙産業', color: 'indigo' },
-        { label: '商社', color: 'yellow' },
-        { label: '自動車部品製造業', color: 'emerald' },
-        { label: '精密機械製造業', color: 'sky' },
-        { label: '電子機器製造業', color: 'pink' },
-      ],
-    },
-    {
-      key: 'status',
-      label: 'ステータス',
-      width: 100,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'select',
-      sortType: 'string',
-      selectOptions: [
-        { label: 'アクティブ', color: 'green' },
-        { label: '非アクティブ', color: 'gray' },
-        { label: '休止中', color: 'yellow' },
-      ],
-    },
-    {
-      key: 'annual_revenue',
-      label: '年間売上高',
-      width: 120,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'number',
-      sortType: 'number',
-    },
-    {
-      key: 'employee_count',
-      label: '従業員数',
-      width: 100,
-      sortable: true,
-      editable: true,
-      locked: false,
-      inputType: 'number',
-      sortType: 'number',
-    },
-    {
-      key: 'account_name_kana',
+      key: 'name_kana',
       label: '取引先名（カナ）',
       width: 180,
       sortable: true,
@@ -117,31 +69,63 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       sortType: 'string',
     },
     {
-      key: 'website',
-      label: 'Webサイト',
+      key: 'customer_status',
+      label: 'ステータス',
       width: 150,
-      sortable: false,
+      sortable: true,
       editable: true,
       locked: false,
-      inputType: 'text',
-      render: (customer: Customer, value: unknown) => (
-        value ? (
-          <a
-            href={String(value)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800 text-sm underline"
-          >
-            サイトを開く
-          </a>
-        ) : (
-          <span className="text-sm text-gray-400">未入力</span>
-        )
-      ),
+      inputType: 'select',
+      sortType: 'string',
+      selectOptions: [
+        { label: '既存顧客', color: 'green' },
+        { label: '見込み客', color: 'yellow' },
+        { label: 'VIP顧客', color: 'purple' },
+      ],
     },
     {
-      key: 'description',
-      label: '取引先概要',
+      key: 'customer_custom_items.業界分類.value',
+      label: '業界分類',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'select',
+      sortType: 'string',
+      selectOptions: [
+        { label: '精密機械', color: 'blue' },
+        { label: '建設業', color: 'orange' },
+        { label: '電子部品', color: 'purple' },
+        { label: '食品製造', color: 'yellow' },
+        { label: '医療機器', color: 'red' },
+        { label: '航空宇宙', color: 'indigo' },
+        { label: '商社', color: 'slate' },
+        { label: '自動車部品', color: 'emerald' },
+        { label: '電子機器', color: 'pink' },
+      ],
+    },
+    {
+      key: 'customer_custom_items.契約形態.value',
+      label: '契約形態',
+      width: 120,
+      sortable: true,
+      editable: true,
+      locked: false,
+      inputType: 'select',
+      sortType: 'string',
+      selectOptions: [
+        { label: 'スポット契約', color: 'gray' },
+        { label: '年間契約', color: 'green' },
+        { label: '継続契約', color: 'emerald' },
+        { label: '季節契約', color: 'pink' },
+        { label: 'プロジェクト契約', color: 'sky' },
+        { label: '包括契約', color: 'purple' },
+        { label: '開発契約', color: 'indigo' },
+      ],
+    },
+    {
+      key: 'remarks',
+      label: '備考',
       width: 200,
       sortable: false,
       editable: true,
@@ -149,45 +133,27 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
       inputType: 'text',
     },
     {
-      key: 'created_at',
-      label: '作成日時',
-      width: 160,
-      sortable: true,
-      editable: false,
-      locked: true,
-      sortType: 'date',
-    },
-    {
-      key: 'updated_at',
-      label: '最終更新日時',
-      width: 160,
-      sortable: true,
-      editable: false,
-      locked: true,
-      sortType: 'date',
-    },
-    {
       key: 'actions',
       label: '操作',
       width: 80,
       minWidth: 80,
       sortable: false,
-      editable: false,
+      editable: true,
       locked: false,
       stickyRight: 0,
-      render: (customer: Customer) => (
+      render: (customer: CustomerHomeDataInterface) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm">
-              <MoreHorizontal className="h-4 w-4" />
+            <Button variant='ghost' size='sm'>
+              <MoreHorizontal className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem 
-              className="text-red-600"
+          <DropdownMenuContent align='end'>
+            <DropdownMenuItem
+              className='text-red-600'
               onClick={() => callbacks?.onDelete?.(customer)}
             >
-              <Trash2 className="h-4 w-4 mr-2" />
+              <Trash2 className='mr-2 h-4 w-4' />
               削除
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -203,4 +169,3 @@ export const createCustomerTableConfig = (callbacks: CustomerColumnCallbacks = {
     maxVisiblePages: 7,
   },
 });
-

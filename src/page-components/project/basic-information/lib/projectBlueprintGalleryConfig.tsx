@@ -1,23 +1,23 @@
 import React from 'react';
 import { GalleryViewConfig, Button } from '@/shared';
-import { Blueprint } from '@/page-components';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint';
 import { Eye, Focus } from 'lucide-react';
 
 export const createProjectBlueprintGalleryConfig = (
-  onShowDetail: (blueprint: Blueprint) => void,
-  onFullPage: (blueprint: Blueprint) => void
-): GalleryViewConfig<Blueprint> => ({
+  onShowDetail: (blueprint: BlueprintDetailDataInterface) => void,
+  onFullPage: (blueprint: BlueprintDetailDataInterface) => void,
+): GalleryViewConfig<BlueprintDetailDataInterface> => ({
   layoutConfig: {
     grid: { xs: 2, lg: 3 },
-    aspectRatio: 'video'
+    aspectRatio: 'video',
   },
-  
+
   itemConfig: {
     showThumbnail: true,
-    getThumbnailUrl: (blueprint) => blueprint.image || "https://jp.meviy.misumi-ec.com/info/ja/wp-content/uploads/2022/04/y1-1.jpg",
+    getThumbnailUrl: (blueprint) => blueprint.s3_url,
     thumbnailOverlayRender: (blueprint) => (
-      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center gap-2">
-        <Button 
+      <div className='absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100'>
+        <Button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -27,7 +27,7 @@ export const createProjectBlueprintGalleryConfig = (
           <Eye size={16} />
           ちょっと見る
         </Button>
-        <Button 
+        <Button
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -40,17 +40,20 @@ export const createProjectBlueprintGalleryConfig = (
       </div>
     ),
     contentRender: (blueprint) => (
-      <div className="space-y-1">
-        <p className="text-sm font-medium truncate" title={blueprint.filename}>
-          {blueprint.filename}
+      <div className='space-y-1'>
+        <p className='truncate text-sm font-medium' title={blueprint.drawing_file_name}>
+          {blueprint.drawing_file_name}
         </p>
-        <p className="text-xs text-gray-500 truncate" title={blueprint.productName}>
-          {blueprint.productName}
+        <p
+          className='truncate text-xs text-gray-500'
+          title={blueprint.leaf_product_name}
+        >
+          {blueprint.leaf_product_name}
         </p>
       </div>
-    )
+    ),
   },
-  
+
   pagination: {
     enabled: true,
     defaultItemsPerPage: 20,
@@ -58,6 +61,6 @@ export const createProjectBlueprintGalleryConfig = (
     showItemsPerPageSelector: true,
     maxVisiblePages: 7,
   },
-  
-  getRowId: (blueprint) => blueprint.internalNumber
+
+  getRowId: (blueprint) => blueprint.id.toString(),
 });

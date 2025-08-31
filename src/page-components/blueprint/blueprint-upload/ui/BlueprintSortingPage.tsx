@@ -9,9 +9,7 @@ interface BlueprintSortingPageProps {
   // その他必要なプロパティ
 }
 
-export function BlueprintSortingPage({
-  viewMode,
-}: BlueprintSortingPageProps) {
+export function BlueprintSortingPage({ viewMode }: BlueprintSortingPageProps) {
   // 状態管理フック
   const {
     state,
@@ -45,17 +43,17 @@ export function BlueprintSortingPage({
 
   // その他のハンドラー（既存の機能から移行）
   const handleRemoveFile = (id: string) => {
-    const fileToRemove = state.files.find(f => f.id === id);
+    const fileToRemove = state.files.find((f) => f.id === id);
     if (fileToRemove) {
-      updateFiles(state.files.filter(f => f.id !== id));
+      updateFiles(state.files.filter((f) => f.id !== id));
       updateTrashedFiles([...state.trashedFiles, fileToRemove]);
     }
   };
 
   const handleRestoreFile = (id: string) => {
-    const fileToRestore = state.trashedFiles.find(f => f.id === id);
+    const fileToRestore = state.trashedFiles.find((f) => f.id === id);
     if (fileToRestore) {
-      updateTrashedFiles(state.trashedFiles.filter(f => f.id !== id));
+      updateTrashedFiles(state.trashedFiles.filter((f) => f.id !== id));
       updateFiles([...state.files, fileToRestore]);
     }
   };
@@ -63,7 +61,9 @@ export function BlueprintSortingPage({
   const handleToggleSelection = (id: string) => {
     const isSelected = state.selectedFiles.includes(id);
     if (isSelected) {
-      updateSelectedFiles(state.selectedFiles.filter(fileId => fileId !== id));
+      updateSelectedFiles(
+        state.selectedFiles.filter((fileId) => fileId !== id),
+      );
     } else {
       updateSelectedFiles([...state.selectedFiles, id]);
     }
@@ -72,25 +72,25 @@ export function BlueprintSortingPage({
   const handleToggleStackSelection = (stackId: string) => {
     const isSelected = state.selectedStacks.includes(stackId);
     if (isSelected) {
-      updateSelectedStacks(state.selectedStacks.filter(id => id !== stackId));
+      updateSelectedStacks(state.selectedStacks.filter((id) => id !== stackId));
     } else {
       updateSelectedStacks([...state.selectedStacks, stackId]);
     }
   };
 
   const handleUnstackFiles = (stackId: string) => {
-    const stack = state.fileStacks.find(s => s.id === stackId);
+    const stack = state.fileStacks.find((s) => s.id === stackId);
     if (stack) {
       updateFiles([...state.files, ...stack.files]);
-      updateFileStacks(state.fileStacks.filter(s => s.id !== stackId));
+      updateFileStacks(state.fileStacks.filter((s) => s.id !== stackId));
     }
   };
 
   const handleRemoveStack = (stackId: string) => {
-    const stack = state.fileStacks.find(s => s.id === stackId);
+    const stack = state.fileStacks.find((s) => s.id === stackId);
     if (stack) {
       updateTrashedFiles([...state.trashedFiles, ...stack.files]);
-      updateFileStacks(state.fileStacks.filter(s => s.id !== stackId));
+      updateFileStacks(state.fileStacks.filter((s) => s.id !== stackId));
     }
   };
 
@@ -100,9 +100,9 @@ export function BlueprintSortingPage({
   };
 
   return (
-    <div className="h-full flex gap-6 p-6">
+    <div className='flex h-full gap-6 p-6'>
       {/* 左側：図面ギャラリー（3/4） */}
-      <div className="flex-1 flex flex-col">
+      <div className='flex flex-1 flex-col'>
         <UploadGalleryView
           files={viewMode === 'uploaded' ? unassignedFiles : state.trashedFiles}
           fileStacks={viewMode === 'uploaded' ? state.fileStacks : []}
@@ -121,7 +121,7 @@ export function BlueprintSortingPage({
       </div>
 
       {/* 右側：プロジェクトボックスリスト（1/4） */}
-      <div className="w-80 flex-shrink-0">
+      <div className='w-80 flex-shrink-0'>
         <ProjectBoxList
           projects={state.projects}
           onBatchRegister={handleBatchRegister}

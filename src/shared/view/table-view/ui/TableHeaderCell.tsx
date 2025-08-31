@@ -19,69 +19,67 @@ export function TableHeaderCell<T>({
   onSort,
   onMouseDown,
   getColumnWidth,
-  getHeaderClassName
+  getHeaderClassName,
 }: TableHeaderCellProps<T>) {
   const { getStickyStyle } = useStickyColumns();
   const renderSortIcon = () => {
     if (!column.sortable) return null;
-    
+
     if (sortIcon.type === 'none') {
       return (
-        <div 
-          className="cursor-pointer hover:text-gray-600 transition-colors" 
+        <div
+          className='cursor-pointer transition-colors hover:text-gray-600'
           onClick={(e) => {
             e.stopPropagation();
             onSort(column.key as string);
           }}
-          title="ソート"
+          title='ソート'
         >
-          <ChevronsUpDown className="h-4 w-4 text-gray-400" />
+          <ChevronsUpDown className='h-4 w-4 text-gray-400' />
         </div>
       );
     }
-    
-    return sortIcon.type === 'asc' 
-      ? (
-          <div 
-            className="cursor-pointer hover:text-primary transition-colors" 
-            onClick={(e) => {
-              e.stopPropagation();
-              onSort(column.key as string);
-            }}
-            title="降順でソート"
-          >
-            <ChevronUp className="h-4 w-4 text-primary" />
-          </div>
-        )
-      : (
-          <div 
-            className="cursor-pointer hover:text-primary transition-colors" 
-            onClick={(e) => {
-              e.stopPropagation();
-              onSort(column.key as string);
-            }}
-            title="昇順でソート"
-          >
-            <ChevronDown className="h-4 w-4 text-primary" />
-          </div>
-        );
+
+    return sortIcon.type === 'asc' ? (
+      <div
+        className='hover:text-primary cursor-pointer transition-colors'
+        onClick={(e) => {
+          e.stopPropagation();
+          onSort(column.key as string);
+        }}
+        title='降順でソート'
+      >
+        <ChevronUp className='text-primary h-4 w-4' />
+      </div>
+    ) : (
+      <div
+        className='hover:text-primary cursor-pointer transition-colors'
+        onClick={(e) => {
+          e.stopPropagation();
+          onSort(column.key as string);
+        }}
+        title='昇順でソート'
+      >
+        <ChevronDown className='text-primary h-4 w-4' />
+      </div>
+    );
   };
 
   return (
-    <TableHead 
+    <TableHead
       className={`${getHeaderClassName(column.key as string)} relative`}
       style={getStickyStyle(column, getColumnWidth, { isHeader: true })}
     >
-      <div className="flex items-center gap-2">
+      <div className='flex items-center gap-2'>
         <span>{column.label}</span>
         {renderSortIcon()}
       </div>
       {column.key !== 'actions' && (
-        <div 
-          className="absolute right-0 top-0 w-2 h-full cursor-col-resize hover:bg-primary bg-transparent border-r border-gray-300 hover:border-primary transition-all z-20"
+        <div
+          className='hover:bg-primary hover:border-primary absolute top-0 right-0 z-20 h-full w-2 cursor-col-resize border-r border-gray-300 bg-transparent transition-all'
           onMouseDown={(e) => onMouseDown(e, column.key as string)}
           onClick={(e) => e.stopPropagation()}
-          title="列幅をリサイズ"
+          title='列幅をリサイズ'
         />
       )}
     </TableHead>

@@ -1,5 +1,5 @@
 export interface FilterConfig<T = Record<string, unknown>> {
-  key: keyof T;
+  key: keyof T | string;
   label: string;
   type: 'text' | 'select' | 'date' | 'dateRange' | 'number' | 'datetime-local';
   options?: string[];

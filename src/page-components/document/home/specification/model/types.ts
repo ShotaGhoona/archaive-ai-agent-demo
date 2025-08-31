@@ -1,15 +1,5 @@
-export interface Specification {
-  id: number;
-  company_id: number;
-  name: string;
-  project_name: string;
-  blueprint_name: string;
-  version: string;
-  approval_status: string;
-  created_at: string;
-  updated_at: string;
-}
+import { DocumentSpecificationDataInterface } from '@/dummy-data-er-fix/document';
 
 export interface SpecificationColumnCallbacks {
-  onDelete?: (specification: Specification) => void;
+  onDelete?: (specification: DocumentSpecificationDataInterface) => void;
 }

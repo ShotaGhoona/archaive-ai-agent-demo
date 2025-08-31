@@ -1,10 +1,9 @@
-import { SimilarBlueprint, BlueprintView } from "../../blueprint-detail-layout/model/types";
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
 
 export interface SimilarBlueprintGalleryProps {
-  similarBlueprints?: SimilarBlueprint[];
-  activeView?: BlueprintView | null;
-  onDifferenceDetection?: (blueprint: SimilarBlueprint) => void;
-  onDetailedComparison?: (blueprint: SimilarBlueprint) => void;
+  similarBlueprints?: BlueprintDetailDataInterface[];
+  activeView?: BlueprintDetailDataInterface | null;
+  onDifferenceDetection?: (blueprint: BlueprintDetailDataInterface) => void;
+  onDetailedComparison?: (blueprint: BlueprintDetailDataInterface) => void;
   isLoading?: boolean;
-  className?: string;
 }

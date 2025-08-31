@@ -1,56 +1,46 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { SimilarBlueprint, BlueprintView, blueprintData, SimilarBlueprintGallery } from "@/widgets";
-import { BlueprintViewContainer } from "@/widgets/blueprint/blueprint-view/ui/BlueprintViewContainer";
-import { ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { BlueprintSimilarCompareModal } from "../ui";
-import { blueprintSimilarResizableLayoutConfig } from "../lib";
+'use client';
+import React, { useState } from 'react';
+import { SimilarBlueprintGallery, BlueprintViewContainer } from '@/widgets';
+import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/shared';
+import { blueprintSimilarResizableLayoutConfig } from '../lib';
+import { BlueprintDetailDataInterface, blueprintDetailData } from '@/dummy-data-er-fix/blueprint';
 export function BlueprintSimilarContainer() {
-  const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
-  const [isCompareOpen, setIsCompareOpen] = useState(false);
-  const [activeView, setActiveView] = useState<BlueprintView | null>(null);
-  // アクティブなビューを取得
-  useEffect(() => {
-    const currentActiveView = blueprintData.blueprintViews.find(view => view.isActive);
-    setActiveView(currentActiveView || blueprintData.blueprintViews[0]);
-  }, []);
+  const [activeBlueprintId, setActiveBlueprintId] = useState<number | null>(null);
+  
+  // ER図ベースのデータを型キャスト
+  const blueprints = blueprintDetailData as BlueprintDetailDataInterface[];
+  
+  // アクティブな図面データを取得
+  const activeBlueprintData = activeBlueprintId 
+    ? blueprints.find(bp => bp.id === activeBlueprintId) 
+    : blueprints[0]; // デフォルトは最初のデータ
 
-  const handleDetailedComparison = (blueprint: SimilarBlueprint) => {
-    setCompareBlueprint(blueprint);
-    setIsCompareOpen(true);
+  const handleBlueprintChange = (blueprintId: number) => {
+    setActiveBlueprintId(blueprintId);
   };
 
-  const handleCloseCompare = () => {
-    setIsCompareOpen(false);
-    setCompareBlueprint(null);
-  };
-
-  const similarBlueprints = activeView?.similarBlueprints || [];
+  // アクティブな図面の類似図面を取得
+  const similarBlueprints = activeBlueprintData?.similar_blueprints || [];
 
   return (
     <ResizableLayout config={blueprintSimilarResizableLayoutConfig}>
       {/* 左側: 図面ビューエリア */}
       <ResizablePanel index={0}>
-        <BlueprintViewContainer />
+        <BlueprintViewContainer 
+          blueprints={blueprints}
+          activeBlueprintId={activeBlueprintId || blueprints[0]?.id}
+          onBlueprintChange={handleBlueprintChange}
+        />
       </ResizablePanel>
-      
+
       <ResizableHandle />
-      
+
       {/* 右側: 類似図面ギャラリー */}
       <ResizablePanel index={1}>
-        <div className="h-full overflow-auto">
-          <SimilarBlueprintGallery 
+        <div className='h-full overflow-auto'>
+          <SimilarBlueprintGallery
             similarBlueprints={similarBlueprints}
-            activeView={activeView}
-            onDetailedComparison={handleDetailedComparison}
-            isLoading={true}
-          />
-          
-          <BlueprintSimilarCompareModal
-            isOpen={isCompareOpen}
-            onClose={handleCloseCompare}
-            currentView={activeView}
-            similarBlueprint={compareBlueprint}
+            activeView={activeBlueprintData}
           />
         </div>
       </ResizablePanel>

@@ -1,18 +1,16 @@
 import React from 'react';
 import { GalleryView } from '@/shared';
-import { Blueprint, createBlueprintGalleryConfig } from '../lib';
+import { DrawingPageBaseDataInterface } from '@/dummy-data-er-fix/blueprint';
+import { createBlueprintGalleryConfig } from '../lib';
 
 interface BlueprintGalleryViewProps {
-  blueprints: Blueprint[];
+  blueprints: DrawingPageBaseDataInterface[];
 }
 
-export function BlueprintGalleryView({ blueprints }: BlueprintGalleryViewProps) {
+export function BlueprintGalleryView({
+  blueprints,
+}: BlueprintGalleryViewProps) {
   const galleryConfig = createBlueprintGalleryConfig();
-  
-  return (
-    <GalleryView
-      data={blueprints}
-      config={galleryConfig}
-    />
-  );
+
+  return <GalleryView data={blueprints} config={galleryConfig} />;
 }

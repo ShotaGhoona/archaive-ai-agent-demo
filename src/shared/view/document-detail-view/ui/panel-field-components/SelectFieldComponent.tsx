@@ -1,5 +1,12 @@
 import React from 'react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Label } from '@/shared';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Label,
+} from '@/shared';
 import { DocumentPanelColumn } from '../../model';
 
 interface SelectFieldComponentProps<T> {
@@ -15,14 +22,14 @@ export function SelectFieldComponent<T>({
   onChange,
 }: SelectFieldComponentProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
       <Select
         value={String(value || '')}
         onValueChange={onChange}
         disabled={!column.editable}
       >
-        <SelectTrigger className={!column.editable ? "bg-gray-50" : ""}>
+        <SelectTrigger className={`w-full ${!column.editable ? 'bg-gray-50' : ''}`}>
           <SelectValue placeholder={column.placeholder} />
         </SelectTrigger>
         <SelectContent>

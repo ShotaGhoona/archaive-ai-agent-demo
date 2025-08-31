@@ -23,17 +23,27 @@ export function BooleanTypeCell<T>({
           cellContent.onChange!(checked);
           cellContent.onSave!();
         }}
-        className="h-8"
+        className='h-8'
       />
     );
   }
 
   return (
-    <div 
-      className={column.editable && !column.locked ? 'cursor-pointer' : undefined}
-      onClick={column.editable && !column.locked ? () => onCellClick(item, column.key as string) : undefined}
+    <div
+      className={
+        column.editable && !column.locked ? 'cursor-pointer' : undefined
+      }
+      onClick={
+        column.editable && !column.locked
+          ? () => onCellClick(item, column.key as string)
+          : undefined
+      }
     >
-      <span className={cellContent.value ? 'text-green-600 font-medium' : 'text-gray-500'}>
+      <span
+        className={
+          cellContent.value ? 'font-medium text-green-600' : 'text-gray-500'
+        }
+      >
         {cellContent.value ? 'はい' : 'いいえ'}
       </span>
     </div>

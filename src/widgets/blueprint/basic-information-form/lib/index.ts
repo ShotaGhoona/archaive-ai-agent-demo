@@ -1,2 +1,2 @@
-export * from './basicInformationFields';
-export * from './useBasicInformationForm';
+export * from './blueprintBasicInformationConfig';
+export * from './useBasicInformationContainer';

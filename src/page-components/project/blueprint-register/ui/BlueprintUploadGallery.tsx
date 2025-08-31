@@ -1,18 +1,15 @@
-"use client";
-import React from "react";
-import { GalleryView } from "@/shared/view/gallery-view";
-import { registerBlueprintsData } from "../data";
-import { createRegisterBlueprintGalleryConfig } from "../lib";
+'use client';
+import React from 'react';
+import { GalleryView } from '@/shared/view/gallery-view';
+import { projectDetailData } from '@/dummy-data-er-fix/project';
+import { createRegisterBlueprintGalleryConfig } from '../lib';
 
 export function BlueprintUploadGallery() {
   const galleryConfig = createRegisterBlueprintGalleryConfig();
 
   return (
-    <div className="flex flex-col p-6">
-      <GalleryView
-        data={registerBlueprintsData}
-        config={galleryConfig}
-      />
+    <div className='flex flex-col h-full overflow-hidden px-6 pt-6'>
+      <GalleryView data={projectDetailData.blueprints} config={galleryConfig} />
     </div>
   );
 }

@@ -10,22 +10,22 @@ export function ResizableHandle({ className = '' }: ResizableHandleProps) {
   const { config, isDragging, setIsDragging } = useResizableContext();
   const handleRef = useRef<HTMLDivElement>(null);
   const [handleIndex, setHandleIndex] = useState<number>(-1);
-  
+
   useEffect(() => {
     // ハンドルのインデックスを計算（簡単な方法）
     if (handleRef.current?.parentElement) {
       const parent = handleRef.current.parentElement;
       const allChildren = Array.from(parent.children);
       const currentIndex = allChildren.indexOf(handleRef.current);
-      
+
       // パネル → ハンドル → パネル → ハンドル の順序で配置されている前提
       // ハンドルは奇数番目（1, 3, 5...）に位置
       const calculatedHandleIndex = Math.floor(currentIndex / 2);
-      
+
       setHandleIndex(calculatedHandleIndex);
     }
   }, []);
-  
+
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsDragging(true, handleIndex);
@@ -44,7 +44,7 @@ export function ResizableHandle({ className = '' }: ResizableHandleProps) {
       } ${className}`}
       onMouseDown={handleMouseDown}
     >
-      <div className={`bg-gray-400 rounded-full ${handleBarClass}`} />
+      <div className={`rounded-full bg-gray-400 ${handleBarClass}`} />
     </div>
   );
 }

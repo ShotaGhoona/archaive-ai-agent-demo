@@ -19,16 +19,16 @@ export class BlueprintDatabaseService {
     state: BlueprintDatabaseState,
     tableId: string,
     columnId: string,
-    updates: Partial<DatabaseColumnSettingConfig>
+    updates: Partial<DatabaseColumnSettingConfig>,
   ): BlueprintDatabaseState {
     return {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: state.blueprintColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, ...updates } : col
-        )
-      }
+        [tableId]: state.blueprintColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, ...updates } : col,
+        ),
+      },
     };
   }
 
@@ -38,14 +38,16 @@ export class BlueprintDatabaseService {
   static deleteColumn(
     state: BlueprintDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): BlueprintDatabaseState {
     return {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: state.blueprintColumns[tableId].filter(col => col.id !== columnId)
-      }
+        [tableId]: state.blueprintColumns[tableId].filter(
+          (col) => col.id !== columnId,
+        ),
+      },
     };
   }
 
@@ -54,7 +56,7 @@ export class BlueprintDatabaseService {
    */
   static addColumn(
     state: BlueprintDatabaseState,
-    tableId: string
+    tableId: string,
   ): BlueprintDatabaseState {
     const newColumn: DatabaseColumnSettingConfig = {
       id: `custom-${Date.now()}`,
@@ -70,8 +72,8 @@ export class BlueprintDatabaseService {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: [...(state.blueprintColumns[tableId] || []), newColumn]
-      }
+        [tableId]: [...(state.blueprintColumns[tableId] || []), newColumn],
+      },
     };
   }
 
@@ -81,19 +83,19 @@ export class BlueprintDatabaseService {
   static toggleRequired(
     state: BlueprintDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): BlueprintDatabaseState {
     // TODO: バックエンド処理（バリデーション、DB更新等）を実装
     console.log('TODO: 必須フラグのバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: state.blueprintColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col
-        )
-      }
+        [tableId]: state.blueprintColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col,
+        ),
+      },
     };
   }
 
@@ -103,19 +105,21 @@ export class BlueprintDatabaseService {
   static toggleBasicInfo(
     state: BlueprintDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): BlueprintDatabaseState {
     // TODO: バックエンド処理（表示設定保存等）を実装
     console.log('TODO: 基本情報表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: state.blueprintColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInBasicInfo: !col.showInBasicInfo } : col
-        )
-      }
+        [tableId]: state.blueprintColumns[tableId].map((col) =>
+          col.id === columnId
+            ? { ...col, showInBasicInfo: !col.showInBasicInfo }
+            : col,
+        ),
+      },
     };
   }
 
@@ -125,19 +129,19 @@ export class BlueprintDatabaseService {
   static toggleTableDisplay(
     state: BlueprintDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): BlueprintDatabaseState {
     // TODO: バックエンド処理（テーブル設定保存等）を実装
     console.log('TODO: テーブル表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       blueprintColumns: {
         ...state.blueprintColumns,
-        [tableId]: state.blueprintColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col
-        )
-      }
+        [tableId]: state.blueprintColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col,
+        ),
+      },
     };
   }
 }
