@@ -1,5 +1,5 @@
 export interface CsvColumnConfig<T = Record<string, unknown>> {
-  key: keyof T;
+  key: keyof T | string;
   label: string;
   enabled: boolean;
   formatter?: (value: unknown) => string;

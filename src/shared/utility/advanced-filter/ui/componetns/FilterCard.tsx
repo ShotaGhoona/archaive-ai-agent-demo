@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import {
   Button,
@@ -36,8 +36,8 @@ export function FilterCard<T>({
   onRemove,
   canRemove,
 }: FilterCardProps<T>) {
-  const selectedConfig = config.find(c => c.key === card.field);
-  
+  const selectedConfig = config.find((c) => c.key === card.field);
+
   const getOperators = (type: string) => {
     switch (type) {
       case 'text':
@@ -76,19 +76,19 @@ export function FilterCard<T>({
   const operators = selectedConfig ? getOperators(selectedConfig.type) : [];
 
   const updateField = (field: string) => {
-    onUpdate({ 
-      ...card, 
+    onUpdate({
+      ...card,
       field,
       operator: '', // フィールド変更時はリセット
-      value: '' 
+      value: '',
     });
   };
 
   const updateOperator = (operator: string) => {
-    onUpdate({ 
-      ...card, 
+    onUpdate({
+      ...card,
       operator,
-      value: '' // オペレーター変更時は値をリセット
+      value: '', // オペレーター変更時は値をリセット
     });
   };
 
@@ -97,28 +97,26 @@ export function FilterCard<T>({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 space-y-4 relative">
-      <div className="absolute top-2 right-2 items-center justify-between">
+    <div className='relative space-y-4 rounded-lg border border-gray-200 bg-white p-4'>
+      <div className='absolute top-2 right-2 items-center justify-between'>
         {canRemove && (
           <Button
-            variant="ghost"
-            size="sm"
+            variant='ghost'
+            size='sm'
             onClick={() => onRemove(card.id)}
-            className="h-6 w-6 p-0 text-gray-400 hover:text-red-500"
+            className='h-6 w-6 p-0 text-gray-400 hover:text-red-500'
           >
-            <X className="h-4 w-4" />
+            <X className='h-4 w-4' />
           </Button>
         )}
       </div>
 
       {/* フィールド選択 */}
       <div>
-      <Label className="text-xs font-medium text-gray-600 mb-2">
-          対象
-        </Label>
+        <Label className='mb-2 text-xs font-medium text-gray-600'>対象</Label>
         <Select value={card.field} onValueChange={updateField}>
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="何を検索しますか？" />
+          <SelectTrigger className='w-full'>
+            <SelectValue placeholder='何を検索しますか？' />
           </SelectTrigger>
           <SelectContent>
             {config.map((field) => (
@@ -132,15 +130,15 @@ export function FilterCard<T>({
 
       {/* フィールドが選択されたら条件と値の入力欄を表示 */}
       {selectedConfig && (
-        <div className="space-y-4">
+        <div className='space-y-4'>
           {/* 条件選択 */}
-          <div className="flex items-center justify-between">
-            <label className="text-xs font-medium text-gray-600 mb-2">
+          <div className='flex items-center justify-between'>
+            <label className='mb-2 text-xs font-medium text-gray-600'>
               条件
             </label>
             <Select value={card.operator} onValueChange={updateOperator}>
               <SelectTrigger>
-                <SelectValue placeholder="条件を選択" />
+                <SelectValue placeholder='条件を選択' />
               </SelectTrigger>
               <SelectContent>
                 {operators.map((op) => (

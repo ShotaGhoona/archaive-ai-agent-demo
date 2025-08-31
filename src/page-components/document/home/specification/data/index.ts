@@ -1,1 +1,0 @@
-export { default as specificationData } from './specification.json';

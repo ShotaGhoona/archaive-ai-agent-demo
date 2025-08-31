@@ -1,13 +1,9 @@
-import { CustomerContainer } from "@/page-components";
-import ChatUIManager from "@/features/ai-agent";
+import { CustomerContainer } from '@/page-components';
 
 export default function Customer() {
   return (
-    <div className="max-h-calc[100vh-45px] flex flex-col overflow-hidden">
+    <div className='max-h-calc[100vh-45px] flex flex-col overflow-hidden'>
       <CustomerContainer />
-      <ChatUIManager 
-        availableAgents={['general', 'estimate', 'inquiry']}
-      />
     </div>
   );
 }

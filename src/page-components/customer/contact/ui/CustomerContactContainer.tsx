@@ -1,17 +1,28 @@
-"use client";
-import { useState } from "react";
-import { CustomerContactPageHeader, CustomerContactTableView } from "../ui";
-import { AdvancedFilterSidebar, useAdvancedFilter, useSearchbar } from "@/shared";
-import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG } from "../lib";
-import { CustomerContactDataInterface, customerContactData } from "@/dummy-data/customer";
-import { ContactColumnCallbacks } from "../model";
+'use client';
+import { useState } from 'react';
+import { CustomerContactPageHeader, CustomerContactTableView } from '../ui';
+import {
+  AdvancedFilterSidebar,
+  useAdvancedFilter,
+  useSearchbar,
+  setValue,
+} from '@/shared';
+import { CONTACT_FILTER_CONFIG, CONTACT_SEARCHBAR_CONFIG } from '../lib';
+import {
+  CustomerContactDataInterface,
+  customerContactData,
+} from '@/dummy-data-er-fix/customer';
 
 interface CustomerContactContainerProps {
   customerId: string;
 }
 
-export function CustomerContactContainer({ customerId }: CustomerContactContainerProps) {
-  const [contacts, setContacts] = useState<CustomerContactDataInterface[]>(customerContactData as CustomerContactDataInterface[]);
+export function CustomerContactContainer({
+  customerId,
+}: CustomerContactContainerProps) {
+  const [contacts, setContacts] = useState<CustomerContactDataInterface[]>(
+    customerContactData as CustomerContactDataInterface[],
+  );
 
   // 分離アプローチ: 検索とAdvanced Filterを独立管理
   const {
@@ -29,42 +40,55 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
     clearFilters,
   } = useAdvancedFilter(searchFiltered, CONTACT_FILTER_CONFIG);
 
-
   // 新規担当者作成ハンドラー
-  const handleContactCreate = (contactData: Omit<CustomerContactDataInterface, 'contact_id' | 'customer_id' | 'created_date' | 'modified_date' | 'created_by' | 'modified_by'>) => {
+  const handleContactCreate = (
+    contactData: Omit<
+      CustomerContactDataInterface,
+      | 'id'
+      | 'customer_id'
+      | 'created_at'
+      | 'updated_at'
+    >,
+  ) => {
+    const newId = Math.max(...contacts.map((c) => c.id), 0) + 1;
     const now = new Date().toISOString();
     const newContact: CustomerContactDataInterface = {
-      contact_id: `CONTACT-${String(contacts.length + 1).padStart(3, '0')}`,
+      id: newId,
       customer_id: Number(customerId),
-      created_date: now,
-      modified_date: now,
-      created_by: '田中 太郎', // TODO: 実際のユーザー名を取得
-      modified_by: '田中 太郎', // TODO: 実際のユーザー名を取得
+      created_at: now,
+      updated_at: now,
       ...contactData,
     };
-    setContacts(prev => [...prev, newContact]);
+    setContacts((prev) => [...prev, newContact]);
   };
 
   const handleContactDelete = (contact: CustomerContactDataInterface) => {
-    setContacts(prev => prev.filter(c => c.contact_id !== contact.contact_id));
+    setContacts((prev) =>
+      prev.filter((c) => c.id !== contact.id),
+    );
   };
 
   // 担当者更新ハンドラー
-  const handleContactUpdate = (rowId: string, field: string, value: unknown) => {
-    setContacts(prev => prev.map(contact => 
-      contact.contact_id === rowId 
-        ? { 
-            ...contact, 
-            [field]: value,
-            modified_date: new Date().toISOString(),
-            modified_by: '田中 太郎' // TODO: 実際のユーザー名を取得
-          }
-        : contact
-    ));
+  const handleContactUpdate = (
+    rowId: string,
+    field: string,
+    value: unknown,
+  ) => {
+    setContacts((prev) =>
+      prev.map((contact) => {
+        if (contact.id.toString() === rowId) {
+          const updatedContact = { ...contact };
+          setValue(updatedContact, field, value);
+          updatedContact.updated_at = new Date().toISOString();
+          return updatedContact;
+        }
+        return contact;
+      }),
+    );
   };
 
   return (
-    <div className="h-[calc(100vh-45px)] flex overflow-hidden">
+    <div className='flex h-[calc(100vh-45px)] overflow-hidden'>
       {/* フィルターサイドバー */}
       <AdvancedFilterSidebar
         isOpen={isFilterSidebarOpen}
@@ -74,14 +98,14 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
         onClearFilters={clearFilters}
         config={CONTACT_FILTER_CONFIG}
       />
-      
+
       {/* メインコンテンツ */}
-      <div 
-        className={`flex-1 flex flex-col overflow-hidden transition-all duration-300 ${
+      <div
+        className={`flex flex-1 flex-col overflow-hidden transition-all duration-300 ${
           isFilterSidebarOpen ? 'ml-80' : 'ml-0'
         }`}
       >
-        <div className="flex-shrink-0 p-4">
+        <div className='flex-shrink-0 p-4'>
           <CustomerContactPageHeader
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -92,8 +116,8 @@ export function CustomerContactContainer({ customerId }: CustomerContactContaine
             customerId={customerId}
           />
         </div>
-        <div className="flex-1 flex flex-col min-h-0 px-4">
-          <CustomerContactTableView 
+        <div className='flex min-h-0 flex-1 flex-col px-4'>
+          <CustomerContactTableView
             contacts={filteredContacts}
             onContactDelete={handleContactDelete}
             onContactUpdate={handleContactUpdate}

@@ -9,28 +9,28 @@ interface LoadingProps {
   fullHeight?: boolean;
 }
 
-export function Loading({ 
-  size = 'lg', 
-  title, 
-  description, 
+export function Loading({
+  size = 'lg',
+  title,
+  description,
   className = '',
-  fullHeight = false 
+  fullHeight = false,
 }: LoadingProps) {
-  const containerClasses = fullHeight 
-    ? 'h-full flex flex-col items-center justify-center' 
+  const containerClasses = fullHeight
+    ? 'h-full flex flex-col items-center justify-center'
     : 'flex flex-col items-center justify-center p-4';
 
   return (
     <div className={`${containerClasses} ${className}`}>
-      <div className="flex flex-col items-center justify-center space-y-4">
+      <div className='flex flex-col items-center justify-center space-y-4'>
         <LoadingSpinner size={size} />
         {(title || description) && (
-          <div className="text-center space-y-2">
+          <div className='space-y-2 text-center'>
             {title && (
-              <p className="text-sm font-medium text-gray-700">{title}</p>
+              <p className='text-sm font-medium text-gray-700'>{title}</p>
             )}
             {description && (
-              <p className="text-xs text-gray-500">{description}</p>
+              <p className='text-xs text-gray-500'>{description}</p>
             )}
           </div>
         )}

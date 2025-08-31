@@ -1,142 +1,109 @@
 'use client';
 import React, { useState, useCallback, useEffect } from 'react';
-import {
-  Button,
-} from '@/shared';
-import {
-  Download,
-  Printer,
-  Pencil,
-} from 'lucide-react';
+import { Button } from '@/shared';
+import { Download, Printer, Pencil } from 'lucide-react';
 import { PicturePreviewContainer } from '@/shared';
 import { BlueprintDetailSidebar } from './BlueprintDetailSidebar';
-import { BlueprintViewContainerData } from '../model';
-import { blueprintViewsData } from '../data';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
 
 interface BlueprintViewContainerProps {
-  blueprintViews?: BlueprintViewContainerData[];
-  activeView?: string;
-  onViewChange?: (viewId: string) => void;
-  onAddView?: () => void;
-  onDownload?: () => void;
-  onPrint?: () => void;
+  blueprints: BlueprintDetailDataInterface[];
+  activeBlueprintId: number;
+  onBlueprintChange: (blueprintId: number) => void;
   onEdit?: () => void;
-  onRevisionComparison?: () => void;
-  onSameBlueprints?: () => void;
-  onFileDrop?: (files: File[]) => void;
 }
 
 export function BlueprintViewContainer({
-  blueprintViews,
-  activeView = 'front-view',
-  onViewChange,
-  onAddView,
-  onDownload,
-  onPrint,
-  onEdit
+  blueprints,
+  activeBlueprintId,
+  onBlueprintChange,
+  onEdit,
 }: BlueprintViewContainerProps) {
-  const [views, setViews] = useState<BlueprintViewContainerData[]>(
-    blueprintViews || (blueprintViewsData.blueprintViews as BlueprintViewContainerData[])
-  );
-  const [currentActiveView, setCurrentActiveView] = useState<string>(activeView);
+  const [views, setViews] = useState<BlueprintDetailDataInterface[]>(blueprints);
   
   // 現在のアクティブビューのデータを取得
-  const activeViewData = views.find(view => view.id === currentActiveView);
-  
+  const activeViewData = views.find((view) => view.id === activeBlueprintId);
+
   // アクティブビューが変更された時の処理
   useEffect(() => {
-    setViews(prev => prev.map(view => ({
-      ...view,
-      isActive: view.id === currentActiveView
-    })));
-  }, [currentActiveView]);
+    setViews((prev) =>
+      prev.map((view) => ({
+        ...view,
+        isActive: view.id === activeBlueprintId,
+      })),
+    );
+  }, [activeBlueprintId]);
 
-  const handleViewSelect = useCallback((viewId: string) => {
-    setCurrentActiveView(viewId);
-    onViewChange?.(viewId);
-  }, [onViewChange]);
+  const handleViewSelect = useCallback(
+    (viewId: number) => {
+      onBlueprintChange(viewId);
+    },
+    [onBlueprintChange],
+  );
 
-  const handleViewRemove = useCallback((viewId: string) => {
-    setViews(prev => prev.filter(view => view.id !== viewId));
-    // アクティブビューが削除された場合、最初のビューをアクティブにする
-    if (currentActiveView === viewId) {
-      const remainingViews = views.filter(view => view.id !== viewId);
-      if (remainingViews.length > 0) {
-        setCurrentActiveView(remainingViews[0].id);
+  const handleViewRemove = useCallback(
+    (viewId: number) => {
+      setViews((prev) => prev.filter((view) => view.id !== viewId));
+      // アクティブビューが削除された場合、最初のビューをアクティブにする
+      if (activeBlueprintId === viewId) {
+        const remainingViews = views.filter((view) => view.id !== viewId);
+        if (remainingViews.length > 0) {
+          onBlueprintChange(remainingViews[0].id);
+        }
       }
-    }
-  }, [currentActiveView, views]);
+    },
+    [activeBlueprintId, views, onBlueprintChange],
+  );
 
-  const handleViewAdd = useCallback((newView: BlueprintViewContainerData) => {
-    setViews(prev => [...prev, newView]);
-    onAddView?.();
-  }, [onAddView]);
+  // TODO: 図面を追加する機能の実装
 
-  const downloadFile = useCallback((url?: string, name?: string) => {
-    if (!url || !name) return;
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    onDownload?.();
-  }, [onDownload]);
-
-  const printFile = useCallback((url?: string) => {
-    if (!url) return;
-    const printWindow = window.open(url, '_blank');
-    printWindow?.print();
-    onPrint?.();
-  }, [onPrint]);
-
-  const handleEdit = useCallback(() => {
-    onEdit?.();
-  }, [onEdit]);
 
   return (
-    <div className="h-full relative">
+    <div className='relative h-full'>
       <BlueprintDetailSidebar
         views={views}
+        activeBlueprintId={activeBlueprintId}
         onViewSelect={handleViewSelect}
         onViewRemove={handleViewRemove}
-        onViewAdd={handleViewAdd}
       />
-      
-      <PicturePreviewContainer 
-        activeFile={activeViewData ? { imageUrl: activeViewData.imageUrl || '' } : null}
+
+      <PicturePreviewContainer
+        activeFile={
+          activeViewData ? { imageUrl: activeViewData.s3_url || '' } : null
+        }
       />
-      
+
       {/* Action buttons overlay */}
       {activeViewData && (
-        <div className="absolute top-6 right-6 space-y-2 z-20">
-          <div className="flex items-center gap-2">
+        <div className='absolute top-6 right-6 z-20 space-y-2'>
+          <div className='flex items-center gap-2'>
             <Button
-              variant="outline"
-              size="lg"
-              onClick={() => downloadFile(activeViewData.imageUrl, activeViewData.name)}
-              title="ダウンロード"
+              variant='outline'
+              size='lg'
+              onClick={() => {
+                // TODO: ダウンロード機能の実装
+              }}
+              title='ダウンロード'
             >
-              <Download className="h-5 w-5" />
-              <span className="text-sm">ダウンロード</span>
+              <Download className='h-5 w-5' />
+              <span className='text-sm'>ダウンロード</span>
             </Button>
-            
+
             <Button
-              variant="outline"
-              size="lg"
-              onClick={() => printFile(activeViewData.imageUrl)}
-              title="印刷"
+              variant='outline'
+              size='lg'
+              onClick={() => {
+                // TODO: 印刷機能の実装
+              }}
+              title='印刷'
             >
-              <Printer className="h-5 w-5" />
-              <span className="text-sm">印刷</span>
+              <Printer className='h-5 w-5' />
+              <span className='text-sm'>印刷</span>
             </Button>
-            
-            <Button 
-              size="lg"
-              onClick={handleEdit}
-            >
-              <Pencil className="h-5 w-5" />
-              <span className="text-sm">書き込み</span>
+
+            <Button size='lg' onClick={() => onEdit?.()}>
+              <Pencil className='h-5 w-5' />
+              <span className='text-sm'>書き込み</span>
             </Button>
           </div>
         </div>

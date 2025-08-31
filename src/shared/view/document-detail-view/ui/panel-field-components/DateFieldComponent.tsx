@@ -1,6 +1,9 @@
-import React from 'react';
-import { Input, Label } from '@/shared';
+import React, { useState } from 'react';
+import { Calendar, Popover, PopoverContent, PopoverTrigger, Button, Label } from '@/shared';
 import { DocumentPanelColumn } from '../../model';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { ja } from 'date-fns/locale';
 
 interface DateFieldComponentProps<T> {
   item: T;
@@ -14,28 +17,60 @@ export function DateFieldComponent<T>({
   value,
   onChange,
 }: DateFieldComponentProps<T>) {
-  const formatDateForInput = (dateValue: unknown) => {
-    if (!dateValue) return '';
-    const date = new Date(String(dateValue));
-    return date.toISOString().split('T')[0];
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const currentDate = value ? new Date(String(value)) : undefined;
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      onChange(date.toISOString());
+    } else {
+      onChange('');
+    }
+    setIsOpen(false);
   };
 
-  const handleChange = (inputValue: string) => {
-    const isoString = inputValue ? new Date(inputValue).toISOString() : '';
-    onChange(isoString);
-  };
+  if (!column.editable) {
+    return (
+      <div className='space-y-2'>
+        <Label>{column.label}</Label>
+        <div className='w-full px-3 py-2 text-sm border border-gray-200 rounded-md bg-gray-50 text-gray-600'>
+          {currentDate 
+            ? format(currentDate, 'yyyy年MM月dd日', { locale: ja })
+            : '未設定'
+          }
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
-      <Input
-        value={formatDateForInput(value)}
-        onChange={(e) => handleChange(e.target.value)}
-        disabled={!column.editable}
-        placeholder={column.placeholder}
-        className={!column.editable ? "bg-gray-50" : ""}
-        type="date"
-      />
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className="w-full justify-start text-left font-normal"
+            onClick={() => setIsOpen(true)}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {currentDate 
+              ? format(currentDate, 'yyyy年MM月dd日', { locale: ja }) 
+              : (column.placeholder || '日付を選択')
+            }
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={currentDate}
+            onSelect={handleDateSelect}
+            initialFocus
+            locale={ja}
+          />
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }

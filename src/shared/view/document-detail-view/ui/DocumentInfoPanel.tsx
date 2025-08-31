@@ -1,6 +1,10 @@
-"use client";
+'use client';
 
-import { DocumentData, DocumentDetailViewConfig, DocumentPanelColumn } from "../model";
+import {
+  DocumentData,
+  DocumentDetailViewConfig,
+  DocumentPanelColumn,
+} from '../model';
 import {
   TextFieldComponent,
   NumberFieldComponent,
@@ -8,7 +12,8 @@ import {
   SelectFieldComponent,
   BooleanFieldComponent,
   UserFieldComponent,
-} from "./panel-field-components";
+} from './panel-field-components';
+import { getValue, setValue } from '@/shared';
 
 interface DocumentInfoPanelProps<T extends DocumentData> {
   item: T | null;
@@ -23,8 +28,8 @@ export function DocumentInfoPanel<T extends DocumentData>({
 }: DocumentInfoPanelProps<T>) {
   if (!item) {
     return (
-      <div className="h-full bg-white border-l flex items-center justify-center">
-        <div className="text-center text-gray-500">
+      <div className='flex h-full items-center justify-center border-l bg-white'>
+        <div className='text-center text-gray-500'>
           <p>帳票を選択してください</p>
         </div>
       </div>
@@ -32,13 +37,22 @@ export function DocumentInfoPanel<T extends DocumentData>({
   }
 
   const handleFieldChange = (field: string, value: unknown) => {
-    onUpdate({ [field]: value } as Partial<T>);
+    if (field.includes('.')) {
+      const updatedItem = { ...item };
+      setValue(updatedItem as Record<string, unknown>, field, value);
+      onUpdate(updatedItem as Partial<T>);
+    } else {
+      onUpdate({ [field]: value } as Partial<T>);
+    }
   };
 
   const renderField = (column: DocumentPanelColumn<T>) => {
-    const value = item[column.key as keyof T];
     const fieldKey = String(column.key);
-    const onChange = (newValue: unknown) => handleFieldChange(fieldKey, newValue);
+    const value = fieldKey.includes('.')
+      ? getValue(item, fieldKey)
+      : item[column.key as keyof T];
+    const onChange = (newValue: unknown) =>
+      handleFieldChange(fieldKey, newValue);
 
     const commonProps = {
       item,
@@ -66,8 +80,8 @@ export function DocumentInfoPanel<T extends DocumentData>({
   };
 
   return (
-    <div className="h-full bg-white border-l overflow-y-auto">
-      <div className="p-6 space-y-4">
+    <div className='h-full overflow-y-auto border-l bg-white'>
+      <div className='space-y-4 p-6'>
         {config.panelColumnConfig.map(renderField)}
       </div>
     </div>

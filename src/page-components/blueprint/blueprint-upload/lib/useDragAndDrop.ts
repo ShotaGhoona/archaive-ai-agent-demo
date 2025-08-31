@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState, useCallback } from 'react';
 import { DragItem } from '../model';
 
@@ -18,10 +18,13 @@ export function useDragAndDrop() {
   }, []);
 
   // ドラッグオーバー
-  const handleDragOver = useCallback((e: React.DragEvent, targetId?: string) => {
-    e.preventDefault();
-    setDragOverTarget(targetId || null);
-  }, []);
+  const handleDragOver = useCallback(
+    (e: React.DragEvent, targetId?: string) => {
+      e.preventDefault();
+      setDragOverTarget(targetId || null);
+    },
+    [],
+  );
 
   // ドラッグリーブ
   const handleDragLeave = useCallback((e: React.DragEvent) => {
@@ -29,31 +32,34 @@ export function useDragAndDrop() {
     const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
     const x = e.clientX;
     const y = e.clientY;
-    
+
     if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
       setDragOverTarget(null);
     }
   }, []);
 
   // ドロップ
-  const handleDrop = useCallback((
-    e: React.DragEvent, 
-    onDropToNewProject?: (item: DragItem) => void,
-    onDropToProject?: (item: DragItem, projectId: string) => void,
-    targetProjectId?: string
-  ) => {
-    e.preventDefault();
-    
-    if (!draggedItem) return;
+  const handleDrop = useCallback(
+    (
+      e: React.DragEvent,
+      onDropToNewProject?: (item: DragItem) => void,
+      onDropToProject?: (item: DragItem, projectId: string) => void,
+      targetProjectId?: string,
+    ) => {
+      e.preventDefault();
 
-    if (targetProjectId && onDropToProject) {
-      onDropToProject(draggedItem, targetProjectId);
-    } else if (onDropToNewProject) {
-      onDropToNewProject(draggedItem);
-    }
+      if (!draggedItem) return;
 
-    handleDragEnd();
-  }, [draggedItem, handleDragEnd]);
+      if (targetProjectId && onDropToProject) {
+        onDropToProject(draggedItem, targetProjectId);
+      } else if (onDropToNewProject) {
+        onDropToNewProject(draggedItem);
+      }
+
+      handleDragEnd();
+    },
+    [draggedItem, handleDragEnd],
+  );
 
   return {
     draggedItem,

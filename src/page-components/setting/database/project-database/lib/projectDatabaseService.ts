@@ -19,16 +19,16 @@ export class ProjectDatabaseService {
     state: ProjectDatabaseState,
     tableId: string,
     columnId: string,
-    updates: Partial<DatabaseColumnSettingConfig>
+    updates: Partial<DatabaseColumnSettingConfig>,
   ): ProjectDatabaseState {
     return {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: state.projectColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, ...updates } : col
-        )
-      }
+        [tableId]: state.projectColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, ...updates } : col,
+        ),
+      },
     };
   }
 
@@ -38,14 +38,16 @@ export class ProjectDatabaseService {
   static deleteColumn(
     state: ProjectDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): ProjectDatabaseState {
     return {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: state.projectColumns[tableId].filter(col => col.id !== columnId)
-      }
+        [tableId]: state.projectColumns[tableId].filter(
+          (col) => col.id !== columnId,
+        ),
+      },
     };
   }
 
@@ -54,7 +56,7 @@ export class ProjectDatabaseService {
    */
   static addColumn(
     state: ProjectDatabaseState,
-    tableId: string
+    tableId: string,
   ): ProjectDatabaseState {
     const newColumn: DatabaseColumnSettingConfig = {
       id: `custom-${Date.now()}`,
@@ -70,8 +72,8 @@ export class ProjectDatabaseService {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: [...(state.projectColumns[tableId] || []), newColumn]
-      }
+        [tableId]: [...(state.projectColumns[tableId] || []), newColumn],
+      },
     };
   }
 
@@ -81,19 +83,19 @@ export class ProjectDatabaseService {
   static toggleRequired(
     state: ProjectDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): ProjectDatabaseState {
     // TODO: バックエンド処理（バリデーション、DB更新等）を実装
     console.log('TODO: 必須フラグのバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: state.projectColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col
-        )
-      }
+        [tableId]: state.projectColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, isRequired: !col.isRequired } : col,
+        ),
+      },
     };
   }
 
@@ -103,19 +105,21 @@ export class ProjectDatabaseService {
   static toggleBasicInfo(
     state: ProjectDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): ProjectDatabaseState {
     // TODO: バックエンド処理（表示設定保存等）を実装
     console.log('TODO: 基本情報表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: state.projectColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInBasicInfo: !col.showInBasicInfo } : col
-        )
-      }
+        [tableId]: state.projectColumns[tableId].map((col) =>
+          col.id === columnId
+            ? { ...col, showInBasicInfo: !col.showInBasicInfo }
+            : col,
+        ),
+      },
     };
   }
 
@@ -125,19 +129,19 @@ export class ProjectDatabaseService {
   static toggleTableDisplay(
     state: ProjectDatabaseState,
     tableId: string,
-    columnId: string
+    columnId: string,
   ): ProjectDatabaseState {
     // TODO: バックエンド処理（テーブル設定保存等）を実装
     console.log('TODO: テーブル表示のバックエンド処理', { tableId, columnId });
-    
+
     return {
       ...state,
       projectColumns: {
         ...state.projectColumns,
-        [tableId]: state.projectColumns[tableId].map(col => 
-          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col
-        )
-      }
+        [tableId]: state.projectColumns[tableId].map((col) =>
+          col.id === columnId ? { ...col, showInTable: !col.showInTable } : col,
+        ),
+      },
     };
   }
 }

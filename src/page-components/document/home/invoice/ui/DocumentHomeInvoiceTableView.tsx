@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createInvoiceTableConfig } from "../lib";
-import { Invoice } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createInvoiceTableConfig } from '../lib';
+import { DocumentInvoiceDataInterface } from '@/dummy-data-er-fix/document';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,25 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface InvoiceTableViewProps {
-  invoices: Invoice[];
-  onInvoiceDelete?: (invoice: Invoice) => void;
+  invoices: DocumentInvoiceDataInterface[];
+  onInvoiceDelete?: (invoice: DocumentInvoiceDataInterface) => void;
   onInvoiceUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function DocumentHomeInvoiceTableView({ 
+export function DocumentHomeInvoiceTableView({
   invoices,
   onInvoiceDelete,
-  onInvoiceUpdate
+  onInvoiceUpdate,
 }: InvoiceTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [invoiceToDelete, setInvoiceToDelete] = useState<Invoice | null>(null);
+  const [invoiceToDelete, setInvoiceToDelete] =
+    useState<DocumentInvoiceDataInterface | null>(null);
 
-  const handleDeleteClick = (invoice: Invoice) => {
+  const handleDeleteClick = (invoice: DocumentInvoiceDataInterface) => {
     setInvoiceToDelete(invoice);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +59,23 @@ export function DocumentHomeInvoiceTableView({
         getRowId={(invoice) => invoice.id.toString()}
         onItemUpdate={onInvoiceUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>請求書を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{invoiceToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{invoiceToDelete?.directory_document_custom_items?.請求書番号?.value || 'N/A'}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

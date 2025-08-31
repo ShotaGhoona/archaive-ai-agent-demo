@@ -4,13 +4,13 @@
 export interface GalleryLayoutConfig {
   // グリッド設定（カスタマイズ性優先）
   grid: {
-    xs?: number;  // 1-12
+    xs?: number; // 1-12
     sm?: number;
     md?: number;
     lg?: number;
     xl?: number;
   };
-  
+
   // アスペクト比設定（カスタマイズ性優先）
   aspectRatio: 'video' | 'square' | '4/3' | 'auto' | string;
 }
@@ -20,10 +20,10 @@ export interface GalleryItemConfig<T> {
   // サムネイル表示設定（カスタマイズ性優先）
   showThumbnail: boolean;
   getThumbnailUrl?: (item: T) => string;
-  
+
   // サムネイル上のオーバーレイ（ホバー時のボタンなど）
   thumbnailOverlayRender?: (item: T) => React.ReactNode;
-  
+
   // コンテンツレンダラー（TableViewのrenderと同じ思想）
   contentRender: (item: T) => React.ReactNode;
 }
@@ -36,7 +36,7 @@ export interface GalleryBehaviorConfig<T> {
     getHref: (item: T) => string;
     target?: '_blank' | '_self';
   };
-  
+
   // 選択設定（将来拡張用）
   selectionConfig?: {
     enabled: boolean;
@@ -46,7 +46,7 @@ export interface GalleryBehaviorConfig<T> {
 }
 
 // ページネーション設定
-export type GalleryPaginationConfig = 
+export type GalleryPaginationConfig =
   | {
       enabled: false;
     }
@@ -76,12 +76,12 @@ export interface GalleryViewProps<T> {
 }
 
 // アスペクト比のユーティリティ型
-export type AspectRatioClass = 
-  | 'aspect-video'     // 16:9
-  | 'aspect-square'    // 1:1
-  | 'aspect-[4/3]'     // 4:3
-  | 'aspect-auto'      // auto
-  | string;            // カスタム
+export type AspectRatioClass =
+  | 'aspect-video' // 16:9
+  | 'aspect-square' // 1:1
+  | 'aspect-[4/3]' // 4:3
+  | 'aspect-auto' // auto
+  | string; // カスタム
 
 // グリッドクラスのユーティリティ型
 export type GridClass = string;

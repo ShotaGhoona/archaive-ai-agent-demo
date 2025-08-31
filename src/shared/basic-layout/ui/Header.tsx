@@ -1,10 +1,10 @@
-"use client";
-import { useState } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { Button, Popover, PopoverContent, PopoverTrigger } from "@/shared";
-import { User, Menu, X, LogOut, Settings, UserCircle } from "lucide-react";
-import { headerNavigations, defaultUser } from "../constants";
+'use client';
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { Button, Popover, PopoverContent, PopoverTrigger } from '@/shared';
+import { User, Menu, X, LogOut, Settings, UserCircle } from 'lucide-react';
+import { headerNavigations, defaultUser } from '../constants';
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -21,32 +21,38 @@ export function Header() {
 
   const handleLogout = () => {
     // TODO: ログアウト処理を実装
-    console.log("ログアウト処理");
+    console.log('ログアウト処理');
     // 例: signOut() や router.push('/login') など
   };
 
   return (
-    <header className="bg-primary shadow-lg fixed w-full top-0 z-30">
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center h-[45px]">
+    <header className='bg-primary fixed top-0 z-30 w-full shadow-lg'>
+      <div className='w-full px-4 sm:px-6 lg:px-8'>
+        <div className='flex h-[45px] items-center'>
           {/* Left side - Brand and Navigation */}
-          <div className="flex items-center space-x-6">
+          <div className='flex items-center space-x-6'>
             {/* Brand Name */}
-            <Link href="/">
-              <h1 className="text-lg font-bold text-white tracking-tight cursor-pointer">ARCH<span className="text-secondary">AI</span>VE</h1>
+            <Link href='/'>
+              <h1 className='cursor-pointer text-lg font-bold tracking-tight text-white'>
+                ARCH<span className='text-secondary'>AI</span>VE
+              </h1>
             </Link>
 
             {/* Navigation Menu */}
-            <nav className="hidden md:flex items-center space-x-1">
+            <nav className='hidden items-center space-x-1 md:flex'>
               {headerNavigations.map((navigation) => {
-                const isActive = pathname.startsWith(navigation.href) && navigation.href !== '/';
+                const isActive =
+                  pathname.startsWith(navigation.href) &&
+                  navigation.href !== '/';
                 return (
                   <Link key={navigation.label} href={navigation.href}>
-                    <div className={`relative flex items-center gap-2 px-3 py-1 text-sm font-medium hover:bg-white/10 rounded-md cursor-pointer group ${
-                      isActive 
-                        ? 'text-white bg-white/20 rounded-md' 
-                        : 'text-white hover:text-white'
-                    }`}>
+                    <div
+                      className={`group relative flex cursor-pointer items-center gap-2 rounded-md px-3 py-1 text-sm font-medium hover:bg-white/10 ${
+                        isActive
+                          ? 'rounded-md bg-white/20 text-white'
+                          : 'text-white hover:text-white'
+                      }`}
+                    >
                       {navigation.icon}
                       <span>{navigation.label}</span>
                     </div>
@@ -57,51 +63,57 @@ export function Header() {
           </div>
 
           {/* Right side - User info */}
-          <div className="ml-auto flex items-center space-x-3">
+          <div className='ml-auto flex items-center space-x-3'>
             {/* User section */}
             <Popover>
               <PopoverTrigger asChild>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="flex items-center space-x-2 p-1 text-white hover:text-white hover:bg-white/10 rounded-md"
+                <Button
+                  variant='ghost'
+                  size='sm'
+                  className='flex items-center space-x-2 rounded-md p-1 text-white hover:bg-white/10 hover:text-white'
                 >
-                  <div className="w-6 h-6 bg-white/20 rounded-full flex items-center justify-center">
-                    <User className="text-white w-3 h-3" />
+                  <div className='flex h-6 w-6 items-center justify-center rounded-full bg-white/20'>
+                    <User className='h-3 w-3 text-white' />
                   </div>
-                  <div className="hidden sm:block">
-                    <p className="text-xs font-medium text-white">{defaultUser.name}</p>
+                  <div className='hidden sm:block'>
+                    <p className='text-xs font-medium text-white'>
+                      {defaultUser.name}
+                    </p>
                   </div>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-56" align="end">
-                <div className="space-y-1">
-                  <div className="flex items-center space-x-3 p-2">
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                      <UserCircle className="w-4 h-4 text-primary" />
+              <PopoverContent className='w-56' align='end'>
+                <div className='space-y-1'>
+                  <div className='flex items-center space-x-3 p-2'>
+                    <div className='bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full'>
+                      <UserCircle className='text-primary h-4 w-4' />
                     </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-gray-900">{defaultUser.name}</p>
-                      <p className="text-xs text-gray-500">{defaultUser.email}</p>
+                    <div className='flex-1'>
+                      <p className='text-sm font-medium text-gray-900'>
+                        {defaultUser.name}
+                      </p>
+                      <p className='text-xs text-gray-500'>
+                        {defaultUser.email}
+                      </p>
                     </div>
                   </div>
-                  <div className="border-t pt-2">
+                  <div className='border-t pt-2'>
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      variant='ghost'
+                      size='sm'
+                      className='w-full justify-start text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                       onClick={handleSettings}
                     >
-                      <Settings className="w-4 h-4 mr-2" />
+                      <Settings className='mr-2 h-4 w-4' />
                       設定
                     </Button>
                     <Button
-                      variant="ghost"
-                      size="sm"
-                      className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50"
+                      variant='ghost'
+                      size='sm'
+                      className='w-full justify-start text-red-600 hover:bg-red-50 hover:text-red-700'
                       onClick={handleLogout}
                     >
-                      <LogOut className="w-4 h-4 mr-2" />
+                      <LogOut className='mr-2 h-4 w-4' />
                       ログアウト
                     </Button>
                   </div>
@@ -110,30 +122,38 @@ export function Header() {
             </Popover>
 
             {/* Mobile menu button */}
-            <Button 
-              variant="ghost" 
-              size="sm"
-              className="md:hidden p-1.5 text-white hover:text-white hover:bg-white/10"
+            <Button
+              variant='ghost'
+              size='sm'
+              className='p-1.5 text-white hover:bg-white/10 hover:text-white md:hidden'
               onClick={toggleMobileMenu}
             >
-              {isMobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {isMobileMenuOpen ? (
+                <X className='h-4 w-4' />
+              ) : (
+                <Menu className='h-4 w-4' />
+              )}
             </Button>
           </div>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-white/20 py-2">
-            <nav className="flex flex-col space-y-1">
+          <div className='border-t border-white/20 py-2 md:hidden'>
+            <nav className='flex flex-col space-y-1'>
               {headerNavigations.map((navigation) => {
-                const isActive = pathname.startsWith(navigation.href) && navigation.href !== '/';
+                const isActive =
+                  pathname.startsWith(navigation.href) &&
+                  navigation.href !== '/';
                 return (
                   <Link key={navigation.label} href={navigation.href}>
-                    <div className={`relative flex items-center gap-2 px-4 py-2 text-sm font-medium cursor-pointer group ${
-                      isActive 
-                        ? 'text-white bg-white/10 rounded-md' 
-                        : 'text-white hover:text-white'
-                    }`}>
+                    <div
+                      className={`group relative flex cursor-pointer items-center gap-2 px-4 py-2 text-sm font-medium ${
+                        isActive
+                          ? 'rounded-md bg-white/10 text-white'
+                          : 'text-white hover:text-white'
+                      }`}
+                    >
                       {navigation.icon}
                       <span>{navigation.label}</span>
                     </div>

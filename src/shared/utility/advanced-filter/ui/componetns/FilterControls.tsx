@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from 'react';
 import {
   Input,
@@ -22,10 +22,10 @@ import { FilterControlProps, DateRangeFilter } from '../../model';
 /**
  * 個別のフィルターコントロールを表示するコンポーネント
  */
-export function FilterControl<T>({ 
-  config, 
-  value, 
-  onChange 
+export function FilterControl<T>({
+  config,
+  value,
+  onChange,
 }: FilterControlProps<T>) {
   // All useState hooks must be at the top level
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -37,7 +37,7 @@ export function FilterControl<T>({
   };
 
   const handleDateRangeChange = (field: 'from' | 'to', newValue: string) => {
-    const currentValue = value as DateRangeFilter || { from: '', to: '' };
+    const currentValue = (value as DateRangeFilter) || { from: '', to: '' };
     onChange({
       ...currentValue,
       [field]: newValue,
@@ -52,29 +52,29 @@ export function FilterControl<T>({
             placeholder={config.placeholder}
             value={String(value || '')}
             onChange={(e) => handleChange(e.target.value)}
-            className="mt-2"
+            className='mt-2'
           />
         );
 
       case 'number':
         return (
           <Input
-            type="number"
+            type='number'
             placeholder={config.placeholder}
             value={String(value || '')}
             onChange={(e) => handleChange(e.target.value)}
-            className="mt-2"
+            className='mt-2'
           />
         );
 
       case 'select':
         return (
           <Select value={String(value || 'all')} onValueChange={handleChange}>
-            <SelectTrigger className="mt-2 w-full">
+            <SelectTrigger className='mt-2 w-full'>
               <SelectValue placeholder={config.placeholder} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">すべて</SelectItem>
+              <SelectItem value='all'>すべて</SelectItem>
               {config.options?.map((option) => (
                 <SelectItem key={option} value={option}>
                   {option}
@@ -86,21 +86,23 @@ export function FilterControl<T>({
 
       case 'date':
         const selectedDate = value ? new Date(String(value)) : undefined;
-        
+
         return (
           <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
             <PopoverTrigger asChild>
               <Button
-                variant="outline"
-                className="mt-2 w-full justify-start text-left font-normal"
+                variant='outline'
+                className='mt-2 w-full justify-start text-left font-normal'
               >
-                <CalendarIcon className="mr-2 h-4 w-4" />
-                {selectedDate ? format(selectedDate, 'yyyy/MM/dd', { locale: ja }) : '日付を選択'}
+                <CalendarIcon className='mr-2 h-4 w-4' />
+                {selectedDate
+                  ? format(selectedDate, 'yyyy/MM/dd', { locale: ja })
+                  : '日付を選択'}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className='w-auto p-0' align='start'>
               <Calendar
-                mode="single"
+                mode='single'
                 selected={selectedDate}
                 onSelect={(date) => {
                   if (date) {
@@ -118,25 +120,27 @@ export function FilterControl<T>({
         );
 
       case 'dateRange':
-        const dateRange = value as DateRangeFilter || { from: '', to: '' };
+        const dateRange = (value as DateRangeFilter) || { from: '', to: '' };
         const fromDate = dateRange.from ? new Date(dateRange.from) : undefined;
         const toDate = dateRange.to ? new Date(dateRange.to) : undefined;
-        
+
         return (
-          <div className="mt-2 flex gap-2 items-center">
+          <div className='mt-2 flex items-center gap-2'>
             <Popover open={isFromOpen} onOpenChange={setIsFromOpen}>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
-                  className="flex-1 justify-start text-left font-normal text-sm"
+                  variant='outline'
+                  className='flex-1 justify-start text-left text-sm font-normal'
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {fromDate ? format(fromDate, 'yyyy/MM/dd', { locale: ja }) : '開始日'}
+                  <CalendarIcon className='mr-2 h-4 w-4' />
+                  {fromDate
+                    ? format(fromDate, 'yyyy/MM/dd', { locale: ja })
+                    : '開始日'}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+              <PopoverContent className='w-auto p-0' align='start'>
                 <Calendar
-                  mode="single"
+                  mode='single'
                   selected={fromDate}
                   onSelect={(date) => {
                     if (date) {
@@ -151,20 +155,22 @@ export function FilterControl<T>({
                 />
               </PopoverContent>
             </Popover>
-            <span className="text-xs text-gray-500">〜</span>
+            <span className='text-xs text-gray-500'>〜</span>
             <Popover open={isToOpen} onOpenChange={setIsToOpen}>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
-                  className="flex-1 justify-start text-left font-normal text-sm"
+                  variant='outline'
+                  className='flex-1 justify-start text-left text-sm font-normal'
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {toDate ? format(toDate, 'yyyy/MM/dd', { locale: ja }) : '終了日'}
+                  <CalendarIcon className='mr-2 h-4 w-4' />
+                  {toDate
+                    ? format(toDate, 'yyyy/MM/dd', { locale: ja })
+                    : '終了日'}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+              <PopoverContent className='w-auto p-0' align='start'>
                 <Calendar
-                  mode="single"
+                  mode='single'
                   selected={toDate}
                   onSelect={(date) => {
                     if (date) {
@@ -183,21 +189,24 @@ export function FilterControl<T>({
         );
 
       case 'datetime-local':
-        const dateTimeRange = value as DateRangeFilter || { from: '', to: '' };
+        const dateTimeRange = (value as DateRangeFilter) || {
+          from: '',
+          to: '',
+        };
         return (
-          <div className="mt-2 flex gap-2 items-center">
+          <div className='mt-2 flex items-center gap-2'>
             <Input
-              type="datetime-local"
+              type='datetime-local'
               value={dateTimeRange.from || ''}
               onChange={(e) => handleDateRangeChange('from', e.target.value)}
-              className="text-sm"
+              className='text-sm'
             />
-            <span className="text-xs text-gray-500">〜</span>
+            <span className='text-xs text-gray-500'>〜</span>
             <Input
-              type="datetime-local"
+              type='datetime-local'
               value={dateTimeRange.to || ''}
               onChange={(e) => handleDateRangeChange('to', e.target.value)}
-              className="text-sm"
+              className='text-sm'
             />
           </div>
         );
@@ -209,7 +218,7 @@ export function FilterControl<T>({
 
   return (
     <div>
-      <Label className="text-sm font-medium text-gray-900">
+      <Label className='text-sm font-medium text-gray-900'>
         {config.label}
       </Label>
       {renderControl()}

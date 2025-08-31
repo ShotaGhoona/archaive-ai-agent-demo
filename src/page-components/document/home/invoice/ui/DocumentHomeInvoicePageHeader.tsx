@@ -1,13 +1,13 @@
-import { INVOICE_CSV_COLUMNS } from "../lib";
-import { Invoice } from "../model";
-import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
+import { INVOICE_CSV_COLUMNS } from '../lib';
+import { DocumentInvoiceDataInterface } from '@/dummy-data-er-fix/document';
+import { SearchInput, CsvExportDialog, FilterToggleButton } from '@/shared';
 
 interface InvoicePageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
-  invoices?: Invoice[];
+  invoices?: DocumentInvoiceDataInterface[];
 }
 
 export function DocumentHomeInvoicePageHeader({
@@ -18,8 +18,8 @@ export function DocumentHomeInvoicePageHeader({
   invoices = [],
 }: InvoicePageHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-4'>
         <FilterToggleButton
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
@@ -27,14 +27,14 @@ export function DocumentHomeInvoicePageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="請求書名・プロジェクト名・請求先で検索"
+          placeholder='プロジェクトID・備考で検索'
         />
       </div>
-      <div className="flex items-center gap-3">
+      <div className='flex items-center gap-3'>
         <CsvExportDialog
           data={invoices}
           initialColumns={INVOICE_CSV_COLUMNS}
-          defaultFilename="invoices"
+          defaultFilename='invoices'
         />
       </div>
     </div>

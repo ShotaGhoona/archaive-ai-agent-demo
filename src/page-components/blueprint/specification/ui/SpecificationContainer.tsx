@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { DocumentDetailViewContainer } from "@/shared/view/document-detail-view";
-import { BlueprintSpecificationDataInterface, blueprintSpecificationData } from "@/dummy-data/blueprint";
-import { createSpecificationDetailConfig } from "../lib";
+import { useState } from 'react';
+import { DocumentDetailViewContainer } from '@/shared/view/document-detail-view';
+import {
+  DocumentSpecificationDataInterface,
+  blueprintSpecificationData,
+} from '@/dummy-data-er-fix/document';
+import { createSpecificationDetailConfig } from '../lib';
 
 export function SpecificationContainer() {
-  const [specifications] = useState<BlueprintSpecificationDataInterface[]>(blueprintSpecificationData as BlueprintSpecificationDataInterface[]);
+  const [specifications] = useState<DocumentSpecificationDataInterface[]>(
+    blueprintSpecificationData as DocumentSpecificationDataInterface[],
+  );
   const config = createSpecificationDetailConfig();
 
-  return (
-    <DocumentDetailViewContainer
-      data={specifications}
-      config={config}
-    />
-  );
+  return <DocumentDetailViewContainer data={specifications} config={config} />;
 }

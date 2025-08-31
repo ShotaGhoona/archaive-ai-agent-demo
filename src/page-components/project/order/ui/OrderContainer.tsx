@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { DocumentDetailViewContainer } from "@/shared/view/document-detail-view";
-import { OrderData } from "../model";
-import { orderData as initialOrderData } from "../data";
-import { createOrderDetailConfig } from "../lib/orderDetailConfig";
+import { useState } from 'react';
+import { DocumentDetailViewContainer } from '@/shared/view/document-detail-view';
+import {
+  DocumentOrderDataInterface,
+  projectOrderData,
+} from '@/dummy-data-er-fix/document';
+import { createOrderDetailConfig } from '../lib/orderDetailConfig';
 
 export function OrderContainer() {
-  const [orders] = useState<OrderData[]>(initialOrderData as OrderData[]);
+  const [orders] = useState<DocumentOrderDataInterface[]>(
+    projectOrderData as DocumentOrderDataInterface[],
+  );
   const config = createOrderDetailConfig();
 
-  return (
-    <DocumentDetailViewContainer
-      data={orders}
-      config={config}
-    />
-  );
+  return <DocumentDetailViewContainer data={orders} config={config} />;
 }

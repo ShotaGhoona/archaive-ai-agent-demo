@@ -1,68 +1,88 @@
-"use client";
-import { useState } from "react";
-import { Dialog, DialogContent, Tabs, TabsList, TabsTrigger, TabsContent, ResizableLayout, ResizablePanel, ResizableHandle } from "@/shared";
-import { EstimateCalculation, BasicInformationForm, SimilarBlueprintGallery } from "@/widgets";
-import { PicturePreviewContainer } from "@/shared/components/picture-preview";
-import { QuotationCreateBlueprint, EstimateData } from "../model";
-import { blueprintEstimateDialogResizableLayoutConfig } from "../lib";
+'use client';
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  ResizableLayout,
+  ResizablePanel,
+  ResizableHandle,
+  PicturePreviewContainer,
+} from '@/shared';
+import {
+  EstimateCalculation,
+  BasicInformationContainer,
+  SimilarBlueprintGallery,
+} from '@/widgets';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint';
+import { EstimateInformation } from '../model';
+import { blueprintEstimateDialogResizableLayoutConfig } from '../lib';
 
 interface BlueprintEstimateDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  blueprint: QuotationCreateBlueprint | null;
-  onSave: (blueprintId: string, estimateData: EstimateData) => void;
+  blueprint: BlueprintDetailDataInterface | null;
+  onSave: (blueprintId: string, estimateData: EstimateInformation) => void;
 }
 
-export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: BlueprintEstimateDialogProps) {
-  const [activeTab, setActiveTab] = useState("blueprint");
-  
+export function BlueprintEstimateDialog({
+  isOpen,
+  onClose,
+  blueprint,
+  onSave,
+}: BlueprintEstimateDialogProps) {
+  const [activeTab, setActiveTab] = useState('blueprint');
+
   if (!blueprint) return null;
 
-  // 図面の寸法データ（basicInformationから取得）
-  const dimensions = {
-    length: parseFloat(blueprint.basicInformation.maxLength) || 0,
-    width: parseFloat(blueprint.basicInformation.maxWidth) || 0,
-    height: parseFloat(blueprint.basicInformation.maxHeight) || 0,
-    weight: 2.5 // デフォルト値
+  const handleSave = (estimateData: EstimateInformation) => {
+    onSave(blueprint.id.toString(), estimateData);
   };
-
-  const handleSave = (estimateData: EstimateData) => {
-    onSave(blueprint.id, estimateData);
-  };
-
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="min-w-[90vw] max-w-[90vw] w-full h-[90vh] p-0">
-        <ResizableLayout config={blueprintEstimateDialogResizableLayoutConfig} className="h-full">
+      <DialogContent className='h-[90vh] w-full max-w-[90vw] min-w-[90vw] p-0'>
+        <ResizableLayout
+          config={blueprintEstimateDialogResizableLayoutConfig}
+          className='h-full'
+        >
           {/* 左側: タブコンテンツ */}
           <ResizablePanel index={0}>
-            <div className="h-full flex flex-col">
-              <div className="flex-shrink-0 p-4 border-b">
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="blueprint">図面</TabsTrigger>
-                    <TabsTrigger value="basic-info">基本情報</TabsTrigger>
-                    <TabsTrigger value="similar">類似図面</TabsTrigger>
+            <div className='flex h-full flex-col'>
+              <div className='flex-shrink-0 border-b p-4'>
+                <Tabs
+                  value={activeTab}
+                  onValueChange={setActiveTab}
+                  className='w-full'
+                >
+                  <TabsList className='grid w-full grid-cols-3'>
+                    <TabsTrigger value='blueprint'>図面</TabsTrigger>
+                    <TabsTrigger value='basic-info'>基本情報</TabsTrigger>
+                    <TabsTrigger value='similar'>類似図面</TabsTrigger>
                   </TabsList>
                 </Tabs>
               </div>
-              
-              <div className="flex-1 min-h-0">
-                <Tabs value={activeTab} className="h-full">
-                  <TabsContent value="blueprint" className="h-full m-0 p-0">
-                    <PicturePreviewContainer activeFile={{ imageUrl: blueprint.imageUrl }} />
-                  </TabsContent>
-                  
-                  <TabsContent value="basic-info" className="h-full m-0 p-0">
-                    <BasicInformationForm 
-                      initialData={blueprint.basicInformation}
+
+              <div className='min-h-0 flex-1'>
+                <Tabs value={activeTab} className='h-full'>
+                  <TabsContent value='blueprint' className='m-0 h-full p-0'>
+                    <PicturePreviewContainer
+                      activeFile={{ imageUrl: blueprint.s3_url }}
                     />
                   </TabsContent>
-                  
-                  <TabsContent value="similar" className="h-full m-0 p-0">
-                    <SimilarBlueprintGallery 
-                      similarBlueprints={blueprint.similarBlueprints || []}
+
+                  <TabsContent value='basic-info' className='m-0 h-full p-0'>
+                    <BasicInformationContainer
+                      blueprintData={blueprint}
+                    />
+                  </TabsContent>
+
+                  <TabsContent value='similar' className='m-0 h-full p-0'>
+                    <SimilarBlueprintGallery
+                      similarBlueprints={blueprint.similar_blueprints || []}
                       isLoading={true}
                     />
                   </TabsContent>
@@ -70,15 +90,12 @@ export function BlueprintEstimateDialog({ isOpen, onClose, blueprint, onSave }: 
               </div>
             </div>
           </ResizablePanel>
-          
+
           <ResizableHandle />
-          
+
           {/* 右側: 見積もり画面 */}
           <ResizablePanel index={1}>
-            <EstimateCalculation
-              dimensions={dimensions}
-              onSave={handleSave}
-            />
+            <EstimateCalculation onSave={handleSave as (data: { materialCost: string; processingCost: string; setupCost: string; otherCost: string; totalCost: string; }) => void} />
           </ResizablePanel>
         </ResizableLayout>
       </DialogContent>

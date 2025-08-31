@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "customer_id": 1,
+    "last_name": "田中",
+    "first_name": "太郎",
+    "last_name_kana": "タナカ",
+    "first_name_kana": "タロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "営業部",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "部長",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "精密機械設計に詳しく、技術的な相談も可能",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-1234-5678",
+    "office_phone_number": "03-1234-5678",
+    "email_primary": "tanaka@tanaka-seisaku.co.jp",
+    "email_secondary": "t.tanaka@tanaka-seisaku.co.jp",
+    "fax": "03-1234-5679",
+    "remarks": "主要な窓口担当者",
+    "is_active": true,
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-08-20T14:30:00Z"
+  },
+  {
+    "id": 2,
+    "customer_id": 2,
+    "last_name": "佐藤",
+    "first_name": "花子",
+    "last_name_kana": "サトウ",
+    "first_name_kana": "ハナコ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "技術部",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "課長",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "建設工事管理が専門、現場対応も可能",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-2345-6789",
+    "office_phone_number": "03-2345-6789",
+    "email_primary": "sato@sato-kogyo.co.jp",
+    "email_secondary": null,
+    "fax": "03-2345-6790",
+    "remarks": "技術的な問い合わせ担当",
+    "is_active": true,
+    "created_at": "2024-02-01T10:15:00Z",
+    "updated_at": "2024-08-15T16:45:00Z"
+  },
+  {
+    "id": 3,
+    "customer_id": 3,
+    "last_name": "鈴木",
+    "first_name": "次郎",
+    "last_name_kana": "スズキ",
+    "first_name_kana": "ジロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "開発部",
+        "color": "indigo",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "主任",
+        "color": "emerald",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "新技術に積極的、プロトタイプ開発を担当",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-3456-7890",
+    "office_phone_number": "03-3456-7890",
+    "email_primary": "suzuki@suzuki-denshi.co.jp",
+    "email_secondary": null,
+    "fax": "03-3456-7891",
+    "remarks": "開発案件の技術責任者",
+    "is_active": true,
+    "created_at": "2024-02-10T11:30:00Z",
+    "updated_at": "2024-08-10T13:20:00Z"
+  },
+  {
+    "id": 4,
+    "customer_id": 4,
+    "last_name": "高橋",
+    "first_name": "三郎",
+    "last_name_kana": "タカハシ",
+    "first_name_kana": "サブロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "品質管理部",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "係長",
+        "color": "yellow",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "品質基準に厳しく、詳細な仕様確認が必要",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-4567-8901",
+    "office_phone_number": "03-4567-8901",
+    "email_primary": "takahashi@takahashi-food.co.jp",
+    "email_secondary": "t.takahashi@takahashi-food.co.jp",
+    "fax": "03-4567-8902",
+    "remarks": "品質管理責任者",
+    "is_active": true,
+    "created_at": "2024-02-20T14:45:00Z",
+    "updated_at": "2024-08-05T09:10:00Z"
+  },
+  {
+    "id": 5,
+    "customer_id": 5,
+    "last_name": "渡辺",
+    "first_name": "四郎",
+    "last_name_kana": "ワタナベ",
+    "first_name_kana": "シロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "購買部",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "主任",
+        "color": "emerald",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "コスト重視、複数社比較検討を行う",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-5678-9012",
+    "office_phone_number": "03-5678-9012",
+    "email_primary": "watanabe@watanabe-medical.co.jp",
+    "email_secondary": null,
+    "fax": "03-5678-9013",
+    "remarks": "購買決定権者",
+    "is_active": true,
+    "created_at": "2024-03-01T08:00:00Z",
+    "updated_at": "2024-08-22T17:30:00Z"
+  },
+  {
+    "id": 6,
+    "customer_id": 6,
+    "last_name": "伊藤",
+    "first_name": "五郎",
+    "last_name_kana": "イトウ",
+    "first_name_kana": "ゴロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "設計部",
+        "color": "slate",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "チーフ",
+        "color": "sky",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "航空機部品の設計専門、高精度要求",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-6789-0123",
+    "office_phone_number": "03-6789-0123",
+    "email_primary": "ito@ito-aero.co.jp",
+    "email_secondary": "g.ito@ito-aero.co.jp",
+    "fax": "03-6789-0124",
+    "remarks": "航空機部品設計リーダー",
+    "is_active": true,
+    "created_at": "2024-03-10T12:15:00Z",
+    "updated_at": "2024-07-30T11:45:00Z"
+  },
+  {
+    "id": 7,
+    "customer_id": 7,
+    "last_name": "中村",
+    "first_name": "六郎",
+    "last_name_kana": "ナカムラ",
+    "first_name_kana": "ロクロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "営業部",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "取締役",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "大口案件の決定権を持つ、迅速な判断が可能",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-7890-1234",
+    "office_phone_number": "03-7890-1234",
+    "email_primary": "nakamura@nakamura-shoji.co.jp",
+    "email_secondary": null,
+    "fax": "03-7890-1235",
+    "remarks": "営業取締役、大口案件担当",
+    "is_active": true,
+    "created_at": "2024-03-15T15:20:00Z",
+    "updated_at": "2024-08-12T10:15:00Z"
+  },
+  {
+    "id": 8,
+    "customer_id": 8,
+    "last_name": "小林",
+    "first_name": "七郎",
+    "last_name_kana": "コバヤシ",
+    "first_name_kana": "ナナロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "製造部",
+        "color": "gray",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "工場長",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "製造現場のプロ、実用性重視の判断",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-8901-2345",
+    "office_phone_number": "03-8901-2345",
+    "email_primary": "kobayashi@kobayashi-auto.co.jp",
+    "email_secondary": "n.kobayashi@kobayashi-auto.co.jp",
+    "fax": "03-8901-2346",
+    "remarks": "製造部門責任者",
+    "is_active": true,
+    "created_at": "2024-03-22T09:30:00Z",
+    "updated_at": "2024-08-18T14:20:00Z"
+  },
+  {
+    "id": 9,
+    "customer_id": 9,
+    "last_name": "加藤",
+    "first_name": "八郎",
+    "last_name_kana": "カトウ",
+    "first_name_kana": "ハチロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "技術部",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "技師長",
+        "color": "indigo",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "精密測定のエキスパート、技術仕様に精通",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-9012-3456",
+    "office_phone_number": "03-9012-3456",
+    "email_primary": "kato@kato-precision.co.jp",
+    "email_secondary": null,
+    "fax": "03-9012-3457",
+    "remarks": "技術部門トップ",
+    "is_active": true,
+    "created_at": "2024-04-01T13:45:00Z",
+    "updated_at": "2024-08-25T08:30:00Z"
+  },
+  {
+    "id": 10,
+    "customer_id": 10,
+    "last_name": "吉田",
+    "first_name": "九郎",
+    "last_name_kana": "ヨシダ",
+    "first_name_kana": "クロウ",
+    "customer_contact_custom_items": {
+      "部署": {
+        "value": "営業部",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "役職": {
+        "value": "営業部長",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "営業メモ": {
+        "value": "電子機器に精通、システム提案も可能",
+        "type": "TEXT"
+      }
+    },
+    "phone_number": "090-0123-4567",
+    "office_phone_number": "03-0123-4567",
+    "email_primary": "yoshida@yoshida-electronics.co.jp",
+    "email_secondary": "k.yoshida@yoshida-electronics.co.jp",
+    "fax": "03-0123-4568",
+    "remarks": "営業統括責任者",
+    "is_active": true,
+    "created_at": "2024-04-08T16:10:00Z",
+    "updated_at": "2024-08-07T12:50:00Z"
+  }
+]

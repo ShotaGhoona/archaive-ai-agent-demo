@@ -1,4 +1,4 @@
-import type { CustomerContactDataInterface } from "@/dummy-data/customer";
+import type { CustomerContactDataInterface } from '@/dummy-data-er-fix/customer';
 
 // UI関連の型定義のみここに残す
 export interface ContactColumnCallbacks {

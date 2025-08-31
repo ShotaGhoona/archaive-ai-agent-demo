@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6D1A2B3C4D5E6F7G8H9I0",
+    "leaf_product_name": "ギアボックスGB-X1",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-GB-X1-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-20",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "機械仕様",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JIS B 1702-1",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 機械仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec001_v1.pdf",
+    "remarks": "減速比1:100、耐久性重視設計",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6D2B3C4D5E6F7G8H9I0J1",
+    "leaf_product_name": "サーボモーターSV-200",
+    "customer_name": "山田製作所株式会社",
+    "version": 2,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-SV-200-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-22",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "電気仕様",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "IEC 60034-1",
+        "type": "TEXT"
+      }
+    },
+    "name": "サーボモーターSV-200 電気仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec002_v2.pdf",
+    "remarks": "高トルク、高精度位置決め対応",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-09-05T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6D3C4D5E6F7G8H9I0J1K2",
+    "leaf_product_name": "圧力センサーPS-100",
+    "customer_name": "鈴木工業株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-PS-100-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-15",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "センサー仕様",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JIS C 1283",
+        "type": "TEXT"
+      }
+    },
+    "name": "圧力センサーPS-100 センサー仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec003_v1.pdf",
+    "remarks": "0-10MPa測定範囲、アナログ出力",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "ulid": "01H9T6D4D5E6F7G8H9I0J1K2L3",
+    "leaf_product_name": "制御基板CB-500",
+    "customer_name": "高橋電機株式会社",
+    "version": 3,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-CB-500-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "回路仕様",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "IPC-2221",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御基板CB-500 回路仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec004_v3.pdf",
+    "remarks": "マイコン制御、CAN通信対応",
+    "created_by_name": "高橋一郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-28T14:30:00.000Z",
+    "updated_at": "2024-09-10T09:15:00.000Z"
+  },
+  {
+    "id": 5,
+    "ulid": "01H9T6D5E6F7G8H9I0J1K2L3M4",
+    "leaf_product_name": "油圧ポンプHP-300",
+    "customer_name": "伊藤機械工業株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-HP-300-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-10",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "油圧仕様",
+        "color": "sky",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JIS B 8356",
+        "type": "TEXT"
+      }
+    },
+    "name": "油圧ポンプHP-300 油圧仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec005_v1.pdf",
+    "remarks": "最大圧力21MPa、流量300L/min",
+    "created_by_name": "伊藤三郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-29T11:45:00.000Z",
+    "updated_at": "2024-08-30T15:20:00.000Z"
+  },
+  {
+    "id": 6,
+    "ulid": "01H9T6D6F7G8H9I0J1K2L3M4N5",
+    "leaf_product_name": "電磁バルブEV-150",
+    "customer_name": "渡辺精工株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-EV-150-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-18",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "バルブ仕様",
+        "color": "yellow",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JIS B 2005",
+        "type": "TEXT"
+      }
+    },
+    "name": "電磁バルブEV-150 バルブ仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec006_v1.pdf",
+    "remarks": "SUS316製、最大圧力1.5MPa",
+    "created_by_name": "渡辺四郎",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-30T08:30:00.000Z",
+    "updated_at": "2024-08-30T17:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "ulid": "01H9T6D7G8H9I0J1K2L3M4N5O6",
+    "leaf_product_name": "自動制御装置AC-1000",
+    "customer_name": "中村システム株式会社",
+    "version": 4,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-AC-1000-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-09-15",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "システム仕様",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JEM 1090",
+        "type": "TEXT"
+      }
+    },
+    "name": "自動制御装置AC-1000 システム仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec007_v4.pdf",
+    "remarks": "PLC制御、HMI付き、IoT対応",
+    "created_by_name": "中村五郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-31T10:00:00.000Z",
+    "updated_at": "2024-09-20T16:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "ulid": "01H9T6D8H9I0J1K2L3M4N5O6P7",
+    "leaf_product_name": "ベルトコンベアBC-2000",
+    "customer_name": "小林製造株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-BC-2000-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-08-28",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "搬送仕様",
+        "color": "slate",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "JIS B 8805",
+        "type": "TEXT"
+      }
+    },
+    "name": "ベルトコンベアBC-2000 搬送仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec008_v1.pdf",
+    "remarks": "全長20m、最大積載重量500kg/m",
+    "created_by_name": "小林六郎",
+    "updated_by_name": "高橋一郎",
+    "created_at": "2024-09-01T07:45:00.000Z",
+    "updated_at": "2024-09-01T12:20:00.000Z"
+  },
+  {
+    "id": 9,
+    "ulid": "01H9T6D9I0J1K2L3M4N5O6P7Q8",
+    "leaf_product_name": "三次元測定器3D-500",
+    "customer_name": "加藤工業株式会社",
+    "version": 2,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-3D-500-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-09-05",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "測定仕様",
+        "color": "emerald",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "ISO 10360-2",
+        "type": "TEXT"
+      }
+    },
+    "name": "三次元測定器3D-500 測定仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec009_v2.pdf",
+    "remarks": "測定精度±2μm、測定範囲500×400×300",
+    "created_by_name": "加藤七郎",
+    "updated_by_name": "伊藤三郎",
+    "created_at": "2024-09-02T09:30:00.000Z",
+    "updated_at": "2024-09-20T14:45:00.000Z"
+  },
+  {
+    "id": 10,
+    "ulid": "01H9T6DAJ1K2L3M4N5O6P7Q8R9",
+    "leaf_product_name": "制御回路基板CC-800",
+    "customer_name": "斎藤電子株式会社",
+    "version": 1,
+    "leaf_product_document_custom_items": {
+      "仕様書番号": {
+        "value": "SPEC-CC-800-001",
+        "type": "TEXT"
+      },
+      "承認日": {
+        "value": "2024-09-01",
+        "type": "DATE"
+      },
+      "仕様分類": {
+        "value": "回路仕様",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "適用規格": {
+        "value": "IPC-2222",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御回路基板CC-800 カスタム回路仕様書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/specification/spec010_v1.pdf",
+    "remarks": "ARM Cortex-M4搭載、Ethernet対応",
+    "created_by_name": "斎藤八郎",
+    "updated_by_name": "渡辺四郎",
+    "created_at": "2024-09-03T13:15:00.000Z",
+    "updated_at": "2024-09-03T18:50:00.000Z"
+  }
+]

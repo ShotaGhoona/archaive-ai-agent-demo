@@ -2,44 +2,27 @@ import React from 'react';
 import { Button } from '@/shared';
 import { Plus } from 'lucide-react';
 import { GalleryViewConfig } from '@/shared/view/gallery-view';
-
-export interface RepeatBlueprint {
-  filename: string;
-  orderSource: string;
-  productName: string;
-  internalNumber: string;
-  customerNumber: string;
-  cadName: string;
-  camName: string;
-  orderQuantity: number;
-  orderDate: string;
-  deliveryDate: string;
-  maxDimensionL: number;
-  maxDimensionD: number;
-  maxDimensionH: number;
-  companyField: string;
-  image: string;
-}
+import { DrawingPageBaseDataInterface } from '@/dummy-data-er-fix/blueprint';
 
 interface CreateRepeatBlueprintGalleryConfigOptions {
-  onRepeatRegister: (blueprint: RepeatBlueprint) => void;
+  onRepeatRegister: (blueprint: DrawingPageBaseDataInterface) => void;
 }
 
 export const createRepeatBlueprintGalleryConfig = ({
-  onRepeatRegister
-}: CreateRepeatBlueprintGalleryConfigOptions): GalleryViewConfig<RepeatBlueprint> => ({
+  onRepeatRegister,
+}: CreateRepeatBlueprintGalleryConfigOptions): GalleryViewConfig<DrawingPageBaseDataInterface> => ({
   layoutConfig: {
     grid: { xs: 1, md: 2, lg: 3 },
-    aspectRatio: 'video'
+    aspectRatio: 'video',
   },
-  
+
   itemConfig: {
     showThumbnail: true,
-    getThumbnailUrl: (blueprint) => blueprint.image,
-    
+    getThumbnailUrl: (blueprint) => blueprint.s3_url,
+
     // ホバー時にリピート品登録ボタンを表示
     thumbnailOverlayRender: (blueprint) => (
-      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+      <div className='absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100'>
         <Button
           onClick={(e) => {
             e.preventDefault();
@@ -47,32 +30,36 @@ export const createRepeatBlueprintGalleryConfig = ({
             onRepeatRegister(blueprint);
           }}
         >
-          <Plus className="h-4 w-4 mr-2" />
+          <Plus className='mr-2 h-4 w-4' />
           リピート品として登録
         </Button>
       </div>
     ),
-    
+
     contentRender: (blueprint) => (
-      <div className="space-y-1">
-        <p className="text-xs font-medium truncate" title={blueprint.filename}>
-          {blueprint.filename}
+      <div className='space-y-1'>
+        <p className='truncate text-xs font-medium' title={blueprint.drawing_file_name}>
+          {blueprint.drawing_file_name}
         </p>
-        <p className="text-xs text-gray-500 truncate" title={blueprint.productName}>
-          {blueprint.productName}
+        <p
+          className='truncate text-xs text-gray-500'
+          title={blueprint.leaf_product_name}
+        >
+          {blueprint.leaf_product_name}
         </p>
       </div>
-    )
+    ),
   },
-  
+
   behaviorConfig: {
     linkConfig: {
       enabled: true,
-      getHref: (blueprint) => `/blueprint/${blueprint.internalNumber}/basic-information`,
-      target: '_blank'
-    }
+      getHref: (blueprint) =>
+        `/blueprint/${blueprint.id}/basic-information`,
+      target: '_blank',
+    },
   },
-  
+
   pagination: {
     enabled: true,
     defaultItemsPerPage: 10,
@@ -80,6 +67,6 @@ export const createRepeatBlueprintGalleryConfig = ({
     showItemsPerPageSelector: true,
     maxVisiblePages: 5,
   },
-  
-  getRowId: (blueprint) => blueprint.internalNumber
+
+  getRowId: (blueprint) => blueprint.id.toString(),
 });

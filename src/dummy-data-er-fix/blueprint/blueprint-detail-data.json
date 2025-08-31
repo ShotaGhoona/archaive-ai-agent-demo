@@ -1,0 +1,558 @@
+[
+  {
+    "id": 1,
+    "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W2",
+    "drawing_file_id": 101,
+    "drawing_number": "BP-2024-0001-P001",
+    "external_drawing_number": "TN-001-001-01",
+    "drawing_category_rename_id": 1,
+    "page_number": 1,
+    "is_shown_similar_search": true,
+    "s3_url": "https://images.edrawsoft.com/jp/articles/edraw-max/2024/parts-diagram-4.png",
+    "remarks": "正面図",
+    "created_by": 1001,
+    "updated_by": 1002,
+    "created_at": "2024-01-15T09:00:00.000Z",
+    "updated_at": "2024-01-16T14:30:00.000Z",
+    "drawing_file_name": "BP001_エンジンブラケット",
+    "drawing_file_extension": "dwg",
+    "leaf_product_id": 201,
+    "leaf_product_name": "エンジンブラケット",
+    "leaf_product_revision_number": 1,
+    "customer_id": 301,
+    "customer_name": "株式会社田中製作所",
+    "company_id": 1,
+    "company_name": "株式会社アーカイブ",
+    "drawing_category_name": "本図面",
+    "created_by_name": "山田太郎",
+    "updated_by_name": "佐藤花子",
+    "drawing_page_custom_items": {
+      "材質": {
+        "value": "S45C",
+        "color": "blue",
+        "type": "select"
+      },
+      "表面処理": {
+        "value": "亜鉛めっき",
+        "color": "green",
+        "type": "select"
+      },
+      "公差": {
+        "value": "±0.1",
+        "color": "orange",
+        "type": "text"
+      },
+      "熱処理": {
+        "value": "調質",
+        "color": "purple",
+        "type": "select"
+      },
+      "検査レベル": {
+        "value": "A",
+        "color": "red",
+        "type": "select"
+      }
+    },
+    "similar_blueprints": [
+      {
+        "id": 4,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W5",
+        "drawing_file_id": 102,
+        "drawing_number": "BP-2024-0002-P001",
+        "external_drawing_number": "YM-002-003-01",
+        "drawing_category_rename_id": 1,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "フレーム全体図",
+        "created_by": 1003,
+        "updated_by": 1004,
+        "created_at": "2024-01-20T10:00:00.000Z",
+        "updated_at": "2024-01-21T15:30:00.000Z",
+        "drawing_file_name": "BP002_フレーム部品",
+        "drawing_file_extension": "step",
+        "leaf_product_id": 202,
+        "leaf_product_name": "フレーム部品",
+        "leaf_product_revision_number": 1,
+        "customer_id": 302,
+        "customer_name": "山田工業株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "本図面",
+        "created_by_name": "田中一郎",
+        "updated_by_name": "鈴木次郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "SS400",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "無処理",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.1",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "焼入れ",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "C",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      },
+      {
+        "id": 5,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W6",
+        "drawing_file_id": 102,
+        "drawing_number": "BP-2024-0002-P002",
+        "external_drawing_number": "YM-002-003-02",
+        "drawing_category_rename_id": 1,
+        "page_number": 2,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "詳細寸法図",
+        "created_by": 1003,
+        "updated_by": 1004,
+        "created_at": "2024-01-20T10:00:00.000Z",
+        "updated_at": "2024-01-21T15:30:00.000Z",
+        "drawing_file_name": "BP002_フレーム部品",
+        "drawing_file_extension": "step",
+        "leaf_product_id": 202,
+        "leaf_product_name": "フレーム部品",
+        "leaf_product_revision_number": 1,
+        "customer_id": 302,
+        "customer_name": "山田工業株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "本図面",
+        "created_by_name": "田中一郎",
+        "updated_by_name": "鈴木次郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "S45C",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "無処理",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.2",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "残留応力除去",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "C",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W3",
+    "drawing_file_id": 101,
+    "drawing_number": "BP-2024-0001-P002",
+    "external_drawing_number": "TN-001-001-02",
+    "drawing_category_rename_id": 1,
+    "page_number": 2,
+    "is_shown_similar_search": true,
+    "s3_url": "https://lunar-creation.com/wp-content/uploads/2021/03/c446b604980d5731c8c35e2ab536abdb-scaled-e1638518469848.jpg",
+    "remarks": "側面図",
+    "created_by": 1001,
+    "updated_by": 1002,
+    "created_at": "2024-01-15T09:00:00.000Z",
+    "updated_at": "2024-01-16T14:30:00.000Z",
+    "drawing_file_name": "BP001_エンジンブラケット",
+    "drawing_file_extension": "dwg",
+    "leaf_product_id": 201,
+    "leaf_product_name": "エンジンブラケット",
+    "leaf_product_revision_number": 1,
+    "customer_id": 301,
+    "customer_name": "株式会社田中製作所",
+    "company_id": 1,
+    "company_name": "株式会社アーカイブ",
+    "drawing_category_name": "本図面",
+    "created_by_name": "山田太郎",
+    "updated_by_name": "佐藤花子",
+    "drawing_page_custom_items": {
+      "材質": {
+        "value": "S45C",
+        "color": "blue",
+        "type": "select"
+      },
+      "表面処理": {
+        "value": "亜鉛めっき",
+        "color": "green",
+        "type": "select"
+      },
+      "公差": {
+        "value": "±0.05",
+        "color": "orange",
+        "type": "text"
+      },
+      "熱処理": {
+        "value": "焼入れ",
+        "color": "purple",
+        "type": "select"
+      },
+      "検査レベル": {
+        "value": "C",
+        "color": "red",
+        "type": "select"
+      }
+    },
+    "similar_blueprints": [
+      {
+        "id": 6,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W7",
+        "drawing_file_id": 103,
+        "drawing_number": "BP-2024-0003-P001",
+        "external_drawing_number": "ST-003-007-01",
+        "drawing_category_rename_id": 2,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "カップリング本体図",
+        "created_by": 1005,
+        "updated_by": 1006,
+        "created_at": "2024-01-25T11:00:00.000Z",
+        "updated_at": "2024-01-26T16:30:00.000Z",
+        "drawing_file_name": "BP003_シャフトカップリング",
+        "drawing_file_extension": "dwg",
+        "leaf_product_id": 203,
+        "leaf_product_name": "シャフトカップリング",
+        "leaf_product_revision_number": 1,
+        "customer_id": 303,
+        "customer_name": "佐藤重工業株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "見積図面",
+        "created_by_name": "高橋三郎",
+        "updated_by_name": "中村四郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "SCM440",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "無処理",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.2",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "無処理",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "特級",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      },
+      {
+        "id": 7,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W8",
+        "drawing_file_id": 104,
+        "drawing_number": "BP-2024-0004-P001",
+        "external_drawing_number": "SZ-004-012-01",
+        "drawing_category_rename_id": 1,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "ギアボックス外形図",
+        "created_by": 1007,
+        "updated_by": 1008,
+        "created_at": "2024-02-01T12:00:00.000Z",
+        "updated_at": "2024-02-02T17:30:00.000Z",
+        "drawing_file_name": "BP004_ギアボックスケース",
+        "drawing_file_extension": "igs",
+        "leaf_product_id": 204,
+        "leaf_product_name": "ギアボックスケース",
+        "leaf_product_revision_number": 1,
+        "customer_id": 304,
+        "customer_name": "鈴木精密工業株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "本図面",
+        "created_by_name": "伊藤五郎",
+        "updated_by_name": "加藤六郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "SUS304",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "クロムめっき",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.2",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "調質",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "特級",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      },
+      {
+        "id": 8,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W9",
+        "drawing_file_id": 105,
+        "drawing_number": "BP-2024-0005-P001",
+        "external_drawing_number": "TK-005-008-01",
+        "drawing_category_rename_id": 3,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "ベアリングハウジング図",
+        "created_by": 1009,
+        "updated_by": 1010,
+        "created_at": "2024-02-05T13:00:00.000Z",
+        "updated_at": "2024-02-06T18:30:00.000Z",
+        "drawing_file_name": "BP005_ベアリングホルダー",
+        "drawing_file_extension": "dwg",
+        "leaf_product_id": 205,
+        "leaf_product_name": "ベアリングホルダー",
+        "leaf_product_revision_number": 1,
+        "customer_id": 305,
+        "customer_name": "高橋エンジニアリング株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "検査図面",
+        "created_by_name": "松本七郎",
+        "updated_by_name": "木村八郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "A5052",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "陽極酸化",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.1",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "調質",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "A",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      },
+      {
+        "id": 9,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V2A0",
+        "drawing_file_id": 106,
+        "drawing_number": "BP-2024-0006-P001",
+        "external_drawing_number": "IT-006-015-01",
+        "drawing_category_rename_id": 1,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "マウント構造図",
+        "created_by": 1011,
+        "updated_by": 1012,
+        "created_at": "2024-02-10T14:00:00.000Z",
+        "updated_at": "2024-02-11T19:30:00.000Z",
+        "drawing_file_name": "BP006_モーターマウント",
+        "drawing_file_extension": "step",
+        "leaf_product_id": 206,
+        "leaf_product_name": "モーターマウント",
+        "leaf_product_revision_number": 1,
+        "customer_id": 306,
+        "customer_name": "伊藤機械製作所",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "本図面",
+        "created_by_name": "林九郎",
+        "updated_by_name": "森十郎",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "SCM440",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "ニッケルめっき",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.05",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "残留応力除去",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "A",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "ulid": "01J6K2M3N4P5Q6R7S8T9U0V1W4",
+    "drawing_file_id": 101,
+    "drawing_number": "BP-2024-0001-P003",
+    "external_drawing_number": "TN-001-001-03",
+    "drawing_category_rename_id": 1,
+    "page_number": 3,
+    "is_shown_similar_search": true,
+    "s3_url": "https://blogimg.goo.ne.jp/user_image/47/48/11a526e916633923435b978ea61cea42.jpg",
+    "remarks": "断面図",
+    "created_by": 1001,
+    "updated_by": 1002,
+    "created_at": "2024-01-15T09:00:00.000Z",
+    "updated_at": "2024-01-16T14:30:00.000Z",
+    "drawing_file_name": "BP001_エンジンブラケット",
+    "drawing_file_extension": "dwg",
+    "leaf_product_id": 201,
+    "leaf_product_name": "エンジンブラケット",
+    "leaf_product_revision_number": 1,
+    "customer_id": 301,
+    "customer_name": "株式会社田中製作所",
+    "company_id": 1,
+    "company_name": "株式会社アーカイブ",
+    "drawing_category_name": "本図面",
+    "created_by_name": "山田太郎",
+    "updated_by_name": "佐藤花子",
+    "drawing_page_custom_items": {
+      "材質": {
+        "value": "S45C",
+        "color": "blue",
+        "type": "select"
+      },
+      "表面処理": {
+        "value": "クロムめっき",
+        "color": "green",
+        "type": "select"
+      },
+      "公差": {
+        "value": "±0.1",
+        "color": "orange",
+        "type": "text"
+      },
+      "熱処理": {
+        "value": "残留応力除去",
+        "color": "purple",
+        "type": "select"
+      },
+      "検査レベル": {
+        "value": "特級",
+        "color": "red",
+        "type": "select"
+      }
+    },
+    "similar_blueprints": [
+      {
+        "id": 10,
+        "ulid": "01J6K2M3N4P5Q6R7S8T9U0V2B1",
+        "drawing_file_id": 107,
+        "drawing_number": "BP-2024-0007-P001",
+        "external_drawing_number": "WB-007-021-01",
+        "drawing_category_rename_id": 4,
+        "page_number": 1,
+        "is_shown_similar_search": true,
+        "s3_url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3",
+        "remarks": "コネクタ配置図",
+        "created_by": 1013,
+        "updated_by": 1014,
+        "created_at": "2024-02-15T15:00:00.000Z",
+        "updated_at": "2024-02-16T20:30:00.000Z",
+        "drawing_file_name": "BP007_コネクタープレート",
+        "drawing_file_extension": "dwg",
+        "leaf_product_id": 207,
+        "leaf_product_name": "コネクタープレート",
+        "leaf_product_revision_number": 1,
+        "customer_id": 307,
+        "customer_name": "渡辺工業株式会社",
+        "company_id": 1,
+        "company_name": "株式会社アーカイブ",
+        "drawing_category_name": "手配図面",
+        "created_by_name": "井上十一",
+        "updated_by_name": "小林十二",
+        "drawing_page_custom_items": {
+          "材質": {
+            "value": "SCM440",
+            "color": "blue",
+            "type": "select"
+          },
+          "表面処理": {
+            "value": "陽極酸化",
+            "color": "green",
+            "type": "select"
+          },
+          "公差": {
+            "value": "±0.1",
+            "color": "orange",
+            "type": "text"
+          },
+          "熱処理": {
+            "value": "焼入れ",
+            "color": "purple",
+            "type": "select"
+          },
+          "検査レベル": {
+            "value": "A",
+            "color": "red",
+            "type": "select"
+          }
+        }
+      }
+    ]
+  }
+]

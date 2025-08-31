@@ -1,18 +1,19 @@
 import { CsvColumnConfig } from '@/shared';
-import { Customer } from '../model';
+import { CustomerHomeDataInterface } from '@/dummy-data-er-fix/customer';
 
-export const CUSTOMER_CSV_COLUMNS: Omit<CsvColumnConfig<Customer>, 'enabled'>[] = [
-  { key: 'id', label: '顧客ID' },
-  { key: 'company_id', label: '会社ID' },
-  { key: 'account_id', label: '取引先ID' },
-  { key: 'account_name', label: '取引先名' },
-  { key: 'account_name_kana', label: '取引先名（カナ）' },
-  { key: 'account_type', label: '取引先種別' },
-  { key: 'status', label: 'ステータス' },
+export const CUSTOMER_CSV_COLUMNS: Omit<
+  CsvColumnConfig<CustomerHomeDataInterface>,
+  'enabled'
+>[] = [
+  { key: 'seq_num', label: '顧客番号' },
+  { key: 'name', label: '顧客名' },
+  { key: 'name_kana', label: '顧客名（カナ）' },
+  { key: 'customer_status', label: 'ステータス' },
   { key: 'annual_revenue', label: '年間売上高' },
-  { key: 'employee_count', label: '従業員数' },
+  { key: 'head_count', label: '従業員数' },
   { key: 'website', label: 'Webサイト' },
-  { key: 'description', label: '取引先概要' },
+  { key: 'remarks', label: '備考' },
+  { key: 'in_charge_name', label: '営業担当者' },
   { key: 'created_at', label: '作成日時' },
   { key: 'updated_at', label: '最終更新日時' },
 ];

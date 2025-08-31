@@ -458,7 +458,6 @@ const DELIVERY_COLUMNS: DatabaseColumnSettingConfig[] = [
   ...DOCUMENT_COMMON_COLUMNS,
 ];
 
-
 // 受注書のカラム設定（仕様書から）
 const ORDER_COLUMNS: DatabaseColumnSettingConfig[] = [
   {
@@ -571,7 +570,6 @@ const SHIPPING_COLUMNS: DatabaseColumnSettingConfig[] = [
   ...DOCUMENT_COMMON_COLUMNS,
 ];
 
-
 // デフォルトの帳票カテゴリ
 export const DEFAULT_DOCUMENT_CATEGORIES: DocumentCategory[] = [
   {
@@ -668,4 +666,3 @@ export const DEFAULT_DOCUMENT_CATEGORIES: DocumentCategory[] = [
     documentTypes: [],
   },
 ];
-

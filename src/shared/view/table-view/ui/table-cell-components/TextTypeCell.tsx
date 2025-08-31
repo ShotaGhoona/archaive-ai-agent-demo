@@ -26,16 +26,22 @@ export function TextTypeCell<T>({
           if (e.key === 'Escape') cellContent.onCancel!();
         }}
         onBlur={cellContent.onSave!}
-        className="h-8 text-sm border-0 bg-transparent p-1 focus:ring-1 focus:ring-primary"
-        type="text"
+        className='focus:ring-primary h-8 border-0 bg-transparent p-1 text-sm focus:ring-1'
+        type='text'
       />
     );
   }
 
   return (
-    <span 
-      className={column.editable && !column.locked ? 'cursor-pointer' : undefined}
-      onClick={column.editable && !column.locked ? () => onCellClick(item, column.key as string) : undefined}
+    <span
+      className={
+        column.editable && !column.locked ? 'cursor-pointer' : undefined
+      }
+      onClick={
+        column.editable && !column.locked
+          ? () => onCellClick(item, column.key as string)
+          : undefined
+      }
     >
       {String(cellContent.value)}
     </span>

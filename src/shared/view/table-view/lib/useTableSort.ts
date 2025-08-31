@@ -1,6 +1,11 @@
-"use client";
+'use client';
 import { useState, useCallback } from 'react';
-import { SortConfig, SortableFields, DataTableColumn, SortIconData } from '../model';
+import {
+  SortConfig,
+  SortableFields,
+  DataTableColumn,
+  SortIconData,
+} from '../model';
 
 interface UseTableSortProps<T> {
   columns: DataTableColumn<T>[];
@@ -12,77 +17,95 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
   // columns からソート可能フィールドを動的に生成
   const sortableFields = columns.reduce((acc, col) => {
     if (col.sortable) {
-      acc[col.key as string] = { 
-        type: col.sortType || 'string', 
-        label: col.label 
+      acc[col.key as string] = {
+        type: col.sortType || 'string',
+        label: col.label,
       };
     }
     return acc;
   }, {} as SortableFields);
 
-  const handleSort = useCallback((field: string) => {
-    // 3段階のソート: なし → 昇順 → 降順 → なし（リセット）
-    if (!sortConfig || sortConfig.field !== field) {
-      // 新しいフィールドでソート開始（昇順）
-      setSortConfig({ field, direction: 'asc' });
-    } else if (sortConfig.direction === 'asc') {
-      // 昇順 → 降順
-      setSortConfig({ field, direction: 'desc' });
-    } else {
-      // 降順 → リセット（ソートなし）
-      setSortConfig(null);
-    }
-  }, [sortConfig]);
-
-  const getSortedData = useCallback((data: T[]) => {
-    if (!sortConfig) return data;
-
-    const { field, direction } = sortConfig;
-    const fieldConfig = sortableFields[field];
-    
-    return [...data].sort((a, b) => {
-      const aValue = (a as Record<string, unknown>)[field];
-      const bValue = (b as Record<string, unknown>)[field];
-      
-      let comparison = 0;
-      
-      if (fieldConfig?.type === 'number') {
-        comparison = Number(aValue) - Number(bValue);
-      } else if (fieldConfig?.type === 'date') {
-        comparison = new Date(aValue as string).getTime() - new Date(bValue as string).getTime();
+  const handleSort = useCallback(
+    (field: string) => {
+      // 3段階のソート: なし → 昇順 → 降順 → なし（リセット）
+      if (!sortConfig || sortConfig.field !== field) {
+        // 新しいフィールドでソート開始（昇順）
+        setSortConfig({ field, direction: 'asc' });
+      } else if (sortConfig.direction === 'asc') {
+        // 昇順 → 降順
+        setSortConfig({ field, direction: 'desc' });
       } else {
-        // string型
-        comparison = String(aValue).localeCompare(String(bValue), 'ja');
+        // 降順 → リセット（ソートなし）
+        setSortConfig(null);
       }
-      
-      return direction === 'desc' ? -comparison : comparison;
-    });
-  }, [sortConfig, sortableFields]);
+    },
+    [sortConfig],
+  );
 
-  const getSortIcon = useCallback((field: string): SortIconData => {
-    if (!sortConfig || sortConfig.field !== field) {
-      return { type: 'none' };
-    }
-    
-    return { 
-      type: sortConfig.direction === 'asc' ? 'asc' : 'desc' 
-    };
-  }, [sortConfig]);
+  const getSortedData = useCallback(
+    (data: T[]) => {
+      if (!sortConfig) return data;
 
-  const getHeaderClassName = useCallback((field: string) => {
-    const isSortable = field in sortableFields;
-    let baseClass = "font-medium text-gray-700";
-    
-    if (isSortable) {
-      baseClass += " cursor-pointer hover:bg-gray-100 transition-colors select-none";
-    }
-    
-    return baseClass;
-  }, [sortableFields]);
+      const { field, direction } = sortConfig;
+      const fieldConfig = sortableFields[field];
 
-  const isSortable = useCallback((field: string) => {
-    return field in sortableFields;
-  }, [sortableFields]);
+      return [...data].sort((a, b) => {
+        const aValue = (a as Record<string, unknown>)[field];
+        const bValue = (b as Record<string, unknown>)[field];
+
+        let comparison = 0;
+
+        if (fieldConfig?.type === 'number') {
+          comparison = Number(aValue) - Number(bValue);
+        } else if (fieldConfig?.type === 'date') {
+          comparison =
+            new Date(aValue as string).getTime() -
+            new Date(bValue as string).getTime();
+        } else {
+          // string型
+          comparison = String(aValue).localeCompare(String(bValue), 'ja');
+        }
+
+        return direction === 'desc' ? -comparison : comparison;
+      });
+    },
+    [sortConfig, sortableFields],
+  );
+
+  const getSortIcon = useCallback(
+    (field: string): SortIconData => {
+      if (!sortConfig || sortConfig.field !== field) {
+        return { type: 'none' };
+      }
+
+      return {
+        type: sortConfig.direction === 'asc' ? 'asc' : 'desc',
+      };
+    },
+    [sortConfig],
+  );
+
+  const getHeaderClassName = useCallback(
+    (field: string) => {
+      const isSortable = field in sortableFields;
+      let baseClass = 'font-medium text-gray-700';
+
+      if (isSortable) {
+        baseClass +=
+          ' cursor-pointer hover:bg-gray-100 transition-colors select-none';
+      }
+
+      return baseClass;
+    },
+    [sortableFields],
+  );
+
+  const isSortable = useCallback(
+    (field: string) => {
+      return field in sortableFields;
+    },
+    [sortableFields],
+  );
 
   return {
     sortConfig,
@@ -91,6 +114,6 @@ export function useTableSort<T>({ columns }: UseTableSortProps<T>) {
     getSortIcon,
     getHeaderClassName,
     isSortable,
-    setSortConfig
+    setSortConfig,
   };
 }

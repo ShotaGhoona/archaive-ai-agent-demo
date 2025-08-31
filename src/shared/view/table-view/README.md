@@ -105,7 +105,7 @@ import { createMyTableConfig } from '../lib/myTableConfig';
 
 function MyTableView({ data }: { data: MyData[] }) {
   const config = createMyTableConfig();
-  
+
   const handleUpdate = (rowId: string, field: string, value: unknown) => {
     console.log('Updated:', { rowId, field, value });
   };
@@ -125,44 +125,54 @@ function MyTableView({ data }: { data: MyData[] }) {
 
 ### 必須プロパティ
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `key` | `keyof T \| string` | データのフィールド名 |
-| `label` | `string` | 列のヘッダー表示名 |
-| `width` | `number` | 列の幅（px） |
-| `sortable` | `boolean` | ソート可能かどうか |
-| `editable` | `boolean` | 編集可能かどうか |
-| `locked` | `boolean` | 編集ロックするかどうか |
+| プロパティ | 型                  | 説明                   |
+| ---------- | ------------------- | ---------------------- |
+| `key`      | `keyof T \| string` | データのフィールド名   |
+| `label`    | `string`            | 列のヘッダー表示名     |
+| `width`    | `number`            | 列の幅（px）           |
+| `sortable` | `boolean`           | ソート可能かどうか     |
+| `editable` | `boolean`           | 編集可能かどうか       |
+| `locked`   | `boolean`           | 編集ロックするかどうか |
 
 ### オプションプロパティ
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `minWidth` | `number` | 最小幅（px） |
-| `inputType` | `'text' \| 'number' \| 'date' \| 'select' \| 'user' \| 'boolean'` | 編集時の入力タイプ |
-| `sortType` | `'string' \| 'number' \| 'date'` | ソートの種類 |
-| `selectOptions` | `SelectOption[]` | select時の選択肢 ({ label: string, color: TableColor }[]) |
-| `render` | `(item: T, value: unknown) => React.ReactNode` | カスタムレンダリング関数 |
-| `headerRender` | `(column: DataTableColumn<T>) => React.ReactNode` | ヘッダーのカスタムレンダリング |
-| `stickyLeft` | `number` | 左側固定時の位置（px） |
-| `stickyRight` | `number` | 右側固定時の位置（px） |
+| プロパティ      | 型                                                                | 説明                                                      |
+| --------------- | ----------------------------------------------------------------- | --------------------------------------------------------- |
+| `minWidth`      | `number`                                                          | 最小幅（px）                                              |
+| `inputType`     | `'text' \| 'number' \| 'date' \| 'select' \| 'user' \| 'boolean'` | 編集時の入力タイプ                                        |
+| `sortType`      | `'string' \| 'number' \| 'date'`                                  | ソートの種類                                              |
+| `selectOptions` | `SelectOption[]`                                                  | select時の選択肢 ({ label: string, color: TableColor }[]) |
+| `render`        | `(item: T, value: unknown) => React.ReactNode`                    | カスタムレンダリング関数                                  |
+| `headerRender`  | `(column: DataTableColumn<T>) => React.ReactNode`                 | ヘッダーのカスタムレンダリング                            |
+| `stickyLeft`    | `number`                                                          | 左側固定時の位置（px）                                    |
+| `stickyRight`   | `number`                                                          | 右側固定時の位置（px）                                    |
 
 ### inputType の種類
 
-| タイプ | 説明 | 用途例 |
-|--------|------|---------|
-| `text` | テキスト型：文字や文章を入力 | 製品名、部品名、コメントなど |
-| `number` | 数値型：数字を入力 | 受注個数、寸法、重量、価格など |
-| `date` | 日付型：日付を入力 | 受注日、納期、検査日など |
-| `select` | 選択肢型：予め決められた選択肢から選択 | 進捗状況、品質ランク、優先度など |
-| `user` | 従業員型：社内の担当者を選択 | 営業担当、設計担当、検査担当など |
-| `boolean` | ON/OFF型：はい/いいえを選択 | 検査合格、緊急案件、完了フラグなど |
+| タイプ    | 説明                                   | 用途例                             |
+| --------- | -------------------------------------- | ---------------------------------- |
+| `text`    | テキスト型：文字や文章を入力           | 製品名、部品名、コメントなど       |
+| `number`  | 数値型：数字を入力                     | 受注個数、寸法、重量、価格など     |
+| `date`    | 日付型：日付を入力                     | 受注日、納期、検査日など           |
+| `select`  | 選択肢型：予め決められた選択肢から選択 | 進捗状況、品質ランク、優先度など   |
+| `user`    | 従業員型：社内の担当者を選択           | 営業担当、設計担当、検査担当など   |
+| `boolean` | ON/OFF型：はい/いいえを選択            | 検査合格、緊急案件、完了フラグなど |
 
 ### 利用可能な色（TableColor）
 
 ```typescript
-'red' | 'orange' | 'yellow' | 'green' | 'blue' | 'indigo' | 
-'purple' | 'pink' | 'gray' | 'slate' | 'emerald' | 'sky'
+'red' |
+  'orange' |
+  'yellow' |
+  'green' |
+  'blue' |
+  'indigo' |
+  'purple' |
+  'pink' |
+  'gray' |
+  'slate' |
+  'emerald' |
+  'sky';
 ```
 
 #### select型の使用例
@@ -243,8 +253,8 @@ export interface TableViewConfig<T = unknown> {
 
 export interface TablePaginationConfig {
   enabled: boolean;
-  defaultItemsPerPage: number;         // デフォルト: 20
-  allowedItemsPerPage: number[];       // [10, 20, 50, 100]
+  defaultItemsPerPage: number; // デフォルト: 20
+  allowedItemsPerPage: number[]; // [10, 20, 50, 100]
   showItemsPerPageSelector: boolean;
   maxVisiblePages: number;
 }
@@ -323,7 +333,7 @@ export const createBlueprintTableConfig = (): TableViewConfig<Blueprint> => ({
 // ui/BlueprintTableView.tsx
 export function BlueprintTableView({ blueprints, onBlueprintUpdate }) {
   const config = createBlueprintTableConfig();
-  
+
   return (
     <TableView
       data={blueprints}
@@ -338,7 +348,7 @@ export function BlueprintTableView({ blueprints, onBlueprintUpdate }) {
 export function BlueprintHomeContainer() {
   return (
     <div className="flex-1 flex flex-col min-h-0 px-4">
-      <BlueprintTableView 
+      <BlueprintTableView
         blueprints={filteredBlueprints}
       />
     </div>
@@ -382,7 +392,7 @@ export const createProjectTableConfig = (): TableViewConfig<Project> => ({
       ],
       render: (project, value) => (
         <Badge className={getStatusColor(String(value), 'project')}>
-          {String(value)} 
+          {String(value)}
         </Badge>
       ),
     },
@@ -426,9 +436,11 @@ export function ProjectTableView({ projects, onProjectUpdate }) {
 ## 利用可能なコンポーネント
 
 ### TableView（推奨）
+
 ```typescript
 import { TableView } from '@/shared/view/table-view';
 ```
+
 - 設定オブジェクトベースのアプローチ
 - 自動ページネーション管理
 - usePaginatedTableフック内蔵

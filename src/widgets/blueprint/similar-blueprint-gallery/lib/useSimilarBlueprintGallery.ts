@@ -1,47 +1,33 @@
-"use client";
-import { useState, useEffect } from "react";
-import { SimilarBlueprint, BlueprintView } from "../../blueprint-detail-layout/model/types";
+'use client';
+import { useState } from 'react';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
 
 interface UseSimilarBlueprintGalleryProps {
-  similarBlueprints?: SimilarBlueprint[];
-  activeView?: BlueprintView | null;
-  onDifferenceDetection?: (blueprint: SimilarBlueprint) => void;
-  onDetailedComparison?: (blueprint: SimilarBlueprint) => void;
-  initialLoading?: boolean;
+  similarBlueprints?: BlueprintDetailDataInterface[];
+  activeView?: BlueprintDetailDataInterface | null;
+  onDifferenceDetection?: (blueprint: BlueprintDetailDataInterface) => void;
+  onDetailedComparison?: (blueprint: BlueprintDetailDataInterface) => void;
 }
 
 export function useSimilarBlueprintGallery({
-  similarBlueprints = [],
   activeView,
   onDifferenceDetection,
   onDetailedComparison,
-  initialLoading = false
 }: UseSimilarBlueprintGalleryProps) {
-  const [compareBlueprint, setCompareBlueprint] = useState<SimilarBlueprint | null>(null);
+  const [compareBlueprint, setCompareBlueprint] =
+    useState<BlueprintDetailDataInterface | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(initialLoading);
-
-  // 初期ローディング
-  useEffect(() => {
-    if (initialLoading) {
-      const timer = setTimeout(() => {
-        setIsInitialLoading(false);
-      }, 1000 + Math.random() * 1000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [initialLoading]);
-
-  const handleDifferenceDetection = (blueprint: SimilarBlueprint) => {
+  
+  const handleDifferenceDetection = (blueprint: BlueprintDetailDataInterface) => {
     if (onDifferenceDetection) {
       onDifferenceDetection(blueprint);
     } else {
-      const differenceUrl = `/blueprint/difference-detection?source=${encodeURIComponent(activeView?.name || '')}&target=${encodeURIComponent(blueprint.name)}&sourceId=${activeView?.id}&targetId=${blueprint.id}`;
+      const differenceUrl = `/blueprint/difference-detection?source=${encodeURIComponent(activeView?.drawing_file_name || '')}&target=${encodeURIComponent(blueprint.drawing_file_name)}&sourceId=${activeView?.id}&targetId=${blueprint.id}`;
       window.open(differenceUrl, '_blank');
     }
   };
 
-  const handleDetailedComparison = (blueprint: SimilarBlueprint) => {
+  const handleDetailedComparison = (blueprint: BlueprintDetailDataInterface) => {
     if (onDetailedComparison) {
       onDetailedComparison(blueprint);
     } else {
@@ -55,16 +41,11 @@ export function useSimilarBlueprintGallery({
     setCompareBlueprint(null);
   };
 
-  // ソート済みデータを準備
-  const sortedSimilarBlueprints = [...similarBlueprints].sort((a, b) => b.similarity - a.similarity);
-
   return {
     compareBlueprint,
     isCompareOpen,
-    isInitialLoading,
-    sortedSimilarBlueprints,
     handleDifferenceDetection,
     handleDetailedComparison,
-    handleCloseCompare
+    handleCloseCompare,
   };
 }

@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { DocumentDetailViewContainer } from "@/shared/view/document-detail-view";
-import { ShippingData } from "../model";
-import { shippingData as initialShippingData } from "../data";
-import { createShippingDetailConfig } from "../lib/shippingDetailConfig";
+import { useState } from 'react';
+import { DocumentDetailViewContainer } from '@/shared/view/document-detail-view';
+import {
+  DocumentShippingDataInterface,
+  projectShippingData,
+} from '@/dummy-data-er-fix/document';
+import { createShippingDetailConfig } from '../lib/shippingDetailConfig';
 
 export function ShippingContainer() {
-  const [shippings] = useState<ShippingData[]>(initialShippingData as ShippingData[]);
+  const [shippings] = useState<DocumentShippingDataInterface[]>(
+    projectShippingData as DocumentShippingDataInterface[],
+  );
   const config = createShippingDetailConfig();
 
-  return (
-    <DocumentDetailViewContainer
-      data={shippings}
-      config={config}
-    />
-  );
+  return <DocumentDetailViewContainer data={shippings} config={config} />;
 }

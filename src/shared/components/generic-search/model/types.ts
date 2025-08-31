@@ -1,7 +1,7 @@
 export interface SearchConfig<T> {
-  searchableFields: (keyof T)[];
+  searchableFields: (keyof T | string)[];
   basicFilter?: {
-    filterKey: keyof T;
+    filterKey: keyof T | string;
     filterOptions: string[];
     defaultOption: string;
   };

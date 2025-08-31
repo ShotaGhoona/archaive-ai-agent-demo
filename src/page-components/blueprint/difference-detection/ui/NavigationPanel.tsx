@@ -1,6 +1,6 @@
-"use client";
-import { useRef } from "react";
-import { Loading } from "@/shared";
+'use client';
+import { useRef } from 'react';
+import { Loading } from '@/shared';
 
 interface NavigationPanelProps {
   imageUrl: string;
@@ -15,7 +15,7 @@ export function NavigationPanel({
   currentZoom,
   currentPosition,
   containerSize,
-  imageSize
+  imageSize,
 }: NavigationPanelProps) {
   const overviewRef = useRef<HTMLDivElement>(null);
 
@@ -23,21 +23,21 @@ export function NavigationPanel({
   const overviewSize = 280; // 固定サイズ（拡大）
   // 画像サイズが有効でない場合はコンポーネントをレンダリングしない
   const hasValidImageSize = imageSize.width > 0 && imageSize.height > 0;
-  
+
   // 有効なサイズがない場合は早期リターン
   if (!hasValidImageSize) {
     return (
-      <div className="space-y-3">
-        <div 
-          className="relative bg-gray-100 rounded-lg border border-gray-300 overflow-hidden mx-auto flex items-center justify-center"
-          style={{ 
-            width: `${overviewSize * 0.8}px`, 
-            height: `${overviewSize * 0.6}px` 
+      <div className='space-y-3'>
+        <div
+          className='relative mx-auto flex items-center justify-center overflow-hidden rounded-lg border border-gray-300 bg-gray-100'
+          style={{
+            width: `${overviewSize * 0.8}px`,
+            height: `${overviewSize * 0.6}px`,
           }}
         >
-          <Loading size="sm" title="読み込み中..." className="text-gray-400" />
+          <Loading size='sm' title='読み込み中...' className='text-gray-400' />
         </div>
-        <div className="text-xs text-gray-500 text-center">
+        <div className='text-center text-xs text-gray-500'>
           ズーム: {Math.round(currentZoom * 100)}%
         </div>
       </div>
@@ -45,12 +45,19 @@ export function NavigationPanel({
   }
 
   const aspectRatio = imageSize.width / imageSize.height;
-  const overviewWidth = aspectRatio > 1 ? overviewSize : overviewSize * aspectRatio;
-  const overviewHeight = aspectRatio > 1 ? overviewSize / aspectRatio : overviewSize;
+  const overviewWidth =
+    aspectRatio > 1 ? overviewSize : overviewSize * aspectRatio;
+  const overviewHeight =
+    aspectRatio > 1 ? overviewSize / aspectRatio : overviewSize;
 
   // 現在のビューポートをオーバービューに投影
   const getViewportRect = () => {
-    if (!containerSize.width || !containerSize.height || !imageSize.width || !imageSize.height) {
+    if (
+      !containerSize.width ||
+      !containerSize.height ||
+      !imageSize.width ||
+      !imageSize.height
+    ) {
       return { x: 0, y: 0, width: 0, height: 0 };
     }
 
@@ -63,8 +70,10 @@ export function NavigationPanel({
     const viewportHeight = containerSize.height / currentZoom;
 
     // ビューポート中心位置（画像座標系）
-    const viewportCenterX = imageSize.width / 2 - currentPosition.x / currentZoom;
-    const viewportCenterY = imageSize.height / 2 - currentPosition.y / currentZoom;
+    const viewportCenterX =
+      imageSize.width / 2 - currentPosition.x / currentZoom;
+    const viewportCenterY =
+      imageSize.height / 2 - currentPosition.y / currentZoom;
 
     // オーバービューでのビューポート矩形（中心基準）
     const centerX = viewportCenterX * scaleX;
@@ -76,7 +85,7 @@ export function NavigationPanel({
       x: centerX - width / 2,
       y: centerY - height / 2,
       width,
-      height
+      height,
     };
   };
 
@@ -85,41 +94,41 @@ export function NavigationPanel({
   // インタラクション機能は削除（読み取り専用）
 
   return (
-    <div className="space-y-3">
-      <div 
+    <div className='space-y-3'>
+      <div
         ref={overviewRef}
-        className="relative bg-gray-100 rounded-lg border border-gray-300 overflow-hidden mx-auto"
-        style={{ 
-          width: `${overviewWidth}px`, 
-          height: `${overviewHeight}px` 
+        className='relative mx-auto overflow-hidden rounded-lg border border-gray-300 bg-gray-100'
+        style={{
+          width: `${overviewWidth}px`,
+          height: `${overviewHeight}px`,
         }}
       >
         {/* オーバービュー画像 */}
         <img
           src={imageUrl}
-          alt="オーバービュー"
-          className="w-full h-full object-cover"
+          alt='オーバービュー'
+          className='h-full w-full object-cover'
           draggable={false}
         />
-        
+
         {/* 現在のビューポート表示（ズームイン時のみ） */}
         {currentZoom > 1 && (
           <div
-            className="absolute border-2 border-primary bg-primary/20"
+            className='border-primary bg-primary/20 absolute border-2'
             style={{
               left: `${viewportRect.x}px`,
               top: `${viewportRect.y}px`,
               width: `${viewportRect.width}px`,
               height: `${viewportRect.height}px`,
-              clipPath: `inset(${Math.max(0, -viewportRect.y)}px ${Math.max(0, viewportRect.x + viewportRect.width - overviewWidth)}px ${Math.max(0, viewportRect.y + viewportRect.height - overviewHeight)}px ${Math.max(0, -viewportRect.x)}px)`
+              clipPath: `inset(${Math.max(0, -viewportRect.y)}px ${Math.max(0, viewportRect.x + viewportRect.width - overviewWidth)}px ${Math.max(0, viewportRect.y + viewportRect.height - overviewHeight)}px ${Math.max(0, -viewportRect.x)}px)`,
             }}
           />
         )}
-        
+
         {/* ズームアウト時は全体枠を表示 */}
         {currentZoom <= 1 && (
           <div
-            className="absolute border-2 border-primary bg-primary/10"
+            className='border-primary bg-primary/10 absolute border-2'
             style={{
               left: '0px',
               top: '0px',
@@ -131,7 +140,7 @@ export function NavigationPanel({
       </div>
 
       {/* ズーム情報 */}
-      <div className="text-xs text-gray-500 text-center">
+      <div className='text-center text-xs text-gray-500'>
         ズーム: {Math.round(currentZoom * 100)}%
       </div>
     </div>

@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { 
-  PicturePreviewContainer, 
+import {
+  PicturePreviewContainer,
   Button,
   AlertDialog,
   AlertDialogAction,
@@ -11,10 +11,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
-} from "@/shared";
-import { Download, Printer, Trash } from "lucide-react";
-import { DocumentData, DocumentDetailViewConfig } from "../model";
+  AlertDialogTrigger,
+} from '@/shared';
+import { Download, Printer, Trash } from 'lucide-react';
+import { DocumentData, DocumentDetailViewConfig } from '../model';
 
 interface DocumentPreviewProps<T extends DocumentData> {
   item: T | null;
@@ -29,9 +29,9 @@ export function DocumentPreview<T extends DocumentData>({
 }: DocumentPreviewProps<T>) {
   if (!item) {
     return (
-      <div className="h-full bg-gray-100 flex items-center justify-center">
-        <div className="text-center text-gray-500">
-          <div className="text-4xl mb-4">📄</div>
+      <div className='flex h-full items-center justify-center bg-gray-100'>
+        <div className='text-center text-gray-500'>
+          <div className='mb-4 text-4xl'>📄</div>
           <p>帳票を選択してください</p>
         </div>
       </div>
@@ -41,30 +41,27 @@ export function DocumentPreview<T extends DocumentData>({
   const imageUrl = config.dataConfig.getImageUrl(item);
 
   const handleDownload = () => {
-    console.log("帳票をダウンロード");
+    console.log('帳票をダウンロード');
   };
 
   const handlePrint = () => {
-    console.log("帳票を印刷");
+    console.log('帳票を印刷');
   };
 
   const handleDelete = () => {
-    console.log("帳票を削除しました");
+    console.log('帳票を削除しました');
   };
 
   return (
-    <div className="h-full bg-gray-100 relative">
+    <div className='relative h-full bg-gray-100'>
       <PicturePreviewContainer activeFile={{ imageUrl }} />
-      
-      <div className="absolute top-6 right-6 flex gap-2">
+
+      <div className='absolute top-6 right-6 flex gap-2'>
         {config.previewActionButtonsConfig.showDeleteButton && (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button
-                variant="outline"
-                size="lg"
-              >
-                <Trash className="h-4 w-4" />
+              <Button variant='outline' size='lg'>
+                <Trash className='h-4 w-4' />
                 消去
               </Button>
             </AlertDialogTrigger>
@@ -79,7 +76,7 @@ export function DocumentPreview<T extends DocumentData>({
                 <AlertDialogCancel>キャンセル</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={handleDelete}
-                  className="text-white bg-red-500 hover:bg-red-600"
+                  className='bg-red-500 text-white hover:bg-red-600'
                 >
                   削除
                 </AlertDialogAction>
@@ -87,30 +84,25 @@ export function DocumentPreview<T extends DocumentData>({
             </AlertDialogContent>
           </AlertDialog>
         )}
-        
+
         {config.previewActionButtonsConfig.showDownloadButton && (
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handleDownload}
-          >
-            <Download className="h-4 w-4" />
+          <Button variant='outline' size='lg' onClick={handleDownload}>
+            <Download className='h-4 w-4' />
             ダウンロード
           </Button>
         )}
-        
+
         {config.previewActionButtonsConfig.showPrintButton && (
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handlePrint}
-          >
-            <Printer className="h-4 w-4" />
+          <Button variant='outline' size='lg' onClick={handlePrint}>
+            <Printer className='h-4 w-4' />
             印刷
           </Button>
         )}
-        
-        {config.previewActionButtonsConfig.customButtonsRender?.(item, onUpdate)}
+
+        {config.previewActionButtonsConfig.customButtonsRender?.(
+          item,
+          onUpdate,
+        )}
       </div>
     </div>
   );

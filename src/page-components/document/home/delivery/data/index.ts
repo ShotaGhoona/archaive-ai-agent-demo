@@ -1,1 +1,0 @@
-export { default as deliveryData } from './delivery.json';

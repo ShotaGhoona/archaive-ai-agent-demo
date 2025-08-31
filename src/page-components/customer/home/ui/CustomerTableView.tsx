@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createCustomerTableConfig } from "../lib";
-import { Customer } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createCustomerTableConfig } from '../lib';
+import { CustomerHomeDataInterface } from '@/dummy-data-er-fix/customer';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,26 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface CustomerTableViewProps {
-  customers: Customer[];
-  onCustomerDelete?: (customer: Customer) => void;
+  customers: CustomerHomeDataInterface[];
+  onCustomerDelete?: (customer: CustomerHomeDataInterface) => void;
   onCustomerUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function CustomerTableView({ 
+export function CustomerTableView({
   customers,
   onCustomerDelete,
-  onCustomerUpdate
+  onCustomerUpdate,
 }: CustomerTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+  const [customerToDelete, setCustomerToDelete] = useState<CustomerHomeDataInterface | null>(
+    null,
+  );
 
-  const handleDeleteClick = (customer: Customer) => {
+  const handleDeleteClick = (customer: CustomerHomeDataInterface) => {
     setCustomerToDelete(customer);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +60,23 @@ export function CustomerTableView({
         getRowId={(customer) => customer.id.toString()}
         onItemUpdate={onCustomerUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>取引先を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{customerToDelete?.account_name}」を削除します。この操作は取り消すことができません。
+              「{customerToDelete?.name}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

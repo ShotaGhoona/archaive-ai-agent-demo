@@ -1,6 +1,13 @@
 import { SearchConfig } from '@/shared';
-import { Invoice } from '../model';
+import { DocumentInvoiceDataInterface } from '@/dummy-data-er-fix/document';
 
-export const INVOICE_SEARCHBAR_CONFIG: SearchConfig<Invoice> = {
-  searchableFields: ['name', 'project_name', 'billing_destination']
+export const INVOICE_SEARCHBAR_CONFIG: SearchConfig<DocumentInvoiceDataInterface> = {
+  searchableFields: [
+    'directory_document_custom_items.請求書番号.value',
+    'directory_name',
+    'customer_name',
+    'directory_document_custom_items.支払条件.value',
+    'directory_document_custom_items.請求金額.value',
+    'name',
+  ],
 };

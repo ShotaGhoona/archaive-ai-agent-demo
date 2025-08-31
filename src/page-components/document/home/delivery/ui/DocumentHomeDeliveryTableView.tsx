@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createDeliveryTableConfig } from "../lib";
-import { Delivery } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createDeliveryTableConfig } from '../lib';
+import { DocumentDeliveryDataInterface } from '@/dummy-data-er-fix/document';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,25 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface DeliveryTableViewProps {
-  deliveries: Delivery[];
-  onDeliveryDelete?: (delivery: Delivery) => void;
+  deliveries: DocumentDeliveryDataInterface[];
+  onDeliveryDelete?: (delivery: DocumentDeliveryDataInterface) => void;
   onDeliveryUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function DocumentHomeDeliveryTableView({ 
+export function DocumentHomeDeliveryTableView({
   deliveries,
   onDeliveryDelete,
-  onDeliveryUpdate
+  onDeliveryUpdate,
 }: DeliveryTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [deliveryToDelete, setDeliveryToDelete] = useState<Delivery | null>(null);
+  const [deliveryToDelete, setDeliveryToDelete] =
+    useState<DocumentDeliveryDataInterface | null>(null);
 
-  const handleDeleteClick = (delivery: Delivery) => {
+  const handleDeleteClick = (delivery: DocumentDeliveryDataInterface) => {
     setDeliveryToDelete(delivery);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +59,23 @@ export function DocumentHomeDeliveryTableView({
         getRowId={(delivery) => delivery.id.toString()}
         onItemUpdate={onDeliveryUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>納品書を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{deliveryToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{deliveryToDelete?.name}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

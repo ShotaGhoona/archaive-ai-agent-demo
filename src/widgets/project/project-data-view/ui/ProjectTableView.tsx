@@ -1,15 +1,16 @@
-import React from "react";
-import { TableView } from "@/shared";
-import { Project, createProjectTableConfig } from "../lib/projectTableConfig";
+import React from 'react';
+import { TableView } from '@/shared';
+import { DirectoryBaseDataInterface } from '@/dummy-data-er-fix/project';
+import { createProjectTableConfig } from '../lib/projectTableConfig';
 
 interface ProjectTableViewProps {
-  projects: Project[];
-  onProjectUpdate?: (projectId: string, field: string, value: unknown) => void;
+  projects: DirectoryBaseDataInterface[];
+  onProjectUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function ProjectTableView({ 
-  projects, 
-  onProjectUpdate
+export function ProjectTableView({
+  projects,
+  onProjectUpdate,
 }: ProjectTableViewProps) {
   const config = createProjectTableConfig();
 
@@ -18,7 +19,7 @@ export function ProjectTableView({
       data={projects}
       config={config}
       onItemUpdate={onProjectUpdate}
-      getRowId={(project) => project.projectId}
+      getRowId={(project) => project.id.toString()}
     />
   );
 }

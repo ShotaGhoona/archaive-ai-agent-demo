@@ -8,8 +8,14 @@ interface UseUnsavedChangesProps {
   onHideDialog: () => void;
 }
 
-export function useUnsavedChanges({ hasChanges, onShowDialog, onHideDialog }: UseUnsavedChangesProps) {
-  const [pendingNavigation, setPendingNavigation] = useState<string | null>(null);
+export function useUnsavedChanges({
+  hasChanges,
+  onShowDialog,
+  onHideDialog,
+}: UseUnsavedChangesProps) {
+  const [pendingNavigation, setPendingNavigation] = useState<string | null>(
+    null,
+  );
 
   // ブラウザの beforeunload イベントで未保存の変更を警告
   useEffect(() => {
@@ -31,7 +37,7 @@ export function useUnsavedChanges({ hasChanges, onShowDialog, onHideDialog }: Us
 
       const target = e.target as HTMLElement;
       const link = target.closest('a');
-      
+
       if (link && link.href && link.href !== window.location.href) {
         e.preventDefault();
         e.stopPropagation();
@@ -42,7 +48,7 @@ export function useUnsavedChanges({ hasChanges, onShowDialog, onHideDialog }: Us
 
     // 全てのリンククリックをキャプチャ
     document.addEventListener('click', handleClick, true);
-    
+
     return () => {
       document.removeEventListener('click', handleClick, true);
     };

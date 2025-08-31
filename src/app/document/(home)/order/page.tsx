@@ -1,4 +1,4 @@
-import { DocumentHomeOrderContainer } from "@/page-components/document/home/order/ui";
+import { DocumentHomeOrderContainer } from '@/page-components/document/home/order/ui';
 
 export default function OrderPage() {
   return <DocumentHomeOrderContainer />;

@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -42,7 +42,6 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
-
 
 :root {
   --background: hsl(0, 0%, 100%);
@@ -90,8 +89,6 @@
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
 }
-
-
 
 @layer base {
   * {

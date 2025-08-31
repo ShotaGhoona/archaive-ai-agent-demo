@@ -40,19 +40,19 @@ export function TablePagination({
   const getVisiblePages = () => {
     const pages: number[] = [];
     const halfVisible = Math.floor(maxVisiblePages / 2);
-    
+
     let startPage = Math.max(1, currentPage - halfVisible);
     const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-    
+
     // 最後のページ付近で調整
     if (endPage - startPage < maxVisiblePages - 1) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
-    
+
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   };
 
@@ -63,7 +63,7 @@ export function TablePagination({
   return (
     <div className={`flex items-center justify-between ${className}`}>
       {/* 総項目数表示 */}
-      <div className="text-sm text-muted-foreground  whitespace-nowrap">
+      <div className='text-muted-foreground text-sm whitespace-nowrap'>
         {totalItems}件中 {startItem}-{endItem}件を表示
       </div>
 
@@ -74,7 +74,11 @@ export function TablePagination({
           <PaginationItem>
             <PaginationPrevious
               onClick={() => currentPage > 1 && onPageChange(currentPage - 1)}
-              className={currentPage <= 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              className={
+                currentPage <= 1
+                  ? 'pointer-events-none opacity-50'
+                  : 'cursor-pointer'
+              }
             />
           </PaginationItem>
 
@@ -84,7 +88,7 @@ export function TablePagination({
               <PaginationLink
                 onClick={() => onPageChange(page)}
                 isActive={page === currentPage}
-                className="cursor-pointer"
+                className='cursor-pointer'
               >
                 {page}
               </PaginationLink>
@@ -94,8 +98,14 @@ export function TablePagination({
           {/* 次のページ */}
           <PaginationItem>
             <PaginationNext
-              onClick={() => currentPage < totalPages && onPageChange(currentPage + 1)}
-              className={currentPage >= totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
+              onClick={() =>
+                currentPage < totalPages && onPageChange(currentPage + 1)
+              }
+              className={
+                currentPage >= totalPages
+                  ? 'pointer-events-none opacity-50'
+                  : 'cursor-pointer'
+              }
             />
           </PaginationItem>
         </PaginationContent>
@@ -103,20 +113,22 @@ export function TablePagination({
 
       {/* ページ当たり項目数セレクター */}
       {showItemsPerPageSelector && onItemsPerPageChange && (
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground whitespace-nowrap">表示件数:</span>
+        <div className='flex items-center gap-2'>
+          <span className='text-muted-foreground text-sm whitespace-nowrap'>
+            表示件数:
+          </span>
           <Select
             value={itemsPerPage.toString()}
             onValueChange={(value) => onItemsPerPageChange(parseInt(value, 10))}
           >
-            <SelectTrigger className="w-20">
+            <SelectTrigger className='w-20'>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
+              <SelectItem value='10'>10</SelectItem>
+              <SelectItem value='20'>20</SelectItem>
+              <SelectItem value='50'>50</SelectItem>
+              <SelectItem value='100'>100</SelectItem>
             </SelectContent>
           </Select>
         </div>

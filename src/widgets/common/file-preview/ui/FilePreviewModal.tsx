@@ -1,11 +1,11 @@
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-} from '@/shared';
+import { Dialog, DialogContent, DialogHeader } from '@/shared';
 import { FilePreviewModalProps } from '../model';
-import { useFilePreview, PreviewProviderManager, defaultPreviewProviders } from '../lib';
+import {
+  useFilePreview,
+  PreviewProviderManager,
+  defaultPreviewProviders,
+} from '../lib';
 import { PreviewToolbar, PreviewViewer } from '../ui';
 
 export function FilePreviewModal({
@@ -13,10 +13,10 @@ export function FilePreviewModal({
   isOpen,
   onClose,
   initialFileIndex = 0,
-  options = {}
+  options = {},
 }: FilePreviewModalProps) {
   const providerManager = new PreviewProviderManager(defaultPreviewProviders);
-  
+
   const {
     currentFile,
     currentIndex,
@@ -31,26 +31,27 @@ export function FilePreviewModal({
     handleDownloadAll,
     goToIndex,
     canZoomIn,
-    canZoomOut
+    canZoomOut,
   } = useFilePreview({
     files,
     initialIndex: initialFileIndex,
     options,
-    providerManager
+    providerManager,
   });
 
   if (!currentFile) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent 
-        className={isMultipleFiles ? 
-          "min-w-[90vw] max-w-[90vw] max-h-[90vh] p-0 overflow-hidden" : 
-          "min-w-[80vw] max-w-[80vw] max-h-[80vh] p-0 overflow-hidden"
+      <DialogContent
+        className={
+          isMultipleFiles
+            ? 'max-h-[90vh] max-w-[90vw] min-w-[90vw] overflow-hidden p-0'
+            : 'max-h-[80vh] max-w-[80vw] min-w-[80vw] overflow-hidden p-0'
         }
       >
         {/* ヘッダー・ツールバー */}
-        <DialogHeader className="p-0">
+        <DialogHeader className='p-0'>
           <PreviewToolbar
             currentFile={currentFile}
             zoom={zoom}

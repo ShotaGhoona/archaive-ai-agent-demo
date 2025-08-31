@@ -19,6 +19,7 @@ loading/
 ## 概要
 
 **5種類のローディングコンポーネントを提供：**
+
 - **LoadingSpinner**: 基本的な回転スピナー（sm/md/lg）
 - **Loading**: スピナー＋タイトル＋説明文の組み合わせ
 - **LoadingScreen**: 全画面オーバーレイ表示

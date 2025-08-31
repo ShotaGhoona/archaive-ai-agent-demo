@@ -1,9 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import {
-  Button,
-  TabNavigation,
-} from '@/shared';
+import { Button, TabNavigation } from '@/shared';
 import { RotateCcw, Search, Settings } from 'lucide-react';
 import { AdvancedFilterProps, FilterState } from '../model';
 import { SimpleFilterContent, AdvancedFilterContent } from '../ui';
@@ -21,7 +18,7 @@ export function AdvancedFilterSidebar<T>({
 }: AdvancedFilterProps<T>) {
   const [activeTab, setActiveTab] = useState('simple');
   const [pendingFilters, setPendingFilters] = useState<FilterState<T>>(filters);
-  
+
   const updateFilter = (key: string, value: unknown) => {
     setPendingFilters({
       ...pendingFilters,
@@ -56,18 +53,14 @@ export function AdvancedFilterSidebar<T>({
       {/* オーバーレイ */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className='bg-opacity-50 fixed inset-0 z-40 bg-black lg:hidden'
           onClick={onToggle}
         />
       )}
-      
+
       {/* サイドバー */}
       <div
-        className={`
-          fixed left-0 top-[45px] h-[calc(100vh-45px)] bg-white border-r shadow-lg z-50 transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          w-80 flex flex-col
-        `}
+        className={`fixed top-[45px] left-0 z-50 h-[calc(100vh-45px)] border-r bg-white shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex w-80 flex-col`}
       >
         {/* 切り替えタブ */}
         <TabNavigation
@@ -77,8 +70,8 @@ export function AdvancedFilterSidebar<T>({
         />
 
         {/* フィルター内容 */}
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex-1 overflow-hidden">
+        <div className='flex min-h-0 flex-1 flex-col'>
+          <div className='flex-1 overflow-hidden'>
             {activeTab === 'simple' && (
               <SimpleFilterContent
                 config={config}
@@ -94,24 +87,24 @@ export function AdvancedFilterSidebar<T>({
               />
             )}
           </div>
-          
+
           {/* 固定ボタン */}
-          <div className="p-4 border-t bg-white grid grid-cols-3 gap-2 flex-shrink-0">
+          <div className='grid flex-shrink-0 grid-cols-3 gap-2 border-t bg-white p-4'>
             <Button
-              variant="outline"
+              variant='outline'
               onClick={handleClearFilters}
-              className="w-full col-span-1"
-              size="lg"
+              className='col-span-1 w-full'
+              size='lg'
             >
-              <RotateCcw className="h-4 w-4 mr-2" />
+              <RotateCcw className='mr-2 h-4 w-4' />
               クリア
             </Button>
             <Button
               onClick={handleApplyFilters}
-              className="w-full col-span-2"
-              size="lg"
+              className='col-span-2 w-full'
+              size='lg'
             >
-              <Search className="h-4 w-4 mr-2" />
+              <Search className='mr-2 h-4 w-4' />
               フィルターを適用
             </Button>
           </div>

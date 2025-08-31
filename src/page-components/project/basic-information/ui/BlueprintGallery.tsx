@@ -1,42 +1,52 @@
-"use client";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { GalleryView } from "@/shared";
-import { Blueprint } from "@/page-components";
-import { createProjectBlueprintGalleryConfig } from "../lib";
-import { BlueprintDetailDialog } from "./BlueprintDetailDialog";
+'use client';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { GalleryView } from '@/shared';
+import { createProjectBlueprintGalleryConfig } from '../lib/projectBlueprintGalleryConfig';
+import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
+import { BlueprintDetailDialog } from './BlueprintDetailDialog';
 
 interface BlueprintGalleryProps {
-  blueprints: Blueprint[];
+  blueprints: BlueprintDetailDataInterface[];
+  onBlueprintUpdate?: (blueprintId: number, updatedBlueprint: Partial<BlueprintDetailDataInterface>) => void;
+  isLoading?: boolean;
 }
 
-export function BlueprintGallery({ blueprints }: BlueprintGalleryProps) {
+export function BlueprintGallery({ 
+  blueprints, 
+  onBlueprintUpdate, 
+  isLoading = false 
+}: BlueprintGalleryProps) {
   const router = useRouter();
-  const [selectedBlueprint, setSelectedBlueprint] = useState<Blueprint | null>(null);
+  const [selectedBlueprint, setSelectedBlueprint] = useState<BlueprintDetailDataInterface | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleShowDetail = (blueprint: Blueprint) => {
+  const handleShowDetail = (blueprint: BlueprintDetailDataInterface) => {
     setSelectedBlueprint(blueprint);
     setIsDialogOpen(true);
   };
 
-  const handleFullPage = (blueprint: Blueprint) => {
-    // フルページに遷移
-    router.push(`/blueprint/${blueprint.internalNumber}/basic-information`);
+  const handleFullPage = (blueprint: BlueprintDetailDataInterface) => {
+    // 図面詳細画面への遷移
+    router.push(`/blueprint/${blueprint.id}/basic-information`);
   };
 
-  const galleryConfig = createProjectBlueprintGalleryConfig(handleShowDetail, handleFullPage);
-  
+  const galleryConfig = createProjectBlueprintGalleryConfig(
+    handleShowDetail,
+    handleFullPage,
+  );
+
   return (
-    <div className="bg-white flex flex-col px-6 pt-6 h-full">
-      <h3 className="text-lg font-semibold mb-4">登録図面</h3>
-      <div className="flex-1 overflow-y-auto">
-        <GalleryView
-          data={blueprints}
-          config={galleryConfig}
+    <div className='flex h-full flex-col bg-white px-4 pt-4'>
+      <h3 className='mb-4 text-lg text-primary font-semibold'>登録図面</h3>
+      <div className='flex-1 overflow-y-auto'>
+        <GalleryView 
+          data={blueprints} 
+          config={galleryConfig} 
+          loading={isLoading}
         />
       </div>
-      
+
       {selectedBlueprint && (
         <BlueprintDetailDialog
           blueprint={selectedBlueprint}

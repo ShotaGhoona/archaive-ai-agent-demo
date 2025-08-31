@@ -1,23 +1,23 @@
-
-import { 
-  Button, 
-  Tooltip, 
-  TooltipTrigger, 
+import {
+  Button,
+  Tooltip,
+  TooltipTrigger,
   TooltipContent,
   SearchInput,
   FilterToggleButton,
   CsvExportDialog,
-} from "@/shared";
-import { Plus, List, Kanban } from "lucide-react";
-import { Project, PROJECT_CSV_COLUMNS } from "../lib";
-import Link from "next/link";
-import { ProjectBlueprintUploadDialog } from "../ui";
+} from '@/shared';
+import { Plus, List, Kanban } from 'lucide-react';
+import { PROJECT_CSV_COLUMNS } from '../lib';
+import { DirectoryBaseDataInterface } from '@/dummy-data-er-fix/project';
+import Link from 'next/link';
+import { ProjectBlueprintUploadDialog } from '../ui';
 
 interface ProjectDataViewPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
-  viewMode: "table" | "kanban";
-  setViewMode: (mode: "table" | "kanban") => void;
+  viewMode: 'table' | 'kanban';
+  setViewMode: (mode: 'table' | 'kanban') => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
   projects?: unknown[];
@@ -32,40 +32,35 @@ export function ProjectDataViewPageHeader({
   isFilterSidebarOpen,
   projects = [],
 }: ProjectDataViewPageHeaderProps) {
-
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1 border border-gray-200 rounded-lg bg-background">
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-4'>
+        <div className='bg-background flex items-center gap-1 rounded-lg border border-gray-200'>
           <Tooltip delayDuration={500}>
             <TooltipTrigger asChild>
               <Button
-                variant={viewMode === "table" ? "default" : "ghost"}
-                size="lg"
-                onClick={() => setViewMode("table")}
-                className="h-10 w-10 p-0"
+                variant={viewMode === 'table' ? 'default' : 'ghost'}
+                size='lg'
+                onClick={() => setViewMode('table')}
+                className='h-10 w-10 p-0'
               >
-                <List className="h-5 w-5" />
+                <List className='h-5 w-5' />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
-              テーブルビュー
-            </TooltipContent>
+            <TooltipContent side='bottom'>テーブルビュー</TooltipContent>
           </Tooltip>
           <Tooltip delayDuration={500}>
             <TooltipTrigger asChild>
               <Button
-                variant={viewMode === "kanban" ? "default" : "ghost"}
-                size="lg"
-                onClick={() => setViewMode("kanban")}
-                className="h-10 w-10 p-0"
+                variant={viewMode === 'kanban' ? 'default' : 'ghost'}
+                size='lg'
+                onClick={() => setViewMode('kanban')}
+                className='h-10 w-10 p-0'
               >
-                <Kanban className="h-5 w-5" />
+                <Kanban className='h-5 w-5' />
               </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">
-              看板ビュー
-            </TooltipContent>
+            <TooltipContent side='bottom'>看板ビュー</TooltipContent>
           </Tooltip>
         </div>
         <FilterToggleButton
@@ -75,20 +70,20 @@ export function ProjectDataViewPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="案件ID、顧客名、担当者、ステータスで検索"
+          placeholder='案件ID、顧客名、担当者、ステータスで検索'
         />
       </div>
-      <div className="flex items-center gap-3">
+      <div className='flex items-center gap-3'>
         {/* CSV出力ボタン */}
         <CsvExportDialog
-          data={projects as Project[]}
+          data={projects as DirectoryBaseDataInterface[]}
           initialColumns={PROJECT_CSV_COLUMNS}
-          defaultFilename="projects"
+          defaultFilename='projects'
         />
         <ProjectBlueprintUploadDialog />
-        <Link href="/blueprint/upload">
-          <Button size="lg" className="bg-primary hover:bg-primary/90">
-            <Plus className="h-4 w-4 mr-2" />
+        <Link href='/blueprint/upload'>
+          <Button size='lg' className='bg-primary hover:bg-primary/90'>
+            <Plus className='mr-2 h-4 w-4' />
             一括案件登録
           </Button>
         </Link>

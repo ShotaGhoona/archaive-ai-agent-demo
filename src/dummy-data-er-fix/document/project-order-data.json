@@ -1,0 +1,104 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6C3E6F7G8H9I0J1K2L3M4",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "受注番号": {
+        "value": "ORD-2024-001",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "発注区分": {
+        "value": "新規発注",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "指定日厳守",
+        "color": "red",
+        "type": "SELECT"
+      }
+    },
+    "name": "ギアボックスGB-X1 発注書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order001_v1.pdf",
+    "remarks": "初回発注、数量50台",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6C4F7G8H9I0J1K2L3M4N5",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "発注区分": {
+        "value": "追加発注",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "通常納期",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "受注番号": {
+        "value": "ORD-2024-002",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-26",
+        "type": "DATE"
+      }
+    },
+    "name": "ギアボックスGB-X1 追加発注書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order002_v2.pdf",
+    "remarks": "追加発注、数量10台",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6C5G8H9I0J1K2L3M4N5O6",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "発注区分": {
+        "value": "緊急発注",
+        "color": "red",
+        "type": "SELECT"
+      },
+      "納期条件": {
+        "value": "至急対応",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "受注番号": {
+        "value": "ORD-2024-003",
+        "type": "TEXT"
+      },
+      "受注日": {
+        "value": "2024-08-27",
+        "type": "DATE"
+      }
+    },
+    "name": "ギアボックスGB-X1 緊急発注書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/order/order003_v3.pdf",
+    "remarks": "緊急対応、数量2台",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  }
+]

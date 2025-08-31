@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createSpecificationTableConfig } from "../lib";
-import { Specification } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createSpecificationTableConfig } from '../lib';
+import { DocumentSpecificationDataInterface } from '@/dummy-data-er-fix/document';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,33 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface SpecificationTableViewProps {
-  specifications: Specification[];
-  onSpecificationDelete?: (specification: Specification) => void;
-  onSpecificationUpdate?: (rowId: string, field: string, value: unknown) => void;
+  specifications: DocumentSpecificationDataInterface[];
+  onSpecificationDelete?: (
+    specification: DocumentSpecificationDataInterface,
+  ) => void;
+  onSpecificationUpdate?: (
+    rowId: string,
+    field: string,
+    value: unknown,
+  ) => void;
 }
 
-export function DocumentHomeSpecificationTableView({ 
+export function DocumentHomeSpecificationTableView({
   specifications,
   onSpecificationDelete,
-  onSpecificationUpdate
+  onSpecificationUpdate,
 }: SpecificationTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [specificationToDelete, setSpecificationToDelete] = useState<Specification | null>(null);
+  const [specificationToDelete, setSpecificationToDelete] =
+    useState<DocumentSpecificationDataInterface | null>(null);
 
-  const handleDeleteClick = (specification: Specification) => {
+  const handleDeleteClick = (
+    specification: DocumentSpecificationDataInterface,
+  ) => {
     setSpecificationToDelete(specification);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +67,23 @@ export function DocumentHomeSpecificationTableView({
         getRowId={(specification) => specification.id.toString()}
         onItemUpdate={onSpecificationUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>仕様書を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{specificationToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{specificationToDelete?.leaf_product_document_custom_items?.仕様書番号?.value || 'N/A'}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

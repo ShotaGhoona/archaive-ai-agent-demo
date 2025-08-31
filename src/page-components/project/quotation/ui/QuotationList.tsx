@@ -1,21 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Card, CardContent, Button } from "@/shared";
-import { FileText } from "lucide-react";
-import { QuotationData } from "../model";
-import { QuotationRegistrationDialog } from "./QuotationRegistrationDialog";
+import { useState } from 'react';
+import { Card, CardContent, Button } from '@/shared';
+import { FileText } from 'lucide-react';
+import { DocumentQuotationDataInterface } from '@/dummy-data-er-fix/document';
+import { QuotationRegistrationDialog } from './QuotationRegistrationDialog';
 
 interface QuotationListProps {
-  quotations: QuotationData[];
+  quotations: DocumentQuotationDataInterface[];
   selectedId: string;
-  onSelectQuotation: (quotation: QuotationData) => void;
+  onSelectQuotation: (quotation: DocumentQuotationDataInterface) => void;
 }
 
-export function QuotationList({ quotations, selectedId, onSelectQuotation }: QuotationListProps) {
+export function QuotationList({
+  quotations,
+  selectedId,
+  onSelectQuotation,
+}: QuotationListProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleSelectQuotation = (quotation: QuotationData) => {
+  const handleSelectQuotation = (quotation: DocumentQuotationDataInterface) => {
     onSelectQuotation(quotation);
   };
 
@@ -28,60 +32,62 @@ export function QuotationList({ quotations, selectedId, onSelectQuotation }: Quo
   };
 
   return (
-    <div className="h-full bg-white border-r flex flex-col">
+    <div className='flex h-full flex-col border-r bg-white'>
       {/* 見積書リスト */}
-      <div className="flex-1 p-4 pt-0 space-y-4 mt-4">
-        <Button 
-          size="lg" 
-          variant="outline" 
-          className="w-full py-8"
+      <div className='mt-4 flex-1 space-y-4 p-4 pt-0'>
+        <Button
+          size='lg'
+          variant='outline'
+          className='w-full py-8'
           onClick={handleOpenDialog}
         >
-          <FileText className="h-4 w-4 mr-2" />
+          <FileText className='mr-2 h-4 w-4' />
           見積書を登録or作成
         </Button>
         {quotations
-          .sort((a, b) => new Date(b.modified_date).getTime() - new Date(a.modified_date).getTime())
+          .sort(
+            (a, b) => b.version - a.version,
+          )
           .map((quotation) => (
-          <Card 
-            key={quotation.quote_id}
-            onClick={() => handleSelectQuotation(quotation)}
-            className={`
-              cursor-pointer transition-all duration-200 group relative py-1
-              ${selectedId === quotation.quote_id 
-                ? 'ring-2 ring-primary' 
-                : 'hover:shadow-md hover:bg-gray-50'
-              }
-            `}
-          >
-            <CardContent className="p-2">
-              <div className="space-y-2">
-                <div className="aspect-video w-full bg-gray-100 rounded overflow-hidden">
-                  {quotation.image_url ? (
-                    <img 
-                      src={quotation.image_url} 
-                      alt={quotation.quote_number}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <FileText className="h-8 w-8 text-gray-400" />
-                    </div>
-                  )}
+            <Card
+              key={quotation.id}
+              onClick={() => handleSelectQuotation(quotation)}
+              className={`group relative cursor-pointer py-1 transition-all duration-200 ${
+                selectedId === quotation.id.toString()
+                  ? 'ring-primary ring-2'
+                  : 'hover:bg-gray-50 hover:shadow-md'
+              } `}
+            >
+              <CardContent className='p-2'>
+                <div className='space-y-2'>
+                  <div className='aspect-video w-full overflow-hidden rounded bg-gray-100'>
+                    {quotation.s3_url ? (
+                      <img
+                        src={quotation.s3_url}
+                        alt={quotation.quotation_number}
+                        className='h-full w-full object-cover'
+                        loading='lazy'
+                      />
+                    ) : (
+                      <div className='flex h-full w-full items-center justify-center'>
+                        <FileText className='h-8 w-8 text-gray-400' />
+                      </div>
+                    )}
+                  </div>
+                  <div className='px-1'>
+                    <h4 className='truncate text-xs font-medium text-gray-900'>
+                      {quotation.quotation_number}
+                    </h4>
+                    <p className='mt-1 text-xs text-gray-500'>
+                      {new Date(quotation.updated_at).toLocaleDateString(
+                        'ja-JP',
+                      )}
+                    </p>
+                  </div>
                 </div>
-                <div className="px-1">
-                  <h4 className="text-xs font-medium text-gray-900 truncate">
-                    {quotation.quote_number}
-                  </h4>
-                  <p className="text-xs text-gray-500 mt-1">
-                    {new Date(quotation.created_date).toLocaleDateString('ja-JP')}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+              </CardContent>
+            </Card>
+          ))}
       </div>
 
       <QuotationRegistrationDialog

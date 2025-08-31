@@ -1,13 +1,13 @@
-import { DELIVERY_CSV_COLUMNS } from "../lib";
-import { Delivery } from "../model";
-import { SearchInput, CsvExportDialog, FilterToggleButton } from "@/shared";
+import { DELIVERY_CSV_COLUMNS } from '../lib';
+import { DocumentDeliveryDataInterface } from '@/dummy-data-er-fix/document';
+import { SearchInput, CsvExportDialog, FilterToggleButton } from '@/shared';
 
 interface DeliveryPageHeaderProps {
   searchTerm: string;
   setSearchTerm: (value: string) => void;
   onToggleFilterSidebar: () => void;
   isFilterSidebarOpen: boolean;
-  deliveries?: Delivery[];
+  deliveries?: DocumentDeliveryDataInterface[];
 }
 
 export function DocumentHomeDeliveryPageHeader({
@@ -18,8 +18,8 @@ export function DocumentHomeDeliveryPageHeader({
   deliveries = [],
 }: DeliveryPageHeaderProps) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-4">
+    <div className='flex items-center justify-between'>
+      <div className='flex items-center gap-4'>
         <FilterToggleButton
           isOpen={isFilterSidebarOpen}
           onToggle={onToggleFilterSidebar}
@@ -27,14 +27,14 @@ export function DocumentHomeDeliveryPageHeader({
         <SearchInput
           value={searchTerm}
           onChange={setSearchTerm}
-          placeholder="納品書名・プロジェクト名・納品先で検索"
+          placeholder='納品書番号・プロジェクト名・納品先で検索'
         />
       </div>
-      <div className="flex items-center gap-3">
+      <div className='flex items-center gap-3'>
         <CsvExportDialog
           data={deliveries}
           initialColumns={DELIVERY_CSV_COLUMNS}
-          defaultFilename="deliveries"
+          defaultFilename='deliveries'
         />
       </div>
     </div>

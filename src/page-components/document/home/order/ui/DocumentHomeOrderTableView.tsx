@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import { TableView } from "@/shared";
-import { createOrderTableConfig } from "../lib";
-import { Order } from "../model";
+'use client';
+import React, { useState } from 'react';
+import { TableView } from '@/shared';
+import { createOrderTableConfig } from '../lib';
+import { DocumentOrderDataInterface } from '@/dummy-data-er-fix/document';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,24 +11,25 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle
-} from "@/shared";
+  AlertDialogTitle,
+} from '@/shared';
 
 interface OrderTableViewProps {
-  orders: Order[];
-  onOrderDelete?: (order: Order) => void;
+  orders: DocumentOrderDataInterface[];
+  onOrderDelete?: (order: DocumentOrderDataInterface) => void;
   onOrderUpdate?: (rowId: string, field: string, value: unknown) => void;
 }
 
-export function DocumentHomeOrderTableView({ 
+export function DocumentHomeOrderTableView({
   orders,
   onOrderDelete,
-  onOrderUpdate
+  onOrderUpdate,
 }: OrderTableViewProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [orderToDelete, setOrderToDelete] = useState<Order | null>(null);
+  const [orderToDelete, setOrderToDelete] =
+    useState<DocumentOrderDataInterface | null>(null);
 
-  const handleDeleteClick = (order: Order) => {
+  const handleDeleteClick = (order: DocumentOrderDataInterface) => {
     setOrderToDelete(order);
     setDeleteDialogOpen(true);
   };
@@ -58,22 +59,23 @@ export function DocumentHomeOrderTableView({
         getRowId={(order) => order.id.toString()}
         onItemUpdate={onOrderUpdate}
       />
-      
+
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>発注書を削除しますか？</AlertDialogTitle>
             <AlertDialogDescription>
-              「{orderToDelete?.name}」を削除します。この操作は取り消すことができません。
+              「{orderToDelete?.directory_document_custom_items?.受注番号?.value || 'N/A'}
+              」を削除します。この操作は取り消すことができません。
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel onClick={handleDeleteCancel}>
               キャンセル
             </AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-red-600 hover:bg-red-700"
+              className='bg-red-600 hover:bg-red-700'
             >
               削除
             </AlertDialogAction>

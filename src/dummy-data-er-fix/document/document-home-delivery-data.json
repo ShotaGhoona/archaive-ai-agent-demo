@@ -1,0 +1,332 @@
+[
+  {
+    "id": 1,
+    "ulid": "01H9T6A1B2C3D4E5F6G7H8I9J0",
+    "directory_name": "田中精密工業_ギアボックス案件",
+    "customer_name": "田中精密工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-001",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-25",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "本社工場",
+        "color": "blue",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "ギアボックスGB-X1 × 50台",
+        "type": "TEXT"
+      }
+    },
+    "name": "ギアボックスGB-X1 納品書_202408",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery001_v1.pdf",
+    "remarks": "納期厳守、梱包注意",
+    "created_by_name": "田中太郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-25T09:00:00.000Z",
+    "updated_at": "2024-08-29T14:30:00.000Z"
+  },
+  {
+    "id": 2,
+    "ulid": "01H9T6A1C3D4E5F6G7H8I9J0K1",
+    "directory_name": "山田製作所_モーター開発",
+    "customer_name": "山田製作所株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-002",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-26",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "第二工場",
+        "color": "green",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "サーボモーターSV-200 × 20台",
+        "type": "TEXT"
+      }
+    },
+    "name": "サーボモーターSV-200 納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery002_v1.pdf",
+    "remarks": "高精度モーター、精密梱包済み",
+    "created_by_name": "山田次郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-26T10:15:00.000Z",
+    "updated_at": "2024-08-28T16:45:00.000Z"
+  },
+  {
+    "id": 3,
+    "ulid": "01H9T6A1D4E5F6G7H8I9J0K1L2",
+    "directory_name": "鈴木工業_センサー量産",
+    "customer_name": "鈴木工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-003",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-27",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "検査室",
+        "color": "orange",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "圧力センサーPS-100 × 100個",
+        "type": "TEXT"
+      }
+    },
+    "name": "圧力センサーPS-100 大量納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery003_v1.pdf",
+    "remarks": "量産初回分、品質検査済み",
+    "created_by_name": "佐藤花子",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-27T13:20:00.000Z",
+    "updated_at": "2024-08-27T18:00:00.000Z"
+  },
+  {
+    "id": 4,
+    "ulid": "01H9T6A1E5F6G7H8I9J0K1L2M3",
+    "directory_name": "高橋電機_制御装置開発",
+    "customer_name": "高橋電機株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-004",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-28",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "研究開発部",
+        "color": "purple",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "制御基板CB-500 × 5台",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御基板CB-500 プロトタイプ納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery004_v2.pdf",
+    "remarks": "プロトタイプ版、評価用",
+    "created_by_name": "高橋一郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-28T14:30:00.000Z",
+    "updated_at": "2024-08-30T09:15:00.000Z"
+  },
+  {
+    "id": 5,
+    "ulid": "01H9T6A1F6G7H8I9J0K1L2M3N4",
+    "directory_name": "伊藤機械_ポンプシステム",
+    "customer_name": "伊藤機械工業株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-005",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-29",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "組立ライン",
+        "color": "sky",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "油圧ポンプHP-300 × 3台",
+        "type": "TEXT"
+      }
+    },
+    "name": "油圧ポンプHP-300 納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery005_v1.pdf",
+    "remarks": "大型機械用、重量物注意",
+    "created_by_name": "伊藤三郎",
+    "updated_by_name": "田中太郎",
+    "created_at": "2024-08-29T11:45:00.000Z",
+    "updated_at": "2024-08-30T15:20:00.000Z"
+  },
+  {
+    "id": 6,
+    "ulid": "01H9T6A1G7H8I9J0K1L2M3N4O5",
+    "directory_name": "渡辺精工_バルブ製造",
+    "customer_name": "渡辺精工株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-006",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-30",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "品質管理部",
+        "color": "yellow",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "電磁バルブEV-150 × 30個",
+        "type": "TEXT"
+      }
+    },
+    "name": "電磁バルブEV-150 納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery006_v1.pdf",
+    "remarks": "ステンレス製、耐圧試験済み",
+    "created_by_name": "渡辺四郎",
+    "updated_by_name": "山田次郎",
+    "created_at": "2024-08-30T08:30:00.000Z",
+    "updated_at": "2024-08-30T17:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "ulid": "01H9T6A1H8I9J0K1L2M3N4O5P6",
+    "directory_name": "中村システム_自動化装置",
+    "customer_name": "中村システム株式会社",
+    "version": 3,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-007",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-08-31",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "システム統合部",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "自動制御装置AC-1000 × 1式",
+        "type": "TEXT"
+      }
+    },
+    "name": "自動制御装置AC-1000 最終納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery007_v3.pdf",
+    "remarks": "システム完成版、設置調整込み",
+    "created_by_name": "中村五郎",
+    "updated_by_name": "佐藤花子",
+    "created_at": "2024-08-31T10:00:00.000Z",
+    "updated_at": "2024-08-31T16:30:00.000Z"
+  },
+  {
+    "id": 8,
+    "ulid": "01H9T6A1I9J0K1L2M3N4O5P6Q7",
+    "directory_name": "小林製造_コンベア部品",
+    "customer_name": "小林製造株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-008",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-09-01",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "製造現場",
+        "color": "slate",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "ベルトコンベアBC-2000 × 2台",
+        "type": "TEXT"
+      }
+    },
+    "name": "ベルトコンベアBC-2000 納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery008_v1.pdf",
+    "remarks": "長尺物、分割納品対応",
+    "created_by_name": "小林六郎",
+    "updated_by_name": "高橋一郎",
+    "created_at": "2024-09-01T07:45:00.000Z",
+    "updated_at": "2024-09-01T12:20:00.000Z"
+  },
+  {
+    "id": 9,
+    "ulid": "01H9T6A1J0K1L2M3N4O5P6Q7R8",
+    "directory_name": "加藤工業_測定機器",
+    "customer_name": "加藤工業株式会社",
+    "version": 2,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-009",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-09-02",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "計測室",
+        "color": "emerald",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "三次元測定器3D-500 × 1台",
+        "type": "TEXT"
+      }
+    },
+    "name": "三次元測定器3D-500 精密納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery009_v2.pdf",
+    "remarks": "高精度測定器、校正証明書付き",
+    "created_by_name": "加藤七郎",
+    "updated_by_name": "伊藤三郎",
+    "created_at": "2024-09-02T09:30:00.000Z",
+    "updated_at": "2024-09-02T14:45:00.000Z"
+  },
+  {
+    "id": 10,
+    "ulid": "01H9T6A1K1L2M3N4O5P6Q7R8S9",
+    "directory_name": "斎藤電子_回路設計",
+    "customer_name": "斎藤電子株式会社",
+    "version": 1,
+    "directory_document_custom_items": {
+      "納品書番号": {
+        "value": "DN-2024-010",
+        "type": "TEXT"
+      },
+      "納品日": {
+        "value": "2024-09-03",
+        "type": "DATE"
+      },
+      "納品先": {
+        "value": "電子回路部",
+        "color": "pink",
+        "type": "SELECT"
+      },
+      "品目・数量": {
+        "value": "制御回路基板CC-800 × 15枚",
+        "type": "TEXT"
+      }
+    },
+    "name": "制御回路基板CC-800 納品書",
+    "s3_url": "https://archaive-documents.s3.amazonaws.com/delivery/delivery010_v1.pdf",
+    "remarks": "カスタム回路、動作確認済み",
+    "created_by_name": "斎藤八郎",
+    "updated_by_name": "渡辺四郎",
+    "created_at": "2024-09-03T13:15:00.000Z",
+    "updated_at": "2024-09-03T18:50:00.000Z"
+  }
+]

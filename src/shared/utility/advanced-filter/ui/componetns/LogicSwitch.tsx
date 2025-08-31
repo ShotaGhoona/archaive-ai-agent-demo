@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 
 interface LogicSwitchProps {
@@ -8,11 +8,11 @@ interface LogicSwitchProps {
 
 export function LogicSwitch({ logic, onToggle }: LogicSwitchProps) {
   return (
-    <div className="flex justify-center py-3">
-      <div className="bg-gray-100 rounded-full p-1 flex">
+    <div className='flex justify-center py-3'>
+      <div className='flex rounded-full bg-gray-100 p-1'>
         <button
           onClick={() => onToggle('AND')}
-          className={`px-4 py-1 rounded-full text-sm font-medium transition-all ${
+          className={`rounded-full px-4 py-1 text-sm font-medium transition-all ${
             logic === 'AND'
               ? 'bg-primary text-white shadow-sm'
               : 'text-gray-600 hover:text-gray-800'
@@ -22,7 +22,7 @@ export function LogicSwitch({ logic, onToggle }: LogicSwitchProps) {
         </button>
         <button
           onClick={() => onToggle('OR')}
-          className={`px-4 py-1 rounded-full text-sm font-medium transition-all ${
+          className={`rounded-full px-4 py-1 text-sm font-medium transition-all ${
             logic === 'OR'
               ? 'bg-primary text-white shadow-sm'
               : 'text-gray-600 hover:text-gray-800'

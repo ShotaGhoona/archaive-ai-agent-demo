@@ -15,15 +15,15 @@ export function NumberFieldComponent<T>({
   onChange,
 }: NumberFieldComponentProps<T>) {
   return (
-    <div className="space-y-2">
+    <div className='space-y-2'>
       <Label>{column.label}</Label>
       <Input
         value={String(value || '')}
         onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
         disabled={!column.editable}
         placeholder={column.placeholder}
-        className={!column.editable ? "bg-gray-50" : ""}
-        type="number"
+        className={!column.editable ? 'bg-gray-50' : ''}
+        type='number'
       />
     </div>
   );

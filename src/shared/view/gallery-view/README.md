@@ -40,7 +40,7 @@ export const createMyGalleryConfig = (): GalleryViewConfig<MyItem> => ({
     grid: { xs: 1, md: 2, lg: 3, xl: 4 },
     aspectRatio: 'video'  // 'video' | 'square' | '4/3' | 'auto' | string
   },
-  
+
   itemConfig: {
     showThumbnail: true,
     getThumbnailUrl: (item) => item.imageUrl,
@@ -52,7 +52,7 @@ export const createMyGalleryConfig = (): GalleryViewConfig<MyItem> => ({
       </div>
     )
   },
-  
+
   behaviorConfig: {
     linkConfig: {
       enabled: true,
@@ -60,7 +60,7 @@ export const createMyGalleryConfig = (): GalleryViewConfig<MyItem> => ({
       target: '_self'  // '_self' | '_blank'
     }
   },
-  
+
   pagination: {
     enabled: true,
     defaultItemsPerPage: 20,
@@ -68,7 +68,7 @@ export const createMyGalleryConfig = (): GalleryViewConfig<MyItem> => ({
     showItemsPerPageSelector: true,
     maxVisiblePages: 7,
   },
-  
+
   getRowId: (item) => item.id
 });
 ```
@@ -87,7 +87,7 @@ interface MyGalleryViewProps {
 
 export function MyGalleryView({ items, loading }: MyGalleryViewProps) {
   const galleryConfig = createMyGalleryConfig();
-  
+
   return (
     <GalleryView
       data={items}
@@ -104,48 +104,48 @@ export function MyGalleryView({ items, loading }: MyGalleryViewProps) {
 
 #### layoutConfig (必須)
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `grid.xs` | `number` | xsブレークポイント（390px未満）でのカラム数 |
-| `grid.sm` | `number` | smブレークポイント（640px以上）でのカラム数 |
-| `grid.md` | `number` | mdブレークポイント（768px以上）でのカラム数 |
-| `grid.lg` | `number` | lgブレークポイント（1024px以上）でのカラム数 |
-| `grid.xl` | `number` | xlブレークポイント（1280px以上）でのカラム数 |
-| `aspectRatio` | `'video' \| 'square' \| '4/3' \| 'auto' \| string` | サムネイルのアスペクト比 |
+| プロパティ    | 型                                                 | 説明                                         |
+| ------------- | -------------------------------------------------- | -------------------------------------------- |
+| `grid.xs`     | `number`                                           | xsブレークポイント（390px未満）でのカラム数  |
+| `grid.sm`     | `number`                                           | smブレークポイント（640px以上）でのカラム数  |
+| `grid.md`     | `number`                                           | mdブレークポイント（768px以上）でのカラム数  |
+| `grid.lg`     | `number`                                           | lgブレークポイント（1024px以上）でのカラム数 |
+| `grid.xl`     | `number`                                           | xlブレークポイント（1280px以上）でのカラム数 |
+| `aspectRatio` | `'video' \| 'square' \| '4/3' \| 'auto' \| string` | サムネイルのアスペクト比                     |
 
 #### itemConfig (必須)
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `showThumbnail` | `boolean` | サムネイル表示のオン/オフ |
-| `getThumbnailUrl` | `(item: T) => string` | サムネイルURL取得関数（showThumbnail=trueの場合必須） |
-| `thumbnailOverlayRender` | `(item: T) => React.ReactNode` | サムネイル上のオーバーレイコンテンツ |
-| `contentRender` | `(item: T) => React.ReactNode` | カード下部のカスタムコンテンツ |
+| プロパティ               | 型                             | 説明                                                  |
+| ------------------------ | ------------------------------ | ----------------------------------------------------- |
+| `showThumbnail`          | `boolean`                      | サムネイル表示のオン/オフ                             |
+| `getThumbnailUrl`        | `(item: T) => string`          | サムネイルURL取得関数（showThumbnail=trueの場合必須） |
+| `thumbnailOverlayRender` | `(item: T) => React.ReactNode` | サムネイル上のオーバーレイコンテンツ                  |
+| `contentRender`          | `(item: T) => React.ReactNode` | カード下部のカスタムコンテンツ                        |
 
 #### behaviorConfig (オプション)
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `linkConfig.enabled` | `boolean` | リンク機能の有効/無効 |
-| `linkConfig.getHref` | `(item: T) => string` | リンクURL生成関数 |
-| `linkConfig.target` | `'_self' \| '_blank'` | リンクターゲット |
+| プロパティ           | 型                    | 説明                  |
+| -------------------- | --------------------- | --------------------- |
+| `linkConfig.enabled` | `boolean`             | リンク機能の有効/無効 |
+| `linkConfig.getHref` | `(item: T) => string` | リンクURL生成関数     |
+| `linkConfig.target`  | `'_self' \| '_blank'` | リンクターゲット      |
 
 #### pagination (オプション)
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `enabled` | `boolean` | ページネーション機能の有効/無効 |
-| `defaultItemsPerPage` | `number` | デフォルト表示件数（推奨: 20） |
-| `allowedItemsPerPage` | `number[]` | 選択可能な表示件数（推奨: [10, 20, 50, 100]） |
-| `showItemsPerPageSelector` | `boolean` | 表示件数セレクターの表示/非表示 |
-| `maxVisiblePages` | `number` | ページ番号の最大表示数（推奨: 7） |
+| プロパティ                 | 型         | 説明                                          |
+| -------------------------- | ---------- | --------------------------------------------- |
+| `enabled`                  | `boolean`  | ページネーション機能の有効/無効               |
+| `defaultItemsPerPage`      | `number`   | デフォルト表示件数（推奨: 20）                |
+| `allowedItemsPerPage`      | `number[]` | 選択可能な表示件数（推奨: [10, 20, 50, 100]） |
+| `showItemsPerPageSelector` | `boolean`  | 表示件数セレクターの表示/非表示               |
+| `maxVisiblePages`          | `number`   | ページ番号の最大表示数（推奨: 7）             |
 
 #### その他
 
-| プロパティ | 型 | 説明 |
-|------------|----|----|
-| `getRowId` | `(item: T) => string` | 一意キー生成関数（デフォルト：ランダム値） |
-| `className` | `string` | 追加CSSクラス |
+| プロパティ  | 型                    | 説明                                       |
+| ----------- | --------------------- | ------------------------------------------ |
+| `getRowId`  | `(item: T) => string` | 一意キー生成関数（デフォルト：ランダム値） |
+| `className` | `string`              | 追加CSSクラス                              |
 
 ## 実装例
 
@@ -189,7 +189,7 @@ export const createInteractiveGalleryConfig = (
   itemConfig: {
     showThumbnail: true,
     getThumbnailUrl: (item) => item.thumbnail,
-    
+
     // ホバー時のオーバーレイボタン
     thumbnailOverlayRender: (item) => (
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2">
@@ -197,7 +197,7 @@ export const createInteractiveGalleryConfig = (
         <Button variant="destructive" onClick={() => onDelete(item)}>削除</Button>
       </div>
     ),
-    
+
     contentRender: (item) => (
       <div>
         <h3 className="font-medium">{item.title}</h3>
@@ -255,21 +255,25 @@ export const createLinkedGalleryConfig = (): GalleryViewConfig<Article> => ({
 ## プロジェクト内の実装例
 
 ### BlueprintGalleryView
+
 - **用途**: 図面ホーム画面での図面一覧表示
 - **特徴**: 4列レスポンシブ、詳細情報表示、図面詳細ページへのリンク、**ページネーション対応**
 - **ファイル**: `src/page-components/blueprint/home/lib/blueprintGalleryConfig.tsx`
 
 ### SimilarBlueprintGallery
+
 - **用途**: 類似図面表示
 - **特徴**: 2列レイアウト、ホバーオーバーレイボタン、比較機能、**ページネーション対応**
 - **ファイル**: `src/page-components/blueprint/similar/lib/similarBlueprintGalleryConfig.tsx`
 
 ### ProjectBlueprintGallery
+
 - **用途**: プロジェクト内の図面一覧
 - **特徴**: コンパクト表示、ファイル名・商品名表示、**ページネーション対応**
 - **ファイル**: `src/page-components/project/basic-information/lib/projectBlueprintGalleryConfig.tsx`
 
 ### QuotationBlueprintGallery
+
 - **用途**: 見積書作成用図面一覧
 - **特徴**: 見積もりボタン、ステータス表示、**ページネーション対応**
 - **ファイル**: `src/page-components/project/quotation/lib/quotationBlueprintGalleryConfig.tsx`
@@ -329,11 +333,11 @@ src/shared/view/gallery-view/
 export const createPaginatedGalleryConfig = (): GalleryViewConfig<Item> => ({
   // ... 他の設定
   pagination: {
-    enabled: true,                          // ページネーション有効化
-    defaultItemsPerPage: 20,               // デフォルト表示数
+    enabled: true, // ページネーション有効化
+    defaultItemsPerPage: 20, // デフォルト表示数
     allowedItemsPerPage: [10, 20, 50, 100], // 選択可能な表示数
-    showItemsPerPageSelector: true,         // 表示数セレクター表示
-    maxVisiblePages: 7,                     // ページ番号最大表示数
+    showItemsPerPageSelector: true, // 表示数セレクター表示
+    maxVisiblePages: 7, // ページ番号最大表示数
   },
   // ...
 });

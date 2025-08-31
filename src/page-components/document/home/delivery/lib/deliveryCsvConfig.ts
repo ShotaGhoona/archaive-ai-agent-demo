@@ -1,25 +1,21 @@
 import { CsvColumnConfig } from '@/shared';
-import { Delivery } from '../model';
+import { DocumentDeliveryDataInterface } from '@/dummy-data-er-fix/document';
 
-export const DELIVERY_CSV_COLUMNS: Omit<CsvColumnConfig<Delivery>, 'enabled'>[] = [
-  { key: 'name', label: '帳票名' },
-  { key: 'project_name', label: 'プロジェクト名' },
-  { key: 'delivery_destination', label: '納品先' },
-  { key: 'delivery_date', label: '納品日',
-    formatter: (value: unknown) => value ? new Date(value as string).toLocaleDateString('ja-JP') : '-'
-  },
-  { key: 'inspection_scheduled_date', label: '検収予定日',
-    formatter: (value: unknown) => value ? new Date(value as string).toLocaleDateString('ja-JP') : '-'
-  },
-  { key: 'inspection_status', label: '検収状況' },
-  {
-    key: 'created_at',
-    label: '作成日',
-    formatter: (value: unknown) => new Date(value as string).toLocaleDateString('ja-JP')
-  },
-  {
-    key: 'updated_at',
-    label: '更新日',
-    formatter: (value: unknown) => new Date(value as string).toLocaleDateString('ja-JP')
-  }
+export const DELIVERY_CSV_COLUMNS: Omit<
+  CsvColumnConfig<DocumentDeliveryDataInterface>,
+  'enabled'
+>[] = [
+  { key: 'directory_document_custom_items.納品書番号.value', label: '納品書番号' },
+  { key: 'directory_name', label: 'プロジェクト名' },
+  { key: 'customer_name', label: '顧客名' },
+  { key: 'directory_document_custom_items.納品先.value', label: '納品先' },
+  { key: 'directory_document_custom_items.納品日.value', label: '納品日' },
+  { key: 'directory_document_custom_items.品目・数量.value', label: '品目・数量' },
+  { key: 'name', label: 'ドキュメント名' },
+  { key: 'version', label: 'バージョン' },
+  { key: 'created_by_name', label: '作成者' },
+  { key: 'updated_by_name', label: '更新者' },
+  { key: 'remarks', label: '備考' },
+  { key: 'created_at', label: '作成日時' },
+  { key: 'updated_at', label: '最終更新日時' },
 ];
