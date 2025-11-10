@@ -15,4 +15,5 @@ export type {
 } from './types';
 
 // モックデータのエクスポート
-export { mockBomData } from './mockData';
+export { mockBomData } from './mockIndustrialPumpData';
+export { allProducts, industrialPump, industrialCompressor, industrialValve, industrialHeatExchanger, industrialMotor } from './mockProductData';

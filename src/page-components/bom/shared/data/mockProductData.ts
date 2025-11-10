@@ -1,5 +1,5 @@
 import type { Directory } from './types';
-import { mockBomData } from './mockData';
+import { mockBomData } from './mockIndustrialPumpData';
 
 // ヘルパー関数: ULID風の文字列生成
 const generateUlid = (prefix: string = '') => {
