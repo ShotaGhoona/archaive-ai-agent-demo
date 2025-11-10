@@ -53,6 +53,7 @@ const createDrawingFile = (name: string, drawingNumber: string): DrawingFile => 
   name,
   fileExtension: 'pdf',
   s3Url: `s3://bucket/drawings/${drawingNumber}.pdf`,
+  previewImageUrl: `https://picsum.photos/seed/${drawingNumber}/800/600`, // ランダムな技術図面風画像
   createdBy: 'user_001',
   updatedBy: 'user_001',
   createdAt: '2024-01-15T09:00:00Z',
@@ -71,7 +72,7 @@ const createDrawingFile = (name: string, drawingNumber: string): DrawingFile => 
 });
 
 // Directory文書のサンプル
-const createDirectoryDocument = (): DirectoryDocument => ({
+const createDirectoryDocument = (docName: string = 'spec'): DirectoryDocument => ({
   id: generateUlid('dd_'),
   ulid: generateUlid(),
   seqNumber: 1,
@@ -84,6 +85,7 @@ const createDirectoryDocument = (): DirectoryDocument => ({
       version: 1,
       name: '製品仕様書_v1.0',
       s3Url: 's3://bucket/documents/spec_v1.pdf',
+      previewImageUrl: `https://picsum.photos/seed/${docName}/800/600`, // ランダムな文書風画像
       customItems: {},
       createdAt: '2024-01-15T09:00:00Z',
       updatedAt: '2024-01-15T09:00:00Z',

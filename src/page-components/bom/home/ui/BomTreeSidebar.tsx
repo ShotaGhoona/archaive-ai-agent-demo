@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronRight, ChevronDown, FolderOpen, Folder, SquareChartGantt, FileText } from 'lucide-react';
-import type { BomNode, BomTree, Directory, DocumentNode } from '../data';
+import type { BomNode, BomTree, Directory, DocumentNode } from '../../shared/data';
 import { ScrollArea } from '@/shared';
 
 interface BomTreeSidebarProps {

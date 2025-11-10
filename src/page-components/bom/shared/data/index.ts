@@ -7,6 +7,7 @@ export type {
   DirectoryDocument,
   LeafProduct,
   Directory,
+  DocumentNode,
   BomNode,
   BomTree,
   ProductListItem,

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import type { BomNode } from '../data';
-import { mockBomData } from '../data';
+import type { BomNode } from '../../shared/data';
+import { mockBomData } from '../../shared/data';
 import { BomTreeSidebar } from './BomTreeSidebar';
 import { BomDetailPanel } from './BomDetailPanel';
 import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/shared';

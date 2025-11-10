@@ -34,6 +34,7 @@ export interface DrawingFile {
   name: string;
   fileExtension: string;
   s3Url: string;
+  previewImageUrl?: string; // プレビュー用画像URL
   remarks?: string;
   createdBy: string;
   updatedBy: string;
@@ -56,6 +57,7 @@ export interface DirectoryDocument {
     version: number;
     name: string;
     s3Url: string;
+    previewImageUrl?: string; // プレビュー用画像URL
     customItems: Record<string, any>;
     remarks?: string;
     createdAt: string;
