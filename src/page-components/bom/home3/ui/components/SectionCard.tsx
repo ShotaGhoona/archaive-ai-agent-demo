@@ -129,7 +129,9 @@ function SectionCard({ data, selected }: SectionCardProps) {
       <div className={`${getColorClasses()} border-2 rounded-lg shadow-md w-full h-full min-w-[400px] min-h-[150px]`}>
         {/* ヘッダー（左上に名前） */}
         <div className="px-4 py-2 border-b border-gray-300">
-          <h3 className="text-sm font-bold text-gray-900">{bomNode.name || (bomNode as DocumentNode).document?.typeName}</h3>
+          <h3 className="text-sm font-bold text-gray-900">
+            {nodeType === 'document' ? (bomNode as DocumentNode).document.typeName : bomNode.name}
+          </h3>
         </div>
 
         {/* コンテンツエリア */}

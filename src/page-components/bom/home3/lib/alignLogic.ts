@@ -1,11 +1,14 @@
 import { Node } from 'reactflow';
 import { Directory, BomNode, DocumentNode } from '../../shared/data/types';
 import { SectionNodeData } from './types';
-import { getDirectoryChildren, getLeafProductChildren, getDocumentChildren, getAllChildren } from './layoutUtils';
-
-// 定数
-const HORIZONTAL_GAP = 300; // 親子間の横間隔
-const VERTICAL_GAP = 100; // 兄弟間の縦間隔
+import {
+  getDirectoryChildren,
+  getLeafProductChildren,
+  getDocumentChildren,
+  getAllChildren,
+  HORIZONTAL_GAP,
+  VERTICAL_GAP
+} from './layoutUtils';
 
 // React Flowのnode.positionは左上座標を表します
 // 以下の座標変換関数は、中央座標を使う場合のために残していますが、現在は使用していません
@@ -189,20 +192,6 @@ function calculateSubtreeWidth(node: Node<SectionNodeData>, allNodes: Node<Secti
 }
 
 /**
- * 親子間のGap
- */
-function calculateHorizontalGap(): number {
-  return HORIZONTAL_GAP;
-}
-
-/**
- * 兄弟間のGap
- */
-function calculateVerticalGap(): number {
-  return VERTICAL_GAP;
-}
-
-/**
  * ルートノードを見つける
  */
 function findRootNode(nodes: Node<SectionNodeData>[]): Node<SectionNodeData> | null {
@@ -226,7 +215,7 @@ function alignHierarchy(
   const positions = new Map<string, { x: number; y: number }>();
 
   // 現在のノードの左上座標
-  const currentLeftX = isRoot ? parentLeftX : parentLeftX + parentWidth + calculateHorizontalGap();
+  const currentLeftX = isRoot ? parentLeftX : parentLeftX + parentWidth + HORIZONTAL_GAP;
   const currentTopY = parentTopY;
 
   positions.set(node.id, { x: currentLeftX, y: currentTopY });
@@ -267,7 +256,7 @@ function alignHierarchy(
     });
 
     // 次の兄弟の上端 = 現在の子の上端 + サブツリー高さ + 兄弟Gap
-    currentChildTop += childSubtreeHeights[index] + calculateVerticalGap();
+    currentChildTop += childSubtreeHeights[index] + VERTICAL_GAP;
   });
 
   return positions;

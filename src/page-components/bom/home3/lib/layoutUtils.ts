@@ -3,8 +3,8 @@ import { Directory, BomNode, DocumentNode, LeafProduct, DirectoryDocument } from
 // セクションカードのサイズ定数
 export const SECTION_WIDTH = 400;
 export const SECTION_HEIGHT = 200; // 平均的な高さ
-export const HORIZONTAL_GAP = 300; // 親子間の横間隔
-export const VERTICAL_GAP = 100; // 兄弟間の縦間隔
+export const HORIZONTAL_GAP = 100; // 親子間の横間隔
+export const VERTICAL_GAP = 50; // 兄弟間の縦間隔
 
 // 初期位置（ルートノード）
 export const INITIAL_POSITION = { x: 100, y: 300 };

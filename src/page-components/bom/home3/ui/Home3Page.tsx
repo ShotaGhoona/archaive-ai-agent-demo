@@ -32,8 +32,8 @@ export default function Home3Page() {
   const [selectedProduct, setSelectedProduct] = useState<Directory>(allProducts[0]);
 
   // React Flowのノードとエッジ
-  const [nodes, setNodes, onNodesChange] = useNodesState<Node<SectionNodeData>>([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<SectionNodeData>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   // ノードサイズを記録（折りたたみ後も保持）
   const nodeSizesRef = useRef<Map<string, { width: number; height: number }>>(new Map());
