@@ -16,9 +16,11 @@ import { Directory, BomNode } from '../../shared/data/types';
 import { allProducts } from '../../shared/data';
 import ProductSelector from './ProductSelector';
 import SectionCard from './components/SectionCard';
+import AlignButton from './components/AlignButton';
 import { SectionNodeData } from '../lib/types';
 import { INITIAL_POSITION } from '../lib/layoutUtils';
 import { expandNode, collapseNode } from '../lib/expandLogic';
+import { alignAllNodes } from '../lib/alignLogic';
 
 // カスタムノードタイプの定義
 const nodeTypes = {
@@ -111,6 +113,11 @@ export default function Home3Page() {
     handleProductChange(selectedProduct);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // 整列処理
+  const handleAlign = useCallback(() => {
+    setNodes((nds) => alignAllNodes(nds));
+  }, [setNodes]);
+
   return (
     <div className="relative h-[calc(100vh-45px)] w-full">
       {/* 製品セレクター */}
@@ -119,6 +126,9 @@ export default function Home3Page() {
         selectedProduct={selectedProduct}
         onSelectProduct={handleProductChange}
       />
+
+      {/* 整列ボタン */}
+      <AlignButton onAlign={handleAlign} />
 
       {/* React Flow Canvas */}
       <ReactFlow

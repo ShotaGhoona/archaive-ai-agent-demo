@@ -116,9 +116,19 @@ export function collapseNode(
     );
 
   // 関連するエッジを削除
-  const updatedEdges = currentEdges.filter(
-    (e) => !allDescendantIds.has(e.target) && !allDescendantIds.has(e.source)
-  );
+  // - 子孫ノードが source または target になっているエッジ
+  // - 親ノード（nodeId）から子へのエッジ
+  const updatedEdges = currentEdges.filter((e) => {
+    // 親から子への直接エッジを削除
+    if (e.source === nodeId && childIds.has(e.target)) {
+      return false;
+    }
+    // 子孫ノードが関係するエッジを削除
+    if (allDescendantIds.has(e.target) || allDescendantIds.has(e.source)) {
+      return false;
+    }
+    return true;
+  });
 
   return { nodes: updatedNodes, edges: updatedEdges };
 }
