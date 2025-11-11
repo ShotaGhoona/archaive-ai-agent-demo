@@ -13,9 +13,15 @@ export interface CanvasState {
 
 // Section Node Data (React Flowのカスタムノードデータ)
 export interface SectionNodeData {
-  bomNode: BomNode; // Directory or LeafProduct
-  isExpanded: boolean; // 子要素を展開しているか
-  onExpand?: () => void; // 展開ボタンのコールバック
+  bomNode: BomNode; // Directory, LeafProduct, or DocumentNode
+  // タイプ別の展開状態
+  isDirectoryExpanded: boolean;
+  isLeafProductExpanded: boolean;
+  isDocumentExpanded: boolean;
+  // タイプ別の展開コールバック
+  onExpandDirectory?: () => void;
+  onExpandLeafProduct?: () => void;
+  onExpandDocument?: () => void;
 }
 
 // Section Node (React FlowのNode型を拡張)

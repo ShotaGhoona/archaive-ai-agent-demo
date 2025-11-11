@@ -111,7 +111,7 @@ const createLeafProduct = (
             version: 1,
             name: `${name}_仕様書_v1.0`,
             s3Url: `s3://bucket/documents/${id}/spec_v1.pdf`,
-            previewImageUrl: `https://picsum.photos/seed/${id}-spec/800/600`,
+            previewImageUrl: `https://www.kabuku.io/wp-content/uploads/2022/12/end-1024x724.jpg`,
             customItems: {},
             createdAt: '2024-01-15T09:00:00Z',
             updatedAt: '2024-01-15T09:00:00Z',

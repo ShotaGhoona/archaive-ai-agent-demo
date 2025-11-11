@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect, useMemo } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -19,7 +19,7 @@ import SectionCard from './components/SectionCard';
 import AlignButton from './components/AlignButton';
 import { SectionNodeData } from '../lib/types';
 import { INITIAL_POSITION } from '../lib/layoutUtils';
-import { expandNode, collapseNode, calculateInitialNodeSize } from '../lib/expandLogic';
+import { expandNodeByType, collapseNodeByType, calculateInitialNodeSize } from '../lib/expandLogic';
 import { alignAllNodes } from '../lib/alignLogic';
 
 // カスタムノードタイプの定義
@@ -31,87 +31,224 @@ export default function Home3Page() {
   // 製品選択状態
   const [selectedProduct, setSelectedProduct] = useState<Directory>(allProducts[0]);
 
-  // 展開状態の管理（ノードIDをキーに）
-  const [expandedNodeIds, setExpandedNodeIds] = useState<Set<string>>(new Set());
-
   // React Flowのノードとエッジ
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<SectionNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
-  // ノード展開/折りたたみ処理
-  const handleExpand = useCallback((nodeId: string, bomNode: BomNode) => {
-    setExpandedNodeIds((prev) => {
-      const newSet = new Set(prev);
-      const isCurrentlyExpanded = prev.has(nodeId);
+  // ノード展開処理（Directory）
+  const handleExpandDirectory = useCallback(
+    (nodeId: string, bomNode: BomNode) => {
+      setNodes((nds) => {
+        const currentNode = nds.find((n) => n.id === nodeId);
+        if (!currentNode) return nds;
 
-      if (isCurrentlyExpanded) {
-        // 折りたたみ
-        newSet.delete(nodeId);
+        const isCurrentlyExpanded = currentNode.data.isDirectoryExpanded;
 
-        setNodes((nds) => {
+        if (isCurrentlyExpanded) {
+          // 折りたたみ
           setEdges((eds) => {
-            const { nodes: updatedNodes, edges: updatedEdges } = collapseNode(
+            const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
               nodeId,
               bomNode,
+              'directory',
               nds,
               eds
             );
-            setEdges(updatedEdges);
             return updatedEdges;
           });
-          const { nodes: updatedNodes } = collapseNode(nodeId, bomNode, nds, []);
+          const { nodes: updatedNodes } = collapseNodeByType(
+            nodeId,
+            bomNode,
+            'directory',
+            nds,
+            []
+          );
           return updatedNodes;
-        });
-      } else {
-        // 展開
-        newSet.add(nodeId);
-
-        setNodes((nds) => {
+        } else {
+          // 展開
           setEdges((eds) => {
-            const { nodes: updatedNodes, edges: updatedEdges } = expandNode(
+            const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
               nodeId,
               bomNode,
+              'directory',
               nds,
               eds,
-              handleExpand
+              handleExpandDirectory,
+              handleExpandLeafProduct,
+              handleExpandDocument
             );
-            setEdges(updatedEdges);
             return updatedEdges;
           });
-          const { nodes: updatedNodes } = expandNode(nodeId, bomNode, nds, [], handleExpand);
+          const { nodes: updatedNodes } = expandNodeByType(
+            nodeId,
+            bomNode,
+            'directory',
+            nds,
+            [],
+            handleExpandDirectory,
+            handleExpandLeafProduct,
+            handleExpandDocument
+          );
           return updatedNodes;
-        });
-      }
+        }
+      });
+    },
+    [setNodes, setEdges]
+  );
 
-      return newSet;
-    });
-  }, [setNodes, setEdges]);
+  // ノード展開処理（LeafProduct）
+  const handleExpandLeafProduct = useCallback(
+    (nodeId: string, bomNode: BomNode) => {
+      setNodes((nds) => {
+        const currentNode = nds.find((n) => n.id === nodeId);
+        if (!currentNode) return nds;
+
+        const isCurrentlyExpanded = currentNode.data.isLeafProductExpanded;
+
+        if (isCurrentlyExpanded) {
+          // 折りたたみ
+          setEdges((eds) => {
+            const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
+              nodeId,
+              bomNode,
+              'leaf-product',
+              nds,
+              eds
+            );
+            return updatedEdges;
+          });
+          const { nodes: updatedNodes } = collapseNodeByType(
+            nodeId,
+            bomNode,
+            'leaf-product',
+            nds,
+            []
+          );
+          return updatedNodes;
+        } else {
+          // 展開
+          setEdges((eds) => {
+            const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
+              nodeId,
+              bomNode,
+              'leaf-product',
+              nds,
+              eds,
+              handleExpandDirectory,
+              handleExpandLeafProduct,
+              handleExpandDocument
+            );
+            return updatedEdges;
+          });
+          const { nodes: updatedNodes } = expandNodeByType(
+            nodeId,
+            bomNode,
+            'leaf-product',
+            nds,
+            [],
+            handleExpandDirectory,
+            handleExpandLeafProduct,
+            handleExpandDocument
+          );
+          return updatedNodes;
+        }
+      });
+    },
+    [setNodes, setEdges]
+  );
+
+  // ノード展開処理（Document）
+  const handleExpandDocument = useCallback(
+    (nodeId: string, bomNode: BomNode) => {
+      setNodes((nds) => {
+        const currentNode = nds.find((n) => n.id === nodeId);
+        if (!currentNode) return nds;
+
+        const isCurrentlyExpanded = currentNode.data.isDocumentExpanded;
+
+        if (isCurrentlyExpanded) {
+          // 折りたたみ
+          setEdges((eds) => {
+            const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
+              nodeId,
+              bomNode,
+              'document',
+              nds,
+              eds
+            );
+            return updatedEdges;
+          });
+          const { nodes: updatedNodes } = collapseNodeByType(
+            nodeId,
+            bomNode,
+            'document',
+            nds,
+            []
+          );
+          return updatedNodes;
+        } else {
+          // 展開
+          setEdges((eds) => {
+            const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
+              nodeId,
+              bomNode,
+              'document',
+              nds,
+              eds,
+              handleExpandDirectory,
+              handleExpandLeafProduct,
+              handleExpandDocument
+            );
+            return updatedEdges;
+          });
+          const { nodes: updatedNodes } = expandNodeByType(
+            nodeId,
+            bomNode,
+            'document',
+            nds,
+            [],
+            handleExpandDirectory,
+            handleExpandLeafProduct,
+            handleExpandDocument
+          );
+          return updatedNodes;
+        }
+      });
+    },
+    [setNodes, setEdges]
+  );
 
   // 製品切り替え時の処理
-  const handleProductChange = useCallback((product: Directory) => {
-    setSelectedProduct(product);
-    setExpandedNodeIds(new Set());
+  const handleProductChange = useCallback(
+    (product: Directory) => {
+      setSelectedProduct(product);
 
-    // ルートノードを作成
-    const rootSize = calculateInitialNodeSize(product);
-    const rootNode: Node<SectionNodeData> = {
-      id: product.id,
-      type: 'sectionCard',
-      position: INITIAL_POSITION,
-      data: {
-        bomNode: product,
-        isExpanded: false,
-        onExpand: () => handleExpand(product.id, product),
-      },
-      style: {
-        width: rootSize.width,
-        height: rootSize.height,
-      },
-    };
+      // ルートノードを作成
+      const rootSize = calculateInitialNodeSize(product);
+      const rootNode: Node<SectionNodeData> = {
+        id: product.id,
+        type: 'sectionCard',
+        position: INITIAL_POSITION,
+        data: {
+          bomNode: product,
+          isDirectoryExpanded: false,
+          isLeafProductExpanded: false,
+          isDocumentExpanded: false,
+          onExpandDirectory: () => handleExpandDirectory(product.id, product),
+          onExpandLeafProduct: () => handleExpandLeafProduct(product.id, product),
+          onExpandDocument: () => handleExpandDocument(product.id, product),
+        },
+        style: {
+          width: rootSize.width,
+          height: rootSize.height,
+        },
+      };
 
-    setNodes([rootNode]);
-    setEdges([]);
-  }, [setNodes, setEdges, handleExpand]);
+      setNodes([rootNode]);
+      setEdges([]);
+    },
+    [setNodes, setEdges, handleExpandDirectory, handleExpandLeafProduct, handleExpandDocument]
+  );
 
   // 初回表示時にルートノードを作成
   useEffect(() => {

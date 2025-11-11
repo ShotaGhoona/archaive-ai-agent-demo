@@ -1,4 +1,4 @@
-import { Directory, BomNode } from '../../shared/data/types';
+import { Directory, BomNode, DocumentNode, LeafProduct, DirectoryDocument } from '../../shared/data/types';
 
 // セクションカードのサイズ定数
 export const SECTION_WIDTH = 400;
@@ -9,39 +9,65 @@ export const VERTICAL_GAP = 100; // 兄弟間の縦間隔
 // 初期位置（ルートノード）
 export const INITIAL_POSITION = { x: 100, y: 300 };
 
-/**
- * 子ノードの位置を計算
- * 親の右側に、縦並びで配置
- */
 export interface Position {
   x: number;
   y: number;
 }
 
-export function calculateChildPositions(
-  parentPosition: Position,
-  childCount: number
-): Position[] {
-  if (childCount === 0) return [];
-
-  // 親の右側のX座標
-  const childX = parentPosition.x + SECTION_WIDTH + HORIZONTAL_GAP;
-
-  // 全体の高さを計算
-  const totalHeight = childCount * SECTION_HEIGHT + (childCount - 1) * VERTICAL_GAP;
-
-  // 親の中央を基準に、上下に配置
-  const startY = parentPosition.y - totalHeight / 2 + SECTION_HEIGHT / 2;
-
-  // 各子の位置を計算
-  return Array.from({ length: childCount }, (_, index) => ({
-    x: childX,
-    y: startY + index * (SECTION_HEIGHT + VERTICAL_GAP),
-  }));
+/**
+ * DocumentNode を生成
+ */
+export function createDocumentNode(doc: DirectoryDocument, parentId: string): DocumentNode {
+  return {
+    id: doc.id,
+    ulid: doc.ulid,
+    type: 'document',
+    parentId,
+    document: doc,
+  };
 }
 
 /**
- * BomNodeから子要素のみを取得（Documentを除外）
+ * Directory の子ノード（Directory のみ）を取得
+ */
+export function getDirectoryChildren(node: BomNode): BomNode[] {
+  if (node.type !== 'directory') return [];
+  const directory = node as Directory;
+  return (directory.children || []).filter((child) => child.type === 'directory');
+}
+
+/**
+ * LeafProduct の子ノード（LeafProduct のみ）を取得
+ */
+export function getLeafProductChildren(node: BomNode): BomNode[] {
+  if (node.type !== 'directory') return [];
+  const directory = node as Directory;
+  return (directory.children || []).filter((child) => child.type === 'leaf-product');
+}
+
+/**
+ * Document の子ノード（DocumentNode に変換）を取得
+ */
+export function getDocumentChildren(node: BomNode): DocumentNode[] {
+  if (node.type !== 'directory') return [];
+  const directory = node as Directory;
+  return (directory.documents || []).map((doc) => createDocumentNode(doc, directory.id));
+}
+
+/**
+ * すべての子ノード（Directory + LeafProduct + Document）を取得
+ */
+export function getAllChildren(node: BomNode): BomNode[] {
+  return [
+    ...getDirectoryChildren(node),
+    ...getLeafProductChildren(node),
+    ...getDocumentChildren(node),
+  ];
+}
+
+/**
+ * 旧互換性のための関数（Document を除外）
+ * @deprecated 新しいコードでは getAllChildren を使用
  */
 export function getChildNodes(node: BomNode): BomNode[] {
   if (node.type !== 'directory') return [];

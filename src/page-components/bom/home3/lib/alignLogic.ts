@@ -1,7 +1,7 @@
 import { Node } from 'reactflow';
-import { Directory, BomNode } from '../../shared/data/types';
+import { Directory, BomNode, DocumentNode } from '../../shared/data/types';
 import { SectionNodeData } from './types';
-import { getChildNodes } from './layoutUtils';
+import { getDirectoryChildren, getLeafProductChildren, getDocumentChildren, getAllChildren } from './layoutUtils';
 
 // 定数
 const HORIZONTAL_GAP = 300; // 親子間の横間隔
@@ -44,23 +44,24 @@ function estimateNodeHeight(bomNode: BomNode): number {
   const BASE_HEIGHT = 80; // ヘッダー + padding
   const ROW_HEIGHT = 32; // メタデータ1行の高さ
 
-  const isDirectory = bomNode.type === 'directory';
-  const directory = bomNode as Directory;
+  const nodeType = bomNode.type;
 
-  // メタデータの行数を計算
-  let metadataRows = 2; // 基本2行（コード、タイプ）
-  if (isDirectory) {
+  if (nodeType === 'directory') {
+    const directory = bomNode as Directory;
+    // メタデータの行数を計算
+    let metadataRows = 2; // 基本2行（コード、タイプ）
     if (directory.customItems?.weight) metadataRows++;
     if (directory.customItems?.material) metadataRows++;
     if (directory.customItems?.maxPressure) metadataRows++;
     if (directory.customItems?.flowRate) metadataRows++;
+
+    return BASE_HEIGHT + metadataRows * ROW_HEIGHT;
+  } else if (nodeType === 'leaf-product' || nodeType === 'document') {
+    // 画像表示用の高さ
+    return 300;
   }
 
-  // 帳票の高さ
-  const documents = isDirectory ? (directory.documents || []) : [];
-  const documentHeight = documents.length > 0 ? 180 : 0; // 帳票エリアの高さ
-
-  return BASE_HEIGHT + metadataRows * ROW_HEIGHT + documentHeight;
+  return BASE_HEIGHT;
 }
 
 /**
@@ -96,11 +97,27 @@ function getNodeWidth(node: Node<SectionNodeData>): number {
 }
 
 /**
- * 展開済みの子ノードのみを取得
+ * 展開済みの子ノードのみを取得（タイプ別展開状態を考慮）
  */
 function getExpandedChildren(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[]): Node<SectionNodeData>[] {
-  const childBomNodes = getChildNodes(node.data.bomNode);
-  return childBomNodes
+  const expandedChildBomNodes: BomNode[] = [];
+
+  // Directory の子（展開されている場合のみ）
+  if (node.data.isDirectoryExpanded) {
+    expandedChildBomNodes.push(...getDirectoryChildren(node.data.bomNode));
+  }
+
+  // LeafProduct の子（展開されている場合のみ）
+  if (node.data.isLeafProductExpanded) {
+    expandedChildBomNodes.push(...getLeafProductChildren(node.data.bomNode));
+  }
+
+  // Document の子（展開されている場合のみ）
+  if (node.data.isDocumentExpanded) {
+    expandedChildBomNodes.push(...getDocumentChildren(node.data.bomNode));
+  }
+
+  return expandedChildBomNodes
     .map((childBomNode) => allNodes.find((n) => n.id === childBomNode.id))
     .filter((n): n is Node<SectionNodeData> => n !== undefined);
 }
@@ -111,8 +128,9 @@ function getExpandedChildren(node: Node<SectionNodeData>, allNodes: Node<Section
 function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[]): number {
   const nodeHeight = getNodeHeight(node);
 
-  // 展開されていない、または子がいない場合
-  if (!node.data.isExpanded) {
+  // すべてのタイプが展開されていない場合
+  const hasAnyExpanded = node.data.isDirectoryExpanded || node.data.isLeafProductExpanded || node.data.isDocumentExpanded;
+  if (!hasAnyExpanded) {
     return nodeHeight;
   }
 
@@ -138,8 +156,9 @@ function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<Sect
 function calculateSubtreeWidth(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[]): number {
   const nodeWidth = getNodeWidth(node);
 
-  // 展開されていない、または子がいない場合
-  if (!node.data.isExpanded) {
+  // すべてのタイプが展開されていない場合
+  const hasAnyExpanded = node.data.isDirectoryExpanded || node.data.isLeafProductExpanded || node.data.isDocumentExpanded;
+  if (!hasAnyExpanded) {
     return nodeWidth;
   }
 
@@ -197,8 +216,9 @@ function alignHierarchy(
 
   positions.set(node.id, { x: currentLeftX, y: currentTopY });
 
-  // 子がいない、または展開されていない場合は終了
-  if (!node.data.isExpanded) {
+  // すべてのタイプが展開されていない場合は終了
+  const hasAnyExpanded = node.data.isDirectoryExpanded || node.data.isLeafProductExpanded || node.data.isDocumentExpanded;
+  if (!hasAnyExpanded) {
     return positions;
   }
 
