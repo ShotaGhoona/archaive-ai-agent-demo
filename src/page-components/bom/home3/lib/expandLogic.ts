@@ -1,7 +1,40 @@
 import { Node, Edge } from 'reactflow';
-import { BomNode } from '../../shared/data/types';
+import { BomNode, Directory } from '../../shared/data/types';
 import { SectionNodeData } from './types';
 import { calculateChildPositions, getChildNodes } from './layoutUtils';
+import { alignAllNodes } from './alignLogic';
+
+/**
+ * ノードの初期サイズを計算
+ */
+export function calculateInitialNodeSize(bomNode: BomNode): { width: number; height: number } {
+  const BASE_HEIGHT = 80;
+  const ROW_HEIGHT = 32;
+  const BASE_WIDTH = 400;
+
+  const isDirectory = bomNode.type === 'directory';
+  const directory = bomNode as Directory;
+
+  // メタデータの行数
+  let metadataRows = 2;
+  if (isDirectory) {
+    if (directory.customItems?.weight) metadataRows++;
+    if (directory.customItems?.material) metadataRows++;
+    if (directory.customItems?.maxPressure) metadataRows++;
+    if (directory.customItems?.flowRate) metadataRows++;
+  }
+
+  // 帳票の有無で幅を決定
+  const documents = isDirectory ? (directory.documents || []) : [];
+  const width = documents.length > 0 ? 650 : BASE_WIDTH;
+
+  // 帳票の高さ
+  const documentHeight = documents.length > 0 ? 180 : 0;
+
+  const height = BASE_HEIGHT + metadataRows * ROW_HEIGHT + documentHeight;
+
+  return { width, height };
+}
 
 /**
  * ノードを展開する処理
@@ -32,16 +65,23 @@ export function expandNode(
   const childPositions = calculateChildPositions(parentNode.position, childNodes.length);
 
   // 新しいノードを作成
-  const newNodes: Node<SectionNodeData>[] = childNodes.map((child, index) => ({
-    id: child.id,
-    type: 'sectionCard',
-    position: childPositions[index],
-    data: {
-      bomNode: child,
-      isExpanded: false,
-      onExpand: () => handleExpand(child.id, child),
-    },
-  }));
+  const newNodes: Node<SectionNodeData>[] = childNodes.map((child, index) => {
+    const size = calculateInitialNodeSize(child);
+    return {
+      id: child.id,
+      type: 'sectionCard',
+      position: childPositions[index],
+      data: {
+        bomNode: child,
+        isExpanded: false,
+        onExpand: () => handleExpand(child.id, child),
+      },
+      style: {
+        width: size.width,
+        height: size.height,
+      },
+    };
+  });
 
   // 親ノードの展開状態を更新
   const updatedNodes = currentNodes
@@ -67,7 +107,10 @@ export function expandNode(
 
   const updatedEdges = [...currentEdges, ...newEdges];
 
-  return { nodes: updatedNodes, edges: updatedEdges };
+  // 展開後に自動整列
+  const alignedNodes = alignAllNodes(updatedNodes);
+
+  return { nodes: alignedNodes, edges: updatedEdges };
 }
 
 /**
@@ -130,5 +173,8 @@ export function collapseNode(
     return true;
   });
 
-  return { nodes: updatedNodes, edges: updatedEdges };
+  // 折りたたみ後に自動整列
+  const alignedNodes = alignAllNodes(updatedNodes);
+
+  return { nodes: alignedNodes, edges: updatedEdges };
 }

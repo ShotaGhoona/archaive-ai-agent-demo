@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import { Handle, Position } from 'reactflow';
+import { Handle, Position, NodeResizer } from 'reactflow';
 import { Directory, LeafProduct, DirectoryDocument } from '../../../shared/data/types';
 import { Plus, Minus } from 'lucide-react';
 
@@ -11,9 +11,10 @@ interface SectionCardProps {
     isExpanded: boolean;
     onExpand: () => void;
   };
+  selected?: boolean;
 }
 
-function SectionCard({ data }: SectionCardProps) {
+function SectionCard({ data, selected }: SectionCardProps) {
   const { bomNode, isExpanded, onExpand } = data;
   const isDirectory = bomNode.type === 'directory';
   const directory = bomNode as Directory;
@@ -57,7 +58,16 @@ function SectionCard({ data }: SectionCardProps) {
   const metadataRows = getMetadataRows();
 
   return (
-    <div className="relative">
+    <div className="relative w-full h-full">
+      {/* リサイザー（選択時のみ表示） */}
+      <NodeResizer
+        isVisible={selected}
+        minWidth={400}
+        minHeight={150}
+        lineClassName="!border-primary"
+        handleClassName="!w-3 !h-3 !bg-primary"
+      />
+
       {/* 左側のハンドル（矢印の終点） */}
       <Handle
         type="target"
@@ -66,7 +76,7 @@ function SectionCard({ data }: SectionCardProps) {
       />
 
       {/* カード本体 */}
-      <div className="bg-primary/10 border-2 border-primary rounded-lg shadow-md min-w-[400px]">
+      <div className="bg-primary/10 border-2 border-primary rounded-lg shadow-md w-full h-full min-w-[400px] min-h-[150px]">
         {/* ヘッダー（左上に名前） */}
         <div className="px-4 py-2 border-b border-primary/20">
           <h3 className="text-sm font-bold text-gray-900">{bomNode.name}</h3>

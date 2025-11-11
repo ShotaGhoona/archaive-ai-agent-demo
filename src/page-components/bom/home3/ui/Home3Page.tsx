@@ -19,7 +19,7 @@ import SectionCard from './components/SectionCard';
 import AlignButton from './components/AlignButton';
 import { SectionNodeData } from '../lib/types';
 import { INITIAL_POSITION } from '../lib/layoutUtils';
-import { expandNode, collapseNode } from '../lib/expandLogic';
+import { expandNode, collapseNode, calculateInitialNodeSize } from '../lib/expandLogic';
 import { alignAllNodes } from '../lib/alignLogic';
 
 // カスタムノードタイプの定義
@@ -93,6 +93,7 @@ export default function Home3Page() {
     setExpandedNodeIds(new Set());
 
     // ルートノードを作成
+    const rootSize = calculateInitialNodeSize(product);
     const rootNode: Node<SectionNodeData> = {
       id: product.id,
       type: 'sectionCard',
@@ -101,6 +102,10 @@ export default function Home3Page() {
         bomNode: product,
         isExpanded: false,
         onExpand: () => handleExpand(product.id, product),
+      },
+      style: {
+        width: rootSize.width,
+        height: rootSize.height,
       },
     };
 
