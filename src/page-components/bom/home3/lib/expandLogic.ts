@@ -5,6 +5,15 @@ import { getDirectoryChildren, getLeafProductChildren, getDocumentChildren, getA
 import { alignAllNodes } from './alignLogic';
 
 /**
+ * セクションタイプ別の色定義（エッジとボタンで使用）
+ */
+const SECTION_COLORS = {
+  directory: '#36adbf',      // primary
+  'leaf-product': '#eab308', // yellow-500
+  document: '#9ca3af',       // gray-500
+} as const;
+
+/**
  * ノードの初期サイズを計算
  */
 export function calculateInitialNodeSize(bomNode: BomNode): { width: number; height: number } {
@@ -123,13 +132,17 @@ export function expandNodeByType(
     })
     .concat(newNodes);
 
-  // 新しいエッジを作成（親から各子へ）
+  // 新しいエッジを作成（親から各子へ、子のタイプに応じた色と接続位置）
   const newEdges: Edge[] = childNodes.map((child) => ({
     id: `${nodeId}-${child.id}`,
     source: nodeId,
     target: child.id,
+    sourceHandle: child.type, // タイプに応じたハンドルID
     type: 'smoothstep',
-    style: { stroke: '#3b82f6', strokeWidth: 2 },
+    style: {
+      stroke: SECTION_COLORS[child.type as keyof typeof SECTION_COLORS] || '#3b82f6',
+      strokeWidth: 3,
+    },
     animated: false,
   }));
 
