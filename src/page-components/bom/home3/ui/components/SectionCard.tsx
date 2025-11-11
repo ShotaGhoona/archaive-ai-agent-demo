@@ -136,11 +136,27 @@ function SectionCard({ data, selected }: SectionCardProps) {
         {renderContent()}
       </div>
 
-      {/* 右側の+ボタン（3つ縦並び） */}
+      {/* 右側のハンドル（3つの位置） */}
       <Handle
         type="source"
         position={Position.Right}
-        className="!bg-transparent !border-0 !w-8 !h-8"
+        id="directory"
+        className="!bg-transparent !border-0 !w-2 !h-2"
+        style={{ top: '33%' }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="leaf-product"
+        className="!bg-transparent !border-0 !w-2 !h-2"
+        style={{ top: '50%' }}
+      />
+      <Handle
+        type="source"
+        position={Position.Right}
+        id="document"
+        className="!bg-transparent !border-0 !w-2 !h-2"
+        style={{ top: '67%' }}
       />
 
       {/* Directory +ボタン（上: 33%） */}

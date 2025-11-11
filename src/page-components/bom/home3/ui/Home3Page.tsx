@@ -82,29 +82,21 @@ export default function Home3Page() {
         const isCurrentlyExpanded = currentNode.data.isDirectoryExpanded;
 
         if (isCurrentlyExpanded) {
-          // 折りたたみ
-          setEdges((eds) => {
-            const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
-              nodeId,
-              bomNode,
-              'directory',
-              nds,
-              eds,
-              nodeSizesRef.current
-            );
-            return updatedEdges;
-          });
-          const { nodes: updatedNodes } = collapseNodeByType(
+          // 折りたたみ（エッジと同時に更新）
+          const currentEdges = edges;
+          const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
             nodeId,
             bomNode,
             'directory',
             nds,
-            [],
+            currentEdges,
             nodeSizesRef.current
           );
+          setEdges(updatedEdges);
           return updatedNodes;
         } else {
           // 展開
+          let finalEdges: Edge[] = [];
           setEdges((eds) => {
             const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
               nodeId,
@@ -117,6 +109,7 @@ export default function Home3Page() {
               handleExpandDocument,
               nodeSizesRef.current
             );
+            finalEdges = updatedEdges;
             return updatedEdges;
           });
           const { nodes: updatedNodes } = expandNodeByType(
@@ -124,7 +117,7 @@ export default function Home3Page() {
             bomNode,
             'directory',
             nds,
-            [],
+            finalEdges,
             handleExpandDirectory,
             handleExpandLeafProduct,
             handleExpandDocument,
@@ -148,6 +141,7 @@ export default function Home3Page() {
 
         if (isCurrentlyExpanded) {
           // 折りたたみ
+          let finalEdges: Edge[] = [];
           setEdges((eds) => {
             const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
               nodeId,
@@ -157,6 +151,7 @@ export default function Home3Page() {
               eds,
               nodeSizesRef.current
             );
+            finalEdges = updatedEdges;
             return updatedEdges;
           });
           const { nodes: updatedNodes } = collapseNodeByType(
@@ -164,12 +159,13 @@ export default function Home3Page() {
             bomNode,
             'leaf-product',
             nds,
-            [],
+            finalEdges,
             nodeSizesRef.current
           );
           return updatedNodes;
         } else {
           // 展開
+          let finalEdges: Edge[] = [];
           setEdges((eds) => {
             const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
               nodeId,
@@ -182,6 +178,7 @@ export default function Home3Page() {
               handleExpandDocument,
               nodeSizesRef.current
             );
+            finalEdges = updatedEdges;
             return updatedEdges;
           });
           const { nodes: updatedNodes } = expandNodeByType(
@@ -189,7 +186,7 @@ export default function Home3Page() {
             bomNode,
             'leaf-product',
             nds,
-            [],
+            finalEdges,
             handleExpandDirectory,
             handleExpandLeafProduct,
             handleExpandDocument,
@@ -213,6 +210,7 @@ export default function Home3Page() {
 
         if (isCurrentlyExpanded) {
           // 折りたたみ
+          let finalEdges: Edge[] = [];
           setEdges((eds) => {
             const { nodes: updatedNodes, edges: updatedEdges } = collapseNodeByType(
               nodeId,
@@ -222,6 +220,7 @@ export default function Home3Page() {
               eds,
               nodeSizesRef.current
             );
+            finalEdges = updatedEdges;
             return updatedEdges;
           });
           const { nodes: updatedNodes } = collapseNodeByType(
@@ -229,12 +228,13 @@ export default function Home3Page() {
             bomNode,
             'document',
             nds,
-            [],
+            finalEdges,
             nodeSizesRef.current
           );
           return updatedNodes;
         } else {
           // 展開
+          let finalEdges: Edge[] = [];
           setEdges((eds) => {
             const { nodes: updatedNodes, edges: updatedEdges } = expandNodeByType(
               nodeId,
@@ -247,6 +247,7 @@ export default function Home3Page() {
               handleExpandDocument,
               nodeSizesRef.current
             );
+            finalEdges = updatedEdges;
             return updatedEdges;
           });
           const { nodes: updatedNodes } = expandNodeByType(
@@ -254,7 +255,7 @@ export default function Home3Page() {
             bomNode,
             'document',
             nds,
-            [],
+            finalEdges,
             handleExpandDirectory,
             handleExpandLeafProduct,
             handleExpandDocument,
