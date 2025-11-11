@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import ReactFlow, {
   Controls,
   Background,
@@ -35,6 +35,43 @@ export default function Home3Page() {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node<SectionNodeData>>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
+  // ノードサイズを記録（折りたたみ後も保持）
+  const nodeSizesRef = useRef<Map<string, { width: number; height: number }>>(new Map());
+
+  // ノード変更時の処理（リサイズをノード自体に反映 & 記録）
+  const handleNodesChange = useCallback(
+    (changes: any[]) => {
+      // リサイズイベントを検知してノードのstyleに反映 & 記録
+      changes.forEach((change) => {
+        if (change.type === 'dimensions' && change.dimensions) {
+          // サイズマップに記録
+          nodeSizesRef.current.set(change.id, {
+            width: change.dimensions.width,
+            height: change.dimensions.height,
+          });
+
+          // ノードのstyleに反映
+          setNodes((nds) =>
+            nds.map((node) =>
+              node.id === change.id
+                ? {
+                    ...node,
+                    style: {
+                      ...node.style,
+                      width: change.dimensions.width,
+                      height: change.dimensions.height,
+                    },
+                  }
+                : node
+            )
+          );
+        }
+      });
+      onNodesChange(changes);
+    },
+    [onNodesChange, setNodes]
+  );
+
   // ノード展開処理（Directory）
   const handleExpandDirectory = useCallback(
     (nodeId: string, bomNode: BomNode) => {
@@ -52,7 +89,8 @@ export default function Home3Page() {
               bomNode,
               'directory',
               nds,
-              eds
+              eds,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -61,7 +99,8 @@ export default function Home3Page() {
             bomNode,
             'directory',
             nds,
-            []
+            [],
+            nodeSizesRef.current
           );
           return updatedNodes;
         } else {
@@ -75,7 +114,8 @@ export default function Home3Page() {
               eds,
               handleExpandDirectory,
               handleExpandLeafProduct,
-              handleExpandDocument
+              handleExpandDocument,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -87,7 +127,8 @@ export default function Home3Page() {
             [],
             handleExpandDirectory,
             handleExpandLeafProduct,
-            handleExpandDocument
+            handleExpandDocument,
+            nodeSizesRef.current
           );
           return updatedNodes;
         }
@@ -113,7 +154,8 @@ export default function Home3Page() {
               bomNode,
               'leaf-product',
               nds,
-              eds
+              eds,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -122,7 +164,8 @@ export default function Home3Page() {
             bomNode,
             'leaf-product',
             nds,
-            []
+            [],
+            nodeSizesRef.current
           );
           return updatedNodes;
         } else {
@@ -136,7 +179,8 @@ export default function Home3Page() {
               eds,
               handleExpandDirectory,
               handleExpandLeafProduct,
-              handleExpandDocument
+              handleExpandDocument,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -148,7 +192,8 @@ export default function Home3Page() {
             [],
             handleExpandDirectory,
             handleExpandLeafProduct,
-            handleExpandDocument
+            handleExpandDocument,
+            nodeSizesRef.current
           );
           return updatedNodes;
         }
@@ -174,7 +219,8 @@ export default function Home3Page() {
               bomNode,
               'document',
               nds,
-              eds
+              eds,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -183,7 +229,8 @@ export default function Home3Page() {
             bomNode,
             'document',
             nds,
-            []
+            [],
+            nodeSizesRef.current
           );
           return updatedNodes;
         } else {
@@ -197,7 +244,8 @@ export default function Home3Page() {
               eds,
               handleExpandDirectory,
               handleExpandLeafProduct,
-              handleExpandDocument
+              handleExpandDocument,
+              nodeSizesRef.current
             );
             return updatedEdges;
           });
@@ -209,7 +257,8 @@ export default function Home3Page() {
             [],
             handleExpandDirectory,
             handleExpandLeafProduct,
-            handleExpandDocument
+            handleExpandDocument,
+            nodeSizesRef.current
           );
           return updatedNodes;
         }
@@ -257,7 +306,7 @@ export default function Home3Page() {
 
   // 整列処理
   const handleAlign = useCallback(() => {
-    setNodes((nds) => alignAllNodes(nds));
+    setNodes((nds) => alignAllNodes(nds, nodeSizesRef.current));
   }, [setNodes]);
 
   return (
@@ -276,7 +325,7 @@ export default function Home3Page() {
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
+        onNodesChange={handleNodesChange}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView

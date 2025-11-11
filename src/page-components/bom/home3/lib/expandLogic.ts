@@ -44,7 +44,8 @@ export function expandNodeByType(
   currentEdges: Edge[],
   handleExpandDirectory: (nodeId: string, bomNode: BomNode) => void,
   handleExpandLeafProduct: (nodeId: string, bomNode: BomNode) => void,
-  handleExpandDocument: (nodeId: string, bomNode: BomNode) => void
+  handleExpandDocument: (nodeId: string, bomNode: BomNode) => void,
+  nodeSizesMap: Map<string, { width: number; height: number }>
 ): {
   nodes: Node<SectionNodeData>[];
   edges: Edge[];
@@ -71,7 +72,23 @@ export function expandNodeByType(
 
   // 新しいノードを作成（仮配置）
   const newNodes: Node<SectionNodeData>[] = childNodes.map((child) => {
-    const size = calculateInitialNodeSize(child);
+    // サイズを取得（優先順位: nodeSizesMap > 既存ノードのstyle > 初期サイズ）
+    let size: { width: number; height: number };
+
+    if (nodeSizesMap.has(child.id)) {
+      // 1. nodeSizesMapに記録されているサイズを使用（最優先）
+      size = nodeSizesMap.get(child.id)!;
+    } else {
+      const existingNode = currentNodes.find((n) => n.id === child.id);
+      if (existingNode?.style?.width && existingNode?.style?.height) {
+        // 2. 既存のノードがあればそのサイズを使用
+        size = { width: existingNode.style.width as number, height: existingNode.style.height as number };
+      } else {
+        // 3. 初期サイズを計算
+        size = calculateInitialNodeSize(child);
+      }
+    }
+
     return {
       id: child.id,
       type: 'sectionCard',
@@ -119,7 +136,7 @@ export function expandNodeByType(
   const updatedEdges = [...currentEdges, ...newEdges];
 
   // 展開後に自動整列
-  const alignedNodes = alignAllNodes(updatedNodes);
+  const alignedNodes = alignAllNodes(updatedNodes, nodeSizesMap);
 
   return { nodes: alignedNodes, edges: updatedEdges };
 }
@@ -132,7 +149,8 @@ export function collapseNodeByType(
   bomNode: BomNode,
   collapseType: 'directory' | 'leaf-product' | 'document',
   currentNodes: Node<SectionNodeData>[],
-  currentEdges: Edge[]
+  currentEdges: Edge[],
+  nodeSizesMap: Map<string, { width: number; height: number }>
 ): {
   nodes: Node<SectionNodeData>[];
   edges: Edge[];
@@ -166,6 +184,18 @@ export function collapseNodeByType(
 
   const allDescendantIds = collectDescendants(childIds, currentNodes);
 
+  // 削除する前に、子孫ノードのサイズ情報をnodeSizesMapに保存
+  currentNodes.forEach((node) => {
+    if (allDescendantIds.has(node.id)) {
+      if (node.style?.width && node.style?.height) {
+        nodeSizesMap.set(node.id, {
+          width: node.style.width as number,
+          height: node.style.height as number,
+        });
+      }
+    }
+  });
+
   // 子孫ノードを削除 & 親の展開状態を更新
   const updatedNodes = currentNodes
     .filter((n) => !allDescendantIds.has(n.id))
@@ -194,7 +224,7 @@ export function collapseNodeByType(
   });
 
   // 折りたたみ後に自動整列
-  const alignedNodes = alignAllNodes(updatedNodes);
+  const alignedNodes = alignAllNodes(updatedNodes, nodeSizesMap);
 
   return { nodes: alignedNodes, edges: updatedEdges };
 }

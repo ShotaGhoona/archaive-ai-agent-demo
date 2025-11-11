@@ -7,35 +7,38 @@ import { getDirectoryChildren, getLeafProductChildren, getDocumentChildren, getA
 const HORIZONTAL_GAP = 300; // 親子間の横間隔
 const VERTICAL_GAP = 100; // 兄弟間の縦間隔
 
-/**
- * 左上座標からReact Flowの中央座標に変換
- */
-function topLeftToCenterPosition(
-  topLeftX: number,
-  topLeftY: number,
-  width: number,
-  height: number
-): { x: number; y: number } {
-  return {
-    x: topLeftX + width / 2,
-    y: topLeftY + height / 2,
-  };
-}
+// React Flowのnode.positionは左上座標を表します
+// 以下の座標変換関数は、中央座標を使う場合のために残していますが、現在は使用していません
 
-/**
- * React Flowの中央座標から左上座標に変換
- */
-function centerToTopLeftPosition(
-  centerX: number,
-  centerY: number,
-  width: number,
-  height: number
-): { x: number; y: number } {
-  return {
-    x: centerX - width / 2,
-    y: centerY - height / 2,
-  };
-}
+// /**
+//  * 左上座標からReact Flowの中央座標に変換
+//  */
+// function topLeftToCenterPosition(
+//   topLeftX: number,
+//   topLeftY: number,
+//   width: number,
+//   height: number
+// ): { x: number; y: number } {
+//   return {
+//     x: topLeftX + width / 2,
+//     y: topLeftY + height / 2,
+//   };
+// }
+
+// /**
+//  * React Flowの中央座標から左上座標に変換
+//  */
+// function centerToTopLeftPosition(
+//   centerX: number,
+//   centerY: number,
+//   width: number,
+//   height: number
+// ): { x: number; y: number } {
+//   return {
+//     x: centerX - width / 2,
+//     y: centerY - height / 2,
+//   };
+// }
 
 /**
  * コンテンツからノードの高さを予測
@@ -65,31 +68,42 @@ function estimateNodeHeight(bomNode: BomNode): number {
 }
 
 /**
- * ノードの実際の高さを取得（style.height → measured → 予測）
+ * ノードの実際の高さを取得（nodeSizesMap → style.height → measured → 予測）
  */
-function getNodeHeight(node: Node<SectionNodeData>): number {
-  // ユーザーがリサイズした場合はstyle.heightが設定されている
+function getNodeHeight(node: Node<SectionNodeData>, nodeSizesMap?: Map<string, { width: number; height: number }>): number {
+  // 1. nodeSizesMapに記録されているサイズを使用（最優先）
+  if (nodeSizesMap?.has(node.id)) {
+    return nodeSizesMap.get(node.id)!.height;
+  }
+  // 2. ユーザーがリサイズした場合はstyle.heightが設定されている
   if (node.style?.height && typeof node.style.height === 'number') {
     return node.style.height;
   }
+  // 3. measured
   if (node.measured?.height) {
     return node.measured.height;
   }
+  // 4. 予測
   return estimateNodeHeight(node.data.bomNode);
 }
 
 /**
- * ノードの実際の幅を取得（style.width → measured → デフォルト）
+ * ノードの実際の幅を取得（nodeSizesMap → style.width → measured → デフォルト）
  */
-function getNodeWidth(node: Node<SectionNodeData>): number {
-  // ユーザーがリサイズした場合はstyle.widthが設定されている
+function getNodeWidth(node: Node<SectionNodeData>, nodeSizesMap?: Map<string, { width: number; height: number }>): number {
+  // 1. nodeSizesMapに記録されているサイズを使用（最優先）
+  if (nodeSizesMap?.has(node.id)) {
+    return nodeSizesMap.get(node.id)!.width;
+  }
+  // 2. ユーザーがリサイズした場合はstyle.widthが設定されている
   if (node.style?.width && typeof node.style.width === 'number') {
     return node.style.width;
   }
+  // 3. measured
   if (node.measured?.width) {
     return node.measured.width;
   }
-  // デフォルト幅を予測（帳票があるかどうかで変わる）
+  // 4. デフォルト幅を予測（帳票があるかどうかで変わる）
   const isDirectory = node.data.bomNode.type === 'directory';
   const directory = node.data.bomNode as Directory;
   const hasDocuments = isDirectory && (directory.documents || []).length > 0;
@@ -125,8 +139,8 @@ function getExpandedChildren(node: Node<SectionNodeData>, allNodes: Node<Section
 /**
  * サブツリー全体の高さを計算（展開済みの子のみを再帰的に含める）
  */
-function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[]): number {
-  const nodeHeight = getNodeHeight(node);
+function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[], nodeSizesMap?: Map<string, { width: number; height: number }>): number {
+  const nodeHeight = getNodeHeight(node, nodeSizesMap);
 
   // すべてのタイプが展開されていない場合
   const hasAnyExpanded = node.data.isDirectoryExpanded || node.data.isLeafProductExpanded || node.data.isDocumentExpanded;
@@ -140,7 +154,7 @@ function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<Sect
   }
 
   // 各子のサブツリー高さを再帰的に計算
-  const childSubtreeHeights = children.map((child) => calculateSubtreeHeight(child, allNodes));
+  const childSubtreeHeights = children.map((child) => calculateSubtreeHeight(child, allNodes, nodeSizesMap));
 
   // 子のサブツリーの合計高さ + 子間のギャップ
   const childrenTotalHeight =
@@ -153,8 +167,8 @@ function calculateSubtreeHeight(node: Node<SectionNodeData>, allNodes: Node<Sect
 /**
  * サブツリー全体の幅を計算（展開済みの子のみを再帰的に含める）
  */
-function calculateSubtreeWidth(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[]): number {
-  const nodeWidth = getNodeWidth(node);
+function calculateSubtreeWidth(node: Node<SectionNodeData>, allNodes: Node<SectionNodeData>[], nodeSizesMap?: Map<string, { width: number; height: number }>): number {
+  const nodeWidth = getNodeWidth(node, nodeSizesMap);
 
   // すべてのタイプが展開されていない場合
   const hasAnyExpanded = node.data.isDirectoryExpanded || node.data.isLeafProductExpanded || node.data.isDocumentExpanded;
@@ -168,7 +182,7 @@ function calculateSubtreeWidth(node: Node<SectionNodeData>, allNodes: Node<Secti
   }
 
   // 子のサブツリー幅の最大値を再帰的に取得
-  const maxChildSubtreeWidth = Math.max(...children.map((child) => calculateSubtreeWidth(child, allNodes)));
+  const maxChildSubtreeWidth = Math.max(...children.map((child) => calculateSubtreeWidth(child, allNodes, nodeSizesMap)));
 
   // 自身の幅 + 親子Gap + 子のサブツリー最大幅
   return nodeWidth + HORIZONTAL_GAP + maxChildSubtreeWidth;
@@ -206,7 +220,8 @@ function alignHierarchy(
   parentTopY: number,
   parentWidth: number,
   isRoot: boolean,
-  allNodes: Node<SectionNodeData>[]
+  allNodes: Node<SectionNodeData>[],
+  nodeSizesMap?: Map<string, { width: number; height: number }>
 ): Map<string, { x: number; y: number }> {
   const positions = new Map<string, { x: number; y: number }>();
 
@@ -228,10 +243,10 @@ function alignHierarchy(
   }
 
   // 現在のノードのサイズ
-  const currentWidth = getNodeWidth(node);
+  const currentWidth = getNodeWidth(node, nodeSizesMap);
 
   // 各子のサブツリー高さを計算
-  const childSubtreeHeights = children.map((child) => calculateSubtreeHeight(child, allNodes));
+  const childSubtreeHeights = children.map((child) => calculateSubtreeHeight(child, allNodes, nodeSizesMap));
 
   // 親の上端 = 長男の上端（top-align）
   const parentTop = currentTopY;
@@ -244,7 +259,7 @@ function alignHierarchy(
     const childTopY = currentChildTop;
 
     // 再帰的に子を配置
-    const childPositions = alignHierarchy(child, currentLeftX, childTopY, currentWidth, false, allNodes);
+    const childPositions = alignHierarchy(child, currentLeftX, childTopY, currentWidth, false, allNodes, nodeSizesMap);
 
     // 結果をマージ
     childPositions.forEach((pos, id) => {
@@ -261,38 +276,27 @@ function alignHierarchy(
 /**
  * 全ノードを整列させる
  */
-export function alignAllNodes(nodes: Node<SectionNodeData>[]): Node<SectionNodeData>[] {
+export function alignAllNodes(nodes: Node<SectionNodeData>[], nodeSizesMap?: Map<string, { width: number; height: number }>): Node<SectionNodeData>[] {
   if (nodes.length === 0) return nodes;
 
   // ルートノードを見つける
   const rootNode = findRootNode(nodes);
   if (!rootNode) return nodes;
 
-  // ルートノードの左上座標を取得
-  const rootWidth = getNodeWidth(rootNode);
-  const rootHeight = getNodeHeight(rootNode);
-  const rootTopLeft = centerToTopLeftPosition(
-    rootNode.position.x,
-    rootNode.position.y,
-    rootWidth,
-    rootHeight
-  );
+  // ルートノードは現在の位置をそのまま使用（左上座標として）
+  const rootTopLeft = { x: rootNode.position.x, y: rootNode.position.y };
 
   // 階層を整列（左上座標で計算）
-  const topLeftPositions = alignHierarchy(rootNode, rootTopLeft.x, rootTopLeft.y, 0, true, nodes);
+  const topLeftPositions = alignHierarchy(rootNode, rootTopLeft.x, rootTopLeft.y, 0, true, nodes, nodeSizesMap);
 
-  // React Flowの中央座標に変換して適用
+  // 左上座標をそのまま適用（React Flowは左上座標を使用）
   return nodes.map((node) => {
     const topLeft = topLeftPositions.get(node.id);
     if (!topLeft) return node;
 
-    const width = getNodeWidth(node);
-    const height = getNodeHeight(node);
-    const centerPos = topLeftToCenterPosition(topLeft.x, topLeft.y, width, height);
-
     return {
       ...node,
-      position: centerPos,
+      position: topLeft,
     };
   });
 }
