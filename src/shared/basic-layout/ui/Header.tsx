@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Button, Popover, PopoverContent, PopoverTrigger } from '@/shared';
 import { User, Menu, X, LogOut, Settings, UserCircle } from 'lucide-react';
+import Image from 'next/image';
 import { headerNavigations, defaultUser } from '../constants';
 
 export function Header() {
@@ -27,15 +28,31 @@ export function Header() {
 
   return (
     <header className='bg-primary fixed top-0 z-30 w-full shadow-lg'>
-      <div className='w-full px-4 sm:px-6 lg:px-8'>
+      <div className='w-full px-4 sm:px-6 lg:px-6'>
         <div className='flex h-[45px] items-center'>
           {/* Left side - Brand and Navigation */}
           <div className='flex items-center space-x-6'>
-            {/* Brand Name */}
+            {/* Brand Logo */}
             <Link href='/'>
-              <h1 className='cursor-pointer text-lg font-bold tracking-tight text-white'>
-                ARCH<span className='text-secondary'>AI</span>VE
-              </h1>
+              <div className='flex cursor-pointer items-center space-x-2'>
+                <Image
+                  src='/logo.svg'
+                  alt='ARCHAIVE Logo'
+                  width={24}
+                  height={24}
+                  className='h-6 w-6'
+                />
+                <Image
+                  src='/logo-text.svg'
+                  alt='ARCHAIVE Logo'
+                  width={80}
+                  height={24}
+                  className='h-6'
+                />
+                {/* <h1 className='text-lg font-bold tracking-tight text-white'>
+                  ARCH<span className='text-secondary'>AI</span>VE
+                </h1> */}
+              </div>
             </Link>
 
             {/* Navigation Menu */}
