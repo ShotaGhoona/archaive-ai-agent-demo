@@ -5,12 +5,12 @@ import { FileText, Image as ImageIcon } from 'lucide-react';
 
 interface GalleryViewProps {
   documents: DirectoryDocument[];
-  children: BomNode[];
+  bomChildren: BomNode[];
 }
 
-export default function GalleryView({ documents, children }: GalleryViewProps) {
+export default function GalleryView({ documents, bomChildren }: GalleryViewProps) {
   // LeafProductのみをフィルタリング
-  const leafProducts = children.filter((child) => child.type === 'leaf-product') as LeafProduct[];
+  const leafProducts = bomChildren.filter((child) => child.type === 'leaf-product') as LeafProduct[];
 
   // 全アイテムを結合
   const allItems: Array<{ type: 'document' | 'drawing'; data: any }> = [

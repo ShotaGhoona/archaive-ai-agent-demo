@@ -71,28 +71,6 @@ const createDrawingFile = (name: string, drawingNumber: string): DrawingFile => 
   ],
 });
 
-// Directory文書のサンプル
-const createDirectoryDocument = (docName: string = 'spec'): DirectoryDocument => ({
-  id: generateUlid('dd_'),
-  ulid: generateUlid(),
-  seqNumber: 1,
-  typeId: 'dtype_001',
-  typeName: '仕様書',
-  versions: [
-    {
-      id: generateUlid('ddv_'),
-      ulid: generateUlid(),
-      version: 1,
-      name: '製品仕様書_v1.0',
-      s3Url: 's3://bucket/documents/spec_v1.pdf',
-      previewImageUrl: `https://picsum.photos/seed/${docName}/800/600`, // ランダムな文書風画像
-      customItems: {},
-      createdAt: '2024-01-15T09:00:00Z',
-      updatedAt: '2024-01-15T09:00:00Z',
-    },
-  ],
-});
-
 // Leaf Product（末端部品）のサンプル - 仕様書付き
 const createLeafProduct = (
   id: string,
@@ -133,7 +111,7 @@ const createLeafProduct = (
             version: 1,
             name: `${name}_仕様書_v1.0`,
             s3Url: `s3://bucket/documents/${id}/spec_v1.pdf`,
-            previewImageUrl: `https://picsum.photos/seed/${id}-spec/800/600`,
+            previewImageUrl: `https://www.kabuku.io/wp-content/uploads/2022/12/end-1024x724.jpg`,
             customItems: {},
             createdAt: '2024-01-15T09:00:00Z',
             updatedAt: '2024-01-15T09:00:00Z',
@@ -280,47 +258,47 @@ export const mockBomData: BomTree = {
         createdAt: '2024-01-20T10:00:00Z',
         updatedAt: '2024-03-20T14:30:00Z',
         customItemValues: createCustomItemValues(),
-        documents: [
-          {
-            id: generateUlid('dd_'),
-            ulid: generateUlid(),
-            seqNumber: 4,
-            typeId: 'dtype_assembly',
-            typeName: '組立手順書',
-            versions: [
-              {
-                id: generateUlid('ddv_'),
-                ulid: generateUlid(),
-                version: 2,
-                name: 'ASSY-2000_組立手順書_v2.0',
-                s3Url: 's3://bucket/documents/ASSY-2000/procedure_v2.pdf',
-                customItems: { author: '製造部', approvalDate: '2024-03-15' },
-                remarks: 'シール部の取り付け手順を詳細化',
-                createdAt: '2024-03-15T14:00:00Z',
-                updatedAt: '2024-03-15T14:00:00Z',
-              },
-            ],
-          },
-          {
-            id: generateUlid('dd_'),
-            ulid: generateUlid(),
-            seqNumber: 5,
-            typeId: 'dtype_qc',
-            typeName: '品質管理基準書',
-            versions: [
-              {
-                id: generateUlid('ddv_'),
-                ulid: generateUlid(),
-                version: 1,
-                name: 'ASSY-2000_品質管理基準書_v1.0',
-                s3Url: 's3://bucket/documents/ASSY-2000/qc_standard_v1.pdf',
-                customItems: { inspector: '品質管理課' },
-                createdAt: '2024-02-01T10:00:00Z',
-                updatedAt: '2024-02-01T10:00:00Z',
-              },
-            ],
-          },
-        ],
+        // documents: [
+        //   {
+        //     id: generateUlid('dd_'),
+        //     ulid: generateUlid(),
+        //     seqNumber: 4,
+        //     typeId: 'dtype_assembly',
+        //     typeName: '組立手順書',
+        //     versions: [
+        //       {
+        //         id: generateUlid('ddv_'),
+        //         ulid: generateUlid(),
+        //         version: 2,
+        //         name: 'ASSY-2000_組立手順書_v2.0',
+        //         s3Url: 's3://bucket/documents/ASSY-2000/procedure_v2.pdf',
+        //         customItems: { author: '製造部', approvalDate: '2024-03-15' },
+        //         remarks: 'シール部の取り付け手順を詳細化',
+        //         createdAt: '2024-03-15T14:00:00Z',
+        //         updatedAt: '2024-03-15T14:00:00Z',
+        //       },
+        //     ],
+        //   },
+        //   {
+        //     id: generateUlid('dd_'),
+        //     ulid: generateUlid(),
+        //     seqNumber: 5,
+        //     typeId: 'dtype_qc',
+        //     typeName: '品質管理基準書',
+        //     versions: [
+        //       {
+        //         id: generateUlid('ddv_'),
+        //         ulid: generateUlid(),
+        //         version: 1,
+        //         name: 'ASSY-2000_品質管理基準書_v1.0',
+        //         s3Url: 's3://bucket/documents/ASSY-2000/qc_standard_v1.pdf',
+        //         customItems: { inspector: '品質管理課' },
+        //         createdAt: '2024-02-01T10:00:00Z',
+        //         updatedAt: '2024-02-01T10:00:00Z',
+        //       },
+        //     ],
+        //   },
+        // ],
         children: [
           // ========== 第3階層: 駆動部Assy ASSY-2100 ==========
           {
