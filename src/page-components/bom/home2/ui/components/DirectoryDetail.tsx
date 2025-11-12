@@ -27,7 +27,7 @@ export default function DirectoryDetail({ node }: DirectoryDetailProps) {
 
       {/* ギャラリー（ある場合のみ表示） */}
       {hasGalleryItems && (
-        <GalleryView documents={documents} children={directory.children || []} />
+        <GalleryView documents={documents} bomChildren={directory.children || []} />
       )}
     </div>
   );
