@@ -83,8 +83,9 @@ function getNodeHeight(node: Node<SectionNodeData>, nodeSizesMap?: Map<string, {
     return node.style.height;
   }
   // 3. measured
-  if (node.measured?.height) {
-    return node.measured.height;
+  const measured = (node as { measured?: { width?: number; height?: number } }).measured;
+  if (measured?.height) {
+    return measured.height;
   }
   // 4. 予測
   return estimateNodeHeight(node.data.bomNode);
@@ -103,8 +104,9 @@ function getNodeWidth(node: Node<SectionNodeData>, nodeSizesMap?: Map<string, { 
     return node.style.width;
   }
   // 3. measured
-  if (node.measured?.width) {
-    return node.measured.width;
+  const measured = (node as { measured?: { width?: number; height?: number } }).measured;
+  if (measured?.width) {
+    return measured.width;
   }
   // 4. デフォルト幅を予測（帳票があるかどうかで変わる）
   const isDirectory = node.data.bomNode.type === 'directory';
