@@ -1,736 +1,1242 @@
-```mermaid
-erDiagram
-    COMPANIES {
-        int id PK "NN, auto_increment"
-        varchar(255) name "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on current_timestamp"
-    }
-
-    COMPANY_INFO {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        int invoice_number "インボイス番号"
-        varchar(255) postal_code "郵便番号"
-        varchar(255) company_address1 "NN"
-        varchar(255) company_address2
-        varchar(255) company_phone "NN"
-        varchar(255) website "webサイト"
-        varchar(255) company_logo_url "NN, {company_id}/company_assets/company_logo.[extension], ロゴ画像"
-        varchar(255) company_seal_url "NN, {company_id}/company_assets/company_seal.[extension], 印影画像"
-        varchar(255) ceo "代表者の名前"
-        varchar(255) ceo_role "代表者役割"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    COMPANY_PLANS {
-        int id PK "NN auto_increment"
-        int company_id FK "NN"
-        int plan_id FK "NN"
-        datetime start_date "NN default_generated on current_timestamp"
-        datetime end_date "NN"
-        boolean is_active "NN"
-        int included_editors "NN"
-        int included_viewers "NN"
-        int drawing_limit "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    PLANS {
-        int id PK "NN auto_increment"
-        varchar(255) name "NN"
-        int default_drawing_limit "NN"
-        int default_included_editors "NN"
-        int default_included_viewers "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    COMPANY_DOCUMENT_TYPES {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) type_name "NN, company_idとUNIQUE"
-        int display_order "NN, company_idとUNIQUE"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    COMPANY_DOCUMENTS {
-        int id PK "NN, auto_increment"
-        int seq_number "NN, company_document_type_id, company_idとUNIQUE"
-        int company_id FK "NN"
-        int company_document_type_id FK "NN"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    COMPANY_DOCUMENT_VERSIONS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int company_document_id FK "NN"
-        int version "NN, default = 1"
-        jsonb company_document_custom_items "company_document_custom_itemsを参照。自由項目をJSONで"
-        varchar(255) name "NN"
-        varchar(2083) s3_url "NN"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    COMPANY_DOCUMENT_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int company_document_type_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        boolean is_required	"NN, defautl = true (ユーザーからして必須項目かどうか)"
-        int display_order "NN, company_document_type_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    COMPANY_DOCUMENT_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int company_document_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DEPARTMENTS {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) name "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    EMPLOYEES {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        int authority_id FK "NN"
-        varchar(255) name "NN"
-        varchar(255) email  "UK1"
-        int initial_login "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LOGIN_INFOS {
-        int id PK "NN, auto_increment"
-        int employee_id FK "NN"
-        varchar(255) login_id "NN"
-        varchar(255) password "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-        varchar(1024) token
-    }
-
-    AUTHORITIES {
-        int id PK "NN, auto_increment"
-        varchar(255) name "NN, viewer または editor"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    POLICIES {
-        int id PK "NN, auto_increment"
-        jsonb policy "NN"
-        boolean is_active "NN, default = true"
-        int created_by FK
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    EMPLOYEE_DEPARTMENT {
-        int id PK "NN, auto_increment"
-        int department_id FK "NN, UK1"
-        int employee_id FK "NN, UK1"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOM_ROLES {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) name "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    EMPLOYEE_ROLE {
-        int id PK "NN, auto_increment"
-        int employee_id FK "NN"
-        int custom_role_id FK "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    CUSTOMERS {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        int seq_number "NN, 会社ごとの取引先の連番, DB側の設定で自動で入るようにする"
-        varchar(255) name "NN"
-        varchar(255) name_kana "名前のカナ"
-        jsonb customer_custom_items "customer_custom_items テーブルを参照"
-        int customer_status_id FK "customer_statusテーブルの外部キー。取引先の種別"
-        float annual_revenue "年間売り上げ高"
-        varchar(255) customer_address
-        int head_count "従業員数"
-        varchar(255) website "Webサイト"
-        text remarks "備考欄"
-        int in_charge FK "自社での営業担当者"
-        int created_by FK "NN, 作成者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_STATUS {
-        int id PK "NN, auto_increment"
-        varchar(255) name "ステータスの名前。ユーザが自由に決めれる"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_CUSTOMER_TYPE {
-        int id PK "NN, auto_increment"
-        int customer_id FK "NN"
-        int customer_type_id FK "NN"
-    }
-
-    CUSTOMER_TYPES {
-        int id PK "NN, auto_increment"
-        varchar(255) name "顧客タイプの名前"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        int display_order "NN, company_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int customer_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    CUSTOMER_CONTACTS {
-        int id PK "NN, auto_increment"
-        int customer_id FK "NN"
-        varchar(255) last_name "NN, 苗字"
-        varchar(255) first_name "NN, 名前"
-        varchar(255) last_name_kana ""
-        varchar(255) first_name_kana ""
-        jsonb customer_contact_custom_items "customer_contact_custom_itemsテーブル参照。自由項目をJSONで"
-        varchar(50) phone_number "個人電話番号"
-        varchar(50) office_phone_number "固定電話番号"
-        varchar(255) email_primary "主メールアドレス"
-        varchar(255) email_secondary "副メールアドレス"
-        varchar(50) fax "fax番号"
-        text remarks "備考欄"
-        boolean is_active "NN, default = true, 有効かどうか"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_CONTACT_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        int display_order "NN, company_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    CUSTOMER_CONTACT_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int customer_contact_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_CONTACTS {
-        int id PK "NN, auto_increment"
-        int customer_contact_id FK "NN"
-        int directory_id FK "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORIES {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN, UK1"
-        int seq_number "NN, company_idとdirectory_type_idとUNIQUE"
-        int company_id FK "NN"
-        int directory_type_id "NN"
-        int customer_id FK "NN"
-        varchar(255) name
-        jsonb directory_custom_item "自由項目をJSON形式で"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DIRECTORY_PATH {
-        int id PK "NN, auto_increment"
-        int ancestor FK "NN"
-        int descendant FK "NN"
-        int depth "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_TYPES {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) directory_type "NN"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_DOCUMENTS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN, UK1"
-        int seq_number "NN, directory_document_type_id, company_idとUNIQUE"
-        int directory_id FK
-        int company_id FK "NN"
-        int directory_document_type_id FK "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DIRECTORY_DOCUMENT_VERSIONS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int directory_document_id FK "NN"
-        int version "NN, default = 1"
-        jsonb directory_document_custom_items "directory_document_custom_itemsテーブル自由項目をjSONで"
-        varchar(255) name "NN"
-        varchar(2083) s3_url "NN"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    SUPPLIER_QUOTATIONS {
-        int id PK "NN, auto_increment"
-        int directory_id FK "NN"
-        int customer_id FK "NN"
-        int company_id FK "NN"
-        int seq_number "NN, company_idと連番"
-        varchar(255) quotation_number "NN, 見積もり番号"
-        date expiration_date "NN, 有効期限"
-        int version "NN, default = 1"
-        varchar(2083) s3_url
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    REVISION_SETS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int company_id FK "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCTS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN, UK1"
-        int revision_set_id FK "NN, UK2"
-        int directory_id FK "UK2"
-        int customer_id FK "顧客ID"
-        int revision_number "NN, default=1, UK2"
-        jsonb leaf_product_custom_item "leaf_products参照。自由項目をjSONで"
-        boolean is_latest "NN"
-        tsvector search_text "全文検索用のカラム"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DRAWING_FILES {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int leaf_product_id FK "NN"
-        varchar(255) name "NN, ファイル名"
-        varchar(255) file_extension "NN"
-        varchar(2083) s3_url "実際の画像のS3パス"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DRAWING_PAGES {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int seq_number "NN, 会社での連番, company_idとUNIQUE"
-        int drawing_file_id FK "NN"
-        varchar(255) drawing_number "NN, 図面番号"
-        varchar(255) external_drawing_number "社外図面番号"
-        varchar(255) drawing_category_id "NN"
-        int page_number "NN, drawing_file_idとUNIQUE"
-        boolean is_shown_similar_search "NN, default = true"
-        varchar(2083) s3_url "実際の画像のS3パス"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DRAWING_CATEGORIES {
-        int id PK "NN auto_increment"
-        varchar(255) name "NN, 図面のカテゴリ名、本図面、見積図面、検査図面、製作図面、その他などの文字列が入る"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DRAWING_CATEGORY_RENAMES {
-        int id PK "NN auto_increment"
-        int company_id FK "NN"
-        int drawing_category_id FK "NN company_id とUNIQUE"
-        varchar(255) custom_name "NN"
-        created_at datetime "NN"
-        updated_at datetime "NN"
-    }
-
-    OCR {
-        int id PK "NN, auto_increment"
-        int drawing_page_id FK "NN"
-        text text "NN"
-        int x_min "NN"
-        int y_min "NN"
-        int x_max "NN"
-        int y_max "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    SUPPLIER_QUOTES {
-        int id PK "NN, auto_increment"
-        char(26) ulid UK "NN"
-        int supplier_quotation_id FK "NN"
-        int leaf_product_id FK "NN"
-        int version "NN, default = 1"
-        int total_cost "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    QUOTE_ITEMS {
-        int id PK "NN, auto_increment"
-        int supplier_quote_id FK "NN"
-        int quote_type_id FK "NN"
-        varchar(255) name "NN"
-        int unit_cost "NN, 単価"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    QUOTE_TYPE_QUANTITIES {
-        int id PK "NN, auto_increment"
-        int supplier_quote_id FK "NN"
-        int quote_type_id FK "NN"
-        int quantity "NN"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    QUOTE_TYPES {
-        int id PK "NN, auto_increment"
-        varchar(255) name "NN, 材料, 作業工程, 段取り工程, その他"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCT_DOCUMENTS {
-        int id PK "NN, auto_increment"
-        int leaf_product_id FK
-        int seq_number "NN, leaf_product_document_type_id, company_idとUNIQUE"
-        int company_id FK "NN"
-        int leaf_product_document_type_id FK "NN"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCT_DOCUMENT_VERSIONS {
-        int id PK "NN, auto_increment"
-        char(26) ulid "NN"
-        int leaf_product_document_id "NN, leaf_product_document_idとUNIQUE"
-        int version "NN, default = 1"
-        jsonb leaf_product_document_custom_items "leaf_product_document_custom_items テーブル参照。自由項目をJSONで"
-        varchar(255) name "NN"
-        varchar(2083) s3_url "NN"
-        text remarks "備考欄"
-        int created_by FK "NN, 作成者"
-        int updated_by FK "NN, 最終更新者"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCT_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        boolean is_required	"NN, defautl = true (ユーザーからして必須項目かどうか)"
-        int display_order "NN, company_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEMS{
-        int id PK "NN, auto_increment"
-        int leaf_product_document_type_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        boolean is_required	"NN, defautl = true (ユーザーからして必須項目かどうか)"
-        int display_order "NN, leaf_product_document_type_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DIRECTORY_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int directory_type_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        boolean is_required	"NN, defautl = true (ユーザーからして必須項目かどうか)"
-        int display_order "NN, directory_type_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    DIRECTORY_DOCUMENT_CUSTOM_ITEMS {
-        int id PK "NN, auto_increment"
-        int directory_document_type_id FK "NN"
-        varchar(255) name "NN"
-        int custom_item_type_id FK "NN, custom_item_typesテーブルのキー"
-        boolean is_required	"NN, defautl = true (ユーザーからして必須項目かどうか)"
-        int display_order "NN, directory_document_type_idとUNIQUE"
-        boolean is_enabled_db "NN, default = true, DBで表示するか"
-        boolean is_enabled_page "NN, default = true, pageで表示するか"
-        varchar(50) description "項目の説明"
-        datetime created_at "NN, default_generated"
-        datetime updated_at "NN, default_generated on update current_timestamp"
-    }
-
-    LEAF_PRODUCT_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int leaf_product_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int leaf_product_document_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int directory_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_DOCUMENT_CUSTOM_ITEM_OPTIONS {
-        int id PK "NN, auto_increment"
-        int directory_document_custom_item_id FK "NN, option_valueとUNIQUE"
-        varchar(255) option_value "NN"
-        char(7) color_code "NN, default=#FFFFFF, 選択肢のカラーコード"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    LEAF_PRODUCT_DOCUMENT_TYPES {
-        int id PK "NN, auto_increment"
-        int company_id FK "NN"
-        varchar(255) type_name "NN, company_idとUNIQUE"
-        int display_order "NN, company_idとUNIQUE"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    DIRECTORY_DOCUMENT_TYPES {
-        int id PK "NN, auto_increment"
-        int directory_type_id FK "NN"
-        varchar(255) type_name "NN, directory_type_idとUNIQUE"
-        int display_order "NN, directory_type_idとUNIQUE"
-        datetime created_at "NN default_generated"
-        datetime updated_at "NN default_generated on current_timestamp"
-    }
-
-    CUSTOM_ITEM_TYPES {
-        int id PK "NN, auto_increment"
-        varchar(255) type "NN, ('NUMBER', 'STRING', 'SELECT', 'USER', 'DATE', 'BOOLEAN')"
-        datetime created_at "default_generated"
-        datetime updated_at "default_generated on update current_timestamp"
-    }
-
-    COMPANIES ||--|| COMPANY_INFO : "has"
-    COMPANIES ||--o{ DEPARTMENTS : "has"
-    COMPANIES ||--o{ CUSTOM_ROLES : "has"
-    COMPANIES ||--o{ CUSTOMERS : "has"
-    COMPANIES ||--o{ COMPANY_PLANS : ""
-    COMPANIES ||--o{ LEAF_PRODUCT_CUSTOM_ITEMS : ""
-    COMPANIES ||--o{ DIRECTORY_TYPES : ""
-    COMPANIES ||--o{ DIRECTORIES : ""
-    COMPANIES ||--o{ REVISION_SETS : ""
-    COMPANIES ||--o{ DIRECTORY_DOCUMENTS : ""
-    COMPANIES ||--o{ LEAF_PRODUCT_DOCUMENTS : ""
-    COMPANIES ||--o{ SUPPLIER_QUOTATIONS : ""
-    COMPANIES ||--o{ LEAF_PRODUCT_DOCUMENT_TYPES: ""
-    COMPANIES ||--o{ COMPANY_DOCUMENT_TYPES : ""
-    COMPANIES ||--o{ COMPANY_DOCUMENTS : ""
-    COMPANIES ||--o{ COMPANY_DOCUMENT_CUSTOM_ITEMS : ""
-    COMPANIES ||--o{ CUSTOMER_CUSTOM_ITEMS : ""
-    COMPANIES ||--o{ CUSTOMER_CONTACT_CUSTOM_ITEMS : ""
-    COMPANIES ||--o{ DRAWING_CATEGORY_RENAMES : ""
-
-    COMPANY_DOCUMENT_CUSTOM_ITEMS ||--o{ COMPANY_DOCUMENT_CUSTOM_ITEM_OPTIONS : ""
-
-    COMPANY_DOCUMENT_TYPES ||--o{ COMPANY_DOCUMENTS : ""
-    COMPANY_DOCUMENT_TYPES ||--o{ COMPANY_DOCUMENT_CUSTOM_ITEMS : ""
-
-    COMPANY_DOCUMENTS ||--o{ COMPANY_DOCUMENT_VERSIONS : "has"
-
-    PLANS ||--o{ COMPANY_PLANS : ""
-
-    DEPARTMENTS ||--o{ EMPLOYEE_DEPARTMENT : ""
-
-    EMPLOYEES ||--o{ EMPLOYEE_DEPARTMENT : "maps"
-    EMPLOYEES ||--o{ EMPLOYEE_ROLE : "has"
-    EMPLOYEES ||--o{ POLICIES : "created by"
-    EMPLOYEES ||--|| LOGIN_INFOS : ""
-
-    AUTHORITIES ||--o{ EMPLOYEES: ""
-
-    CUSTOM_ROLES ||--o{ EMPLOYEE_ROLE : "maps"
-
-    CUSTOMERS ||--o{ CUSTOMER_CONTACTS : "has"
-    CUSTOMERS ||--o{ CUSTOMER_CUSTOMER_TYPE : ""
-    CUSTOMERS ||--o{ DIRECTORIES : ""
-    CUSTOMERS ||--o{ LEAF_PRODUCTS : ""
-
-    CUSTOMER_TYPES ||--o{ CUSTOMER_CUSTOMER_TYPE : ""
-    CUSTOMER_STATUS ||--o{ CUSTOMERS : ""
-
-    CUSTOMER_CONTACTS ||--o{ DIRECTORY_CONTACTS : ""
-
-    DIRECTORIES ||--o{ DIRECTORY_PATH : "is ancestor of"
-    DIRECTORIES ||--o{ DIRECTORY_PATH : "is descendant of"
-    DIRECTORIES o|--o{ DIRECTORY_DOCUMENTS : "contains"
-    DIRECTORIES o|--o{ LEAF_PRODUCTS : ""
-    DIRECTORIES o|--o{ DIRECTORY_CONTACTS : ""
-    DIRECTORIES o|--o{ SUPPLIER_QUOTATIONS : ""
-
-    DIRECTORY_TYPES ||--o{ DIRECTORIES : "categorizes"
-    DIRECTORY_TYPES ||--o{ DIRECTORY_CUSTOM_ITEMS : "applies to"
-    DIRECTORY_TYPES ||--o{ DIRECTORY_DOCUMENT_TYPES : "has"
-    COMPANIES ||--o{ LEAF_PRODUCT_DOCUMENT_TYPES : "has"
-
-    DIRECTORY_DOCUMENTS ||--o{ DIRECTORY_DOCUMENT_VERSIONS : "has"
-
-    SUPPLIER_QUOTATIONS ||--o{ SUPPLIER_QUOTES : ""
-
-    REVISION_SETS ||--o{ LEAF_PRODUCTS : ""
-
-    LEAF_PRODUCTS ||--o{ DRAWING_FILES : ""
-    LEAF_PRODUCTS ||--o{ LEAF_PRODUCT_DOCUMENTS : "has"
-    LEAF_PRODUCTS ||--o{ SUPPLIER_QUOTES : ""
-
-    SUPPLIER_QUOTES ||--o{ QUOTE_ITEMS : "has"
-    SUPPLIER_QUOTES ||--o{ QUOTE_TYPE_QUANTITIES : "defines quantities for"
-    QUOTE_TYPES ||--o{ QUOTE_ITEMS : "categorizes"
-    QUOTE_TYPES ||--o{ QUOTE_TYPE_QUANTITIES : "applies to"
-
-    DRAWING_FILES ||--o{ DRAWING_PAGES : ""
-    DRAWING_PAGES ||--o{ OCR: ""
-    DRAWING_CATEGORIES ||--o{ DRAWING_PAGES : ""
-    DRAWING_CATEGORIES ||--o{ DRAWING_CATEGORY_RENAMES : ""
-
-    LEAF_PRODUCT_DOCUMENTS ||--o{ LEAF_PRODUCT_DOCUMENT_VERSIONS : "has"
-
-    LEAF_PRODUCT_DOCUMENT_TYPES ||--o{ LEAF_PRODUCT_DOCUMENTS : ""
-    LEAF_PRODUCT_DOCUMENT_TYPES ||--o{ LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEMS : ""
-
-    DIRECTORY_DOCUMENT_TYPES ||--o{ DIRECTORY_DOCUMENT_CUSTOM_ITEMS : ""
-    DIRECTORY_DOCUMENT_TYPES ||--o{ DIRECTORY_DOCUMENTS : ""
-
-    CUSTOM_ITEM_TYPES ||--o{ LEAF_PRODUCT_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ DIRECTORY_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ DIRECTORY_DOCUMENT_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ CUSTOMER_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ CUSTOMER_CONTACT_CUSTOM_ITEMS : "defines type of"
-    CUSTOM_ITEM_TYPES ||--o{ COMPANY_DOCUMENT_CUSTOM_ITEMS : "defines type of"
-
-    LEAF_PRODUCT_CUSTOM_ITEMS ||--o{ LEAF_PRODUCT_CUSTOM_ITEM_OPTIONS : "has"
-    DIRECTORY_CUSTOM_ITEMS ||--o{ DIRECTORY_CUSTOM_ITEM_OPTIONS : "has"
-    LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEMS ||--o{ LEAF_PRODUCT_DOCUMENT_CUSTOM_ITEM_OPTIONS : "has"
-    DIRECTORY_DOCUMENT_CUSTOM_ITEMS ||--o{ DIRECTORY_DOCUMENT_CUSTOM_ITEM_OPTIONS : "has"
-    CUSTOMER_CUSTOM_ITEMS ||--o{ CUSTOMER_CUSTOM_ITEM_OPTIONS : "has"
-    CUSTOMER_CONTACT_CUSTOM_ITEMS ||--o{ CUSTOMER_CONTACT_CUSTOM_ITEM_OPTIONS : "has"
+# Database Schema Documentation
+
+Generated on: 2025-11-02 16:55:08
+
+## 📊 ER図
+
+![Database ER Diagram](./database_erd.png)
+
+### その他の形式
+- [SVG形式で表示](./database_erd.svg)
+- [DBML形式をコピー](./database_erd_full.dbml) → [dbdiagram.io](https://dbdiagram.io/d) でペースト
+
+## 📋 テーブル一覧
+
+- [public.authorities](#public.authorities) (4カラム)
+- [public.companies](#public.companies) (4カラム)
+- [public.company_document_custom_item_options](#public.company_document_custom_item_options) (6カラム)
+- [public.company_document_custom_items](#public.company_document_custom_items) (11カラム)
+- [public.company_document_types](#public.company_document_types) (6カラム)
+- [public.company_document_versions](#public.company_document_versions) (13カラム)
+- [public.company_documents](#public.company_documents) (9カラム)
+- [public.company_info](#public.company_info) (15カラム)
+- [public.company_plans](#public.company_plans) (11カラム)
+- [public.custom_item_types](#public.custom_item_types) (4カラム)
+- [public.custom_roles](#public.custom_roles) (5カラム)
+- [public.customer_contact_custom_item_options](#public.customer_contact_custom_item_options) (6カラム)
+- [public.customer_contact_custom_items](#public.customer_contact_custom_items) (11カラム)
+- [public.customer_contacts](#public.customer_contacts) (16カラム)
+- [public.customer_custom_item_options](#public.customer_custom_item_options) (6カラム)
+- [public.customer_custom_items](#public.customer_custom_items) (11カラム)
+- [public.customer_customer_types](#public.customer_customer_types) (2カラム)
+- [public.customer_status](#public.customer_status) (4カラム)
+- [public.customer_types](#public.customer_types) (4カラム)
+- [public.customers](#public.customers) (16カラム)
+- [public.departments](#public.departments) (5カラム)
+- [public.directories](#public.directories) (13カラム)
+- [public.directory_contacts](#public.directory_contacts) (5カラム)
+- [public.directory_custom_item_options](#public.directory_custom_item_options) (6カラム)
+- [public.directory_custom_items](#public.directory_custom_items) (11カラム)
+- [public.directory_document_custom_item_options](#public.directory_document_custom_item_options) (6カラム)
+- [public.directory_document_custom_items](#public.directory_document_custom_items) (11カラム)
+- [public.directory_document_types](#public.directory_document_types) (6カラム)
+- [public.directory_document_versions](#public.directory_document_versions) (13カラム)
+- [public.directory_documents](#public.directory_documents) (8カラム)
+- [public.directory_path](#public.directory_path) (6カラム)
+- [public.directory_types](#public.directory_types) (5カラム)
+- [public.drawing_categories](#public.drawing_categories) (4カラム)
+- [public.drawing_category_renames](#public.drawing_category_renames) (6カラム)
+- [public.drawing_files](#public.drawing_files) (11カラム)
+- [public.drawing_pages](#public.drawing_pages) (15カラム)
+- [public.employee_department](#public.employee_department) (5カラム)
+- [public.employee_role](#public.employee_role) (5カラム)
+- [public.employees](#public.employees) (8カラム)
+- [public.leaf_product_custom_item_options](#public.leaf_product_custom_item_options) (6カラム)
+- [public.leaf_product_custom_items](#public.leaf_product_custom_items) (11カラム)
+- [public.leaf_product_document_custom_item_options](#public.leaf_product_document_custom_item_options) (6カラム)
+- [public.leaf_product_document_custom_items](#public.leaf_product_document_custom_items) (11カラム)
+- [public.leaf_product_document_types](#public.leaf_product_document_types) (6カラム)
+- [public.leaf_product_document_versions](#public.leaf_product_document_versions) (13カラム)
+- [public.leaf_product_documents](#public.leaf_product_documents) (10カラム)
+- [public.leaf_products](#public.leaf_products) (16カラム)
+- [public.login_infos](#public.login_infos) (7カラム)
+- [public.ocr](#public.ocr) (9カラム)
+- [public.plans](#public.plans) (7カラム)
+- [public.policies](#public.policies) (13カラム)
+- [public.quote_items](#public.quote_items) (7カラム)
+- [public.quote_type_quantities](#public.quote_type_quantities) (6カラム)
+- [public.quote_types](#public.quote_types) (5カラム)
+- [public.revision_sets](#public.revision_sets) (5カラム)
+- [public.supplier_quotations](#public.supplier_quotations) (14カラム)
+- [public.supplier_quotes](#public.supplier_quotes) (8カラム)
+
+## 🗂️ テーブル詳細
+
+### public.authorities
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+- ユニークキー: name
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.companies
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_document_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: company_document_custom_item_id → company_document_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_document_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_document_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_document_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_document_types
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: company_id → companies.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `type_name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_document_versions
+
+**テーブル情報:**
+- カラム数: 13
+- 主キー: id
+- 外部キー: company_document_id → company_documents.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `company_document_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `version` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `company_document_custom_items` | `JSON` | - | Custom items in JSON format |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | File name |
+| `s3_url` | `VARCHAR(2083)` | ❗ NOT NULL | S3 URL |
+| `remarks` | `TEXT` | - | Version remarks |
+| `is_password_protected` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | PDFがパスワード保護されているか |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Creator employee ID |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Updater employee ID |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_documents
+
+**テーブル情報:**
+- カラム数: 9
+- 主キー: id
+- 外部キー: company_id → companies.id, company_document_type_id → company_document_types.id, created_by → employees.id, updated_by → employees.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | Sequential number unique per type and company |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `company_document_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `remarks` | `TEXT` | - | Remarks |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Creator employee ID |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Updater employee ID |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_info
+
+**テーブル情報:**
+- カラム数: 15
+- 主キー: id
+- 外部キー: company_id → companies.id
+- ユニークキー: company_id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>⚡ UNIQUE<br>❗ NOT NULL | - |
+| `invoice_number` | `INTEGER` | - | - |
+| `postal_code` | `VARCHAR(255)` | - | - |
+| `company_address1` | `VARCHAR(255)` | - | - |
+| `company_address2` | `VARCHAR(255)` | - | - |
+| `company_phone` | `VARCHAR(255)` | - | - |
+| `website` | `VARCHAR(255)` | - | - |
+| `email` | `VARCHAR(255)` | - | - |
+| `company_logo_url` | `VARCHAR(255)` | - | - |
+| `company_seal_url` | `VARCHAR(255)` | - | - |
+| `ceo` | `VARCHAR(255)` | - | - |
+| `ceo_role` | `VARCHAR(255)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.company_plans
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+- 外部キー: company_id → companies.id, plan_id → plans.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `plan_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `start_date` | `DATETIME` | ❗ NOT NULL | - |
+| `end_date` | `DATETIME` | - | - |
+| `is_active` | `BOOLEAN` | ❗ NOT NULL | - |
+| `included_editors` | `INTEGER` | ❗ NOT NULL | - |
+| `included_viewers` | `INTEGER` | ❗ NOT NULL | - |
+| `drawing_limit` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.custom_item_types
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `type` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.custom_roles
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: company_id → companies.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_contact_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: customer_contact_custom_item_id → customer_contact_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `customer_contact_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_contact_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_contacts
+
+**テーブル情報:**
+- カラム数: 16
+- 主キー: id
+- 外部キー: customer_id → customers.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `customer_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `last_name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `first_name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `last_name_kana` | `VARCHAR(255)` | - | - |
+| `first_name_kana` | `VARCHAR(255)` | - | - |
+| `phone_number` | `VARCHAR(50)` | - | - |
+| `office_phone_number` | `VARCHAR(50)` | - | - |
+| `email_primary` | `VARCHAR(255)` | - | - |
+| `email_secondary` | `VARCHAR(255)` | - | - |
+| `fax` | `VARCHAR(50)` | - | - |
+| `customer_contact_custom_items` | `JSONB` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `is_active` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: customer_custom_item_id → customer_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `customer_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_customer_types
+
+**テーブル情報:**
+- カラム数: 2
+- 主キー: customer_id, customer_type_id
+- 外部キー: customer_id → customers.id, customer_type_id → customer_types.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `customer_id` | `INTEGER` | 🔑 PK<br>🔗 FK<br>❗ NOT NULL | - |
+| `customer_type_id` | `INTEGER` | 🔑 PK<br>🔗 FK<br>❗ NOT NULL | - |
+
+---
+
+### public.customer_status
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customer_types
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.customers
+
+**テーブル情報:**
+- カラム数: 16
+- 主キー: id
+- 外部キー: company_id → companies.id, customer_status_id → customer_status.id, in_charge → employees.id, created_by → employees.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `name_kana` | `VARCHAR(255)` | - | - |
+| `customer_custom_items` | `JSONB` | - | - |
+| `customer_status_id` | `INTEGER` | 🔗 FK | - |
+| `annual_revenue` | `INTEGER` | - | - |
+| `customer_address` | `VARCHAR(255)` | - | - |
+| `head_count` | `INTEGER` | - | - |
+| `website` | `VARCHAR(255)` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `in_charge` | `INTEGER` | 🔗 FK | - |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.departments
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: company_id → companies.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directories
+
+**テーブル情報:**
+- カラム数: 13
+- 主キー: id
+- 外部キー: company_id → companies.id, directory_type_id → directory_types.id, customer_id → customers.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | - | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `directory_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `customer_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | - | - |
+| `directory_custom_item` | `JSON` | - | - |
+| `remarks` | `VARCHAR` | - | - |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_contacts
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: customer_contact_id → customer_contacts.id, directory_id → directories.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `customer_contact_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `directory_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: directory_custom_item_id → directory_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_document_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: directory_document_custom_item_id → directory_document_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_document_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_document_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_document_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_document_types
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: directory_type_id → directory_types.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `type_name` | `VARCHAR(255)` | ❗ NOT NULL | Document type name |
+| `display_order` | `INTEGER` | ❗ NOT NULL | Display order |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_document_versions
+
+**テーブル情報:**
+- カラム数: 13
+- 主キー: id
+- 外部キー: directory_document_id → directory_documents.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `directory_document_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `version` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `directory_document_custom_items` | `JSON` | - | Custom items in JSON format |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | File name |
+| `s3_url` | `VARCHAR(2083)` | ❗ NOT NULL | S3 URL |
+| `remarks` | `TEXT` | - | Version remarks |
+| `is_password_protected` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | PDFがパスワード保護されているか |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Creator employee ID |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Updater employee ID |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_documents
+
+**テーブル情報:**
+- カラム数: 8
+- 主キー: id
+- 外部キー: directory_id → directories.id, company_id → companies.id, directory_document_type_id → directory_document_types.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | Sequential number unique per type and company |
+| `directory_id` | `INTEGER` | 🔗 FK | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `directory_document_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_path
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: ancestor → directories.id, descendant → directories.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ancestor` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `descendant` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `depth` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.directory_types
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: company_id → companies.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `directory_type` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.drawing_categories
+
+**テーブル情報:**
+- カラム数: 4
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.drawing_category_renames
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: company_id → companies.id, drawing_category_id → drawing_categories.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `drawing_category_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `custom_name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.drawing_files
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+- 外部キー: leaf_product_id → leaf_products.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `leaf_product_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `file_extension` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `s3_url` | `VARCHAR(2083)` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.drawing_pages
+
+**テーブル情報:**
+- カラム数: 15
+- 主キー: id
+- 外部キー: drawing_file_id → drawing_files.id, drawing_category_id → drawing_categories.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | - |
+| `drawing_file_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `drawing_number` | `VARCHAR(255)` | - | - |
+| `external_drawing_number` | `VARCHAR(255)` | - | - |
+| `drawing_category_id` | `INTEGER` | 🔗 FK | - |
+| `page_number` | `INTEGER` | ❗ NOT NULL | - |
+| `is_shown_similar_search` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `s3_url` | `VARCHAR(2083)` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.employee_department
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: employee_id → employees.id, department_id → departments.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `employee_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `department_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.employee_role
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: employee_id → employees.id, custom_role_id → custom_roles.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `employee_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `custom_role_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.employees
+
+**テーブル情報:**
+- カラム数: 8
+- 主キー: id
+- 外部キー: company_id → companies.id, authority_id → authorities.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `authority_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `email` | `VARCHAR(255)` | - | - |
+| `initial_login` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: leaf_product_custom_item_id → leaf_product_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `leaf_product_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_document_custom_item_options
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: leaf_product_document_custom_item_id → leaf_product_document_custom_items.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `leaf_product_document_custom_item_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `option_value` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `color_code` | `VARCHAR(7)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_document_custom_items
+
+**テーブル情報:**
+- カラム数: 11
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `leaf_product_document_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `custom_item_type_id` | `INTEGER` | ❗ NOT NULL | - |
+| `display_order` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(0) | - |
+| `is_enabled_db` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_enabled_page` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `is_required` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | - |
+| `description` | `VARCHAR(50)` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_document_types
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: company_id → companies.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `type_name` | `VARCHAR(255)` | ❗ NOT NULL | Document type name |
+| `display_order` | `INTEGER` | ❗ NOT NULL | Display order |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_document_versions
+
+**テーブル情報:**
+- カラム数: 13
+- 主キー: id
+- 外部キー: leaf_product_document_id → leaf_product_documents.id, created_by → employees.id, updated_by → employees.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `leaf_product_document_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `version` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `leaf_product_document_custom_items` | `JSON` | - | Custom items in JSON format |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | File name |
+| `s3_url` | `VARCHAR(2083)` | ❗ NOT NULL | S3 URL |
+| `remarks` | `TEXT` | - | Version remarks |
+| `is_password_protected` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(False) | PDFがパスワード保護されているか |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Creator employee ID |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | Updater employee ID |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_product_documents
+
+**テーブル情報:**
+- カラム数: 10
+- 主キー: id
+- 外部キー: leaf_product_id → leaf_products.id, company_id → companies.id, leaf_product_document_type_id → leaf_product_document_types.id, created_by → employees.id, updated_by → employees.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | Sequential number unique per type and company |
+| `leaf_product_id` | `INTEGER` | 🔗 FK | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `leaf_product_document_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `remarks` | `TEXT` | - | 備考欄 |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | 作成者 |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | 最終更新者 |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.leaf_products
+
+**テーブル情報:**
+- カラム数: 16
+- 主キー: id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `revision_set_id` | `INTEGER` | ❗ NOT NULL | - |
+| `revision_number` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `name` | `VARCHAR(255)` | - | - |
+| `leaf_product_custom_item` | `JSON` | - | - |
+| `is_latest` | `BOOLEAN` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(True) | - |
+| `search_text` | `TSVECTOR` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `quantity` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `created_by` | `INTEGER` | ❗ NOT NULL | - |
+| `updated_by` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+| `directory_id` | `INTEGER` | - | - |
+| `customer_id` | `INTEGER` | - | - |
+
+---
+
+### public.login_infos
+
+**テーブル情報:**
+- カラム数: 7
+- 主キー: id
+- 外部キー: employee_id → employees.id
+- ユニークキー: employee_id, login_id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `employee_id` | `INTEGER` | 🔗 FK<br>⚡ UNIQUE<br>❗ NOT NULL | - |
+| `login_id` | `VARCHAR(255)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `password` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+| `token` | `VARCHAR(1024)` | - | - |
+
+---
+
+### public.ocr
+
+**テーブル情報:**
+- カラム数: 9
+- 主キー: id
+- 外部キー: drawing_page_id → drawing_pages.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `drawing_page_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `text` | `TEXT` | ❗ NOT NULL | - |
+| `x_min` | `INTEGER` | ❗ NOT NULL | - |
+| `y_min` | `INTEGER` | ❗ NOT NULL | - |
+| `x_max` | `INTEGER` | ❗ NOT NULL | - |
+| `y_max` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.plans
+
+**テーブル情報:**
+- カラム数: 7
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `default_drawing_limit` | `INTEGER` | ❗ NOT NULL | - |
+| `default_included_editors` | `INTEGER` | ❗ NOT NULL | - |
+| `default_included_viewers` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.policies
+
+**テーブル情報:**
+- カラム数: 13
+- 主キー: id
+- ユニークキー: name
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `description` | `TEXT` | - | - |
+| `resource_type` | `VARCHAR(100)` | ❗ NOT NULL | - |
+| `action` | `VARCHAR(100)` | ❗ NOT NULL | - |
+| `effect` | `VARCHAR(10)` | ❗ NOT NULL | - |
+| `conditions` | `TEXT` | - | - |
+| `priority` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(100) | - |
+| `is_active` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `created_by` | `INTEGER` | - | - |
+| `updated_by` | `INTEGER` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.quote_items
+
+**テーブル情報:**
+- カラム数: 7
+- 主キー: id
+- 外部キー: supplier_quote_id → supplier_quotes.id, quote_type_id → quote_types.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `supplier_quote_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `quote_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `unit_cost` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.quote_type_quantities
+
+**テーブル情報:**
+- カラム数: 6
+- 主キー: id
+- 外部キー: supplier_quote_id → supplier_quotes.id, quote_type_id → quote_types.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `supplier_quote_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `quote_type_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `quantity` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.quote_types
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `code` | `VARCHAR(50)` | ❗ NOT NULL | - |
+| `name` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.revision_sets
+
+**テーブル情報:**
+- カラム数: 5
+- 主キー: id
+- 外部キー: company_id → companies.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.supplier_quotations
+
+**テーブル情報:**
+- カラム数: 14
+- 主キー: id
+- 外部キー: directory_id → directories.id, customer_id → customers.id, company_id → companies.id, created_by → employees.id, updated_by → employees.id
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `directory_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `customer_id` | `INTEGER` | 🔗 FK | - |
+| `company_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `created_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `updated_by` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `seq_number` | `INTEGER` | ❗ NOT NULL | - |
+| `quotation_number` | `VARCHAR(255)` | ❗ NOT NULL | - |
+| `expiration_date` | `DATE` | ❗ NOT NULL | - |
+| `version` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `s3_url` | `VARCHAR(2083)` | - | - |
+| `remarks` | `TEXT` | - | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+### public.supplier_quotes
+
+**テーブル情報:**
+- カラム数: 8
+- 主キー: id
+- 外部キー: supplier_quotation_id → supplier_quotations.id, leaf_product_id → leaf_products.id
+- ユニークキー: ulid
+
+| カラム名 | 型 | 制約 | 説明 |
+|----------|----|----- |------|
+| `id` | `INTEGER` | 🔑 PK<br>❗ NOT NULL | - |
+| `ulid` | `VARCHAR(26)` | ⚡ UNIQUE<br>❗ NOT NULL | - |
+| `supplier_quotation_id` | `INTEGER` | 🔗 FK | - |
+| `leaf_product_id` | `INTEGER` | 🔗 FK<br>❗ NOT NULL | - |
+| `version` | `INTEGER` | ❗ NOT NULL<br>📋 DEFAULT: ScalarElementColumnDefault(1) | - |
+| `total_cost` | `INTEGER` | ❗ NOT NULL | - |
+| `created_at` | `DATETIME` | ❗ NOT NULL | - |
+| `updated_at` | `DATETIME` | ❗ NOT NULL | - |
+
+---
+
+## 📚 補足情報
+
+### アイコン説明
+- 🔑 PK: Primary Key（主キー）
+- 🔗 FK: Foreign Key（外部キー）
+- ⚡ UNIQUE: 一意制約
+- ❗ NOT NULL: NULL不許可
+- 📋 DEFAULT: デフォルト値
+
+### 更新方法
+このドキュメントは SQLAlchemy モデルから自動生成されます。
+```bash
+uv run python scripts/generate_erd_docs.py
 ```
