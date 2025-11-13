@@ -5,7 +5,6 @@ import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/inte
 
 export const createSimilarBlueprintGalleryConfig = (
   handleDifferenceDetection: (blueprint: BlueprintDetailDataInterface) => void,
-  // handleDetailedComparison: (blueprint: BlueprintDetailDataInterface) => void,
 ): GalleryViewConfig<BlueprintDetailDataInterface> => ({
   layoutConfig: {
     grid: { xs: 1, md: 2 },
@@ -29,15 +28,6 @@ export const createSimilarBlueprintGalleryConfig = (
           <Search className='mr-1 h-4 w-4' />
           差分検出
         </Button>
-        {/* <Button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDetailedComparison(blueprint);
-          }}
-        >
-          <GitCompareArrows className='mr-1 h-4 w-4' />
-          詳細比較
-        </Button> */}
       </div>
     ),
 

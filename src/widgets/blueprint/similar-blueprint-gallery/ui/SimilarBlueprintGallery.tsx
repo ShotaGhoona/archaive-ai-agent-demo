@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
-import { GalleryView, Loading } from '@/shared';
+import { GalleryView, Loading, Button } from '@/shared';
+import { ChevronRight } from 'lucide-react';
 import { createSimilarBlueprintGalleryConfig } from '../lib';
 import { SimilarBlueprintGalleryProps } from '../model';
 import { useSimilarBlueprintGallery } from '../lib';
@@ -9,23 +10,23 @@ export function SimilarBlueprintGallery({
   similarBlueprints = [],
   activeView,
   onDifferenceDetection,
-  // onDetailedComparison,
+  onDetailView,
+  showDetailViewButton = false,
   isLoading = false,
 }: SimilarBlueprintGalleryProps) {
   const {
     handleDifferenceDetection,
-    // handleDetailedComparison,
+    handleDetailView,
   } = useSimilarBlueprintGallery({
     similarBlueprints,
     activeView,
     onDifferenceDetection,
-    // onDetailedComparison,
+    onDetailView,
   });
 
   // ギャラリー設定を作成
   const galleryConfig = createSimilarBlueprintGalleryConfig(
     handleDifferenceDetection,
-    // handleDetailedComparison,
   );
 
   // ローディング状態のUI
@@ -58,6 +59,22 @@ export function SimilarBlueprintGallery({
 
   return (
     <div className={`flex h-full flex-col`}>
+      {/* オプショナルヘッダー */}
+      {showDetailViewButton && (
+        <div className='flex items-center justify-between p-4'>
+          <h3 className='text-lg font-semibold text-primary'>類似図面</h3>
+          <Button
+            variant='outline'
+            size='sm'
+            onClick={() => handleDetailView(activeView!)}
+            disabled={!activeView}
+          >
+            <ChevronRight className='mr-1 h-4 w-4' />
+            類似図面詳細ページへ
+          </Button>
+        </div>
+      )}
+
       <div className='min-h-0 flex-1 overflow-y-auto p-4'>
         <GalleryView data={similarBlueprints} config={galleryConfig} />
       </div>
