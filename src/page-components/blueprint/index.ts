@@ -4,3 +4,4 @@ export * from './difference-detection';
 export * from './estimate';
 export * from './home';
 export * from './similar';
+export * from './similar-detail';
