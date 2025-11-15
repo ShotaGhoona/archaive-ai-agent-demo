@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { BlueprintDetailDataInterface } from '@/dummy-data-er-fix/blueprint/interfaces/types';
 
 interface UseSimilarBlueprintGalleryProps {
@@ -7,13 +8,16 @@ interface UseSimilarBlueprintGalleryProps {
   activeView?: BlueprintDetailDataInterface | null;
   onDifferenceDetection?: (blueprint: BlueprintDetailDataInterface) => void;
   onDetailedComparison?: (blueprint: BlueprintDetailDataInterface) => void;
+  onDetailView?: (blueprint: BlueprintDetailDataInterface) => void;
 }
 
 export function useSimilarBlueprintGallery({
   activeView,
   onDifferenceDetection,
   onDetailedComparison,
+  onDetailView,
 }: UseSimilarBlueprintGalleryProps) {
+  const router = useRouter();
   const [compareBlueprint, setCompareBlueprint] =
     useState<BlueprintDetailDataInterface | null>(null);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
@@ -36,6 +40,14 @@ export function useSimilarBlueprintGallery({
     }
   };
 
+  const handleDetailView = (blueprint: BlueprintDetailDataInterface) => {
+    if (onDetailView) {
+      onDetailView(blueprint);
+    } else {
+      router.push(`/blueprint/similar-detail?blueprintId=${blueprint.id}`);
+    }
+  };
+
   const handleCloseCompare = () => {
     setIsCompareOpen(false);
     setCompareBlueprint(null);
@@ -46,6 +58,7 @@ export function useSimilarBlueprintGallery({
     isCompareOpen,
     handleDifferenceDetection,
     handleDetailedComparison,
+    handleDetailView,
     handleCloseCompare,
   };
 }

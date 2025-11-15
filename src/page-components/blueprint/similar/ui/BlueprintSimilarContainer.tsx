@@ -41,6 +41,7 @@ export function BlueprintSimilarContainer() {
           <SimilarBlueprintGallery
             similarBlueprints={similarBlueprints}
             activeView={activeBlueprintData}
+            showDetailViewButton={true}
           />
         </div>
       </ResizablePanel>

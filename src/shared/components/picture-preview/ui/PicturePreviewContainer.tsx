@@ -16,10 +16,12 @@ import { usePicturePreview } from '../lib';
 
 interface PicturePreviewContainerProps {
   activeFile: PictureFile | null;
+  backgroundVariant?: 'gray' | 'white-dot';
 }
 
 export function PicturePreviewContainer({
   activeFile,
+  backgroundVariant = 'gray',
 }: PicturePreviewContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -42,6 +44,11 @@ export function PicturePreviewContainer({
     rotateCounterClockwise,
   } = usePicturePreview({ imageUrl: activeFile?.imageUrl });
 
+  // 背景スタイルの決定
+  const backgroundClass = backgroundVariant === 'white-dot'
+    ? 'bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] bg-[size:20px_20px]'
+    : 'bg-gray-100';
+
   if (!activeFile) {
     return (
       <div className='flex h-full w-full items-center justify-center bg-gray-50'>
@@ -61,7 +68,7 @@ export function PicturePreviewContainer({
   return (
     <div
       ref={containerRef}
-      className='relative h-full w-full overflow-hidden bg-gray-100'
+      className={`relative h-full w-full overflow-hidden ${backgroundClass}`}
       onWheel={handleWheel}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}

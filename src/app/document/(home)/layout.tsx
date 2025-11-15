@@ -1,68 +1,17 @@
-'use client';
-import {
-  Calculator,
-  ShoppingCart,
-  Package,
-  Receipt,
-  FileCheck,
-} from 'lucide-react';
-import { LinkTabNavigation, LinkTabItem } from '@/shared';
-import { usePathname } from 'next/navigation';
-
-const documentTabs: LinkTabItem[] = [
-  {
-    key: 'quotation',
-    label: '見積書',
-    icon: Calculator,
-    href: '/document/quotation',
-  },
-  {
-    key: 'order',
-    label: '発注書',
-    icon: ShoppingCart,
-    href: '/document/order',
-  },
-  {
-    key: 'delivery',
-    label: '納品書',
-    icon: Package,
-    href: '/document/delivery',
-  },
-  { key: 'invoice', label: '請求書', icon: Receipt, href: '/document/invoice' },
-  {
-    key: 'specification',
-    label: '仕様書',
-    icon: FileCheck,
-    href: '/document/specification',
-  },
-];
+import { DocumentSidebar } from './DocumentSidebar';
 
 export default function DocumentLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-
-  // パスから現在のドキュメントタイプを取得
-  const getCurrentDocumentType = () => {
-    const segments = pathname.split('/');
-    const documentType = segments[segments.length - 1];
-    return documentType || 'quotation';
-  };
-
   return (
-    <div className='flex h-[calc(100vh-45px)] flex-col'>
-      {/* Document Type Tab Navigation */}
-      <div className='flex-shrink-0'>
-        <LinkTabNavigation
-          items={documentTabs}
-          selectedKey={getCurrentDocumentType()}
-        />
-      </div>
+    <div className='flex h-[calc(100vh-45px)] w-full overflow-hidden'>
+      {/* Document Sidebar */}
+      <DocumentSidebar />
 
       {/* Main Content Area */}
-      <div className='min-h-0 flex-1'>{children}</div>
+      <div className='min-h-0 min-w-0 flex-1 overflow-auto'>{children}</div>
     </div>
   );
 }

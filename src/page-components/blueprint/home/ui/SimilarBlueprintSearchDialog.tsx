@@ -20,9 +20,9 @@ export function SimilarBlueprintSearchDialog() {
         file.name.endsWith('.igs') ||
         file.name.endsWith('.pdf'))
     ) {
-      // アップロード完了後に遷移
+      // アップロード完了後に類似図面詳細ページへ遷移
       setIsOpen(false);
-      router.push('/project/INT-2024-001/blueprint');
+      router.push('/blueprint/similar-detail?uploaded=true');
     }
   };
 
