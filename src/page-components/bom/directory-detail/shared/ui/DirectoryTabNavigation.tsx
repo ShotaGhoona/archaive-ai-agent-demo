@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname, useParams } from 'next/navigation';
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from '@/shared';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared';
 import { directoryDetailTabs } from '../constants';
 
 export function DirectoryTabNavigation() {
@@ -27,47 +27,33 @@ export function DirectoryTabNavigation() {
   const activeTab = getCurrentTab();
 
   return (
-    <div className='scrollbar-hide flex items-center gap-1 overflow-x-auto'>
+    <div className='scrollbar-hide flex items-center gap-6 overflow-x-auto'>
       {directoryDetailTabs.map((tab) => {
         const isActive = activeTab === tab.id;
 
+        const TabLink = (
+          <Link
+            href={tab.href(directoryId)}
+            className={`flex flex-shrink-0 items-center gap-2 border-b-2 px-1 py-3 text-sm font-medium transition-colors ${
+              isActive
+                ? 'border-gray-900 text-gray-900'
+                : 'border-transparent text-gray-600 hover:border-gray-300 hover:text-gray-900'
+            }`}
+          >
+            {tab.icon}
+            {tab.label}
+          </Link>
+        );
+
         return tab.description ? (
           <Tooltip key={tab.id} delayDuration={500}>
-            <TooltipTrigger asChild>
-              <Link href={tab.href(directoryId)}>
-                <Button
-                  variant={isActive ? 'default' : 'ghost'}
-                  size='lg'
-                  className={`h-12 flex-shrink-0 gap-2 px-4 text-sm font-medium transition-all ${
-                    isActive
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                  } `}
-                >
-                  {tab.icon}
-                  {tab.label}
-                </Button>
-              </Link>
-            </TooltipTrigger>
+            <TooltipTrigger asChild>{TabLink}</TooltipTrigger>
             <TooltipContent side='bottom'>
               <p>{tab.description}</p>
             </TooltipContent>
           </Tooltip>
         ) : (
-          <Link key={tab.id} href={tab.href(directoryId)}>
-            <Button
-              variant={isActive ? 'default' : 'ghost'}
-              size='lg'
-              className={`h-12 flex-shrink-0 gap-2 px-4 text-sm font-medium transition-all ${
-                isActive
-                  ? 'bg-primary text-primary-foreground shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-              } `}
-            >
-              {tab.icon}
-              {tab.label}
-            </Button>
-          </Link>
+          <div key={tab.id}>{TabLink}</div>
         );
       })}
     </div>
