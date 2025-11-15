@@ -88,7 +88,7 @@ export function CustomerContactContainer({
   };
 
   return (
-    <div className='flex h-[calc(100vh-45px)] overflow-hidden'>
+    <div className='flex h-[calc(100vh-60px)] overflow-hidden'>
       {/* フィルターサイドバー */}
       <AdvancedFilterSidebar
         isOpen={isFilterSidebarOpen}

@@ -12,7 +12,7 @@ export function BomPage() {
   const [selectedNode, setSelectedNode] = useState<BomNode | null>(null);
 
   return (
-    <div className="w-full overflow-hidden bg-gray-50" style={{ height: 'calc(100vh - 45px)' }}>
+    <div className="w-full overflow-hidden bg-gray-50" style={{ height: 'calc(100vh - 60px)' }}>
       <ResizableLayout config={bomResizableLayoutConfig} className="h-full">
         {/* 左サイドバー: ツリーリスト */}
         <ResizablePanel index={0}>

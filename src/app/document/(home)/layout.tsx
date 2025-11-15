@@ -6,7 +6,7 @@ export default function DocumentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className='flex h-[calc(100vh-45px)] w-full overflow-hidden'>
+    <div className='flex h-[calc(100vh-60px)] w-full overflow-hidden'>
       {/* Document Sidebar */}
       <DocumentSidebar />
 

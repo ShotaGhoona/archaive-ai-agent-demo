@@ -92,7 +92,7 @@ export function DifferenceDetectionContainer() {
   };
 
   return (
-    <div className='flex h-[calc(100vh-45px)] overflow-hidden'>
+    <div className='flex h-[calc(100vh-60px)] overflow-hidden'>
       {/* 左側: BlueprintCompareViewer */}
       <div className='flex-1'>
         <BlueprintCompareViewer

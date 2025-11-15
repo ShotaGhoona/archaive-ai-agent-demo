@@ -43,7 +43,7 @@ export default function RootLayout({
     <html lang='ja'>
       <body className={`${notoSansJP.variable} ${notoSansJP.className} antialiased`}>
         <Header />
-        <main className='mt-[45px]'>{children}</main>
+        <main className='mt-[60px]'>{children}</main>
       </body>
     </html>
   );

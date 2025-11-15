@@ -29,7 +29,7 @@ export function Header() {
   return (
     <header className='bg-primary fixed top-0 z-30 w-full shadow-lg'>
       <div className='w-full px-4 sm:px-6 lg:px-6'>
-        <div className='flex h-[45px] items-center'>
+        <div className='flex h-[60px] items-center'>
           {/* Left side - Brand and Navigation */}
           <div className='flex items-center space-x-6'>
             {/* Brand Logo */}
@@ -40,14 +40,14 @@ export function Header() {
                   alt='ARCHAIVE Logo'
                   width={24}
                   height={24}
-                  className='h-6 w-6'
+                  className='h-10 w-10'
                 />
                 <Image
                   src='/logo-text.svg'
                   alt='ARCHAIVE Logo'
-                  width={80}
-                  height={24}
-                  className='h-6'
+                  width={120}
+                  height={32}
+                  className='h-10'
                 />
                 {/* <h1 className='text-lg font-bold tracking-tight text-white'>
                   ARCH<span className='text-secondary'>AI</span>VE
@@ -64,7 +64,7 @@ export function Header() {
                 return (
                   <Link key={navigation.label} href={navigation.href}>
                     <div
-                      className={`group relative flex cursor-pointer items-center gap-2 rounded-md px-3 py-1 text-sm font-medium hover:bg-white/10 ${
+                      className={`group relative flex cursor-pointer items-center gap-2 rounded-md px-3 py-1 text-lg font-medium hover:bg-white/10 ${
                         isActive
                           ? 'rounded-md bg-white/20 text-white'
                           : 'text-white hover:text-white'
@@ -89,11 +89,11 @@ export function Header() {
                   size='sm'
                   className='flex items-center space-x-2 rounded-md p-1 text-white hover:bg-white/10 hover:text-white'
                 >
-                  <div className='flex h-6 w-6 items-center justify-center rounded-full bg-white/20'>
-                    <User className='h-3 w-3 text-white' />
+                  <div className='flex h-10 w-10 items-center justify-center rounded-full bg-white/20'>
+                    <User className='h-8 w-8 text-white' />
                   </div>
                   <div className='hidden sm:block'>
-                    <p className='text-xs font-medium text-white'>
+                    <p className='text-lg font-medium text-white'>
                       {defaultUser.name}
                     </p>
                   </div>

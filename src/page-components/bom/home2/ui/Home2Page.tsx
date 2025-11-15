@@ -17,7 +17,7 @@ export default function Home2Page() {
   const [selectedNode, setSelectedNode] = useState<BomNode | null>(allProducts[0]);
 
   return (
-    <div className="flex h-[calc(100vh-45px)] flex-col">
+    <div className="flex h-[calc(100vh-60px)] flex-col">
       {/* Main Content - 3カラムレイアウト */}
       <div className="flex flex-1 overflow-hidden">
         {/* 左: 製品リスト (固定280px) */}

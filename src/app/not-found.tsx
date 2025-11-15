@@ -4,7 +4,7 @@ import { Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className='flex min-h-[calc(100vh-45px)] items-center justify-center bg-gray-50'>
+    <div className='flex min-h-[calc(100vh-60px)] items-center justify-center bg-gray-50'>
       <div className='w-full max-w-md px-6 text-center'>
         <div className='mb-8'>
           {/* 404 Number */}

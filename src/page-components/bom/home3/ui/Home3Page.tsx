@@ -311,7 +311,7 @@ export default function Home3Page() {
   }, [setNodes]);
 
   return (
-    <div className="relative h-[calc(100vh-45px)] w-full">
+    <div className="relative h-[calc(100vh-60px)] w-full">
       {/* 製品セレクター */}
       <ProductSelector
         products={allProducts}

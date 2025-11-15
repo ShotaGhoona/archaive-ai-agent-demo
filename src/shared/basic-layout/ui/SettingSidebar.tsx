@@ -22,7 +22,7 @@ export function SettingSidebar() {
   };
 
   return (
-    <aside className='flex h-[calc(100vh-45px)] w-[250px] flex-col border-r border-gray-200 bg-gray-50 dark:bg-gray-900'>
+    <aside className='flex h-[calc(100vh-60px)] w-[250px] flex-col border-r border-gray-200 bg-gray-50 dark:bg-gray-900'>
       {/* ナビゲーション */}
       <nav className='scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent flex-1 overflow-y-auto py-4'>
         {settingSections.map((section) => (

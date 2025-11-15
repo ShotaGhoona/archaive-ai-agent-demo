@@ -167,7 +167,7 @@ export function BlueprintUploadContainer() {
   const currentFiles = viewMode === 'uploaded' ? unassignedFiles : trashedFiles;
 
   return (
-    <div className='flex h-[calc(100vh-45px)] overflow-hidden'>
+    <div className='flex h-[calc(100vh-60px)] overflow-hidden'>
       {/* 左側：図面ギャラリーエリア */}
       <div className='flex flex-1 flex-col overflow-hidden'>
         {/* 左側ヘッダー */}

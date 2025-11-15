@@ -60,7 +60,7 @@ export function AdvancedFilterSidebar<T>({
 
       {/* サイドバー */}
       <div
-        className={`fixed top-[45px] left-0 z-50 h-[calc(100vh-45px)] border-r bg-white shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex w-80 flex-col`}
+        className={`fixed top-[60px] left-0 z-50 h-[calc(100vh-60px)] border-r bg-white shadow-lg transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} flex w-80 flex-col`}
       >
         {/* 切り替えタブ */}
         <TabNavigation
