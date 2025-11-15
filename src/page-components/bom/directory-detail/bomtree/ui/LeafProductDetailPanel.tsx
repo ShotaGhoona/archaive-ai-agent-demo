@@ -55,7 +55,7 @@ export function LeafProductDetailPanel({ leafProductData }: LeafProductDetailPan
         {selectedTab === 'drawings' && (
           <div className="w-full h-full">
             <PicturePreviewContainer
-              activeFile={firstDrawing ? { imageUrl: firstDrawing.previewImageUrl } : null}
+              activeFile={firstDrawing && firstDrawing.previewImageUrl ? { imageUrl: firstDrawing.previewImageUrl } : null}
               backgroundVariant="white-dot"
             />
           </div>
@@ -106,11 +106,11 @@ export function LeafProductDetailPanel({ leafProductData }: LeafProductDetailPan
 
                   <div className="space-y-2">
                     <label className='text-sm font-medium text-gray-700'>
-                      タイプ
+                      数量
                     </label>
                     <input
-                      type="text"
-                      value={leafProductData.leafProductTypeName}
+                      type="number"
+                      value={leafProductData.quantity}
                       disabled
                       className="w-full rounded-md border border-gray-300 bg-gray-50 px-3 py-2 text-sm text-gray-900"
                     />

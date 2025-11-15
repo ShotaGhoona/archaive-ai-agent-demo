@@ -2,14 +2,12 @@
 
 import { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
-import { ResizableLayout, ResizablePanel, ResizableHandle } from '@/shared';
 import { DirectoryBomTreeSidebar } from './DirectoryBomTreeSidebar';
 import { DirectoryDetailPanel } from './DirectoryDetailPanel';
 import { LeafProductDetailPanel } from './LeafProductDetailPanel';
 import { DocumentDetailPanel } from './DocumentDetailPanel';
 import bomTreeData from '@/page-components/bom/shared/data/mock6LayerRobotArm.json';
 import { BomTree, Directory, BomNode, LeafProduct, DocumentNode } from '@/page-components/bom/shared/data/data-type';
-import { bomTreeResizableLayoutConfig } from '../lib/bomTreeResizableLayoutConfig';
 
 interface BomTreeContainerProps {
   directoryId?: string;
